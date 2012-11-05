@@ -13,3 +13,7 @@ out/
 ~$*
 .idea/
 .DS_Store/
+*.class
+*.jar
+*.war
+*.ear
