@@ -185,19 +185,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Constructs.kt" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Constructs.kt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
+            <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.24182077">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="calculator.kt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="calculator.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/samples/calculator.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="21" selection-start="516" selection-end="516" vertical-scroll-proportion="0.8947368">
+            <state line="11" column="21" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -619,16 +619,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
+    <entry file="file://$PROJECT_DIR$/test/samples/calculator.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0">
+        <state line="11" column="21" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/samples/calculator.kt">
+    <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="21" selection-start="516" selection-end="516" vertical-scroll-proportion="0.8947368">
+        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.24182077">
           <folding />
         </state>
       </provider>
