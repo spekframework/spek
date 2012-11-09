@@ -5,6 +5,8 @@ import spek.given
 import spek.on
 import spek.it
 import spek.shouldEqual
+import spek.ygiven
+import spek.xgiven
 
 
 spec public fun calculatorSpecs() {
@@ -24,6 +26,42 @@ spec public fun calculatorSpecs() {
 
 
 
+}
+
+fun xtext()
+{
+    xgiven("sdfsdf")
+    {
+        val c = Calculator()
+        xon("sdjfbsdjf")
+        {
+            val s = c.sum(7,5)
+            xit("should")
+            {
+                shouldEqual(s, 12)
+            }
+        }
+
+        xon("sdhfbsdhf")
+        {
+
+        }
+    }
+}
+
+
+fun ytest()
+{
+    ygiven("Calculator")
+    {
+        Calculator()
+    }.yon("calling sum with two number")
+    {
+        sum(2,4)
+    }.yit("should")
+    {
+       shouldEqual(7)
+    }
 }
 
 class Calculator {
