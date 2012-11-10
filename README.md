@@ -46,6 +46,16 @@ Currently Spek comes with a Console Runner but a plugin for IntelliJ unit runner
 
 ## FAQ
 
+*Q: What is Kotlin?*
+A: [http://kotlin.jetbrains.org|Kotlin] is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by JetBrains [http://www.jetbrains.com]
+It is aimed at being a concise modern language for general use. It also rocks!
+
+*Q: Is it free to use Kotlin?*
+A: While this is not a Kotlin FAQ, it is important to note that Kotlin is free to use and you can use the command line or the Community Edition
+of IntelliJ to develop with it (which is free and OSS). Obviously IntelliJ Ultimate also works!
+There's also an Eclipse plugin in the works. Check the project site for updates.
+
+
 *Q: Is Kotlin a BDD or a TDD framework?*
 A: Spek in Belgian means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
 moment though, we (at least the original author) believe that there is a false distinction in frameworks around what TDD
@@ -64,4 +74,9 @@ idea that you test a single *unit*, and at the same time, find it easy to see wh
 comply with this guidance. You can have multiple *it* but you limit each to one assertion.
 
 *Q: Why is the logo a piece of bacon?*
-A: See first question which is actually more important.
+A: Spek was originally codenamed kspec. Someone suggested to rename it to Spek which kind of fits. Turns out, it's also Bacon in
+Belgian. So why not have bacon as a logo? After all, quite a lot of people love bacon!
+
+*Q: Can I contribute?*
+A: Please do!
+
