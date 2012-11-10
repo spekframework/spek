@@ -4,10 +4,8 @@ import spek.spec
 import spek.given
 import spek.SpecificationRunner
 import java.util.ArrayList
-
 import spek.*
 
-//import spek.shouldEqual
 
 fun main(args: Array<String>) {
     val textOutput = ConsoleTextListener()
@@ -22,6 +20,7 @@ fun main(args: Array<String>) {
         specRunner.close()
     }
 }
+
 
 spec public fun calculatorSpecs() {
 
@@ -55,10 +54,10 @@ spec public fun calculatorSpecs() {
 }
 
 spec fun incrementorSpecs() {
-    given("an incrementor") {
-        val incrementor = Incrementor()
+    given("an inc util") {
+        val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {
-            val result = incrementor.incValueBy(4, 6)
+            val result = incUtil.incValueBy(4, 6)
             it("should return 10") {
                 shouldEqual(result, 10)
             }
@@ -66,7 +65,7 @@ spec fun incrementorSpecs() {
     }
 }
 
-class Incrementor {
+class IncUtil {
     fun incValueBy(value: Int, inc: Int) = value + inc
 }
 

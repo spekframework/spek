@@ -4,9 +4,10 @@
     <list default="true" id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
+    <file path="/sampleSpecs.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536663616" ignored="false" />
+    <file path="/a.dummy" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536655020" ignored="false" />
     <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/features/src/Functions.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536554719" ignored="false" />
     <file path="$USER_HOME$/Dropbox/presentations/kotlin/resources/Kotlin101/src/Objects/ObjectExpressions.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536550352" ignored="false" />
-    <file path="/sampleSpecs.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536523638" ignored="false" />
     <file path="/calculator.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536498265" ignored="false" />
     <file path="/ConsoleTextListener.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536156414" ignored="false" />
     <file path="/It.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352535387781" ignored="false" />
@@ -215,7 +216,16 @@
       <file leaf-file-name="It.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/It.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0">
+            <state line="7" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="namespace.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/kotlin-runtime.jar!/kotlin/test/namespace.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -251,7 +261,7 @@
       <file leaf-file-name="sampleSpecs.kt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="19" selection-start="897" selection-end="897" vertical-scroll-proportion="1.4857143">
+            <state line="49" column="0" selection-start="1109" selection-end="1109" vertical-scroll-proportion="0.556044">
               <folding />
             </state>
           </provider>
@@ -270,15 +280,6 @@
         <entry file="file://$PROJECT_DIR$/test/SpecificationFinderTests.kt">
           <provider selected="true" editor-type-id="text-editor">
             <state line="5" column="29" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Test.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/lib/junit-4.9-sources.jar!/org/junit/Test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="18" selection-start="1727" selection-end="1727" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -544,7 +545,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2087518" sideWeight="0.6710875" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32891247" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32891247" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -610,13 +611,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MultipleListenerNotifier.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="20" selection-start="903" selection-end="903" vertical-scroll-proportion="0.41460055">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/RunStarted.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="19" selection-start="33" selection-end="33" vertical-scroll-proportion="0.046831954">
@@ -687,13 +681,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/It.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/On.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="11" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0">
@@ -715,9 +702,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/It.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/kotlin-runtime.jar!/kotlin/test/namespace.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="19" selection-start="897" selection-end="897" vertical-scroll-proportion="1.4857143">
+        <state line="49" column="0" selection-start="1109" selection-end="1109" vertical-scroll-proportion="0.556044">
           <folding />
         </state>
       </provider>
