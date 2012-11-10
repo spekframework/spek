@@ -53,7 +53,7 @@ spec public fun calculatorSpecs() {
     }
 }
 
-spec fun incrementorSpecs() {
+spec fun incUtilSpecs() {
     given("an inc util") {
         val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {
