@@ -1,9 +1,8 @@
 package spek.test
 
-import org.junit.Test as test
 import kotlin.test.*
 import spek.SpecificationFinder
-
+import org.junit.Test as test
 
 public class SpecificationFinderTests {
 

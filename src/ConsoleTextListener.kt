@@ -7,11 +7,11 @@ import java.io.PrintWriter
 public class ConsoleTextListener: Listener {
 
     override fun notify(onExecuted: OnExecuted) {
-        println("On ${onExecuted.description}")
+        println("  On ${onExecuted.description}")
     }
 
     override fun notify(itExecuted: ItExecuted) {
-        println("It ${itExecuted.description}")
+        println("    It ${itExecuted.description}")
     }
 
     override fun notify(specExecuted: SpecificationExecuted) {
@@ -19,7 +19,7 @@ public class ConsoleTextListener: Listener {
     }
 
     override fun notify(assertError: AssertionErrorOccurred) {
-        println("Failed ${assertError.description}")
+        println("${assertError.description}")
         val sw = StringWriter()
         val pw = PrintWriter(sw)
         assertError.error.printStackTrace(pw)
@@ -35,10 +35,10 @@ public class ConsoleTextListener: Listener {
     }
 
     override fun notify(runStarted: RunStarted) {
-        println("Found ${runStarted.totalSpecifications} specification. Starting run")
+        println("Found ${runStarted.totalSpecifications} specification(s)\n\n")
     }
 
     override fun notify(runFinished: RunFinished) {
-        println("Finished. Total passed: ${runFinished.passed} failed: ${runFinished.failed}")
+        println("\n\nTotal passed: ${runFinished.passed} failed: ${runFinished.failed}")
     }
 }

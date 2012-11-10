@@ -4,127 +4,136 @@
     <list default="true" id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Constructs.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352468383464" ignored="false" />
-    <file path="$USER_HOME$/tmp/untitled1/src/Customer.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450433612" ignored="false" />
-    <file path="$USER_HOME$/tmp/untitled1/src/anotherClass.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450433612" ignored="false" />
-    <file path="/anotherClass.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450264675" ignored="false" />
-    <file path="/Customer.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450229904" ignored="false" />
-    <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/kotlin-js-hello/src/hello.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352296496039" ignored="false" />
-    <file path="/Dummy.txt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352296482809" ignored="false" />
-    <file path="/RunFinished.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352148873261" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/LongIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ShortRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction17.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function20.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DoubleIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/CharRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction9.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function11.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function22.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Range.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ByteRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction18.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/LongIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DoubleIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction0.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/BooleanIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function10.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction19.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction14.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction16.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function21.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function0.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function15.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction21.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/IntRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function12.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/ArrayIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/SharedVar.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/Ranges.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/Intrinsics.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/Intrinsic.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/KotlinSignature.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetConstructor.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction2.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction12.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetTypeDescriptor.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetMethod.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetValueParameter.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetClass.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetTypeParameter.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetTypeProjection.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction6.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction15.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/JetObject.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/FloatIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function9.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction13.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function18.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/LongRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function8.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function16.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction10.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ByteIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction5.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/NoPatternMatchedException.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/FloatIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction4.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction1.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction3.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction20.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DoubleRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/IntIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function7.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function14.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function13.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function2.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function4.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction22.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DefaultJetObject.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/IntIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction11.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction7.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/CharIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/BooleanIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function17.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function5.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/CharIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ByteIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction8.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Tuple0.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function6.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function3.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/TypeCastException.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ShortIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ShortIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function19.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/FloatRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function1.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Library.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Arrays.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Ranges.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Collections.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Nothing.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/ExtensionFunctions.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Functions.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Iterators.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Numbers.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Unit.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Any.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Iterables.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Enum.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Tuples.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
-    <file path="/Reflection.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352024610089" ignored="false" />
-    <file path="/test.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352060291068" ignored="false" />
-    <file path="$USER_HOME$/tmp/untitled/test.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352060383179" ignored="false" />
-    <file path="$USER_HOME$/tmp/untitled/src/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352060538559" ignored="false" />
-    <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/features/src/builders/HTMLBuilders.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352278694804" ignored="false" />
-    <file path="/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289554660" ignored="false" />
-    <file path="$USER_HOME$/tmp/test1/src/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289559732" ignored="false" />
-    <file path="/test1.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289845890" ignored="false" />
-    <file path="$USER_HOME$/tmp/test1/src/test1.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289845890" ignored="false" />
+    <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/features/src/Functions.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536554719" ignored="false" />
+    <file path="$USER_HOME$/Dropbox/presentations/kotlin/resources/Kotlin101/src/Objects/ObjectExpressions.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536550352" ignored="false" />
+    <file path="/sampleSpecs.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536523638" ignored="false" />
+    <file path="/calculator.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536498265" ignored="false" />
+    <file path="/ConsoleTextListener.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536156414" ignored="false" />
+    <file path="/It.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352535387781" ignored="false" />
+    <file path="/Given.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352535074219" ignored="false" />
+    <file path="/On.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352535069059" ignored="false" />
+    <file path="/Constructs.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352534926735" ignored="false" />
+    <file path="$USER_HOME$/Dropbox/presentations/kotlin/resources/Kotlin101/.gitignore" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352534597569" ignored="false" />
+    <file path="/Dummy.txt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352534596273" ignored="false" />
+    <file path="/SpecificationFinderTests.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352534235110" ignored="false" />
     <file path="$USER_HOME$/tmp/test1/test1.js" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289872932" ignored="false" />
-    <file path="/calculator.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352306849271" ignored="false" />
+    <file path="$USER_HOME$/tmp/test1/src/test1.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289845890" ignored="false" />
+    <file path="/test1.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289845890" ignored="false" />
+    <file path="$USER_HOME$/tmp/test1/src/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289559732" ignored="false" />
+    <file path="/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352289554660" ignored="false" />
+    <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/features/src/builders/HTMLBuilders.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352278694804" ignored="false" />
+    <file path="$USER_HOME$/tmp/untitled/src/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352060538559" ignored="false" />
+    <file path="$USER_HOME$/tmp/untitled/test.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352060383179" ignored="false" />
+    <file path="/test.html" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352060291068" ignored="false" />
+    <file path="/Reflection.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352024610089" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Tuples.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Enum.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Iterables.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Any.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Unit.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Numbers.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Iterators.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Functions.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/ExtensionFunctions.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Nothing.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Collections.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Ranges.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Arrays.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$USER_HOME$/Library/Application Support/IntelliJIdea12/Kotlin/lib/kotlin-plugin.jar!/jet/Library.jet" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025116492" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function1.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/FloatRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function19.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ShortIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ShortIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/TypeCastException.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function3.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function6.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Tuple0.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction8.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ByteIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/CharIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function5.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128195" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function17.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/BooleanIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/CharIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction7.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction11.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/IntIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DefaultJetObject.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction22.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function4.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function2.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function13.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function14.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function7.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/IntIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DoubleRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction20.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction3.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128196" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction1.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction4.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/FloatIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/NoPatternMatchedException.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction5.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ByteIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction10.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function16.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function8.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/LongRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function18.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction13.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function9.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/FloatIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/JetObject.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction15.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction6.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128197" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetTypeProjection.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetTypeParameter.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetClass.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetValueParameter.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetMethod.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetTypeDescriptor.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction12.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction2.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/JetConstructor.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/typeinfo/KotlinSignature.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/Intrinsic.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/Intrinsics.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/Ranges.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/SharedVar.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/runtime/ArrayIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function12.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/IntRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128198" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction21.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function15.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function0.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function21.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction16.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction14.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction19.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function10.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/BooleanIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction0.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DoubleIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/LongIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction18.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ByteRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Range.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function22.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function11.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction9.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128199" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/CharRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/DoubleIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/Function20.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ExtensionFunction17.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/ShortRange.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
+    <file path="$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/jet/LongIterator.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352025128200" ignored="false" />
+    <file path="/RunFinished.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352148873261" ignored="false" />
+    <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/kotlin-js-hello/src/hello.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352296496039" ignored="false" />
+    <file path="/Customer.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450229904" ignored="false" />
+    <file path="/anotherClass.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450264675" ignored="false" />
+    <file path="$USER_HOME$/tmp/untitled1/src/anotherClass.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450433612" ignored="false" />
+    <file path="$USER_HOME$/tmp/untitled1/src/Customer.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352450433612" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +148,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <breakpoint_rules default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -174,6 +182,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <breakpoint_rules default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
@@ -185,91 +194,91 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Constructs.kt" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.24182077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="calculator.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/samples/calculator.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="21" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Reflection.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Reflection.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="37" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Assertions.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Assertions.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="10" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MultipleListenerNotifier.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MultipleListenerNotifier.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="20" selection-start="903" selection-end="903" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RunStarted.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/RunStarted.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="19" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Listener.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Listener.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="13" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SimpleEventAggregator.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SimpleEventAggregator.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ConsoleTextListener.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConsoleTextListener.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="30" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
+            <state line="29" column="77" selection-start="771" selection-end="771" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Specification.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Specification.kt">
+      <file leaf-file-name="Constructs.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="30" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0">
+            <state line="17" column="0" selection-start="453" selection-end="453" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="It.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/It.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/kotlin/test/Test.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="68" column="18" selection-start="2510" selection-end="2510" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="On.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/On.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="11" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Given.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Given.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="21" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sampleSpecs.kt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="19" selection-start="897" selection-end="897" vertical-scroll-proportion="1.4857143">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConsoleRunnerTests.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="15" selection-start="720" selection-end="720" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpecificationFinderTests.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/SpecificationFinderTests.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="29" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/lib/junit-4.9-sources.jar!/org/junit/Test.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="18" selection-start="1727" selection-end="1727" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -285,22 +294,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/SpecificationFinder.kt" />
-        <option value="$PROJECT_DIR$/test/SimpleEventAggregatorTests.kt" />
-        <option value="$PROJECT_DIR$/test/SpecificationFinderTests.kt" />
-        <option value="$PROJECT_DIR$/test/SpecificationRunnerTests.kt" />
-        <option value="$PROJECT_DIR$/src/AssertionErrorOccurred.kt" />
-        <option value="$PROJECT_DIR$/src/GivenExecuted.kt" />
-        <option value="$PROJECT_DIR$/src/ItExecuted.kt" />
         <option value="$PROJECT_DIR$/src/OnExecuted.kt" />
         <option value="$PROJECT_DIR$/src/RunStarted.kt" />
         <option value="$PROJECT_DIR$/src/RunFinished.kt" />
         <option value="$PROJECT_DIR$/src/SpecificationErrorOccurred.kt" />
         <option value="$PROJECT_DIR$/src/SpecificationExecuted.kt" />
         <option value="$PROJECT_DIR$/src/SpecificationRunner.kt" />
-        <option value="$PROJECT_DIR$/test/ConsoleRunnerTests.kt" />
+        <option value="$PROJECT_DIR$/test/SpecificationFinderTests.kt" />
+        <option value="$PROJECT_DIR$/src/Assertions.kt" />
         <option value="$PROJECT_DIR$/src/Constructs.kt" />
+        <option value="$PROJECT_DIR$/src/On.kt" />
+        <option value="$PROJECT_DIR$/src/Given.kt" />
+        <option value="$PROJECT_DIR$/src/It.kt" />
+        <option value="$PROJECT_DIR$/test/ConsoleRunnerTests.kt" />
+        <option value="$PROJECT_DIR$/src/ConsoleTextListener.kt" />
         <option value="$PROJECT_DIR$/test/samples/calculator.kt" />
+        <option value="$PROJECT_DIR$/test/samples/sampleSpecs.kt" />
       </list>
     </option>
   </component>
@@ -308,6 +317,49 @@
     <option name="y" value="22" />
     <option name="width" value="1440" />
     <option name="height" value="874" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Assignment issues</id>
+          </State>
+          <State>
+            <id>Assignment issuesGroovy</id>
+          </State>
+          <State>
+            <id>Assignment issuesJavaScript</id>
+          </State>
+          <State>
+            <id>Data flow issuesGroovy</id>
+          </State>
+          <State>
+            <id>Groovy</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>Numeric issues</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsGroovy</id>
+          </State>
+          <State>
+            <id>Potentially confusing code constructsJavaScript</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Abstraction issues</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -335,6 +387,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -401,8 +455,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -410,18 +462,55 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="Repository.Attach.JavaDocs" value="true" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="editor.preferences.import" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
     <property name="Repository.Attach.Sources" value="true" />
+    <property name="dynamic.classpath" value="false" />
     <property name="Downloaded.Files.Path" value="$PROJECT_DIR$/lib" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
   </component>
-  <component name="RunManager">
-    <list size="0" />
+  <component name="RunManager" selected="Kotlin.samples">
+    <configuration default="false" name="samples" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="samples.namespace" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="spek" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="spek" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Kotlin.samples" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Kotlin.samples" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TaskManager">
@@ -454,8 +543,8 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2087518" sideWeight="0.67241377" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2087518" sideWeight="0.6710875" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32891247" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -521,65 +610,23 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/SpecificationRunnerTests.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="13" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/SimpleEventAggregatorTests.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="12" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AssertionErrorOccurred.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="7" selection-start="21" selection-end="21" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SpecificationFinder.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="236" selection-end="236" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SpecificationRunner.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="17" selection-start="1093" selection-end="1093" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MultipleListenerNotifier.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="20" selection-start="903" selection-end="903" vertical-scroll-proportion="0.0">
+        <state line="29" column="20" selection-start="903" selection-end="903" vertical-scroll-proportion="0.41460055">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/RunStarted.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="19" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0">
+        <state line="2" column="19" selection-start="33" selection-end="33" vertical-scroll-proportion="0.046831954">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Listener.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="13" selection-start="28" selection-end="28" vertical-scroll-proportion="0.0">
+        <state line="3" column="13" selection-start="28" selection-end="28" vertical-scroll-proportion="0.07024793">
           <folding />
         </state>
       </provider>
@@ -591,44 +638,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ConsoleTextListener.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="30" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Assertions.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="10" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Reflection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="37" selection-start="740" selection-end="740" vertical-scroll-proportion="0.0">
+        <state line="25" column="37" selection-start="740" selection-end="740" vertical-scroll-proportion="0.43527737">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Specification.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="30" selection-start="44" selection-end="44" vertical-scroll-proportion="0.0">
+        <state line="2" column="30" selection-start="44" selection-end="44" vertical-scroll-proportion="0.046831954">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/samples/calculator.kt">
+    <entry file="jar://$PROJECT_DIR$/lib/junit-4.9-sources.jar!/org/junit/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="21" selection-start="147" selection-end="147" vertical-scroll-proportion="0.0">
+        <state line="46" column="18" selection-start="1727" selection-end="1727" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/SpecificationFinderTests.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="29" selection-start="102" selection-end="102" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Given.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="21" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/lib/kotlin-runtime.jar!/src/kotlin/test/Test.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="18" selection-start="2510" selection-end="2510" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="15" selection-start="720" selection-end="720" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/It.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="243" selection-end="243" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/On.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="11" selection-start="256" selection-end="256" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="255" selection-end="255" vertical-scroll-proportion="0.24182077">
+        <state line="17" column="0" selection-start="453" selection-end="453" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ConsoleTextListener.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="77" selection-start="771" selection-end="771" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="19" selection-start="897" selection-end="897" vertical-scroll-proportion="1.4857143">
           <folding />
         </state>
       </provider>
@@ -639,6 +728,17 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="Copyright.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -712,6 +812,17 @@
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
           <last-edited>junit:junit:4.9</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
