@@ -9,7 +9,7 @@ Licensed under Modified BSD (See LICENSE.TXT) for full license
 ## Usage
 
 
-Spek is a specification framework for Kotlin, allowing you to define you specifications
+Spek is a specification framework for Kotlin, allowing you to define your specifications
 in a fluent and easy to read way.
 
 ### Writing specifications
