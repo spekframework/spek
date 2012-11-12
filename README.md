@@ -17,9 +17,9 @@ in a fluent and easy to read way.
 A specification is a function (declared as fun in Kotlin) that has to be prefixed with the
 annotation *spec* :
 
-spec public fun calculatorSpecs() {
 
 ```kotlin
+spec public fun calculatorSpecs() {
     given("a calculator")
     {
         val calculator = Calculator()
