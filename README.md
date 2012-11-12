@@ -56,7 +56,7 @@ of IntelliJ to develop with it (which is free and OSS). Obviously IntelliJ Ultim
 There's also an Eclipse plugin in the works. Check the project site for updates.
 
 
-**Q: Is Kotlin a BDD or a TDD framework?**
+**Q: Is Spek a BDD or a TDD framework?**
 <br/>Spek in Dutch means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
 moment though, we (at least the original author) believe that there is a false distinction in frameworks around what TDD
 or BDD is. Unit tests are ultimately about defining the specifications of your system. As such, Spek is merely a specification
