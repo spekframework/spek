@@ -2,8 +2,7 @@ package spek.test
 
 import org.junit.Test as test
 import kotlin.test.assertEquals
-import spek.EventHandler
-import spek.SimpleEventAggregator
+import spek.*
 
 class SomeEventHandler: EventHandler {
     override fun  handle(data: Any) {

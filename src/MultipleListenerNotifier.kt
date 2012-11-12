@@ -2,47 +2,31 @@ package spek
 
 import java.util.ArrayList
 
-public class MultipleListenerNotifier(val outputs: ArrayList<Listener>): Listener {
+public class MultipleListenerNotifier(val listeners: ArrayList<Listener>): Listener {
 
     override fun notify(runStarted: RunStarted) {
-        for (val output in outputs.iterator()) {
-            output.notify(runStarted)
-        }
+        listeners forEach { it.notify(runStarted)}
     }
     override fun notify(runFinished: RunFinished) {
-        for (val output in outputs.iterator()) {
-            output.notify(runFinished)
-        }
+        listeners forEach { it.notify(runFinished)}
     }
     override fun notify(onExecuted: OnExecuted) {
-        for (val output in outputs.iterator()) {
-            output.notify(onExecuted)
-        }
+        listeners forEach { it.notify(onExecuted)}
     }
     override fun notify(itExecuted: ItExecuted) {
-        for (val output in outputs.iterator()) {
-            output.notify(itExecuted)
-        }
+        listeners forEach { it.notify(itExecuted)}
     }
     override fun notify(specExecuted: SpecificationExecuted) {
-        for (val output in outputs.iterator()) {
-            output.notify(specExecuted)
-        }
+        listeners forEach { it.notify(specExecuted)}
     }
     override fun notify(assertError: AssertionErrorOccurred) {
-        for (val output in outputs.iterator()) {
-            output.notify(assertError)
-        }
+        listeners forEach { it.notify(assertError)}
     }
     override fun notify(givenExecuted: GivenExecuted) {
-        for (val output in outputs.iterator()) {
-            output.notify(givenExecuted)
-        }
+        listeners forEach { it.notify(givenExecuted)}
     }
     override fun notify(specError: SpecificationErrorOccurred) {
-        for (val output in outputs.iterator()) {
-            output.notify(specError)
-        }
+        listeners forEach { it.notify(specError)}
     }
 
 

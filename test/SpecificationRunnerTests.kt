@@ -1,32 +1,46 @@
 package spek.test
 
+import org.junit.Test as test
+import spek.*
+
 
 public class SpecificationRunnerTests {
 
-   /* test fun run_with_0_specifications_returns_0_as_total_and_0_as_run_number_of_specs() {
+    test fun creating_a_specification_runner_should_return_instance() {
 
-        val eventAggregator = SimpleEventAggregator()
-        val specs = ArrayList<Specification>()
-        val specRunner = SimpleSpecificationRunner(specs, eventAggregator)
+        val mockListener = MockListener()
+        val specRunner = SpecificationRunner(mockListener)
 
-        val runResults = specRunner.run()
-
-        assertEquals(0, runResults.total)
-        assertEquals(0, runResults.run)
     }
 
-    test fun run_with_1_specifications_returns_1_as_total_and_1_as_run_number_of_specs() {
 
-        val eventAggregator = SimpleEventAggregator()
-        val specFinder = SpecificationFinder()
-        val specs = specFinder.getSpecificationsByPackageName("samples")
-        val specRunner = SimpleSpecificationRunner(specs, eventAggregator)
+}
 
-        val runResults = specRunner.run()
+public class MockListener(): Listener {
 
-        assertEquals(1, runResults.total)
-        assertEquals(1, runResults.run)
+    override fun notify(runStarted: RunStarted) {
+        throw UnsupportedOperationException()
     }
-*/
+    override fun notify(runFinished: RunFinished) {
+        throw UnsupportedOperationException()
+    }
+    override fun notify(onExecuted: OnExecuted) {
+        throw UnsupportedOperationException()
+    }
+    override fun notify(itExecuted: ItExecuted) {
+        throw UnsupportedOperationException()
+    }
+    override fun notify(specExecuted: SpecificationExecuted) {
+        throw UnsupportedOperationException()
+    }
+    override fun notify(assertError: AssertionErrorOccurred) {
+        throw UnsupportedOperationException()
+    }
+    override fun notify(givenExecuted: GivenExecuted) {
+        throw UnsupportedOperationException()
+    }
+    override fun notify(specError: SpecificationErrorOccurred) {
+        throw UnsupportedOperationException()
+    }
 
 }

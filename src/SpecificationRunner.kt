@@ -72,9 +72,7 @@ public class SpecificationRunner(val listener: Listener): Closeable {
         val specs = specFinder.getSpecifications(folderName)
         listener.notify(RunStarted(specs.count()))
         if (specs.count() > 0) {
-            for (spec in specs) {
-                spec.run(listener)
-            }
+            specs forEach { it.run(listener)}
         }
         listener.notify(RunFinished(totalPassed, totalFailed, totalIgnored, totalError))
     }

@@ -7,20 +7,6 @@ import java.util.ArrayList
 import spek.*
 
 
-fun main(args: Array<String>) {
-    val textOutput = ConsoleTextListener()
-    val listeners = ArrayList<Listener>()
-    val multipleNotifiers = MultipleListenerNotifier(listeners)
-
-    listeners.add(textOutput)
-    val specRunner = SpecificationRunner(multipleNotifiers)
-    try {
-        specRunner.runSpecsInFolder("samples")
-    } finally {
-        specRunner.close()
-    }
-}
-
 
 spec public fun calculatorSpecs() {
 

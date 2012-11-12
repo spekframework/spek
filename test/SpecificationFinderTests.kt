@@ -29,7 +29,7 @@ public class SpecificationFinderTests {
 
         val specifications = specFinder.getSpecifications("samples")
 
-        assertEquals(1, specifications.count())
+        assertEquals(2, specifications.count())
 
         assertEquals(specifications.first().method.getName(), "calculatorSpecs")
     }

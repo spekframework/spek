@@ -17,12 +17,7 @@ public class SpecificationFinder {
         val specifications = ArrayList<Specification>()
 
         if (methods != null) {
-            val methodList = methods.iterator()
-            for (m in methodList) {
-                if (m != null) {
-                    specifications.add(Specification(m))
-                }
-            }
+            methods filter { it != null} forEach { specifications.add(Specification(it!!))}
         }
         return specifications
     }
