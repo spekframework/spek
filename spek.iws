@@ -4,6 +4,7 @@
     <list default="true" id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
+    <file path="/README.md" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352719136950" ignored="false" />
     <file path="/SpecificationRunner.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352717750741" ignored="false" />
     <file path="/SpecificationFinder.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352717568204" ignored="false" />
     <file path="/MultipleListenerNotifier.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352717459037" ignored="false" />
@@ -92,7 +93,6 @@
     <file path="$USER_HOME$/tmp/untitled2/src/SomeInterface.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700437036" ignored="false" />
     <file path="/SomeInterface.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700373790" ignored="false" />
     <file path="/SpecificationRunnerTests.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700204261" ignored="false" />
-    <file path="/README.md" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352538657721" ignored="false" />
     <file path="/fragment.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352537149713" ignored="false" />
     <file path="/sampleSpecs.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536663616" ignored="false" />
     <file path="/a.dummy" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536655020" ignored="false" />
@@ -287,15 +287,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AssertionErrorOccurred.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AssertionErrorOccurred.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="18" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ConsoleRunner.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConsoleRunner.kt">
           <provider selected="true" editor-type-id="text-editor">
@@ -368,10 +359,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MultipleListenerNotifier.kt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="MultipleListenerNotifier.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/MultipleListenerNotifier.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="13" selection-start="55" selection-end="55" vertical-scroll-proportion="0.1491228">
+            <state line="4" column="13" selection-start="55" selection-end="55" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="76" column="94" selection-start="3057" selection-end="3057" vertical-scroll-proportion="0.5778781">
               <folding />
             </state>
           </provider>
@@ -392,7 +392,6 @@
         <option value="$PROJECT_DIR$/src/ConsoleTextListener.kt" />
         <option value="$PROJECT_DIR$/test/samples/calculator.kt" />
         <option value="$PROJECT_DIR$/LICENSE.TXT" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/test/samples/sampleSpecs.kt" />
         <option value="$PROJECT_DIR$/test/SpecificationFinderTests.kt" />
         <option value="$PROJECT_DIR$/test/SimpleEventAggregatorTests.kt" />
@@ -403,6 +402,7 @@
         <option value="$PROJECT_DIR$/src/MultipleListenerNotifier.kt" />
         <option value="$PROJECT_DIR$/src/SpecificationFinder.kt" />
         <option value="$PROJECT_DIR$/src/SpecificationRunner.kt" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -841,13 +841,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Specification.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="60" selection-end="60" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SpecificationErrorOccurred.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="2" column="18" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
@@ -948,7 +941,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/MultipleListenerNotifier.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="13" selection-start="55" selection-end="55" vertical-scroll-proportion="0.1491228">
+        <state line="4" column="13" selection-start="55" selection-end="55" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="94" selection-start="3057" selection-end="3057" vertical-scroll-proportion="0.5778781">
           <folding />
         </state>
       </provider>
