@@ -57,7 +57,7 @@ There's also an Eclipse plugin in the works. Check the project site for updates.
 
 
 **Q: Is Kotlin a BDD or a TDD framework?**
-<br/>Spek in Belgian means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
+<br/>Spek in Dutch means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
 moment though, we (at least the original author) believe that there is a false distinction in frameworks around what TDD
 or BDD is. Unit tests are ultimately about defining the specifications of your system. As such, Spek is merely a specification
 framework if it can be called anything. For more information read [What BDD has taught me](http://hadihariri.com/2012/04/11/what-bdd-has-taught-me/)
@@ -75,7 +75,7 @@ comply with this guidance. You can have multiple *it* but you limit each to one 
 
 **Q: Why is the logo a piece of bacon?**
 <br/>We don't have a logo, but if you want to make one, let it be Bacon. English bacon that is. Spek was originally codenamed kspec. Someone suggested to rename it to Spek which kind of fits. Turns out, Spek is Bacon in
-Belgian. So why not have bacon as a logo? After all, we love bacon!
+Dutch. So why not have bacon as a logo? After all, we love bacon!
 
 **Q: Can I contribute?**
 <br/>Please do!
