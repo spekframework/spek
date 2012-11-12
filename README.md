@@ -65,7 +65,7 @@ framework if it can be called anything. For more information read [What BDD has 
 **Q: Can I have more than one _on_ per _given_?**
 <br/>Yes you can. How you group your specifications is up to you
 
-**Q: Can I have more than _it_ per _on_?**
+**Q: Can I have more than one _it_ per _on_?**
 <br/>Yes you can. In real world applications, an action can lead to several reactions.
 
 **Q: Isn't it bad to have more than one assertion per test?**

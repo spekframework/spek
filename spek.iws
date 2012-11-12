@@ -4,7 +4,7 @@
     <list default="true" id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/README.md" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352719671694" ignored="false" />
+    <file path="/README.md" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352719740658" ignored="false" />
     <file path="/SpecificationRunner.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352717750741" ignored="false" />
     <file path="/SpecificationFinder.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352717568204" ignored="false" />
     <file path="/MultipleListenerNotifier.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352717459037" ignored="false" />
@@ -371,7 +371,7 @@
       <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="77" column="223" selection-start="3272" selection-end="3272" vertical-scroll-proportion="0.76975167">
+            <state line="67" column="30" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.61625284">
               <folding />
             </state>
           </provider>
@@ -948,7 +948,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="223" selection-start="3272" selection-end="3272" vertical-scroll-proportion="0.76975167">
+        <state line="67" column="30" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.61625284">
           <folding />
         </state>
       </provider>
