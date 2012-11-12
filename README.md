@@ -47,11 +47,11 @@ Currently Spek comes with a Console Runner but a plugin for IntelliJ unit runner
 ## FAQ
 
 **Q: What is Kotlin?**
-[Kotlin](http://kotlin.jetbrains.org) is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by [JetBrains](http://www.jetbrains.com)
+<br/>[Kotlin](http://kotlin.jetbrains.org) is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by [JetBrains](http://www.jetbrains.com)
 It is aimed at being a concise modern language for general use. It also rocks!
 
 **Q: Is Kotlin free to use?**
-While this is not a Kotlin FAQ, it is important to note that Kotlin is free to use and you can use the command line or the Community Edition
+<br/>While this is not a Kotlin FAQ, it is important to note that Kotlin is free to use and you can use the command line or the Community Edition
 of IntelliJ to develop with it (which is free and OSS). Obviously IntelliJ Ultimate also works!
 There's also an Eclipse plugin in the works. Check the project site for updates.
 
@@ -62,10 +62,10 @@ moment though, we (at least the original author) believe that there is a false d
 or BDD is. Unit tests are ultimately about defining the specifications of your system. As such, Spek is merely a specification
 framework if it can be called anything. For more information read [What BDD has taught me](http://hadihariri.com/2012/04/11/what-bdd-has-taught-me/)
 
-**Q: Can I have more than one *on* per *given*? **
+**Q: Can I have more than one _on_ per _given_?**
 Yes you can. How you group your specifications is up to you
 
-**Q: Can I have more than *it* per *on*? **
+**Q: Can I have more than _it_ per _on_?**
 Yes you can. In real world applications, an action can lead to several reactions.
 
 **Q: Isn't it bad to have more than one assertion per test?**
