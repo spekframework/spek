@@ -4,8 +4,8 @@
     <list default="true" id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
+    <file path="/ConsoleRunnerTests.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353670369150" ignored="false" />
     <file path="/HTMLTextListener.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353670170189" ignored="false" />
-    <file path="/ConsoleRunnerTests.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353670040959" ignored="false" />
     <file path="/ConsoleRunner.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353669805033" ignored="false" />
     <file path="/Device.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353669751834" ignored="false" />
     <file path="/PlainTextListener.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353667267208" ignored="false" />
@@ -318,7 +318,7 @@
       <file leaf-file-name="SpecificationFinderTests.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/SpecificationFinderTests.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="27" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
+            <state line="11" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -372,7 +372,7 @@
       <file leaf-file-name="ConsoleRunnerTests.kt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="37" selection-start="532" selection-end="532" vertical-scroll-proportion="0.4989059">
+            <state line="15" column="21" selection-start="345" selection-end="345" vertical-scroll-proportion="0.25745258">
               <folding />
             </state>
           </provider>
@@ -387,10 +387,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HTMLTextListener.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HTMLTextListener.kt">
+      <file leaf-file-name="HTMLListener.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HTMLListener.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="20" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0">
+            <state line="14" column="5" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -419,9 +419,9 @@
         <option value="$PROJECT_DIR$/src/PlainTextListener.kt" />
         <option value="$PROJECT_DIR$/src/Device.kt" />
         <option value="$PROJECT_DIR$/src/ConsoleRunner.kt" />
-        <option value="$PROJECT_DIR$/test/ConsoleRunnerTests.kt" />
         <option value="$PROJECT_DIR$/test/SpecificationRunnerTests.kt" />
         <option value="$PROJECT_DIR$/src/HTMLTextListener.kt" />
+        <option value="$PROJECT_DIR$/test/ConsoleRunnerTests.kt" />
       </list>
     </option>
   </component>
@@ -786,10 +786,10 @@
     <task active="true" id="Default" summary="Default task">
       <changelist id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
       <created>1352024470672</created>
-      <timeSpent>41177000</timeSpent>
+      <timeSpent>41351000</timeSpent>
       <updated>1352024470672</updated>
     </task>
-    <option name="myTotallyTimeSpent" value="41177000" />
+    <option name="myTotallyTimeSpent" value="41351000" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -805,18 +805,18 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Kotlin" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32625994" sideWeight="0.5946915" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4429708" sideWeight="0.39598277" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32625994" sideWeight="0.40028694" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32625994" sideWeight="0.39383072" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18436155" sideWeight="0.67374" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44425088" sideWeight="0.6097561" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18436155" sideWeight="0.5570292" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4429708" sideWeight="0.5989957" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998565" sideWeight="0.6710875" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -970,21 +970,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/SpecificationFinderTests.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="27" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
+        <state line="11" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HTMLTextListener.kt">
+    <entry file="file://$PROJECT_DIR$/src/HTMLListener.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="20" selection-start="396" selection-end="396" vertical-scroll-proportion="0.0">
+        <state line="14" column="5" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="37" selection-start="532" selection-end="532" vertical-scroll-proportion="0.4989059">
+        <state line="15" column="21" selection-start="345" selection-end="345" vertical-scroll-proportion="0.25745258">
           <folding />
         </state>
       </provider>

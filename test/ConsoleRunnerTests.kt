@@ -14,10 +14,12 @@ public class ConsoleRunnerTests {
     test fun tempTest() {
 
         val textOutput = PlainTextListener(ConsoleDevice())
+        val htmlOutput = HTMLListener(ConsoleDevice())
         val listeners = ArrayList<Listener>()
         val multipleNotifiers = MultipleListenerNotifier(listeners)
 
         listeners.add(textOutput)
+        listeners.add(htmlOutput)
         val specRunner = SpecificationRunner(multipleNotifiers)
         try {
             specRunner.runSpecsInFolder("samples")

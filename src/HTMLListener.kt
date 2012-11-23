@@ -5,7 +5,7 @@ import spek.*
 import java.io.StringWriter
 import java.io.PrintWriter
 
-public class HTMLTextListener(output: Device): Listener, Device by output {
+public class HTMLListener(output: Device): Listener, Device by output {
     {
         output("<html><head><title>Specs</title><css link><body><div class=\"specs\">")
 
