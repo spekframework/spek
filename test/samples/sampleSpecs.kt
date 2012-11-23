@@ -10,7 +10,6 @@ import spek.*
 
 spec public fun calculatorSpecs() {
 
-
     given("a calculator")
     {
         val calculator = Calculator()
@@ -33,6 +32,7 @@ spec public fun calculatorSpecs() {
 
             it("should return the result of substracting the second number from the first number")
             {
+
                 shouldEqual(2, subtract)
             }
         }

@@ -4,14 +4,14 @@ import java.io.StringWriter
 import java.io.PrintWriter
 
 
-public class ConsoleTextListener: Listener {
+public class PlainTextListener(output: Device): Listener, Device by output {
 
     override fun notify(onExecuted: OnExecuted) {
-        println("  On ${onExecuted.description}")
+        output("  On ${onExecuted.description}")
     }
 
     override fun notify(itExecuted: ItExecuted) {
-        println("    It ${itExecuted.description}")
+        output("    It ${itExecuted.description}")
     }
 
     override fun notify(specExecuted: SpecificationExecuted) {
@@ -19,26 +19,26 @@ public class ConsoleTextListener: Listener {
     }
 
     override fun notify(assertError: AssertionErrorOccurred) {
-        println("${assertError.description}")
+        output("${assertError.description}")
         val sw = StringWriter()
         val pw = PrintWriter(sw)
         assertError.error.printStackTrace(pw)
-        println(sw.toString())
+        output(sw.toString())
     }
 
     override fun notify(givenExecuted: GivenExecuted) {
-        println("Given ${givenExecuted.description}")
+        output("Given ${givenExecuted.description}")
     }
 
     override fun notify(specError: SpecificationErrorOccurred) {
-        println("Error running specification: ${specError.errorMessage}")
+        output("Error running specification: ${specError.errorMessage}")
     }
 
     override fun notify(runStarted: RunStarted) {
-        println("Found ${runStarted.totalSpecifications} specification(s)\n\n")
+        output("Found ${runStarted.totalSpecifications} specification(s)\n\n")
     }
 
     override fun notify(runFinished: RunFinished) {
-        println("\n\nTotal passed: ${runFinished.passed} failed: ${runFinished.failed}")
+        output("\n\nTotal passed: ${runFinished.passed} failed: ${runFinished.failed}")
     }
 }

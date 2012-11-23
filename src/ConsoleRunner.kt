@@ -6,7 +6,7 @@ import java.util.ArrayList
 fun main(args: Array<String>) {
 
 
-    val textOutput = ConsoleTextListener()
+    val textOutput = PlainTextListener(ConsoleDevice())
     val listeners = ArrayList<Listener>()
     val multipleNotifiers = MultipleListenerNotifier(listeners)
 
