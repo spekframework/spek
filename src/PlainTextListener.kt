@@ -4,7 +4,7 @@ import java.io.StringWriter
 import java.io.PrintWriter
 
 
-public class PlainTextListener(output: Device): Listener, Device by output {
+public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by output {
 
     override fun notify(onExecuted: OnExecuted) {
         output("  On ${onExecuted.description}")
