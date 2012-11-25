@@ -5,9 +5,13 @@ import spek.*
 import java.io.StringWriter
 import java.io.PrintWriter
 
-public class HTMLListener(output: OutputDevice): Listener, OutputDevice by output {
+public class HTMLListener(output: OutputDevice, cssFile: String): Listener, OutputDevice by output {
     {
-        output("<html><head><title>Specs</title><css link><body><div class=\"specs\">")
+        var css = ""
+        if (cssFile != "") {
+            css = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssFile\">"
+        }
+        output("<html><head><title>Specs</title>$css<body><div class=\"specs\">")
 
     }
     override fun notify(onExecuted: OnExecuted) {

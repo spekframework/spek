@@ -4,7 +4,10 @@
     <list default="true" id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/ConsoleRunner.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353744398152" ignored="false" />
+    <file path="/HTMLListener.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353829381255" ignored="false" />
+    <file path="/ConsoleRunner.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353829281272" ignored="false" />
+    <file path="/fragment.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353746263772" ignored="false" />
+    <file path="/Dummy.txt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353744691013" ignored="false" />
     <file path="$USER_HOME$/tmp/untitled8/src/SwingBuilder.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353524082725" ignored="false" />
     <file path="/SwingBuilder.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353524064206" ignored="false" />
     <file path="/a.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1353522524081" ignored="false" />
@@ -139,13 +142,11 @@
     <file path="/calculator.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536498265" ignored="false" />
     <file path="$USER_HOME$/Dropbox/presentations/kotlin/code/features/src/Functions.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536554719" ignored="false" />
     <file path="/a.dummy" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352536655020" ignored="false" />
-    <file path="/fragment.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352537149713" ignored="false" />
     <file path="/SomeInterface.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700373790" ignored="false" />
     <file path="$USER_HOME$/tmp/untitled2/src/SomeInterface.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700437036" ignored="false" />
     <file path="/Tester.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700446447" ignored="false" />
     <file path="$USER_HOME$/tmp/untitled2/src/Tester.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352700447269" ignored="false" />
     <file path="$USER_HOME$/tmp/untitled4/src/testing.kt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352716294545" ignored="false" />
-    <file path="/Dummy.txt" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352716335048" ignored="false" />
     <file path="$USER_HOME$/frameworks/kotlin/lib/kotlin-runtime.jar!/src/jet/BooleanIterable.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352716344568" ignored="false" />
     <file path="$USER_HOME$/frameworks/kotlin/lib/kotlin-runtime.jar!/src/jet/Function17.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352716344568" ignored="false" />
     <file path="$USER_HOME$/frameworks/kotlin/lib/kotlin-runtime.jar!/src/jet/Function5.java" changelist="b68ef062-0dad-4229-b5a1-847ed0c696ea" time="1352716344568" ignored="false" />
@@ -296,6 +297,22 @@
       </breakpoint>
     </breakpoint_any>
     <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/ConsoleRunner.kt" line="31" class="Class at ConsoleRunner.kt:30" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -306,46 +323,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SpecificationFinderTests.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/SpecificationFinderTests.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="250" selection-end="250" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpecificationRunnerTests.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test/SpecificationRunnerTests.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="6" selection-start="310" selection-end="310" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConsoleRunner.kt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ConsoleRunner.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConsoleRunner.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="49" selection-start="274" selection-end="274" vertical-scroll-proportion="0.50554323">
+            <state line="67" column="31" selection-start="1858" selection-end="1858" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlainTextListener.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/PlainTextListener.kt">
+      <file leaf-file-name="HTMLListener.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/HTMLListener.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="0" selection-start="161" selection-end="1245" vertical-scroll-proportion="0.0">
+            <state line="14" column="53" selection-start="424" selection-end="424" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OutputDevice.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/OutputDevice.kt">
+      <file leaf-file-name="SpecificationRunner.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SpecificationRunner.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="164" selection-end="164" vertical-scroll-proportion="0.0">
+            <state line="71" column="0" selection-start="1902" selection-end="1902" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpecificationFinder.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/SpecificationFinder.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Reflection.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Reflection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="43" column="0" selection-start="1300" selection-end="1300" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#922#930#0" expanded="true" />
+                <element signature="e#1690#1696#0" expanded="true" />
+                <element signature="e#1911#1918#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AssertionErrorOccurred.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AssertionErrorOccurred.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -363,34 +393,25 @@
       <file leaf-file-name="Constructs.kt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="12" column="21" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConsoleDevice.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ConsoleDevice.kt">
+      <file leaf-file-name="sampleSpecs.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="27" column="0" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConsoleRunnerTests.kt" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ConsoleRunnerTests.kt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="21" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HTMLListener.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/HTMLListener.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="5" selection-start="404" selection-end="404" vertical-scroll-proportion="0.0">
+            <state line="23" column="29" selection-start="703" selection-end="703" vertical-scroll-proportion="0.6236324">
               <folding />
             </state>
           </provider>
@@ -406,7 +427,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/MultipleListenerNotifier.kt" />
         <option value="$PROJECT_DIR$/test/samples/sampleSpecs.kt" />
         <option value="$PROJECT_DIR$/src/Reflection.java" />
@@ -417,11 +437,12 @@
         <option value="$PROJECT_DIR$/src/Device.kt" />
         <option value="$PROJECT_DIR$/test/SpecificationRunnerTests.kt" />
         <option value="$PROJECT_DIR$/src/HTMLTextListener.kt" />
-        <option value="$PROJECT_DIR$/test/ConsoleRunnerTests.kt" />
         <option value="$PROJECT_DIR$/src/ConsoleDevice.kt" />
         <option value="$PROJECT_DIR$/src/OutputDevice.kt" />
         <option value="$PROJECT_DIR$/src/FileDevice.kt" />
         <option value="$PROJECT_DIR$/src/ConsoleRunner.kt" />
+        <option value="$PROJECT_DIR$/src/HTMLListener.kt" />
+        <option value="$PROJECT_DIR$/test/ConsoleRunnerTests.kt" />
       </list>
     </option>
   </component>
@@ -591,10 +612,11 @@
     <property name="Repository.Attach.JavaDocs" value="true" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/spek.ipr" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/test/spek" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
     <property name="Repository.Attach.Sources" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -603,34 +625,6 @@
     <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="JUnit.ConsoleRunnerTests.tempTest">
-    <configuration default="false" name="SpecificationFinderTests" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="spek.test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="spek" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="spek.test.SpecificationFinderTests" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
     <configuration default="false" name="SimpleEventAggregatorTests.can_subscribe_multiple_objects_to_different_event" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -715,6 +709,27 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="false" name="spek" type="JetRunConfigurationType" factoryName="Kotlin" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="spek.namespace" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="samples -text" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/out/test" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="spek" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="false" name="ConsoleRunnerTests.tempTest" type="JUnit" factoryName="JUnit" temporary="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -743,6 +758,19 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="spek" />
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -765,16 +793,16 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.SpecificationFinderTests" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.SimpleEventAggregatorTests.can_subscribe_multiple_objects_to_different_event" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.SimpleEventAggregatorTests.can_subscribe_multiple_objects_to_one_event" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.SimpleEventAggregatorTests" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.SimpleEventAggregatorTests.can_subscribe_multiple_objects_to_different_event" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.SimpleEventAggregatorTests.can_subscribe_multiple_objects_to_one_event" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.SimpleEventAggregatorTests" />
+      <item index="3" class="java.lang.String" itemvalue="Kotlin.spek" />
       <item index="4" class="java.lang.String" itemvalue="JUnit.ConsoleRunnerTests.tempTest" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="JUnit.ConsoleRunnerTests.tempTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ConsoleRunnerTests.tempTest" />
+        <item index="1" class="java.lang.String" itemvalue="Kotlin.spek" />
         <item index="2" class="java.lang.String" itemvalue="JUnit.ConsoleRunnerTests.tempTest" />
         <item index="3" class="java.lang.String" itemvalue="JUnit.ConsoleRunnerTests.tempTest" />
         <item index="4" class="java.lang.String" itemvalue="JUnit.ConsoleRunnerTests.tempTest" />
@@ -786,10 +814,10 @@
     <task active="true" id="Default" summary="Default task">
       <changelist id="b68ef062-0dad-4229-b5a1-847ed0c696ea" name="Default" comment="" />
       <created>1352024470672</created>
-      <timeSpent>45829000</timeSpent>
+      <timeSpent>59529000</timeSpent>
       <updated>1352024470672</updated>
     </task>
-    <option name="myTotallyTimeSpent" value="45829000" />
+    <option name="myTotallyTimeSpent" value="59529000" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -802,21 +830,21 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.397878" sideWeight="0.64418936" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Kotlin" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32712767" sideWeight="0.607604" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32625994" sideWeight="0.65925395" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32712767" sideWeight="0.38737446" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32625994" sideWeight="0.33572453" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18436155" sideWeight="0.67287236" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44281915" sideWeight="0.5954089" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18436155" sideWeight="0.67374" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44164455" sideWeight="0.5502152" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998565" sideWeight="0.6710875" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -887,37 +915,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/MultipleListenerNotifier.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="51" selection-start="339" selection-end="339" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/SpecificationRunner.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="5" selection-start="451" selection-end="451" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Reflection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="26" selection-start="1948" selection-end="1948" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Specification.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="523" selection-end="523" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/SimpleEventAggregatorTests.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -946,20 +943,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HTMLListener.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="5" selection-start="404" selection-end="404" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="21" selection-start="345" selection-end="345" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ConsoleDevice.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -983,14 +966,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Constructs.kt">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="21" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AssertionErrorOccurred.kt">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SpecificationRunner.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="0" selection-start="1902" selection-end="1902" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Reflection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="0" selection-start="1300" selection-end="1300" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#922#930#0" expanded="true" />
+            <element signature="e#1690#1696#0" expanded="true" />
+            <element signature="e#1911#1918#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SpecificationFinder.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/samples/sampleSpecs.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="500" selection-end="500" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ConsoleRunner.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="49" selection-start="274" selection-end="274" vertical-scroll-proportion="0.50554323">
+        <state line="67" column="31" selection-start="1858" selection-end="1858" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HTMLListener.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="53" selection-start="424" selection-end="424" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ConsoleRunnerTests.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="29" selection-start="703" selection-end="703" vertical-scroll-proportion="0.6236324">
           <folding />
         </state>
       </provider>
