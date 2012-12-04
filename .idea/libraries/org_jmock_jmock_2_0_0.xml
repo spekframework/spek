@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="org.jmock:jmock:2.0.0" type="repository">
+    <properties maven-id="org.jmock:jmock:2.0.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jmock-2.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hamcrest-api-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/hamcrest-library-1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
