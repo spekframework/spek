@@ -1,15 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96e0f25a-56cd-4440-9ec8-73b82847fe3d" name="Default" comment="" />
+    <list default="true" id="96e0f25a-56cd-4440-9ec8-73b82847fe3d" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\AssertionErrorOccurred.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/AssertionErrorOccurred.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\ConsoleDevice.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/ConsoleDevice.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\ConsoleRunner.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/ConsoleRunner.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\Constructs.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/Constructs.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\EventAggregator.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/EventAggregator.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\EventHandler.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/EventHandler.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\FileDevice.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/FileDevice.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\Given.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/Given.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\GivenExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/GivenExecuted.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\HTMLListener.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/HTMLListener.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\It.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/It.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\ItExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/ItExecuted.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\Listener.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/Listener.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\MultipleListenerNotifier.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/MultipleListenerNotifier.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\On.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/On.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\OnExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/OnExecuted.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\OutputDevice.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/OutputDevice.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\PlainTextListener.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/PlainTextListener.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\Reflection.java" afterPath="$PROJECT_DIR$/src/main/org/spek/Reflection.java" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\RunFinished.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/RunFinished.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\RunStarted.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/RunStarted.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\SimpleEventAggregator.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/SimpleEventAggregator.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\Specification.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/Specification.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\SpecificationErrorOccurred.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/SpecificationErrorOccurred.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\SpecificationExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/SpecificationExecuted.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\SpecificationFinder.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/SpecificationFinder.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\main\org\jetbrains\spek\SpecificationRunner.kt" afterPath="$PROJECT_DIR$/src/main/org/spek/SpecificationRunner.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\test\org\jetbrains\spek\test\TestConsoleRunner.kt" afterPath="$PROJECT_DIR$/src/test/org/spek/test/TestConsoleRunner.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\test\org\jetbrains\spek\test\TestSimpleEventAggregator.kt" afterPath="$PROJECT_DIR$/src/test/org/spek/test/TestSimpleEventAggregator.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\test\org\jetbrains\spek\test\TestSpecificationFinder.kt" afterPath="$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationFinder.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\test\org\jetbrains\spek\test\TestSpecificationRunner.kt" afterPath="$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationRunner.kt" />
+      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\test\org\jetbrains\spek\test\samples\sampleSpecs.kt" afterPath="$PROJECT_DIR$/src/test/org/spek/test/samples/sampleSpecs.kt" />
+    </list>
     <ignored path="Spek.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354613857771" ignored="false" />
-    <file path="$USER_HOME$/IdeaProjects/kotlindemo/.idea/workspace.xml" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354613885408" ignored="false" />
+    <file path="/Dummy.txt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354614358761" ignored="false" />
+    <file path="$USER_HOME$/IdeaProjects/kotlindemo/.idea/workspace.xml" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354616040561" ignored="false" />
     <file path="/pom.xml" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612340058" ignored="false" />
     <file path="/ConsoleRunnerTests.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612393595" ignored="false" />
     <file path="/SimpleEventAggregatorTests.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612683211" ignored="false" />
     <file path="/sampleSpecs.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612953047" ignored="false" />
+    <file path="/a.dummy" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354615376691" ignored="false" />
+    <file path="/HTMLListener.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354615248352" ignored="false" />
+    <file path="/TestConsoleRunner.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354615310751" ignored="false" />
+    <file path="/TestSpecificationFinder.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354615487727" ignored="false" />
+    <file path="/TestSpecificationRunner.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354615498326" ignored="false" />
+    <file path="/TestSimpleEventAggregator.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354615504290" ignored="false" />
+    <file path="/Reflection.java" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354616078327" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,82 +111,93 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="Listener.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/org/spek/Listener.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="25" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.8398204">
+            <state line="3" column="13" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constructs.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/Constructs.kt">
+      <file leaf-file-name="MultipleListenerNotifier.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/org/spek/MultipleListenerNotifier.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestSpecificationRunner.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationRunner.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sampleSpecs.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/samples/sampleSpecs.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="40" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Spek.iml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Spek.iml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="spek.iws" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spek.iws">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TestSpecificationFinder.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationFinder.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="60" selection-start="803" selection-end="803" vertical-scroll-proportion="0.0">
+            <state line="4" column="13" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="TestConsoleRunner.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestConsoleRunner.kt">
+        <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestConsoleRunner.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0">
+            <state line="11" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sampleSpecs.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/samples/sampleSpecs.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="18" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Specification.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/org/spek/Specification.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="18" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpecificationFinder.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/org/spek/SpecificationFinder.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="15" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestSpecificationFinder.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationFinder.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="26" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Reflection.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/org/spek/Reflection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="41" column="37" selection-start="1297" selection-end="1297" vertical-scroll-proportion="0.47714287">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestSpecificationRunner.kt" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationRunner.kt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="13" selection-start="111" selection-end="111" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="TestSimpleEventAggregator.kt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSimpleEventAggregator.kt">
+        <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestSimpleEventAggregator.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="16" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
+            <state line="4" column="11" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -175,14 +228,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/org/jetbrains/spek/Specification.kt" />
-        <option value="$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationFinder.kt" />
         <option value="$PROJECT_DIR$/src/main/org/jetbrains/spek/Constructs.kt" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/ConsoleRunnerTests.kt" />
         <option value="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/SimpleEventAggregatorTests.kt" />
         <option value="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationFinder.kt" />
         <option value="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/samples/sampleSpecs.kt" />
+        <option value="$PROJECT_DIR$/src/main/org/spek/AssertionErrorOccurred.kt" />
+        <option value="$PROJECT_DIR$/src/main/org/spek/HTMLListener.kt" />
+        <option value="$PROJECT_DIR$/src/test/org/spek/test/TestConsoleRunner.kt" />
+        <option value="$PROJECT_DIR$/src/main/org/spek/Specification.kt" />
+        <option value="$PROJECT_DIR$/src/main/org/spek/SpecificationFinder.kt" />
+        <option value="$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationRunner.kt" />
+        <option value="$PROJECT_DIR$/src/test/org/spek/test/TestSimpleEventAggregator.kt" />
+        <option value="$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationFinder.kt" />
+        <option value="$PROJECT_DIR$/src/test/org/spek/test/samples/sampleSpecs.kt" />
+        <option value="$PROJECT_DIR$/src/main/org/spek/Reflection.java" />
       </list>
     </option>
   </component>
@@ -200,6 +261,20 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="spek" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+      </PATH>
       <PATH>
         <PATH_ELEMENT>
           <option name="myItemId" value="" />
@@ -258,8 +333,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -295,9 +368,67 @@
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="samples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Spek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="spek" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -305,6 +436,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -313,15 +445,43 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="Downloaded.Files.Path" value="G:\Sourcecode\Spek\lib" />
     <property name="dynamic.classpath" value="false" />
+    <property name="Downloaded.Files.Path" value="G:\Sourcecode\Spek\lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\Sourcecode\Spek\src\test\org\jetbrains\spek\test" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.TestSpecificationFinder.getSpecificationsByPackageName_with_valid_package_name_returns_list_of_specifications_in_the_package">
+    <configuration default="false" name="TestSpecificationFinder.getSpecificationsByPackageName_with_valid_package_name_returns_list_of_specifications_in_the_package" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="org.spek.test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="spek" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="org.spek.test" />
+      <option name="MAIN_CLASS_NAME" value="org.spek.test.TestSpecificationFinder" />
+      <option name="METHOD_NAME" value="getSpecificationsByPackageName_with_valid_package_name_returns_list_of_specifications_in_the_package" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m" />
@@ -357,6 +517,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -383,19 +556,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -434,7 +594,14 @@
       <patterns />
       <method />
     </configuration>
-    <list size="0" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.TestSpecificationFinder.getSpecificationsByPackageName_with_valid_package_name_returns_list_of_specifications_in_the_package" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.TestSpecificationFinder.getSpecificationsByPackageName_with_valid_package_name_returns_list_of_specifications_in_the_package" />
+      </list>
+    </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
@@ -465,6 +632,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32932332" sideWeight="0.6707989" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -474,17 +642,16 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33458647" sideWeight="0.6707989" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33984962" sideWeight="0.59366393" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1368421" sideWeight="0.6707989" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4077135" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22781955" sideWeight="0.59366393" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4063361" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292011" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3292011" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -552,117 +719,117 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/Reflection.java">
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/ConsoleRunner.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="28" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/ConsoleDevice.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="13" selection-start="13" selection-end="13" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/AssertionErrorOccurred.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="18" selection-start="36" selection-end="36" vertical-scroll-proportion="-0.68">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/HTMLListener.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="10" selection-start="218" selection-end="218" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/It.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="53" selection-end="53" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/ItExecuted.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="18" selection-start="36" selection-end="36" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/Listener.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="13" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/MultipleListenerNotifier.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="59" selection-end="59" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/Specification.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="18" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestSimpleEventAggregator.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="11" selection-start="96" selection-end="96" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestConsoleRunner.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationRunner.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="111" selection-end="111" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/SpecificationFinder.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="15" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/samples/sampleSpecs.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="18" selection-start="193" selection-end="193" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/org/spek/test/TestSpecificationFinder.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="26" selection-start="411" selection-end="411" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/org/spek/Reflection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="37" selection-start="1297" selection-end="1297" vertical-scroll-proportion="0.47714287">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/Specification.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="9" selection-start="459" selection-end="459" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationErrorOccurred.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="18" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationExecuted.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="18" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationRunner.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="135" selection-end="135" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationFinder.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="34" selection-start="308" selection-end="308" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/org/jetbrains/spek/Constructs.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="129" selection-end="129" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestConsoleRunner.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="295" selection-end="295" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSimpleEventAggregator.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="16" selection-start="302" selection-end="302" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationRunner.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="301" selection-end="301" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationFinder.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="60" selection-start="803" selection-end="803" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/org/jetbrains/spek/test/samples/sampleSpecs.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="40" selection-start="40" selection-end="40" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Spek.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spek.iws">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="35" selection-start="256" selection-end="256" vertical-scroll-proportion="0.5175644">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="25" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.8398204">
-          <folding />
         </state>
       </provider>
     </entry>
