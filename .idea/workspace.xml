@@ -1,76 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="96e0f25a-56cd-4440-9ec8-73b82847fe3d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/hamcrest-api-1.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/hamcrest-library-1.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/jmock-2.0.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_api_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_runtime_0_1_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_kotlin_kotlin_stdlib_0_1_SNAPSHOT.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jmock_jmock_2_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/ant.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/org_jmock_jmock_2_0_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="DELETED" beforePath="G:\Sourcecode\Spek\lib\hamcrest-core-1.1-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\Sourcecode\Spek\lib\hamcrest-core-1.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\Sourcecode\Spek\lib\junit-4.9-javadoc.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\Sourcecode\Spek\lib\junit-4.9-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\Sourcecode\Spek\lib\junit-4.9.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\Sourcecode\Spek\lib\kotlin-runtime.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/spek.iws" afterPath="$PROJECT_DIR$/spek.iws" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\spek.iml" afterPath="$PROJECT_DIR$/Spek.iml" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\spek.ipr" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\AssertionErrorOccurred.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/AssertionErrorOccurred.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\ConsoleDevice.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/ConsoleDevice.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\ConsoleRunner.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/ConsoleRunner.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\Constructs.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/Constructs.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\EventAggregator.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/EventAggregator.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\EventHandler.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/EventHandler.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\FileDevice.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/FileDevice.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\Given.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/Given.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\GivenExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/GivenExecuted.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\HTMLListener.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/HTMLListener.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\It.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/It.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\ItExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/ItExecuted.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\Listener.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/Listener.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\MultipleListenerNotifier.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/MultipleListenerNotifier.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\On.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/On.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\OnExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/OnExecuted.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\OutputDevice.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/OutputDevice.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\PlainTextListener.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/PlainTextListener.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\Reflection.java" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/Reflection.java" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\RunFinished.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/RunFinished.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\RunStarted.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/RunStarted.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\SimpleEventAggregator.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/SimpleEventAggregator.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\Specification.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/Specification.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\SpecificationErrorOccurred.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationErrorOccurred.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\SpecificationExecuted.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationExecuted.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\SpecificationFinder.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationFinder.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\src\SpecificationRunner.kt" afterPath="$PROJECT_DIR$/src/main/org/jetbrains/spek/SpecificationRunner.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\test\ConsoleRunnerTests.kt" afterPath="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestConsoleRunner.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\test\SimpleEventAggregatorTests.kt" afterPath="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSimpleEventAggregator.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\test\SpecificationFinderTests.kt" afterPath="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationFinder.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\test\SpecificationRunnerTests.kt" afterPath="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/TestSpecificationRunner.kt" />
-      <change type="MOVED" beforePath="G:\Sourcecode\Spek\test\samples\sampleSpecs.kt" afterPath="$PROJECT_DIR$/src/test/org/jetbrains/spek/test/samples/sampleSpecs.kt" />
-    </list>
+    <list default="true" id="96e0f25a-56cd-4440-9ec8-73b82847fe3d" name="Default" comment="" />
     <ignored path="Spek.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354613857771" ignored="false" />
-    <file path="$USER_HOME$/IdeaProjects/kotlindemo/.idea/workspace.xml" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354613643384" ignored="false" />
+    <file path="$USER_HOME$/IdeaProjects/kotlindemo/.idea/workspace.xml" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354613885408" ignored="false" />
     <file path="/pom.xml" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612340058" ignored="false" />
     <file path="/ConsoleRunnerTests.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612393595" ignored="false" />
     <file path="/SimpleEventAggregatorTests.kt" changelist="96e0f25a-56cd-4440-9ec8-73b82847fe3d" time="1354612683211" ignored="false" />
@@ -137,7 +72,7 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="25" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0254491">
+            <state line="33" column="25" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.8398204">
               <folding />
             </state>
           </provider>
@@ -726,7 +661,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="25" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.0254491">
+        <state line="33" column="25" selection-start="1145" selection-end="1145" vertical-scroll-proportion="0.8398204">
           <folding />
         </state>
       </provider>
