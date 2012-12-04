@@ -1,19 +1,16 @@
-bin/
-obj/
-_ReSharper.*
-out/
-*.csproj.user
-*.resharper.user
-*.resharper
-*.suo
-*.cache
-*.user
-*.dotsettings
-*.dotsettings.*
-~$*
-.idea/
-.DS_Store/
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
 *.class
-*.jar
-*.war
-*.ear
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
