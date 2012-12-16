@@ -1,0 +1,15 @@
+bin/
+obj/
+_ReSharper.*
+out/
+*.csproj.user
+*.resharper.user
+*.resharper
+*.suo
+*.cache
+*.user
+*.dotsettings
+*.dotsettings.*
+~$*
+.idea/
+.DS_Store/
