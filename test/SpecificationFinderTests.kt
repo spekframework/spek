@@ -27,7 +27,7 @@ public class SpecificationFinderTests {
 
         val specFinder = SpecificationFinder()
 
-        val specifications = specFinder.getSpecifications("target/test-classes/org/spek/test/samples","org.spek.test.samples")
+        val specifications = specFinder.getSpecifications("out/test/spek/org/spek/test/samples","org.spek.test.samples")
 
         assertEquals(2, specifications.count())
 

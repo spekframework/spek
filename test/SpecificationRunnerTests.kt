@@ -31,7 +31,7 @@ public class SpecificationRunnerTests {
         val mockListener = mock(javaClass<Listener>())
         val runner = SpecificationRunner(mockListener!!)
 
-        runner.runSpecs("target/test-classes/org/spek/test/samples", "org.spek.test.samples")
+        runner.runSpecs("out/test/spek/org/spek/test/samples", "org.spek.test.samples")
 
         verify(mockListener)?.notify(RunStarted(2))
         verify(mockListener)?.notify(RunFinished(3,0,0,0))

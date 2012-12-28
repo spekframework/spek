@@ -26,7 +26,7 @@ public class FileClassLoaderTests {
     test fun given_a_valid_folder_and_package_name_should_return_list_of_classes() {
         val classLoader = FileClassLoader()
 
-        val classes = classLoader.getClasses("target/test-classes/org/spek/test/samples", "org.spek.test.samples")
+        val classes = classLoader.getClasses("out/test/spek/org/spek/test/samples", "org.spek.test.samples")
 
         assertEquals(11, classes?.size())
     }
