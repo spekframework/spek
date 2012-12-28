@@ -1,0 +1,26 @@
+#!/bin/bash --posix
+
+#`$KOTLIN_HOME/bin/kotlinc-jvm out/artifacts/Spek/Spek.jar`
+
+# determine where Spek is installed
+export SPEK_HOME="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# get the jars needed for the classpath
+JARS="$SPEK_HOME/lib/*.jar"
+
+CP_JARS="$SPEK_HOME/out/artifacts/Spek/Spek.jar:$SPEK_HOME/out/artifacts/Spek/Spek.jar"
+for JAR in $JARS
+do
+    case $JAR in
+    *-sources.jar)
+        ;;
+    *-javadoc.jar)
+        ;;
+    *)
+        CP_JARS="$JAR:$CP_JARS"
+        ;;
+    esac
+done
+
+#echo $CP_JARS
+java -DSPEK_HOME="$SPEK_HOME" -classpath "$CP_JARS" org.spek.namespace "$@"
