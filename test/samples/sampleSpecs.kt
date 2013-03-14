@@ -4,11 +4,13 @@ import org.spek.spec
 import org.spek.given
 import org.spek.SpecificationRunner
 import java.util.ArrayList
+import org.junit.runner.RunWith
+import org.spek.junit.JSpec
+import org.junit.Test as test
+import org.spek.Spek
 
-spec public fun calculatorSpecs() {
-
-
-    given("a calculator")
+spec class calculatorSpecs : Spek(
+   given("a calculator")
     {
         val calculator = Calculator()
         on("calling sum with two numbers")
@@ -18,6 +20,11 @@ spec public fun calculatorSpecs() {
 
 
             it("should return the result of adding the first number to the second number")
+            {
+                shouldEqual(6, sum)
+            }
+
+            it("should another")
             {
                 shouldEqual(6, sum)
             }
@@ -34,12 +41,9 @@ spec public fun calculatorSpecs() {
             }
         }
     }
-}
+)
 
-
-
-
-spec fun incUtilSpecs() {
+spec class incUtilSpecs() : Spek(
     given("an inc util") {
         val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {
@@ -49,7 +53,7 @@ spec fun incUtilSpecs() {
             }
         }
     }
-}
+)
 
 class IncUtil {
     fun incValueBy(value: Int, inc: Int) = value + inc
