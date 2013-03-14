@@ -7,10 +7,10 @@ import java.util.ArrayList
 
 spec public fun calculatorSpecs() {
 
+
     given("a calculator")
     {
         val calculator = Calculator()
-
         on("calling sum with two numbers")
         {
 
@@ -35,6 +35,9 @@ spec public fun calculatorSpecs() {
         }
     }
 }
+
+
+
 
 spec fun incUtilSpecs() {
     given("an inc util") {

@@ -14,17 +14,21 @@ fun main(args: Array<String>) {
 }
 
 fun printUsage() {
+    println(
+    """
 
-    println("usage: spek folder package -options")
-    println("")
-    println("  options:")
-    println("")
-    println("       -text: Output format in plain text")
-    println("       -html: Output format in HTML")
-    println("       -file: Filename for output. Defaults to console")
-    println("       -css: Filename for CSS for HTML output")
-    println("")
-    println("example: spek myapp -text -html -file report.html")
+    usage: spek path package -options
+
+        options:
+
+            -text: Output format in plain text
+            -html: Output format in HTML
+            -file: Filename for output. Defaults to console
+            -css: Filename for CSS for HTML output
+
+
+        example: spek path -text -html -file report.html
+    """)
 }
 
 fun getOptions(args: Array<String>): Options {

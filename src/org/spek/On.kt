@@ -1,4 +1,5 @@
 package org.spek
+
 public class On {
 
     public fun it(description: String, itExpression: It.()->Unit) {

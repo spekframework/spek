@@ -8,7 +8,7 @@ export SPEK_HOME="$( cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # get the jars needed for the classpath
 JARS="$SPEK_HOME/lib/*.jar"
 
-CP_JARS="$SPEK_HOME/out/artifacts/Spek/Spek.jar:$SPEK_HOME/out/artifacts/Spek/Spek.jar"
+CP_JARS="$SPEK_HOME/out/artifacts/Spek/spek.jar:$SPEK_HOME/out/artifacts/Spek/spek.jar"
 for JAR in $JARS
 do
     case $JAR in
@@ -23,4 +23,4 @@ do
 done
 
 #echo $CP_JARS
-java -DSPEK_HOME="$SPEK_HOME" -classpath "$CP_JARS" org.spek.namespace "$@"
+java -DSPEK_HOME="$SPEK_HOME" -classpath "$CP_JARS" org.spek.SpekPackage "$@"

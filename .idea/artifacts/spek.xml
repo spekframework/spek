@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="spek">
+    <output-path>$PROJECT_DIR$/out/artifacts/spek</output-path>
+    <root id="archive" name="spek.jar">
+      <element id="module-output" name="spek" />
+    </root>
+  </artifact>
+</component>
