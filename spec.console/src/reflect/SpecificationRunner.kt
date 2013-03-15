@@ -1,4 +1,4 @@
-package org.spek
+package org.spek.console.reflect;
 
 import java.util.ArrayList
 import javax.security.auth.callback.TextOutputCallback

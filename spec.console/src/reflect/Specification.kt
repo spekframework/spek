@@ -1,4 +1,4 @@
-package org.spek
+package org.spek.console.reflect;
 
 import java.lang.reflect.Method
 import org.spek.Reflection
