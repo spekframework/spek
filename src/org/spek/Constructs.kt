@@ -5,6 +5,7 @@ import java.lang.annotation.RetentionPolicy
 import kotlin.test.assertEquals
 import org.spek.junit.JSpec
 import org.junit.runner.RunWith
+import junit.framework.TestCase
 
 Retention(RetentionPolicy.RUNTIME) annotation class spec
 
@@ -27,6 +28,6 @@ public trait TestAction {
 
 test
 RunWith(javaClass<JSpec<*>>())
-public abstract class Spek(vararg val actions : TestAction){
+public abstract class Spek(vararg val actions : TestAction) : TestCase() {
     test public fun mockTest() {}
 }
