@@ -5,7 +5,6 @@ import org.spek.console.reflect.*
 import org.spek.console.listeners.*
 
 fun main(args: Array<String>) {
-
     if (args.size < 2) {
         printUsage()
     } else {
@@ -15,26 +14,7 @@ fun main(args: Array<String>) {
     }
 }
 
-fun printUsage() {
-    println(
-    """
-
-    usage: spek path package -options
-
-        options:
-
-            -text: Output format in plain text
-            -html: Output format in HTML
-            -file: Filename for output. Defaults to console
-            -css: Filename for CSS for HTML output
-
-
-        example: spek path -text -html -file report.html
-    """)
-}
-
 fun getOptions(args: Array<String>): Options {
-
     var path = ""
     var textPresent = false
     var htmlPresent = false
@@ -77,11 +57,3 @@ fun setupRunner(options: Options): SpecificationRunner {
     }
     return SpecificationRunner(multipleNotifiers)
 }
-
-data class Options(
-        val path: String,
-        val packageName: String,
-        val toText: Boolean,
-        val toHtml: Boolean,
-        val filename: String,
-        val cssFile: String)
