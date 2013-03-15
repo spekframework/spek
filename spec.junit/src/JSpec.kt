@@ -8,8 +8,8 @@ import org.spek.api.*
 import org.spek.impl.*
 import org.spek.junit.api.*
 
-public class JSpec<T>(val clazz : Class<T>) : Runner() {
-    public override fun getDescription(): Description? = Description.createSuiteDescription("Spec:" + clazz.getName())
+public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
+    public override fun getDescription(): Description? = Description.createSuiteDescription("Spec:" + specificationClass.getName())
 
     private fun println(s : Any?) {}
 
@@ -18,11 +18,11 @@ public class JSpec<T>(val clazz : Class<T>) : Runner() {
 
         notifier.fireTestRunStarted(getDescription())
 
-        if (!javaClass<Spek>().isAssignableFrom(clazz)) {
+        if (!javaClass<Spek>().isAssignableFrom(specificationClass)) {
             throw RuntimeException("All spec classes should be inherited from ${javaClass<Spek>()}")
         }
 
-        val spek = (clazz.newInstance() as Spek).allGivens()
+        val spek = (specificationClass.newInstance() as Spek).allGivens()
         spek forEach { given ->
             given.performInit() forEach { on ->
                 on.performInit() forEach { it ->
