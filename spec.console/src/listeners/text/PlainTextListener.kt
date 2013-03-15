@@ -1,8 +1,8 @@
 package org.spek
 
+import org.spek.impl.events.*
 import java.io.StringWriter
 import java.io.PrintWriter
-
 
 public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by output {
 

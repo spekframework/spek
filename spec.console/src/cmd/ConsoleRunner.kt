@@ -1,6 +1,8 @@
-package org.spek
+package org.spek.console.cmd
 
-import java.util.ArrayList
+import org.spek.impl.events.*
+import org.spek.console.reflect.*
+import org.spek.console.listeners.*
 
 fun main(args: Array<String>) {
 
@@ -58,7 +60,7 @@ fun getOptions(args: Array<String>): Options {
 
 fun setupRunner(options: Options): SpecificationRunner {
 
-    val listeners = ArrayList<Listener>()
+    val listeners = arrayListOf<Listener>()
     val multipleNotifiers = MultipleListenerNotifier(listeners)
 
     var device: OutputDevice
@@ -76,4 +78,10 @@ fun setupRunner(options: Options): SpecificationRunner {
     return SpecificationRunner(multipleNotifiers)
 }
 
-data class Options(val path: String, val packageName: String, val toText: Boolean, val toHtml: Boolean, val filename: String, val cssFile: String)
+data class Options(
+        val path: String,
+        val packageName: String,
+        val toText: Boolean,
+        val toHtml: Boolean,
+        val filename: String,
+        val cssFile: String)

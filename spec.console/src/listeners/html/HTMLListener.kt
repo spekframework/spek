@@ -1,9 +1,9 @@
-
+package org.spek.console.listeners.html
 
 import org.spek.*
 import java.io.StringWriter
 import java.io.PrintWriter
-import org.spek.Listener
+import org.spek.impl.events.*
 
 public class HTMLListener(output: OutputDevice, cssFile: String): Listener, OutputDevice by output {
 
