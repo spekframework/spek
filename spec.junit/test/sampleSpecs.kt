@@ -3,7 +3,7 @@ package org.spek.test.samples
 import org.spek.api.*
 import org.spek.junit.api.*
 
-class calculatorSpecs : Spek() {{
+class calculatorSpecs : JUnitSpek() {{
     given("a calculator")
      {
          val calculator = Calculator()
@@ -37,7 +37,7 @@ class calculatorSpecs : Spek() {{
      }
 }}
 
-object incUtilSpecs : Spek() {{
+class incUtilSpecs : JUnitSpek() {{
     given("an inc util") {
         val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {

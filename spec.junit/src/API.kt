@@ -8,10 +8,10 @@ import junit.framework.TestCase
 
 test
 RunWith(javaClass<JSpec<*>>())
-public abstract class Spek : TestCase() {
-    private val givens  = arrayListOf<TestGivenAction>()
+public abstract class JUnitSpek : TestCase(), Spek {
+    private val givens = arrayListOf<TestGivenAction>()
 
-    public fun given(description: String, givenExpression: Given.() -> Unit) {
+    override fun given(description: String, givenExpression: Given.() -> Unit) {
         givens.add(givenImpl(description, givenExpression))
     }
 

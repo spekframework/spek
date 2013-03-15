@@ -5,8 +5,9 @@ import org.spek.impl.*
 import java.lang.annotation.RetentionPolicy
 import java.lang.annotation.Retention
 
-public fun given(description: String, givenExpression: Given.() -> Unit): TestGivenAction
-        = givenImpl(description, givenExpression)
+public trait Spek {
+   fun given(description: String, givenExpression: Given.() -> Unit)
+}
 
 public trait Given {
     fun on(description: String, onExpression: On.() -> Unit)

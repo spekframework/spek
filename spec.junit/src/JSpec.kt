@@ -32,7 +32,7 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                 throw RuntimeException("All spec classes should be inherited from ${javaClass<Spek>()}")
             }
 
-            val spek = (specificationClass.newInstance() as Spek).allGivens()
+            val spek = (specificationClass.newInstance() as JUnitSpek).allGivens()
             spek forEach { given ->
 
                 Runner.executeSpec(given, object : Listener {
