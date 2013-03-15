@@ -2,6 +2,8 @@ package org.spek.api
 
 import kotlin.test.*
 import org.spek.impl.*
+import java.lang.annotation.RetentionPolicy
+import java.lang.annotation.Retention
 
 public fun given(description: String, givenExpression: Given.() -> Unit): TestGivenAction
         = givenImpl(description, givenExpression)

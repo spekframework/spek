@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/spec.api/spec.api.iml" filepath="$PROJECT_DIR$/spec.api/spec.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spec.junit/spec.junit.iml" filepath="$PROJECT_DIR$/spec.junit/spec.junit.iml" />
       <module fileurl="file://$PROJECT_DIR$/spek.iml" filepath="$PROJECT_DIR$/spek.iml" />
     </modules>
   </component>
