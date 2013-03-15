@@ -6,7 +6,7 @@ import java.io.PrintWriter
 import org.spek.impl.events.*
 
 public class HTMLListener(output: OutputDevice, cssFile: String): Listener, OutputDevice by output {
-
+    //TODO: could use markdown + js
     var css = ""
 
     {
