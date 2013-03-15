@@ -6,6 +6,7 @@ import org.junit.runner.Description
 import org.junit.runner.notification.*
 import org.spek.api.*
 import org.spek.impl.*
+import org.spek.impl.events.*
 import org.spek.junit.api.*
 
 public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
@@ -36,27 +37,27 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
             spek forEach { given ->
 
                 Runner.executeSpec(given, object : Listener {
-                    override fun given(given: TestGivenAction): StepListener {
+                    override fun given(given: String): StepListener {
                         return object : StepListener {
                             override fun executionFailed(error: Throwable) {
                                 notifier.fireTestFailure(Failure(
-                                        Description.createTestDescription("${given.Description()}", "given"),
+                                        Description.createTestDescription("${given}", "given"),
                                         error))
                             }
                         }
                     }
-                    override fun on(given: TestGivenAction, on: TestOnAction): StepListener {
+                    override fun on(given: String, on: String): StepListener {
                         return object : StepListener {
                             override fun executionFailed(error: Throwable) {
                                 notifier.fireTestFailure(Failure(
-                                        Description.createTestDescription("${given.Description()} : ${on.Description()}", "on"),
+                                        Description.createTestDescription("${given} : ${on}", "on"),
                                         error))
                             }
                         }
                     }
-                    override fun it(given: TestGivenAction, on: TestOnAction, it: TestItAction): StepListener {
+                    override fun it(given: String, on: String, it: String): StepListener {
                         val desc = Description.createTestDescription(
-                                "${given.Description()} : ${on.Description()}", it.Description())
+                                "${given} : ${on}", it)
                         return object : StepListener {
                             override fun executionStarted() {
                                 notifier.fireTestStarted(desc)

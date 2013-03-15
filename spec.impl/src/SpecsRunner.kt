@@ -1,18 +1,14 @@
 package org.spek.impl
 
-public trait Listener {
-    fun given(given : TestGivenAction) : StepListener
-    fun on(given : TestGivenAction, on : TestOnAction) : StepListener
-    fun it(given : TestGivenAction, on : TestOnAction, it : TestItAction) : StepListener
-}
+import org.spek.impl.events.*
 
 public object Runner {
     public fun executeSpec(given : TestGivenAction, listener : Listener) {
-        Util.safeExecute(given, listener.given(given)) {
+        Util.safeExecute(given, listener.given(given.Description())) {
             performInit() forEach { on ->
-                Util.safeExecute(on, listener.on(given, on)) {
+                Util.safeExecute(on, listener.on(given.Description(), on.Description())) {
                     performInit() forEach { it ->
-                        Util.safeExecute(it, listener.it(given, on, it)) {
+                        Util.safeExecute(it, listener.it(given.Description(), on.Description(), it.Description())) {
                             run()
                         }
                     }
