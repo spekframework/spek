@@ -2,8 +2,6 @@ package org.spek.test
 
 import org.junit.Test as test
 import org.spek.*
-import org.mockito.Mockito.*
-import org.mockito.Matchers.*
 import kotlin.test.assertNotNull
 
 
