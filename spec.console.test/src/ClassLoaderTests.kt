@@ -1,19 +1,23 @@
 package org.spek.test
 
-import kotlin.test.assertNotNull
-import org.junit.Test as test
 import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import org.spek.console.reflect.FileClassLoader
 import kotlin.test.assertTrue
-import org.spek.api.Spek
+import org.junit.Test as test
+import org.spek.api.*
+import org.spek.console.reflect.FileClassLoader
+import org.spek.junit.api.JUnitSpek
 
-
-public class FileClassLoaderTests {
-    test fun given_a_valid_folder_and_package_name_should_return_list_of_classes() {
-        val classes = FileClassLoader.getClasses("org.spek")
-
-        assertEquals(true, classes.size > 0)
-        classes forEach { assertTrue(javaClass<Spek>().isAssignableFrom(it) ) }
+class calculatorSpecs: JUnitSpek() {{
+    given("file class loader") {
+        on("a package with spek tests") {
+            val classes = FileClassLoader.getClasses("org.spek")
+            it("should detect test classes") {
+                assertEquals(true, classes.size > 0)
+            }
+            it("should only find Spek inheritors") {
+                classes forEach { assertTrue(javaClass<Spek>().isAssignableFrom(it)) }
+            }
+        }
     }
-}
+}}
+
