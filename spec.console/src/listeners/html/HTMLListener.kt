@@ -1,10 +1,11 @@
 package org.spek.console.listeners.html
 
 import org.spek.*
-import java.io.StringWriter
-import java.io.PrintWriter
+import org.spek.impl.*
 import org.spek.impl.events.*
 
+//Not supported for now
+/*
 public class HTMLListener(output: OutputDevice, cssFile: String): Listener, OutputDevice by output {
     //TODO: could use markdown + js
     var css = ""
@@ -15,6 +16,48 @@ public class HTMLListener(output: OutputDevice, cssFile: String): Listener, Outp
         }
 
     }
+
+
+    override fun given(given: String): StepListener {
+        return object : StepListener {
+            override fun executionStarted() {
+                output("Given ${given}")
+            }
+            override fun executionCompleted() {
+                output("")
+            }
+            override fun executionFailed(error: Throwable) {
+                output("Failed: ${error}")
+                output("")
+            }
+        }
+    }
+
+    override fun on(given: String, on: String): StepListener {
+        return object : StepListener {
+            override fun executionStarted() {
+                output("  On ${on}")
+            }
+            override fun executionFailed(error: Throwable) {
+                output("  Failed: ${error}")
+                output("")
+            }
+        }
+    }
+
+    override fun it(given: String, on: String, it: String): StepListener {
+        return object : StepListener {
+            override fun executionStarted() {
+                output("    It ${it}")
+            }
+            override fun executionFailed(error: Throwable) {
+                output("    Failed: ${error}")
+                output("")
+            }
+        }
+    }
+
+
 
     override fun notify(onExecuted: OnExecuted) {
         output("<div class=\"on\">on ${onExecuted.description}</div>")
@@ -54,3 +97,4 @@ public class HTMLListener(output: OutputDevice, cssFile: String): Listener, Outp
     }
 
 }
+*/

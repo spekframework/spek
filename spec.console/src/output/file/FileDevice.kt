@@ -1,11 +1,13 @@
+package org.spek.console.output.file
+
 import java.io.Closeable
 import java.io.File
 import java.io.PrintWriter
+import java.io.BufferedWriter
 
 public class FileDevice(filename: String): OutputDevice, Closeable {
     val file = File(filename)
-
-    val writer = PrintWriter(file)
+    val writer = BufferedWriter(PrintWriter(file))
 
     public override fun close() {
         writer.close()
@@ -13,7 +15,7 @@ public class FileDevice(filename: String): OutputDevice, Closeable {
 
     override fun output(message: String) {
         writer.write(message)
+        writer.write("\n")
         writer.flush()
     }
-
 }

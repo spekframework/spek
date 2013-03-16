@@ -3,6 +3,9 @@ package org.spek.console.cmd
 import org.spek.impl.events.*
 import org.spek.console.reflect.*
 import org.spek.console.listeners.*
+import org.spek.console.listeners.text.*
+import org.spek.console.output.file.*
+import org.spek.console.output.console.*
 
 fun main(args: Array<String>) {
     if (args.size < 2) {
@@ -39,9 +42,7 @@ fun getOptions(args: Array<String>): Options {
 }
 
 fun setupRunner(options: Options): SpecificationRunner {
-
-    val listeners = arrayListOf<Listener>()
-    val multipleNotifiers = MultipleListenerNotifier(listeners)
+    val listeners = Multicaster()
 
     var device: OutputDevice
     if (options.filename != "") {
@@ -50,10 +51,11 @@ fun setupRunner(options: Options): SpecificationRunner {
         device = ConsoleDevice()
     }
     if (options.toText) {
-        listeners.add(PlainTextListener(device))
+        listeners.addListener(PlainTextListener(device))
     }
     if (options.toHtml) {
-        listeners.add(HTMLListener(device, options.cssFile))
+        throw RuntimeException("NOT supported")
+//        listeners.add(HTMLListener(device, options.cssFile))
     }
-    return SpecificationRunner(multipleNotifiers)
+    return SpecificationRunner(listeners)
 }

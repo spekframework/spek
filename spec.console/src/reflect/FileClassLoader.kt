@@ -8,7 +8,7 @@ import java.net.URLClassLoader;
 /**
  * @author hadihariri
  */
-public class FileClassLoader {
+public object FileClassLoader {
     public fun getClasses(folder : String, packageName : String ) : List<Class<*>> {
         val dirs = arrayListOf<File>();
         dirs.add(File(folder));
