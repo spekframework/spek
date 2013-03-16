@@ -1,9 +1,9 @@
-package org.spek.junit.test.samples
+package org.spek.console.test.samples
 
 import org.spek.api.*
-import org.spek.junit.api.*
+import org.spek.console.api.*
 
-class calculatorSpecs : JUnitSpek() {{
+class calculatorSpecs : ConsoleSpek() {{
     given("a calculator")
      {
          val calculator = Calculator()
@@ -37,7 +37,7 @@ class calculatorSpecs : JUnitSpek() {{
      }
 }}
 
-class incUtilSpecs : JUnitSpek() {{
+class incUtilSpecs : ConsoleSpek() {{
     given("an inc util") {
         val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {

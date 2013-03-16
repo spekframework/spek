@@ -8,17 +8,17 @@ import org.spek.console.listeners.text.*
 import org.spek.console.output.file.*
 import org.spek.console.output.console.*
 import org.spek.api.Spek
-import org.spek.console.api.CSpek
+import org.spek.console.api.ConsoleSpek
 
 
 public class SpecificationRunner(val listener : Listener) {
-    fun runSpecs(folder : String, packageName : String) {
-        FileClassLoader.getClasses(folder, packageName) forEach { specificationClass ->
-            if (!javaClass<CSpek>().isAssignableFrom(specificationClass)) {
-                throw RuntimeException("All spec classes should be inherited from ${javaClass<CSpek>()}")
+    fun runSpecs(packageName : String) {
+        FileClassLoader.getClasses(packageName) forEach { specificationClass ->
+            if (!javaClass<ConsoleSpek>().isAssignableFrom(specificationClass)) {
+                throw RuntimeException("All spec classes should be inherited from ${javaClass<ConsoleSpek>()}")
             }
 
-            val spek = (specificationClass.newInstance() as CSpek).allGivens()
+            val spek = (specificationClass.newInstance() as ConsoleSpek).allGivens()
             spek forEach {  Runner.executeSpec(it, listener) }
         }
     }
