@@ -7,9 +7,8 @@ import org.junit.runner.RunWith
 import junit.framework.TestCase
 import org.junit.Test as test
 
-test
 RunWith(javaClass<JSpec<*>>())
-public abstract class JUnitSpek : TestCase(), Spek {
+public abstract class JUnitSpek : Spek {
     private val givens = arrayListOf<TestGivenAction>()
 
     override fun given(description: String, givenExpression: Given.() -> Unit) {

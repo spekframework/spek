@@ -10,22 +10,21 @@ import org.spek.impl.events.*
 import org.spek.junit.api.*
 
 public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
-    public override fun getDescription(): Description? = Description.createSuiteDescription(specificationClass)
+    private val rootDescription = Description.createSuiteDescription(specificationClass)!!
+    public override fun getDescription(): Description? = rootDescription
 
     public override fun run(_notifier: RunNotifier?) {
         val notifier = _notifier!!
-
         Util.safeExecute(null, object : StepListener{
-            val root = getDescription()
             override fun executionStarted() {
-                notifier.fireTestRunStarted(root)
+                notifier.fireTestStarted(rootDescription)
             }
             override fun executionCompleted() {
-                notifier.fireTestRunFinished(Result())
+                notifier.fireTestFinished(rootDescription)
             }
             override fun executionFailed(error: Throwable) {
                 notifier.fireTestFailure(Failure(
-                        root,
+                        rootDescription,
                         error))
             }
         }) {
@@ -56,8 +55,7 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                         }
                     }
                     override fun it(given: String, on: String, it: String): StepListener {
-                        val desc = Description.createTestDescription(
-                                "${given} : ${on}", it)
+                        val desc = Description.createTestDescription("${given} : ${on}", it)
                         return object : StepListener {
                             override fun executionStarted() {
                                 notifier.fireTestStarted(desc)
