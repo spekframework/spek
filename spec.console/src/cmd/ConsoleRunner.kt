@@ -13,20 +13,18 @@ fun main(args: Array<String>) {
     } else {
         val options = getOptions(args)
         val specRunner = setupRunner(options)
-        specRunner.runSpecs(options.path, options.packageName)
+        specRunner.runSpecs(options.packageName)
     }
 }
 
 fun getOptions(args: Array<String>): Options {
-    var path = ""
     var textPresent = false
     var htmlPresent = false
     var filename = ""
     var cssFile = ""
     var packageName = ""
-    if (args.size >= 2) {
-        path = args[0]
-        packageName = args[1]
+    if (args.size >= 1) {
+        packageName = args[0]
         textPresent = args.find { it.contains("-text")} != null
         htmlPresent = args.find { it.contains("-html")} != null
         val filePos = args.toList().indexOf("-file")
@@ -38,7 +36,7 @@ fun getOptions(args: Array<String>): Options {
             cssFile = args[cssPos+1]
         }
     }
-    return Options(path, packageName, textPresent, htmlPresent, filename, cssFile)
+    return Options(packageName, textPresent, htmlPresent, filename, cssFile)
 }
 
 fun setupRunner(options: Options): SpecificationRunner {

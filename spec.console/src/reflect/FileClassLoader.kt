@@ -1,38 +1,14 @@
 package org.spek.console.reflect;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
+import org.spek.api.Spek
+import org.reflections.Reflections
 
 /**
  * @author hadihariri
  */
 public object FileClassLoader {
-    public fun getClasses(folder : String, packageName : String ) : List<Class<*>> {
-        val dirs = arrayListOf<File>();
-        dirs.add(File(folder));
-        val classes = arrayListOf<Class<*>>();
-        dirs forEach { directory ->
-            classes.addAll(findClasses(directory, packageName));
-        }
-        return classes;
-    }
-
-    private fun findClasses(directory : File , packageName : String) : List<Class<*>> {
-        val classes = arrayListOf<Class<*>>()
-
-        if (!directory.exists()) return classes
-        val files = directory.listFiles()
-        if (files == null) return classes
-        files forEach { file ->
-            if (file.isDirectory())
-                classes.addAll(findClasses(file, packageName + "." + file.getName()));
-
-            val clazz = ".class"
-            if (file.getName().endsWith(clazz))
-                classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - clazz.length)));
-        }
-        return classes;
+    public fun getClasses(packageName : String ) : List<Class<out Spek>> {
+        val reflections = Reflections(packageName);
+        return reflections.getSubTypesOf(javaClass<Spek>())!!.toList()
     }
 }

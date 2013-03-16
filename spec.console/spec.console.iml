@@ -10,6 +10,7 @@
     <orderEntry type="library" name="KotlinRuntime" level="project" />
     <orderEntry type="module" module-name="spec.api" />
     <orderEntry type="module" module-name="spec.impl" />
+    <orderEntry type="library" name="org.reflections:reflections:0.9.8" level="project" />
   </component>
 </module>
 

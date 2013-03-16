@@ -4,7 +4,7 @@ fun printUsage() {
     println(
     """
 
-    usage: spek path package -options
+    usage: spek package -options
 
         options:
 
