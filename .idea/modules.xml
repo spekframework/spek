@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/spec.api/spec.api.iml" filepath="$PROJECT_DIR$/spec.api/spec.api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spec.console/spec.console.iml" filepath="$PROJECT_DIR$/spec.console/spec.console.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spec.console.test/spec.console.test.iml" filepath="$PROJECT_DIR$/spec.console.test/spec.console.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spec.impl/spec.impl.iml" filepath="$PROJECT_DIR$/spec.impl/spec.impl.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spec.impl.test/spec.impl.test.iml" filepath="$PROJECT_DIR$/spec.impl.test/spec.impl.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spec.junit/spec.junit.iml" filepath="$PROJECT_DIR$/spec.junit/spec.junit.iml" />
       <module fileurl="file://$PROJECT_DIR$/spek.iml" filepath="$PROJECT_DIR$/spek.iml" />
     </modules>
   </component>
