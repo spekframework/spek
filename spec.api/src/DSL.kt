@@ -1,9 +1,6 @@
 package org.spek.api
 
 import kotlin.test.*
-import org.spek.impl.*
-import java.lang.annotation.RetentionPolicy
-import java.lang.annotation.Retention
 
 public trait Spek {
    fun given(description: String, givenExpression: Given.() -> Unit)
