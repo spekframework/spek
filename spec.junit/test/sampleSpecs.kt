@@ -3,10 +3,10 @@ package org.spek.junit.test.samples
 import org.spek.api.*
 import org.spek.junit.api.*
 
-class calculatorSpecs : JUnitSpek() {{
+public class calculatorSpecs : JUnitSpek() {{
     given("a calculator")
      {
-         val calculator = Calculator()
+         val calculator = JCalculator()
          on("calling sum with two numbers")
          {
 
@@ -37,9 +37,9 @@ class calculatorSpecs : JUnitSpek() {{
      }
 }}
 
-class incUtilSpecs : JUnitSpek() {{
+public class incUtilSpecs : JUnitSpek() {{
     given("an inc util") {
-        val incUtil = IncUtil()
+        val incUtil = JIncUtil()
         on("calling incVaueBy with 4 and given number 6") {
             val result = incUtil.incValueBy(4, 6)
             it("should return 10") {
@@ -49,11 +49,11 @@ class incUtilSpecs : JUnitSpek() {{
     }
 }}
 
-class IncUtil {
+class JIncUtil {
     fun incValueBy(value: Int, inc: Int) = value + inc
 }
 
-class Calculator {
+class JCalculator {
     fun sum(x: Int, y: Int) = x + y
     fun subtract(x: Int, y: Int) = x - y
 }

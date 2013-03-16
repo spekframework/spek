@@ -5,6 +5,7 @@ import org.spek.impl.*
 import org.spek.junit.impl.*
 import org.junit.runner.RunWith
 import junit.framework.TestCase
+import org.junit.Test as test
 
 test
 RunWith(javaClass<JSpec<*>>())
@@ -17,7 +18,6 @@ public abstract class JUnitSpek : TestCase(), Spek {
 
     //possible workround to cheat JUnit integration
     test public fun mockTest() {}
-
 
     fun allGivens() : List<TestGivenAction> = givens
 }
