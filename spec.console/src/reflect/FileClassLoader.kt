@@ -21,6 +21,7 @@ public object FileClassLoader {
 
     private fun findClasses(directory : File , packageName : String) : List<Class<*>> {
         val classes = arrayListOf<Class<*>>()
+
         if (!directory.exists()) return classes
         val files = directory.listFiles()
         if (files == null) return classes
@@ -28,8 +29,9 @@ public object FileClassLoader {
             if (file.isDirectory())
                 classes.addAll(findClasses(file, packageName + "." + file.getName()));
 
-            if (file.getName().endsWith(".class"))
-                classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+            val clazz = ".class"
+            if (file.getName().endsWith(clazz))
+                classes.add(Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - clazz.length)));
         }
         return classes;
     }

@@ -8,6 +8,7 @@ import kotlin.test.assertNotNull
 
 
 public class SpecificationRunnerTests {
+/*
 
     test fun creating_a_specification_runner_should_return_instance() {
         val mockListener = mock(javaClass<Listener>())
@@ -39,6 +40,7 @@ public class SpecificationRunnerTests {
 
 
 
+*/
 
 }
 

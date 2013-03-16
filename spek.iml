@@ -10,6 +10,10 @@
     <orderEntry type="library" name="KotlinRuntime" level="project" />
     <orderEntry type="library" name="junit:junit:4.11" level="project" />
     <orderEntry type="library" name="org.mockito:mockito-all:1.9.5" level="project" />
+    <orderEntry type="module" module-name="spec.api" />
+    <orderEntry type="module" module-name="spec.console" />
+    <orderEntry type="module" module-name="spec.impl" />
+    <orderEntry type="module" module-name="spec.junit" />
   </component>
 </module>
 
