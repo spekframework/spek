@@ -12,10 +12,13 @@ import org.spek.console.api.ConsoleSpek
 
 
 public class SpecificationRunner(val listener : Listener) {
+    private val BASE_CLASS = javaClass<ConsoleSpek>()
     fun runSpecs(packageName : String) {
-        FileClassLoader.getClasses(packageName) forEach { specificationClass ->
-            if (!javaClass<ConsoleSpek>().isAssignableFrom(specificationClass)) {
-                throw RuntimeException("All spec classes should be inherited from ${javaClass<ConsoleSpek>()}")
+        val classes = FileClassLoader.getClasses(BASE_CLASS, packageName)
+
+        classes forEach { specificationClass ->
+            if (!BASE_CLASS.isAssignableFrom(specificationClass)) {
+                throw RuntimeException("All spec classes should be inherited from $BASE_CLASS")
             }
 
             val spek = (specificationClass.newInstance() as ConsoleSpek).allGivens()

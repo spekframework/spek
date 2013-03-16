@@ -7,8 +7,8 @@ import org.reflections.Reflections
  * @author hadihariri
  */
 public object FileClassLoader {
-    public fun getClasses(packageName : String ) : List<Class<out Spek>> {
+    public fun <T : Spek> getClasses(clazz : Class<T>, packageName : String ) : List<Class<out Spek>>{
         val reflections = Reflections(packageName);
-        return reflections.getSubTypesOf(javaClass<Spek>())!!.toList()
+        return reflections.getSubTypesOf(clazz)!!.toList()
     }
 }

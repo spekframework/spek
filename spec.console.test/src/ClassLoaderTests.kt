@@ -10,7 +10,7 @@ import org.spek.junit.api.JUnitSpek
 class calculatorSpecs: JUnitSpek() {{
     given("file class loader") {
         on("a package with spek tests") {
-            val classes = FileClassLoader.getClasses("org.spek")
+            val classes = FileClassLoader.getClasses(javaClass<Spek>(), "org.spek")
             it("should detect test classes") {
                 assertEquals(true, classes.size > 0)
             }
