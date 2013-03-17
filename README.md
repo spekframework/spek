@@ -14,12 +14,10 @@ in a fluent and easy to read way.
 
 ### Writing specifications
 
-A specification is a function (declared as fun in Kotlin) that has to be prefixed with the
-annotation *spec* :
-
+A specification is a class that is inherited either from `JUnitSpec` or from `ConsoleSpec`:
 
 ```kotlin
-spec public fun calculatorSpecs() {
+public class calculatorSpecs : JUnitSpec() {{
     given("a calculator")
     {
         val calculator = Calculator()
@@ -34,7 +32,7 @@ spec public fun calculatorSpecs() {
             }
         }
     }
-}
+}}
 ```
 
 Since they are merely functions, specifications do not need to belong to a class and can be declared as top-level
@@ -42,7 +40,8 @@ functions in Kotlin. This gives you complete liberty to organize your specificat
 
 ### Runners
 
-Currently Spek comes with a Console Runner but a plugin for IntelliJ unit runner is planned.
+You may write tests with Spek either for provided standalone console runner, or
+as JUnit tests. JUnit tests are run under standard JUnit 4.x tests runner.
 
 ## FAQ
 
