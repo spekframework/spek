@@ -31,9 +31,35 @@
                 <version>${kotlin.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.spek</groupId>
+                <artifactId>spek-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.spek</groupId>
+                <artifactId>spek-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.spek</groupId>
+                <artifactId>spek-console</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.spek</groupId>
+                <artifactId>spek-junit</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
