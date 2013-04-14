@@ -3,28 +3,28 @@ package org.spek.impl
 import org.spek.api.*
 
 public trait TestFixtureAction {
-    fun Description(): String
+    fun description(): String
     fun performInit(): List<TestGivenAction>
 }
 
 public trait TestGivenAction {
-    fun Description(): String
+    fun description(): String
     fun performInit(): List<TestOnAction>
 }
 
 public trait TestOnAction {
-    fun Description(): String
+    fun description(): String
     fun performInit(): List<TestItAction>
 }
 
 public trait TestItAction {
-    fun Description(): String
+    fun description(): String
     fun run()
 }
 
 public fun givenImpl(description: String, givenExpression: Given.() -> Unit): TestGivenAction {
     return object:TestGivenAction {
-        public override fun Description(): String = "given " + description
+        public override fun description(): String = "given " + description
         public override fun performInit(): List<TestOnAction> {
             val g = GivenImpl()
             g.givenExpression()
@@ -41,7 +41,7 @@ public class GivenImpl: Given {
     public override fun on(description: String, onExpression: On.() -> Unit) {
         recordedActions.add(
                 object : TestOnAction {
-                    public override fun Description(): String = description
+                    public override fun description(): String = description
                     public override fun performInit(): List<TestItAction> {
                         val o = OnImpl()
                         o.onExpression()
@@ -59,7 +59,7 @@ public class OnImpl: On {
     public override fun it(description: String, itExpression: It.()->Unit) {
         recordedActions.add(
                 object : TestItAction {
-                    public override fun Description(): String = description
+                    public override fun description(): String = description
                     public override fun run() {
                         It().itExpression()
                     }
