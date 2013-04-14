@@ -45,10 +45,10 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
 
     ///TODO: implement stats
     /*override fun notify(runStarted: RunStarted) {
-        output("Found ${runStarted.totalSpecifications} specification(s)\n\n")
+        main.output("Found ${runStarted.totalSpecifications} specification(s)\n\n")
     }
 
     override fun notify(runFinished: RunFinished) {
-        output("\n\nTotal passed: ${runFinished.passed} failed: ${runFinished.failed}")
+        main.output("\n\nTotal passed: ${runFinished.passed} failed: ${runFinished.failed}")
     }*/
 }

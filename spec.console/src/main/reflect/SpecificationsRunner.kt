@@ -21,8 +21,8 @@ public class SpecificationRunner(val listener : Listener) {
                 throw RuntimeException("All spec classes should be inherited from $BASE_CLASS")
             }
 
-            val spek = (specificationClass.newInstance() as ConsoleSpek).allGivens()
-            spek forEach {  Runner.executeSpec(it, listener) }
+            val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
+            givenActions forEach {  Runner.executeSpec(it, listener) }
         }
     }
 }

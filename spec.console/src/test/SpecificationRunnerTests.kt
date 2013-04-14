@@ -1,10 +1,5 @@
 package org.spek.test
 
-import org.junit.Test as test
-import org.spek.*
-import kotlin.test.assertNotNull
-
-
 public class SpecificationRunnerTests {
 /*
 

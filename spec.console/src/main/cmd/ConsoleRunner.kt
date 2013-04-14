@@ -53,7 +53,7 @@ fun setupRunner(options: Options): SpecificationRunner {
     }
     if (options.toHtml) {
         throw RuntimeException("NOT supported")
-//        listeners.add(HTMLListener(device, options.cssFile))
+//        main.listeners.add(HTMLListener(device, options.cssFile))
     }
     return SpecificationRunner(listeners)
 }

@@ -8,7 +8,6 @@
         <element id="module-output" name="spec.api" />
       </element>
       <element id="library" level="project" name="org.reflections:reflections:0.9.8" />
-      <element id="library" level="project" name="KotlinRuntime" />
     </root>
   </artifact>
 </component>

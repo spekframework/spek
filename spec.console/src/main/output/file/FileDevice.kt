@@ -6,8 +6,7 @@ import java.io.PrintWriter
 import java.io.BufferedWriter
 
 public class FileDevice(filename: String): OutputDevice, Closeable {
-    val file = File(filename)
-    val writer = BufferedWriter(PrintWriter(file))
+    val writer = BufferedWriter(PrintWriter(File(filename)))
 
     public override fun close() {
         writer.close()

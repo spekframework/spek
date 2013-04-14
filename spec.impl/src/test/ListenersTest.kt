@@ -1,9 +1,9 @@
 package org.spek.impl.events
 
-import org.spek.api.*
-import org.spek.impl.*
-import org.spek.junit.api.*
+/*
 import kotlin.test.assertEquals
+import org.spek.junit.api.JUnitSpek
+import org.spek.impl.StepListener
 
 
 class ListenersTest : JUnitSpek() {{
@@ -17,7 +17,7 @@ class ListenersTest : JUnitSpek() {{
             log.clear()
             mc.given("GGG").executionStarted()
 
-            it("should call listeners") {
+            it("should call main.listeners") {
                 assertEquals(listOf(
                         "l1: given GGG",
                         "l2: given GGG",
@@ -31,7 +31,7 @@ class ListenersTest : JUnitSpek() {{
             log.clear()
             mc.on("GGG", "ZZZ").executionCompleted()
 
-            it("should call listeners") {
+            it("should call main.listeners") {
                 assertEquals(listOf(
                         "l1: on GGG -> ZZZ",
                         "l2: on GGG -> ZZZ",
@@ -45,7 +45,7 @@ class ListenersTest : JUnitSpek() {{
             log.clear()
             mc.it("GGG", "ZZZ", "FFF").executionFailed(RuntimeException("mock"))
 
-            it("should call listeners") {
+            it("should call main.listeners") {
                 assertEquals(listOf(
                         "l1: on GGG -> ZZZ -> FFF",
                         "l2: on GGG -> ZZZ -> FFF",
@@ -84,3 +84,4 @@ class ListenersTest : JUnitSpek() {{
         }
     }
 }
+*/

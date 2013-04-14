@@ -18,8 +18,8 @@ fun printUsage() {
         options:
             -text: Output format in plain text
             -html: Output format in HTML
-            -file: Filename for output. Defaults to console
-            -css: Filename for CSS for HTML output
+            -file: Filename for main.output. Defaults to console
+            -css: Filename for CSS for HTML main.output
 
         example: spek org.spek -text
 

@@ -1,11 +1,11 @@
 package org.spek.test
 
+/*
+import org.spek.junit.api.JUnitSpek
+import org.spek.console.reflect.FileClassLoader
+import org.spek.api.Spek
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import org.junit.Test as test
-import org.spek.api.*
-import org.spek.console.reflect.FileClassLoader
-import org.spek.junit.api.JUnitSpek
 
 class calculatorSpecs: JUnitSpek() {{
     given("file class loader") {
@@ -20,4 +20,4 @@ class calculatorSpecs: JUnitSpek() {{
         }
     }
 }}
-
+*/
