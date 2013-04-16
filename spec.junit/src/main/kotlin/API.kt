@@ -15,7 +15,7 @@ public abstract class JUnitSpek : Spek {
         givens.add(givenImpl(description, givenExpression))
     }
 
-    //possible workround to cheat JUnit integration
+    //possible workaround to cheat JUnit integration
     test public fun mockTest() {}
 
     fun allGivens() : List<TestGivenAction> = givens

@@ -1,6 +1,6 @@
 package org.spek.impl
 
-import org.junit.Test
+import org.junit.Test as test
 import org.spek.impl.events.Listener
 import org.mockito.Mockito
 import org.mockito.BDDMockito
@@ -15,7 +15,7 @@ public class SpecsRunnerTest {
     val aTestItAction = Mockito.mock(javaClass<TestItAction>())!!
     val anotherTestItAction = Mockito.mock(javaClass<TestItAction>())!!
 
-    Test fun executeSpec() {
+    test fun executeSpec() {
         BDDMockito.given(listener.given(Matchers.anyString()!!))!!
                 .willReturn(stepListener)
         BDDMockito.given(listener.on(Matchers.anyString()!!, Matchers.anyString()!!))!!

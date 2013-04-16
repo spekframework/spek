@@ -1,11 +1,11 @@
 package org.spek.impl
 
-import org.junit.Test
+import org.junit.Test as test
 import kotlin.test.assertEquals
 
 public class BackEndTest {
 
-    Test fun testGivenImplFunction() {
+    test fun testGivenImplFunction() {
         //given  a Given with two recorded 'on', first 'on' with a recorded 'it' and the second one with two recorded 'it'
          val givenAction = givenImpl("Test") {
             this.on("Test On") {
@@ -47,7 +47,7 @@ public class BackEndTest {
         assertEquals("It #2", secondIts.get(1).description())
     }
 
-    Test fun testGivenImpl() {
+    test fun testGivenImpl() {
         //given a new (empty) 'GivenImpl'
         val given = GivenImpl()
         //when we ask for actions
@@ -65,7 +65,7 @@ public class BackEndTest {
         assertEquals(2, given.getActions().size)
     }
 
-    Test fun testOnImpl() {
+    test fun testOnImpl() {
         //given a new (empty) 'OnImpl'
         val on = OnImpl()
         //when we ask for actions

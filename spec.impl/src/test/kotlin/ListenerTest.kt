@@ -1,6 +1,6 @@
 package org.spek.impl.events
 
-import org.junit.Test
+import org.junit.Test as test
 import org.mockito.Mockito
 import org.spek.impl.StepListener
 import org.mockito.BDDMockito
@@ -23,7 +23,7 @@ public class ListenerTest {
         multicaster.addListener(secondListener)
     }
 
-    Test fun givenExecution() {
+    test fun givenExecution() {
         //given two listener with following conditions.
         BDDMockito.given(firstListener.given("Test"))!!.willReturn(firstStepListener)
         BDDMockito.given(secondListener.given("Test"))!!.willReturn(secondStepListener)
@@ -48,7 +48,7 @@ public class ListenerTest {
         Mockito.verify(secondStepListener)!!.executionFailed(throwable)
     }
 
-    Test fun onExecution() {
+    test fun onExecution() {
         //given two listener with following conditions.
         BDDMockito.given(firstListener.on("Test", "Test"))!!.willReturn(firstStepListener)
         BDDMockito.given(secondListener.on("Test", "Test"))!!.willReturn(secondStepListener)
@@ -73,7 +73,7 @@ public class ListenerTest {
         Mockito.verify(secondStepListener)!!.executionFailed(throwable)
     }
 
-    Test fun itExecution() {
+    test fun itExecution() {
         //given two listener with following conditions.
         BDDMockito.given(firstListener.it("Test", "Test", "Test"))!!.willReturn(firstStepListener)
         BDDMockito.given(secondListener.it("Test", "Test", "Test"))!!.willReturn(secondStepListener)

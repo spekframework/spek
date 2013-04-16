@@ -1,6 +1,6 @@
 package org.spek.impl
 
-import org.junit.Test
+import org.junit.Test as test
 import org.mockito.Mockito
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -10,7 +10,7 @@ public class UtilTest {
     val listener = Mockito.mock(javaClass<StepListener>())!!
     val action = Mockito.mock(javaClass<StepListener>())!!
 
-    Test fun successfulSafeExecution() {
+    test fun successfulSafeExecution() {
         //given an action and a listener
         var verification = false
 
@@ -28,7 +28,7 @@ public class UtilTest {
         Mockito.verifyNoMoreInteractions(listener)
     }
 
-    Test fun failedSafeExecution() {
+    test fun failedSafeExecution() {
         //given an action and a listener
        //when safeExecution finished with an error (exception).
         val throwable = RuntimeException("an exception")
