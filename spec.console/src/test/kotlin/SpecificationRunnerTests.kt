@@ -1,4 +1,4 @@
-package org.spek.test
+package org.spek.console.reflect;
 
 public class SpecificationRunnerTests {
 /*
