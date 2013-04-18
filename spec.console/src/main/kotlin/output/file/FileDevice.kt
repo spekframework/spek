@@ -4,6 +4,7 @@ import java.io.Closeable
 import java.io.File
 import java.io.PrintWriter
 import java.io.BufferedWriter
+import org.spek.console.output.OutputDevice
 
 public class FileDevice(filename: String): OutputDevice, Closeable {
     val writer = BufferedWriter(PrintWriter(File(filename)))

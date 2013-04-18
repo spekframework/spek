@@ -3,6 +3,7 @@ package org.spek.console.listeners.text
 import org.junit.Test as test
 import kotlin.test.assertTrue
 import org.mockito.Mockito
+import org.spek.console.output.OutputDevice
 
 public class TextListenerTest {
     val device = Mockito.mock(javaClass<OutputDevice>())!!

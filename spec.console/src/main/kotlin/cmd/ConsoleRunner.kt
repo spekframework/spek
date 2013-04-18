@@ -6,6 +6,7 @@ import org.spek.console.listeners.*
 import org.spek.console.listeners.text.*
 import org.spek.console.output.file.*
 import org.spek.console.output.console.*
+import org.spek.console.output.OutputDevice
 
 fun main(args: Array<String>) {
     if (args.size < 2) {

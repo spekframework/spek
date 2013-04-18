@@ -1,3 +1,5 @@
+package org.spek.console.output
+
 import java.io.File
 import java.io.PrintWriter
 import java.io.FileWriter
