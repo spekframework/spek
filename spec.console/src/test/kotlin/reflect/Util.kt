@@ -1,4 +1,4 @@
-package org.spek.samples
+package org.spek.console.reflect;
 
 import org.spek.console.output.OutputDevice
 
