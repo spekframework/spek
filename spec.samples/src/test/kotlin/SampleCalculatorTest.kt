@@ -1,8 +1,22 @@
-package org.spek.junit.test.samples
+package org.spek.samples
 
-import org.spek.api.*
-import java.io.Console
 import org.spek.console.api.ConsoleSpek
+import org.spek.impl.Runner
+import org.spek.impl.events.Multicaster
+import org.junit.Test as test
+import org.spek.console.listeners.text.PlainTextListener
+import org.spek.console.output.console.ConsoleDevice
+
+class SampleCalculatorTest {
+    test fun calculate() {
+        val listeners = Multicaster()
+        listeners.addListener(PlainTextListener(ConsoleDevice()))
+
+        val givenActions = SampleCalculatorSpecs().allGivens()
+        givenActions forEach { Runner.executeSpec(it, listeners) }
+    }
+}
+
 
 class SampleCalculatorSpecs: ConsoleSpek() {{
     given("a calculator") {
@@ -31,22 +45,6 @@ class SampleCalculatorSpecs: ConsoleSpek() {{
         }
     }
 }
-}
-
-class SampleIncUtilSpecs: ConsoleSpek() {{
-    given("an inc util") {
-        val incUtil = SampleIncUtil()
-        on("calling incVaueBy with 4 and given number 6") {
-            val result = incUtil.incValueBy(4, 6)
-            it("should return 10") {
-                shouldEqual(result, 10)
-            }
-        }
-    }
-}}
-
-class SampleIncUtil {
-    fun incValueBy(value: Int, inc: Int) = value + inc
 }
 
 class SampleCalculator {

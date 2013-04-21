@@ -1,4 +1,4 @@
-package org.spek.test
+package org.spek.console.reflect;
 
 /*
 import org.spek.junit.api.JUnitSpek
