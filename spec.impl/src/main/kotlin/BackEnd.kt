@@ -22,48 +22,54 @@ public trait TestItAction {
     fun run()
 }
 
-public fun givenImpl(description: String, givenExpression: Given.() -> Unit): TestGivenAction {
-    return object:TestGivenAction {
-        public override fun description(): String = "given " + description
-        public override fun performInit(): List<TestOnAction> {
-            val g = GivenImpl()
-            g.givenExpression()
-            return g.getActions()
-        }
+public class SpekImpl: Spek {
+    private val recordedActions = arrayListOf<TestGivenAction>()
+    private val stateManager = StateActionManager()
+
+    override fun given(description: String, givenExpression: Given.() -> Unit) {
+        recordedActions.add(stateManager.state().makeTestGivenAction(description, givenExpression))
+        stateManager.normal()
     }
+
+    override fun skip(why: String): Spek {
+        stateManager.skip(why)
+        return this
+    }
+
+    fun allGivens(): List<TestGivenAction> = recordedActions
 }
 
 public class GivenImpl: Given {
     private val recordedActions = arrayListOf<TestOnAction>()
+    private val stateManager = StateActionManager()
 
     public fun getActions(): List<TestOnAction> = recordedActions
 
     public override fun on(description: String, onExpression: On.() -> Unit) {
-        recordedActions.add(
-                object : TestOnAction {
-                    public override fun description(): String = description
-                    public override fun performInit(): List<TestItAction> {
-                        val o = OnImpl()
-                        o.onExpression()
-                        return o.getActions()
-                    }
-                })
+        recordedActions.add(stateManager.state().makeTestOnAction(description, onExpression))
+        stateManager.normal()
+    }
+
+    override fun skip(why: String): Given {
+        stateManager.skip(why)
+        return this
     }
 }
 
 public class OnImpl: On {
     private val recordedActions = arrayListOf<TestItAction>()
+    private val stateManager = StateActionManager()
 
     public fun getActions(): List<TestItAction> = recordedActions
 
     public override fun it(description: String, itExpression: It.()->Unit) {
-        recordedActions.add(
-                object : TestItAction {
-                    public override fun description(): String = description
-                    public override fun run() {
-                        It().itExpression()
-                    }
-                }
-        )
+        recordedActions.add(stateManager.state().makeTestItAction(description, itExpression))
+        stateManager.normal()
+    }
+
+    override fun skip(why: String): On {
+        stateManager.skip(why)
+        return this
     }
 }
+
