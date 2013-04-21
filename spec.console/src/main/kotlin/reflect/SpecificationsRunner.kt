@@ -3,17 +3,12 @@ package org.spek.console.reflect;
 import org.spek.impl.*
 import org.spek.impl.events.*
 import org.spek.console.reflect.*
-import org.spek.console.listeners.*
-import org.spek.console.listeners.text.*
-import org.spek.console.output.file.*
-import org.spek.console.output.console.*
-import org.spek.api.Spek
 import org.spek.console.api.ConsoleSpek
+import org.spek.api.skip
 
-
-public class SpecificationRunner(val listener : Listener) {
+public class SpecificationRunner(val listener: Listener) {
     private val BASE_CLASS = javaClass<ConsoleSpek>()
-    fun runSpecs(packageName : String) {
+    fun runSpecs(packageName: String) {
         val classes = FileClassLoader.getClasses(BASE_CLASS, packageName)
 
         classes forEach { specificationClass ->
@@ -21,8 +16,28 @@ public class SpecificationRunner(val listener : Listener) {
                 throw RuntimeException("All spec classes should be inherited from $BASE_CLASS")
             }
 
-            val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
-            givenActions forEach {  Runner.executeSpec(it, listener) }
+            var skipped = false
+            val annotations = specificationClass.getAnnotations()!!
+            for (annotation in annotations) {
+                val clazz = annotation!!.annotationType()
+                if (clazz == javaClass<skip>()) {
+                    skipped = true
+                    listener.spek(specificationClass.getName()).executionSkipped("$annotation")
+                }
+            }
+            if (!skipped) {
+                val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
+                givenActions forEach { Runner.executeSpec(it, listener) }
+            }
+
+            //TODO: this is the correct way, but it seems there is bug in kotlin annotations :(
+            //            if (specificationClass.isAnnotationPresent(javaClass<skip>())) {
+            //                val skipAnnotation = specificationClass.getAnnotation(javaClass<skip>())
+            //                listener.spek(specificationClass.getName()).executionSkipped(skipAnnotation!!.why)
+            //            } else {
+            //                val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
+            //                givenActions forEach {  Runner.executeSpec(it, listener) }
+            //            }
         }
     }
 }

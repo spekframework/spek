@@ -5,17 +5,29 @@ import org.spek.impl.StepListener
 import org.spek.console.output.OutputDevice
 
 public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by output {
+    override fun spek(spek: String): StepListener {
+        return object : StepListener {
+            override fun executionSkipped(why: String) {
+                output("Skipped: Spek $spek - Reason: $why")
+            }
+        }
+    }
+
     override fun given(given: String): StepListener {
         return object : StepListener {
             override fun executionStarted() {
-                output("Given ${given}")
+                output("Given $given")
             }
             override fun executionCompleted() {
                 output("")
             }
             override fun executionFailed(error: Throwable) {
-                output("Failed: ${error}")
+                output("Failed: $error")
                 output("")
+            }
+
+            override fun executionSkipped(why: String) {
+                output("Skipped: Given $given - Reason: $why")
             }
         }
     }
@@ -23,11 +35,14 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
     override fun on(given: String, on: String): StepListener {
         return object : StepListener {
             override fun executionStarted() {
-                output("  On ${on}")
+                output("  On $on")
             }
             override fun executionFailed(error: Throwable) {
-                output("  Failed: ${error}")
+                output("  Failed: $error")
                 output("")
+            }
+            override fun executionSkipped(why: String) {
+                output("  Skipped: On $on - Reason: $why")
             }
         }
     }
@@ -35,11 +50,14 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
     override fun it(given: String, on: String, it: String): StepListener {
         return object : StepListener {
             override fun executionStarted() {
-                output("    It ${it}")
+                output("    It $it")
             }
             override fun executionFailed(error: Throwable) {
-                output("    Failed: ${error}")
+                output("    Failed: $error")
                 output("")
+            }
+            override fun executionSkipped(why: String) {
+                output("    Skipped: It $it - Reason: $why")
             }
         }
     }

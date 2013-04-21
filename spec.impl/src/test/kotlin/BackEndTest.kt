@@ -7,19 +7,21 @@ public class BackEndTest {
 
     test fun testGivenImplFunction() {
         //given  a Given with two recorded 'on', first 'on' with a recorded 'it' and the second one with two recorded 'it'
-         val givenAction = givenImpl("Test") {
+        val spek = SpekImpl()
+        spek.given("given Test") {
             this.on("Test On") {
-                this.it("Test It") {}
+                this.it("Test It") { }
             }
-             this.on("Another Test On") {
-                 this.it("It #1") {}
-                 this.it("It #2") {}
-             }
-         }
+            this.on("Another Test On") {
+                this.it("It #1") { }
+                this.it("It #2") { }
+            }
+        }
 
+        val givenAction = spek.allGivens().get(0)
         //when we ask for the description
         //then it should return 'given Test'
-        assertEquals("given Test", givenAction.description())
+        assertEquals("given given Test", givenAction.description())
 
         //when we ask for 'TestOnAction's,
         //then it should return a list of 2.
@@ -55,12 +57,12 @@ public class BackEndTest {
         assertEquals(0, given.getActions().size)
 
         //when we record a new 'On'
-        given.on("Test") {}
+        given.on("Test") { }
         //then it should contains one 'On' action
         assertEquals(1, given.getActions().size)
 
         //when we record another 'On'
-        given.on("Another Test") {}
+        given.on("Another Test") { }
         //then it should contains two 'On' action
         assertEquals(2, given.getActions().size)
     }
@@ -73,12 +75,12 @@ public class BackEndTest {
         assertEquals(0, on.getActions().size)
 
         //when we record a new 'It'
-        on.it("Test") {}
+        on.it("Test") { }
         //then it should contains one 'It' action
         assertEquals(1, on.getActions().size)
 
         //when we record another 'It'
-        on.it("Another Test") {}
+        on.it("Another Test") { }
         //then it should contains two 'It' action
         assertEquals(2, on.getActions().size)
     }
