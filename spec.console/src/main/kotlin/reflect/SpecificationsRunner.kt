@@ -16,6 +16,9 @@ public class SpecificationRunner(val listener: Listener) {
                 throw RuntimeException("All spec classes should be inherited from $BASE_CLASS")
             }
 
+            /*
+            * TODO: need to be refactored when #KT-3534 got fixed.
+            */
             var skipped = false
             val annotations = specificationClass.getAnnotations()!!
             for (annotation in annotations) {
@@ -29,15 +32,6 @@ public class SpecificationRunner(val listener: Listener) {
                 val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
                 givenActions forEach { Runner.executeSpec(it, listener) }
             }
-
-            //TODO: this is the correct way, but it seems there is bug in kotlin annotations :(
-            //            if (specificationClass.isAnnotationPresent(javaClass<skip>())) {
-            //                val skipAnnotation = specificationClass.getAnnotation(javaClass<skip>())
-            //                listener.spek(specificationClass.getName()).executionSkipped(skipAnnotation!!.why)
-            //            } else {
-            //                val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
-            //                givenActions forEach {  Runner.executeSpec(it, listener) }
-            //            }
         }
     }
 }
