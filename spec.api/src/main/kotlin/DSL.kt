@@ -50,4 +50,9 @@ public trait SkipSupport<T> {
     fun skip(why: String = "not given"): T
 }
 
+/*
+*  TODO: the parameter (why) could be optional but due to this bug (#KT-3197),
+*        I had no choice but to make it mandatory for now.
+*  TODO: need to be refactored when #KT-3197 got fixed.
+*/
 Retention(RetentionPolicy.RUNTIME) public annotation class skip(val why: String)
