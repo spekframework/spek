@@ -4,25 +4,19 @@ import kotlin.test.*
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
-public trait Spek {
+public trait Spek: SkipSupport<Spek> {
 
     fun given(description: String, givenExpression: Given.() -> Unit)
-
-    fun skip(why: String = "not given"): Spek
 }
 
-public trait Given {
+public trait Given: SkipSupport<Given> {
 
     fun on(description: String, onExpression: On.() -> Unit)
-
-    fun skip(why: String = "not given"): Given
 }
 
-public trait On {
+public trait On: SkipSupport<On> {
 
     fun it(description: String, itExpression: It.()->Unit)
-
-    fun skip(why: String = "not given"): On
 }
 
 public class It {
@@ -52,4 +46,13 @@ public class It {
     }
 }
 
+public trait SkipSupport<T> {
+    fun skip(why: String = "not given"): T
+}
+
+/*
+*  TODO: the parameter (why) could be optional but due to this bug (#KT-3197),
+*        I had no choice but to make it mandatory for now.
+*  TODO: need to be refactored when #KT-3197 got fixed.
+*/
 Retention(RetentionPolicy.RUNTIME) public annotation class skip(val why: String)

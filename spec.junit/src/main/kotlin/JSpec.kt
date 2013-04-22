@@ -30,7 +30,9 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                 throw RuntimeException("All spec classes should be inherited from ${javaClass<Spek>()}")
             }
 
-            //TODO: need for a better way to identify 'skip' annotation
+            /*
+            * TODO: need to be refactored when #KT-3534 got fixed.
+            */
             var skipped = false
             val annotations = specificationClass.getAnnotations()!!
             for (annotation in annotations) {
