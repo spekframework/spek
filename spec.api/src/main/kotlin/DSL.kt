@@ -4,25 +4,19 @@ import kotlin.test.*
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
-public trait Spek {
+public trait Spek: SkipSupport<Spek> {
 
     fun given(description: String, givenExpression: Given.() -> Unit)
-
-    fun skip(why: String = "not given"): Spek
 }
 
-public trait Given {
+public trait Given: SkipSupport<Given> {
 
     fun on(description: String, onExpression: On.() -> Unit)
-
-    fun skip(why: String = "not given"): Given
 }
 
-public trait On {
+public trait On: SkipSupport<On> {
 
     fun it(description: String, itExpression: It.()->Unit)
-
-    fun skip(why: String = "not given"): On
 }
 
 public class It {
@@ -50,6 +44,10 @@ public class It {
     fun shouldBeFalse<T>(actual: T) {
         assertFalse(actual == false)
     }
+}
+
+public trait SkipSupport<T> {
+    fun skip(why: String = "not given"): T
 }
 
 Retention(RetentionPolicy.RUNTIME) public annotation class skip(val why: String)
