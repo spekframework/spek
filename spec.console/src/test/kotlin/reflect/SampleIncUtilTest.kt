@@ -10,20 +10,21 @@ import kotlin.test.assertEquals
 class SampleIncUtilTest {
 
     test fun incUtil() {
+
+        val expected = """
+Given given an inc util
+  On calling incVaueBy with 4 and given number 6
+    It should return 10
+"""
+
         val buffer = StringBuilder()
         val listeners = Multicaster()
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
         val givenActions = SampleIncUtilSpecs().allGivens()
-        givenActions forEach {  Runner.executeSpec(it, listeners) }
+        givenActions forEach { Runner.executeSpec(it, listeners) }
 
-        assertEquals(expected(), buffer.toString())
-    }
-
-    private fun expected(): String {
-        return "Given given an inc util" +
-        "On calling incVaueBy with 4 and given number 6" +
-        "It should return 10"
+        assertEquals(expected.trim(), buffer.toString().trim())
     }
 }
 
@@ -38,7 +39,8 @@ class SampleIncUtilSpecs: ConsoleSpek() {{
             }
         }
     }
-}}
+}
+}
 
 class SampleIncUtil {
     fun incValueBy(value: Int, inc: Int) = value + inc

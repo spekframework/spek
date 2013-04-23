@@ -36,11 +36,14 @@ public class StepMulticaster(val listeners: List<StepListener>): StepListener {
     override fun executionStarted() {
         listeners forEach { it.executionStarted() }
     }
+    override fun executionCompleted() {
+        listeners forEach { it.executionCompleted() }
+    }
     override fun executionSkipped(why: String) {
         listeners forEach { it.executionSkipped(why) }
     }
-    override fun executionCompleted() {
-        listeners forEach { it.executionCompleted() }
+    override fun executionPending(why: String) {
+        listeners forEach { it.executionPending(why) }
     }
     override fun executionFailed(error: Throwable) {
         listeners forEach { it.executionFailed(error) }
