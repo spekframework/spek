@@ -3,7 +3,7 @@ package org.spek.console.api
 import org.spek.api.*
 import org.spek.impl.*
 
-public abstract class ConsoleSpek : Spek {
+public abstract class ConsoleSpek: Spek {
 
     private val spekImpl = SpekImpl()
 
@@ -11,10 +11,5 @@ public abstract class ConsoleSpek : Spek {
         spekImpl.given(description, givenExpression)
     }
 
-    override fun skip(why: String): Spek {
-        spekImpl.skip(why)
-        return this
-    }
-
-    fun allGivens() : List<TestGivenAction> = spekImpl.allGivens()
+    fun allGivens(): List<TestGivenAction> = spekImpl.allGivens()
 }

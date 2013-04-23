@@ -9,6 +9,16 @@ import kotlin.test.assertEquals
 
 class SampleCalculatorTest {
     test fun calculate() {
+
+        val expected = """
+Given given a calculator
+  On calling sum with two numbers
+    It should return the result of adding the first number to the second number
+    It should another
+  On calling substract with two numbers
+    It should return the result of substracting the second number from the first number
+"""
+
         val buffer = StringBuilder()
         val listeners = Multicaster()
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
@@ -16,17 +26,7 @@ class SampleCalculatorTest {
         val givenActions = SampleCalculatorSpecs().allGivens()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
-        assertEquals(expected(), buffer.toString())
-    }
-
-
-    private fun expected(): String {
-        return "Given given a calculator" +
-        "On calling sum with two numbers" +
-        "It should return the result of adding the first number to the second number" +
-        "It should another" +
-        "On calling substract with two numbers" +
-        "It should return the result of substracting the second number from the first number"
+        assertEquals(expected.trim(), buffer.toString().trim())
     }
 }
 

@@ -4,19 +4,19 @@ import kotlin.test.*
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
-public trait Spek: SkipSupport<Spek> {
+public trait Spek: SkipSupport {
 
-    fun given(description: String, givenExpression: Given.() -> Unit)
+    fun given(description: String, givenExpression: Given.() -> Unit = { throw PendingException("not given") })
 }
 
-public trait Given: SkipSupport<Given> {
+public trait Given {
 
-    fun on(description: String, onExpression: On.() -> Unit)
+    fun on(description: String, onExpression: On.() -> Unit = { throw PendingException("not given") })
 }
 
-public trait On: SkipSupport<On> {
+public trait On {
 
-    fun it(description: String, itExpression: It.()->Unit)
+    fun it(description: String, itExpression: It.()->Unit = { throw PendingException("not given") })
 }
 
 public class It {
@@ -46,8 +46,9 @@ public class It {
     }
 }
 
-public trait SkipSupport<T> {
-    fun skip(why: String = "not given"): T
+trait SkipSupport {
+    final fun skip(why: String = "not given") = throw SkippedException(why)
+    final fun pending(why: String = "not given") = throw PendingException(why)
 }
 
 /*
@@ -56,3 +57,7 @@ public trait SkipSupport<T> {
 *  TODO: need to be refactored when #KT-3197 got fixed.
 */
 Retention(RetentionPolicy.RUNTIME) public annotation class skip(val why: String)
+
+class SkippedException(message: String): RuntimeException(message)
+
+class PendingException(message: String): RuntimeException(message)

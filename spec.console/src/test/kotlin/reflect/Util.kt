@@ -6,6 +6,6 @@ class BufferedOutputDevice(buffer: StringBuilder): OutputDevice {
     val buffer = buffer
 
     override fun output(message: String) {
-        buffer.append(message.trim())
+        buffer.append(message).append("\n")
     }
 }
