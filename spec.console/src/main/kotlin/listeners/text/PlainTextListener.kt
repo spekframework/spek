@@ -8,7 +8,10 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
     override fun spek(spek: String): StepListener {
         return object : StepListener {
             override fun executionSkipped(why: String) {
-                output("Skipped: Spek $spek - Reason: $why")
+                output("Skipped Spek '$spek'. Reason: $why")
+            }
+            override fun executionPending(why: String) {
+                output("Pending Spek '$spek'. Reason: $why")
             }
         }
     }
@@ -21,13 +24,15 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
             override fun executionCompleted() {
                 output("")
             }
+            override fun executionSkipped(why: String) {
+                output("Skipped Given '$given'. Reason: $why")
+            }
+            override fun executionPending(why: String) {
+                output("Pending Given '$given'. Reason: $why")
+            }
             override fun executionFailed(error: Throwable) {
                 output("Failed: $error")
                 output("")
-            }
-
-            override fun executionSkipped(why: String) {
-                output("Skipped: Given $given - Reason: $why")
             }
         }
     }
@@ -42,7 +47,10 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
                 output("")
             }
             override fun executionSkipped(why: String) {
-                output("  Skipped: On $on - Reason: $why")
+                output("  Skipped On '$on'. Reason: $why")
+            }
+            override fun executionPending(why: String) {
+                output("  Pending On '$on'. Reason: $why")
             }
         }
     }
@@ -57,7 +65,10 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
                 output("")
             }
             override fun executionSkipped(why: String) {
-                output("    Skipped: It $it - Reason: $why")
+                output("    Skipped It '$it'. Reason: $why")
+            }
+            override fun executionPending(why: String) {
+                output("    Pending It '$it'. Reason: $why")
             }
         }
     }

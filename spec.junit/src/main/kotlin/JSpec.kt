@@ -7,7 +7,7 @@ import org.spek.impl.*
 import org.spek.impl.events.*
 import org.spek.junit.api.*
 
-public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
+public class JSpec<T>(val specificationClass: Class<T>): Runner() {
     private val rootDescription = Description.createSuiteDescription(specificationClass)!!
     public override fun getDescription(): Description? = rootDescription
 
@@ -51,8 +51,8 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                         override fun spek(spek: String): StepListener {
                             return object : StepListener {
                                 override fun executionSkipped(why: String) {
-                                    val msg = "Skipped - Reason: $why"
-                                    notifier.fireTestIgnored(Description.createTestDescription("$spek", msg))
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$spek", "Skipped. Reason: $why"))
                                 }
                             }
                         }
@@ -60,13 +60,16 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                         override fun given(given: String): StepListener {
                             return object : StepListener {
                                 override fun executionSkipped(why: String) {
-                                    val msg = "Skipped - Reason: $why"
-                                    notifier.fireTestIgnored(Description.createTestDescription("$given", msg))
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$given", "Skipped. Reason: $why"))
                                 }
-
+                                override fun executionPending(why: String) {
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$given", "Pending. Reason: $why"))
+                                }
                                 override fun executionFailed(error: Throwable) {
-                                    notifier.fireTestFailure(Failure(
-                                            Description.createTestDescription("$given", "given"), error))
+                                    notifier.fireTestFailure(Failure(Description
+                                            .createTestDescription("$given", "given"), error))
                                 }
                             }
                         }
@@ -76,10 +79,15 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                             return object : StepListener {
 
                                 override fun executionSkipped(why: String) {
-                                    val msg = "Skipped - Reason: $why"
-                                    notifier.fireTestIgnored(Description.createTestDescription("$given : $on", msg))
-                                }
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$given : $on", "Skipped. Reason: $why"))
 
+                                }
+                                override fun executionPending(why: String) {
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$given : $on", "Pending. Reason: $why"))
+
+                                }
                                 override fun executionFailed(error: Throwable) {
                                     notifier.fireTestFailure(Failure(
                                             Description.createTestDescription("$given : $on", "on"),
@@ -102,9 +110,13 @@ public class JSpec<T>(val specificationClass: Class<T>) : Runner() {
                                 }
 
                                 override fun executionSkipped(why: String) {
-                                    val msg = "Skipped - Reason: $why"
-                                    notifier.fireTestIgnored(
-                                            Description.createTestDescription("$given : $on : $it", msg))
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$given : $on : $it", "Skipped. Reason: $why"))
+                                }
+
+                                override fun executionPending(why: String) {
+                                    notifier.fireTestIgnored(Description
+                                            .createTestDescription("$given : $on : $it", "Pending. Reason: $why"))
                                 }
 
                                 override fun executionFailed(error: Throwable) {
