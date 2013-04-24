@@ -1,8 +1,5 @@
 package org.spek.impl
 
-import org.spek.api.SkippedException
-import org.spek.api.PendingException
-
 public trait StepListener {
     fun executionStarted() {
     }
