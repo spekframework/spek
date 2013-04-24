@@ -48,14 +48,10 @@ public class It {
 
 trait SkipSupport {
 
-    final fun skip(why: String = "not given") = throw SkippedException(why)
+    fun skip(why: String = "not given")
 
-    final fun pending(why: String = "not given") = throw PendingException(why)
+    fun pending(why: String = "not given")
 }
-
-class SkippedException(message: String): RuntimeException(message)
-
-class PendingException(message: String): RuntimeException(message)
 
 /*
 *  TODO: the parameter (why) could be optional but due to this bug (#KT-3197),
