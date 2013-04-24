@@ -6,17 +6,17 @@ import java.lang.annotation.RetentionPolicy
 
 public trait Spek: SkipSupport {
 
-    fun given(description: String, givenExpression: Given.() -> Unit = { throw PendingException("not given") })
+    fun given(description: String, givenExpression: Given.() -> Unit = { pending() })
 }
 
-public trait Given {
+public trait Given: SkipSupport {
 
-    fun on(description: String, onExpression: On.() -> Unit = { throw PendingException("not given") })
+    fun on(description: String, onExpression: On.() -> Unit = { pending() })
 }
 
-public trait On {
+public trait On: SkipSupport {
 
-    fun it(description: String, itExpression: It.()->Unit = { throw PendingException("not given") })
+    fun it(description: String, itExpression: It.() -> Unit = { pending() })
 }
 
 public class It {
@@ -47,9 +47,15 @@ public class It {
 }
 
 trait SkipSupport {
+
     final fun skip(why: String = "not given") = throw SkippedException(why)
+
     final fun pending(why: String = "not given") = throw PendingException(why)
 }
+
+class SkippedException(message: String): RuntimeException(message)
+
+class PendingException(message: String): RuntimeException(message)
 
 /*
 *  TODO: the parameter (why) could be optional but due to this bug (#KT-3197),
@@ -58,6 +64,3 @@ trait SkipSupport {
 */
 Retention(RetentionPolicy.RUNTIME) public annotation class skip(val why: String)
 
-class SkippedException(message: String): RuntimeException(message)
-
-class PendingException(message: String): RuntimeException(message)
