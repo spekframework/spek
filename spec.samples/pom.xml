@@ -23,6 +23,10 @@
             <artifactId>spek-console</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.spek</groupId>
+            <artifactId>spek-junit</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
