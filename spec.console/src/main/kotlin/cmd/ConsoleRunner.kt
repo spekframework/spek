@@ -12,10 +12,13 @@ fun main(args: Array<String>) {
     if (args.size < 2) {
         printUsage()
     } else {
-        val options = getOptions(args)
-        val specRunner = setupRunner(options)
-        specRunner.runSpecs(options.packageName)
+        runSpecs(getOptions(args))
     }
+}
+
+fun runSpecs(options: Options) {
+    val specRunner = setupRunner(options)
+    specRunner.runSpecs(options.packageName)
 }
 
 fun getOptions(args: Array<String>): Options {

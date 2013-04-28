@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>Spek Implementation</name>
-    <description>A Specification framework for Kotlin</description>
+    <description>A Specification Framework for Kotlin</description>
     <url>https://github.com/hhariri/spek</url>
 
     <dependencies>
