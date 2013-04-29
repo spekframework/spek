@@ -24,7 +24,7 @@ class SkipSampleTest {
 
 class SkipSample: ConsoleSpek() {{
     given("a sample") {
-        on("calling a functiono") {
+        on("calling a function") {
             val result = 10
             it("should return 10") {
                 shouldEqual(result, 10)

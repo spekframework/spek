@@ -47,13 +47,13 @@
     </dependencies>
 
     <build>
-        <!--<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>-->
-        <!--<testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>-->
+        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
-            <!--<plugin>-->
-                <!--<artifactId>kotlin-maven-plugin</artifactId>-->
-                <!--<groupId>org.jetbrains.kotlin</groupId>-->
-            <!--</plugin>-->
+            <plugin>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <groupId>org.jetbrains.kotlin</groupId>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
