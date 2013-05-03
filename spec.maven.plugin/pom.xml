@@ -1,15 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.spek</groupId>
         <artifactId>spek</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>spek-samples</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>spek-maven-plugin</artifactId>
+    <packaging>maven-plugin</packaging>
 
-    <name>Spek Samples</name>
+    <name>Spek Maven Plugin</name>
     <description>A Specification Framework for Kotlin</description>
     <url>https://github.com/hhariri/spek</url>
 
@@ -19,16 +20,24 @@
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.spek</groupId>
-            <artifactId>spek-api</artifactId>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>2.0</version>
         </dependency>
         <dependency>
             <groupId>org.spek</groupId>
-            <artifactId>spek-console</artifactId>
+            <artifactId>spek-impl</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.spek</groupId>
-            <artifactId>spek-junit</artifactId>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-project</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -36,47 +45,42 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
             </plugin>
             <plugin>
-                <groupId>org.spek</groupId>
-                <artifactId>spek-maven-plugin</artifactId>
-                <version>${project.version}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <goalPrefix>spek-maven-plugin</goalPrefix>
+                    <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+                </configuration>
                 <executions>
                     <execution>
-                        <!--Default Phase is : Test-->
-                        <!--<phase>test</phase>-->
+                        <id>mojo-descriptor</id>
                         <goals>
-                            <goal>spek</goal>
+                            <goal>descriptor</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>help-goal</id>
+                        <goals>
+                            <goal>helpmojo</goal>
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <!--Default Package is the project root package-->
-                    <!--<packageName></packageName>-->
-
-                    <!--Default is true -->
-                    <!--<text>true</text>-->
-
-                    <!--Default is false-->
-                    <!--<html>false</html>-->
-
-                    <!--Default is null-->
-                    <!--<outputFile></outputFile>-->
-
-                    <!--Default is null-->
-                    <!--<cssFile></cssFile>-->
-                </configuration>
             </plugin>
         </plugins>
     </build>
