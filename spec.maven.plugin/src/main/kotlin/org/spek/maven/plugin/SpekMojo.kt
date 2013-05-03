@@ -2,7 +2,7 @@ package org.spek.maven.plugin
 
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.project.MavenProject
-import org.spek.console.cmd.Options
+import org.spek.impl.console.cmd.Options
 import java.net.URL
 import java.io.File
 import java.net.URLClassLoader
@@ -10,7 +10,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo as mojo
 import org.apache.maven.plugins.annotations.Parameter as parameter
-import org.spek.console.cmd.runSpecs
+import org.spek.impl.console.cmd.runSpecs
 
 mojo(name = "spek", requiresDependencyResolution = ResolutionScope.TEST, defaultPhase = LifecyclePhase.TEST)
 public open class SpekMojo: AbstractMojo() {

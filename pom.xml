@@ -19,8 +19,6 @@
     <modules>
         <module>spec.api</module>
         <module>spec.impl</module>
-        <module>spec.console</module>
-        <module>spec.junit</module>
         <module>spec.maven.plugin</module>
         <module>spec.samples</module>
     </modules>
@@ -39,16 +37,6 @@
             <dependency>
                 <groupId>org.spek</groupId>
                 <artifactId>spek-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spek</groupId>
-                <artifactId>spek-console</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spek</groupId>
-                <artifactId>spek-junit</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
