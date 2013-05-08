@@ -1,15 +1,11 @@
 package org.spek.samples.skip
 
-import org.spek.console.api.ConsoleSpek
-import org.spek.impl.Runner
 import org.spek.impl.events.Multicaster
 import org.junit.Test as test
-import org.spek.console.listeners.text.PlainTextListener
-import org.spek.console.output.console.ConsoleDevice
-import java.lang.annotation.Retention
-import java.lang.annotation.RetentionPolicy
-import org.spek.api.skip
-import org.spek.console.reflect.SpecificationRunner
+import org.spek.impl.AbstractSpek
+import org.spek.impl.console.reflect.SpecificationRunner
+import org.spek.impl.console.listeners.text.PlainTextListener
+import org.spek.impl.console.output.console.ConsoleDevice
 
 class SkipSampleTest {
 
@@ -22,7 +18,7 @@ class SkipSampleTest {
 }
 
 
-class SkipSample: ConsoleSpek() {{
+class SkipSample: AbstractSpek() {{
     given("a sample") {
         on("calling a function") {
             val result = 10
@@ -35,5 +31,6 @@ class SkipSample: ConsoleSpek() {{
             }
         }
     }
-}}
+}
+}
 

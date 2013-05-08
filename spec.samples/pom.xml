@@ -20,15 +20,7 @@
         </dependency>
         <dependency>
             <groupId>org.spek</groupId>
-            <artifactId>spek-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.spek</groupId>
-            <artifactId>spek-console</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.spek</groupId>
-            <artifactId>spek-junit</artifactId>
+            <artifactId>spek-impl</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

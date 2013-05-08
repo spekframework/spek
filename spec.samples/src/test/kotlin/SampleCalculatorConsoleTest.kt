@@ -1,11 +1,11 @@
 package org.spek.samples
 
-import org.spek.console.api.ConsoleSpek
 import org.spek.impl.Runner
 import org.spek.impl.events.Multicaster
 import org.junit.Test as test
-import org.spek.console.listeners.text.PlainTextListener
-import org.spek.console.output.console.ConsoleDevice
+import org.spek.impl.AbstractSpek
+import org.spek.impl.console.listeners.text.PlainTextListener
+import org.spek.impl.console.output.console.ConsoleDevice
 
 class SampleCalculatorTest {
     test fun calculate() {
@@ -18,7 +18,7 @@ class SampleCalculatorTest {
 }
 
 
-class CalculatorConsoleSpecs: ConsoleSpek() {{
+class CalculatorConsoleSpecs: AbstractSpek() {{
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {
