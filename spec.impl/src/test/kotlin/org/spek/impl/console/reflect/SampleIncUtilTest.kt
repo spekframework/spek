@@ -1,50 +1,48 @@
-package org.spek.samples
+package org.spek.impl.console.reflect
 
 import org.spek.impl.Runner
 import org.spek.impl.events.Multicaster
 import org.junit.Test as test
+import org.spek.impl.console.listeners.text.PlainTextListener
 import kotlin.test.assertEquals
 import org.spek.impl.AbstractSpek
-import org.spek.impl.console.listeners.text.PlainTextListener
-import org.spek.impl.console.output.console.ConsoleDevice
 
 class SampleIncUtilTest {
 
     test fun incUtil() {
+
+        val expected = """
+Given given an inc util
+  On calling incVaueBy with 4 and given number 6
+    It should return 10
+"""
+
+        val buffer = StringBuilder()
         val listeners = Multicaster()
-        listeners.addListener(PlainTextListener(ConsoleDevice()))
+        listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = IncUtilConsoleSpecs().allGivens()
+        val givenActions = SampleIncUtilSpecs().allGivens()
         givenActions forEach { Runner.executeSpec(it, listeners) }
+
+        assertEquals(expected.trim(), buffer.toString().trim())
     }
 }
 
 
-class IncUtilConsoleSpecs: AbstractSpek() {{
+class SampleIncUtilSpecs: AbstractSpek() {{
     given("an inc util") {
-
         val incUtil = SampleIncUtil()
-
         on("calling incVaueBy with 4 and given number 6") {
-
             val result = incUtil.incValueBy(4, 6)
-
             it("should return 10") {
-
                 shouldEqual(result, 10)
-
-            }
-        }
-
-        on("calling incValueBy with 10 and given number 2") {
-            val result = incUtil.incValueBy(10, 2)
-
-            it("shut return 12") {
-                assertEquals(result, 10)
             }
         }
     }
 }
 }
 
+class SampleIncUtil {
+    fun incValueBy(value: Int, inc: Int) = value + inc
+}
 

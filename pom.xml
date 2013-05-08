@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <name>Spek</name>
-    <description>A Specification framework for Kotlin</description>
+    <description>A Specification Framework for Kotlin</description>
     <url>https://github.com/hhariri/spek</url>
 
     <properties>
@@ -19,8 +19,7 @@
     <modules>
         <module>spec.api</module>
         <module>spec.impl</module>
-        <module>spec.console</module>
-        <module>spec.junit</module>
+        <module>spec.maven.plugin</module>
         <module>spec.samples</module>
     </modules>
     <dependencyManagement>
@@ -42,12 +41,7 @@
             </dependency>
             <dependency>
                 <groupId>org.spek</groupId>
-                <artifactId>spek-console</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.spek</groupId>
-                <artifactId>spek-junit</artifactId>
+                <artifactId>spek-maven-plugin</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

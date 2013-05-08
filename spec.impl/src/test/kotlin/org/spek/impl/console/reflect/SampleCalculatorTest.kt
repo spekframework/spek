@@ -1,24 +1,37 @@
-package org.spek.samples
+package org.spek.impl.console.reflect
 
 import org.spek.impl.Runner
 import org.spek.impl.events.Multicaster
 import org.junit.Test as test
-import org.spek.impl.AbstractSpek
 import org.spek.impl.console.listeners.text.PlainTextListener
-import org.spek.impl.console.output.console.ConsoleDevice
+import kotlin.test.assertEquals
+import org.spek.impl.AbstractSpek
 
 class SampleCalculatorTest {
     test fun calculate() {
-        val listeners = Multicaster()
-        listeners.addListener(PlainTextListener(ConsoleDevice()))
 
-        val givenActions = CalculatorConsoleSpecs().allGivens()
+        val expected = """
+Given given a calculator
+  On calling sum with two numbers
+    It should return the result of adding the first number to the second number
+    It should another
+  On calling substract with two numbers
+    It should return the result of substracting the second number from the first number
+"""
+
+        val buffer = StringBuilder()
+        val listeners = Multicaster()
+        listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
+
+        val givenActions = SampleCalculatorSpecs().allGivens()
         givenActions forEach { Runner.executeSpec(it, listeners) }
+
+        assertEquals(expected.trim(), buffer.toString().trim())
     }
 }
 
 
-class CalculatorConsoleSpecs: AbstractSpek() {{
+class SampleCalculatorSpecs: AbstractSpek() {{
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {
@@ -47,3 +60,7 @@ class CalculatorConsoleSpecs: AbstractSpek() {{
 }
 }
 
+class SampleCalculator {
+    fun sum(x: Int, y: Int) = x + y
+    fun subtract(x: Int, y: Int) = x - y
+}
