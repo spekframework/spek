@@ -12,25 +12,18 @@ public class SpecificationRunner(val listener: Listener) {
         val classes = FileClassLoader.getClasses(BASE_CLASS, packageName)
 
         classes forEach { specificationClass ->
-            if (!BASE_CLASS.isAssignableFrom(specificationClass)) {
-                throw RuntimeException("All spec classes should be inherited from $BASE_CLASS")
-            }
-
-            /*
-            * TODO: need to be refactored when #KT-3534 got fixed.
-            */
-            var skipped = false
-            val annotations = specificationClass.getAnnotations()!!
-            for (annotation in annotations) {
-                val clazz = annotation!!.annotationType()
-                if (clazz == javaClass<skip>()) {
-                    skipped = true
-                    listener.spek(specificationClass.getName()).executionSkipped("$annotation")
+            Util.safeExecute( specificationClass, object : StepListener {
+                override fun executionSkipped(why: String) {
+                    listener.spek(specificationClass.name()).executionSkipped(why)
                 }
-            }
-            if (!skipped) {
-                val givenActions = (specificationClass.newInstance() as ConsoleSpek).allGivens()
-                givenActions forEach { Runner.executeSpec(it, listener) }
+                override fun executionPending(why: String) {
+                    super<StepListener>.executionPending(why)
+                }
+                override fun executionFailed(error: Throwable) {
+                    super<StepListener>.executionFailed(error)
+                }
+            }) {
+                allGiven() forEach { Runner.executeSpec(it, listener) }
             }
         }
     }
