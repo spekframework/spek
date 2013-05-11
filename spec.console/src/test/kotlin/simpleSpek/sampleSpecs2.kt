@@ -7,7 +7,7 @@ import org.spek.console.api.*
 
 spek public fun Spek.this_is_test() {
     given("Outside it is raining") {
-        on("upmbrella") {
+        on("umbrella") {
             it("should not be raining") {
                 shouldBeTrue(true)
             }
