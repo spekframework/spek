@@ -5,7 +5,7 @@ import org.spek.api.annotations.*
 import org.spek.console.api.*
 
 
-spek public fun Spek.this_is_test() {
+spek fun Spek.this_is_test() {
     given("Outside it is raining") {
         on("umbrella") {
             it("should not be raining") {
