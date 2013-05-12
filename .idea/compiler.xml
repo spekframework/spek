@@ -32,12 +32,12 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="spek" target="1.7" />
-      <module name="spek-api" target="1.7" />
-      <module name="spek-console" target="1.7" />
-      <module name="spek-impl" target="1.7" />
-      <module name="spek-junit" target="1.7" />
-      <module name="spek-samples" target="1.7" />
+      <module name="spek" target="1.6" />
+      <module name="spek-api" target="1.6" />
+      <module name="spek-console" target="1.6" />
+      <module name="spek-impl" target="1.6" />
+      <module name="spek-junit" target="1.6" />
+      <module name="spek-samples" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
