@@ -12,17 +12,7 @@ public class SpecificationRunner(val listener: Listener) {
         val classes = FileClassLoader.getClasses(BASE_CLASS, packageName)
 
         classes forEach { specificationClass ->
-            Util.safeExecute( specificationClass, object : StepListener {
-                override fun executionSkipped(why: String) {
-                    listener.spek(specificationClass.name()).executionSkipped(why)
-                }
-                override fun executionPending(why: String) {
-                    super<StepListener>.executionPending(why)
-                }
-                override fun executionFailed(error: Throwable) {
-                    super<StepListener>.executionFailed(error)
-                }
-            }) {
+            Util.safeExecute( specificationClass, listener.spek(specificationClass.name())) {
                 allGiven() forEach { Runner.executeSpec(it, listener) }
             }
         }
