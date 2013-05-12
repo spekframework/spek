@@ -18,7 +18,7 @@ import org.reflections.util.ClasspathHelper
  * @author hadihariri, jonnyzzz
  */
 public object FileClassLoader {
-    public fun <T : SpekImpl> getClasses(clazz : Class<T>, packageName : String ) : List<DetectedSpek>{
+    public fun getClasses(packageName : String ) : List<DetectedSpek>{
         val result = arrayListOf<DetectedSpek>()
 
         var reflectionConfig = ConfigurationBuilder.build(packageName)!!
@@ -27,7 +27,7 @@ public object FileClassLoader {
         reflectionConfig.useParallelExecutor()
         val reflections = Reflections(reflectionConfig);
 
-        result addAll (reflections.getSubTypesOf(clazz)!! map { ClassSpek(it) })
+        result addAll (reflections.getSubTypesOf(javaClass<SpekImpl>())!! map { ClassSpek(it) })
 
         val spekClazz = AnnotationsHelper.toAnnotationClazz(javaClass<spek>())!!
         val annotatedMethods = reflections.getMethodsAnnotatedWith(spekClazz)!!
