@@ -31,7 +31,7 @@ public class JSpec<T>(val specificationClass: Class<T>): Runner() {
             }
 
             /*
-            * TODO: need to be refactored when #KT-3534 got fixed.
+            * TODO: replace duplicated code
             */
             var skipped = false
             val annotations = specificationClass.getAnnotations()!!
