@@ -14,3 +14,4 @@ out/
 ~$*
 .DS_Store/
 lib/kotlin-runtime.jar
+*/target/*
