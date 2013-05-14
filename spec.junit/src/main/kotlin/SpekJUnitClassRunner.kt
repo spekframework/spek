@@ -7,7 +7,7 @@ import org.spek.impl.*
 import org.spek.impl.events.*
 import org.spek.junit.api.*
 
-public class JSpec<T>(val specificationClass: Class<T>): Runner() {
+public class SpekJUnitClassRunner<T>(val specificationClass: Class<T>): Runner() {
     private val rootDescription = Description.createSuiteDescription(specificationClass)!!
     public override fun getDescription(): Description? = rootDescription
 

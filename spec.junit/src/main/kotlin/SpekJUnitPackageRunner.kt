@@ -8,7 +8,7 @@ import org.spek.console.reflect.SpecificationRunner
 import org.spek.junit.impl.JUnitLogger
 import org.junit.Test
 
-public open class JUnitMarker(_ : Class<*>) : Runner() {
+public open class SpekJUnitPackageRunner(_ : Class<*>) : Runner() {
     private fun packageName() : String = getClass().getPackage()!!.getName()!!
 
     public override fun getDescription(): Description? = Description.createSuiteDescription(packageName())
