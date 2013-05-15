@@ -5,18 +5,18 @@ import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
 
 public trait Spek: SkipSupport {
-
-    fun given(description: String, givenExpression: Given.() -> Unit = { pending() })
+    fun given(description: String, givenExpression: Given.() -> Unit)
+    fun given(description: String)
 }
 
 public trait Given: SkipSupport {
-
-    fun on(description: String, onExpression: On.() -> Unit = { pending() })
+    fun on(description: String, onExpression: On.() -> Unit)
+    fun on(description: String)
 }
 
 public trait On: SkipSupport {
-
-    fun it(description: String, itExpression: It.() -> Unit = { pending() })
+    fun it(description: String, itExpression: It.() -> Unit)
+    fun it(description: String)
 }
 
 public class It {
@@ -47,8 +47,9 @@ public class It {
 }
 
 trait SkipSupport {
+    fun skip(why: String)
+    fun skip()
 
-    fun skip(why: String = "not given")
-
-    fun pending(why: String = "not given")
+    fun pending(why: String)
+    fun pending()
 }

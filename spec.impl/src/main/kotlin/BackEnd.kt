@@ -22,7 +22,7 @@ public trait TestItAction {
     fun run()
 }
 
-open public class SpekImpl: Spek, SkipSupportImpl() {
+open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
     private val recordedActions = arrayListOf<TestGivenAction>()
 
     override fun given(description: String, givenExpression: Given.() -> Unit) {
@@ -40,7 +40,7 @@ open public class SpekImpl: Spek, SkipSupportImpl() {
     fun allGivens(): List<TestGivenAction> = recordedActions
 }
 
-public class GivenImpl: Given, SkipSupportImpl() {
+public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
     private val recordedActions = arrayListOf<TestOnAction>()
 
     public fun getActions(): List<TestOnAction> = recordedActions
@@ -58,7 +58,7 @@ public class GivenImpl: Given, SkipSupportImpl() {
     }
 }
 
-public class OnImpl: On, SkipSupportImpl() {
+public class OnImpl: OnWithDefaults, SkipSupportImpl() {
     private val recordedActions = arrayListOf<TestItAction>()
 
     public fun getActions(): List<TestItAction> = recordedActions
@@ -72,7 +72,7 @@ public class OnImpl: On, SkipSupportImpl() {
     }
 }
 
-open class SkipSupportImpl: SkipSupport {
+open class SkipSupportImpl: SkipSupportWithDefaults {
 
     override fun skip(why: String) = throw SkippedException(why)
 
