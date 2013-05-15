@@ -12,13 +12,13 @@ import org.spek.impl.AnnotationsHelper
 import org.reflections.util.ConfigurationBuilder
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
-import org.reflections.util.ClasspathHelper
+import java.lang.reflect.Modifier
 
 /**
  * @author hadihariri, jonnyzzz
  */
 public object FileClassLoader {
-    public fun getClasses(packageName : String ) : List<DetectedSpek>{
+    public fun findTestsInPackage(packageName : String ) : List<DetectedSpek>{
         val result = arrayListOf<DetectedSpek>()
 
         var reflectionConfig = ConfigurationBuilder.build(packageName)!!
@@ -33,6 +33,20 @@ public object FileClassLoader {
         val annotatedMethods = reflections.getMethodsAnnotatedWith(spekClazz)!!
 
         result addAll (annotatedMethods map { ExtensionFunctionSpek(it)})
+
+        return result
+    }
+
+    public fun findTestsInClass(clazz : Class<*>) : List<DetectedSpek>{
+        val result = arrayListOf<DetectedSpek>()
+
+        if (javaClass<SpekImpl>().isAssignableFrom(clazz)) {
+            result add ClassSpek(clazz as Class<SpekImpl>)
+        }
+
+        result addAll clazz.getMethods()
+                .filter { Modifier.isStatic(it.getModifiers()) &&  AnnotationsHelper.hasAnnotationClazz(it, javaClass<spek>()) }
+                .map { ExtensionFunctionSpek(it)}
 
         return result
     }
@@ -55,6 +69,7 @@ public data class ExtensionFunctionSpek(val method : Method) : DetectedSpek {
     override fun name(): String = method.toString()
     override fun allGiven(): List<TestGivenAction> {
         val builder = SpekImpl()
+        //TODO: assert method signature
 
         method.checkSkipped()
         method.invoke(null, builder)

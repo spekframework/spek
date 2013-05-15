@@ -14,7 +14,7 @@ public class SkipTest {
 
     test fun skipIt() {
 
-        JSpec(javaClass<SkipItSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<SkipItSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(1))!!.fireTestIgnored(captor.capture())
@@ -25,7 +25,7 @@ public class SkipTest {
 
     test fun skipOn() {
 
-        JSpec(javaClass<SkipOnSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<SkipOnSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(1))!!.fireTestIgnored(captor.capture())
@@ -36,7 +36,7 @@ public class SkipTest {
 
     test fun skipGiven() {
 
-        JSpec(javaClass<SkipGivenSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<SkipGivenSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(1))!!.fireTestIgnored(captor.capture())
@@ -47,7 +47,7 @@ public class SkipTest {
 
     test fun skipSpek() {
 
-        JSpec(javaClass<SkipSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<SkipSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(1))!!.fireTestIgnored(captor.capture())
@@ -58,7 +58,7 @@ public class SkipTest {
 
     test fun pendingIt() {
 
-        JSpec(javaClass<PendingItSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<PendingItSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(2))!!.fireTestIgnored(captor.capture())
@@ -72,7 +72,7 @@ public class SkipTest {
 
     test fun pendingOn() {
 
-        JSpec(javaClass<PendingOnSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<PendingOnSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(2))!!.fireTestIgnored(captor.capture())
@@ -87,7 +87,7 @@ public class SkipTest {
 
     test fun pendingGiven() {
 
-        JSpec(javaClass<PendingGivenSpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<PendingGivenSpek>()).run(notifier)
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(2))!!.fireTestIgnored(captor.capture())

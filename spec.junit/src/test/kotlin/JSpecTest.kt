@@ -20,7 +20,7 @@ public class JSpecTest {
 
         //given a spek (MySpek - the below class in this file)
         //when we run this spek
-        JSpec(javaClass<MySpek>()).run(notifier)
+        SpekJUnitClassRunner(javaClass<MySpek>()).run(notifier)
 
         //then there must be 5 calls to 'fireTestStarted' in notifier.
         val startCaptor = ArgumentCaptor<Description>()

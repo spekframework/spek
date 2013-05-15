@@ -20,4 +20,12 @@ public class AnnotationsHelper {
     //noinspection unchecked
     return (Class)clazz;
   }
+
+  public static <T> boolean hasAnnotationClazz(AnnotatedElement element, Class<T> clazz) {
+    //Dirty workaround for KT-3534
+    if (!Annotation.class.isAssignableFrom(clazz)) throw new RuntimeException(clazz + " must be an annotation");
+    //noinspection unchecked
+
+    return element.isAnnotationPresent((Class)clazz);
+  }
 }
