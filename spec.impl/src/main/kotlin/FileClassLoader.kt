@@ -2,7 +2,7 @@ package org.spek.console.reflect;
 
 import org.reflections.Reflections
 import org.spek.impl.TestGivenAction
-import org.spek.api.skip
+import org.spek.api.annotations.skip
 import org.spek.impl.SkippedException
 import org.spek.impl.SpekImpl
 import java.lang.reflect.Method

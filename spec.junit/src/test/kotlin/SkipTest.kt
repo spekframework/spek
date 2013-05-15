@@ -6,7 +6,7 @@ import org.junit.runner.notification.RunNotifier
 import org.mockito.Mockito
 import org.mockito.ArgumentCaptor
 import org.junit.runner.Description
-import org.spek.api.skip
+import org.spek.api.annotations.skip
 import kotlin.test.assertEquals
 
 public class SkipTest {

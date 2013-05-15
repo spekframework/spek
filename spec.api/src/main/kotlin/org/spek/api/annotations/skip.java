@@ -1,4 +1,4 @@
-package org.spek.api;
+package org.spek.api.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
  * Date: 11.05.13 14:44
  * TODO: the parameter (why) could be optional but due to this bug (#KT-3197),
  * TODO: I had no choice but to make it mandatory for now.
- * TODO: need to be refactored when #KT-3197 got fixed.
+ * TODO: need to be refactored into Kotlin when #KT-3197 got fixed.
  * TODO: move to annotations package
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -3,7 +3,7 @@ package org.spek.console.reflect;
 import org.spek.impl.*
 import org.spek.impl.events.*
 import org.spek.console.reflect.*
-import org.spek.api.skip
+import org.spek.api.annotations.skip
 
 public class SpecificationRunner(val listener: Listener) {
     public fun runSpecs(packageName: String) {
