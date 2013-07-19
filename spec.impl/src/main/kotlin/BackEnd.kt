@@ -25,6 +25,11 @@ public trait TestItAction {
 open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
     private val recordedActions = arrayListOf<TestGivenAction>()
 
+    ///workaround for KT-3628
+    override fun given(description: String) {
+        super<SpekWithDefaults>.given(description)
+    }
+
     override fun given(description: String, givenExpression: Given.() -> Unit) {
         recordedActions.add(
                 object : TestGivenAction {
