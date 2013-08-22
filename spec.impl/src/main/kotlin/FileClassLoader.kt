@@ -29,7 +29,7 @@ public object FileClassLoader {
 
         result addAll (reflections.getSubTypesOf(javaClass<SpekImpl>())!! map { ClassSpek(it) })
 
-        val spekClazz = AnnotationsHelper.toAnnotationClazz(javaClass<spek>())!!
+        val spekClazz = AnnotationsHelper.toAnnotationClazz(javaClass<spek>())
         val annotatedMethods = reflections.getMethodsAnnotatedWith(spekClazz)!!
 
         result addAll (annotatedMethods map { ExtensionFunctionSpek(it)})
