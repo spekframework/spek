@@ -1,3 +1,36 @@
+# Java specific
+*.class
+target
+
+# OS / App generated files
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
+*.sass-cache
+*~
+
+# Eclipse
+.settings
+.classpath
+.project
+target-eclipse
+
+# IntelliJ
+overlays
+*.iml
+*.iws
+*.ipr
+.idea/
+
+# Gradle
+build/
+out/
+src/gen
+.gradle/
+
+
 bin/
 obj/
 _ReSharper.*
