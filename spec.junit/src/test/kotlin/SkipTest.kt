@@ -51,8 +51,11 @@ public class SkipTest {
 
         val captor = ArgumentCaptor<Description>()
         Mockito.verify(notifier, Mockito.times(1))!!.fireTestIgnored(captor.capture())
-        assertEquals("org.spek.junit.impl.SkipSpek",
+        assertEquals("class org.spek.junit.impl.SkipSpek",
+                captor.getValue()!!.getClassName())
+        assertEquals("Skipped. Reason: for some reason(class org.spek.junit.impl.SkipSpek)",
                 captor.getValue()!!.getDisplayName())
+
 
     }
 
