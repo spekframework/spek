@@ -1,0 +1,28 @@
+buildscript {
+    ext.kotlin_version = '0.6.+'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.kotlin_version"
+    }
+}
+
+description = 'Spek API'
+
+apply plugin: 'kotlin'
+
+version="$kotlinVersion"
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+    testCompile "junit:junit:4.11"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$ext.kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+}

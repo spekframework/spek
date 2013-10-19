@@ -1,0 +1,8 @@
+rootProject.name = 'spek'
+include 'spek-api', 'spek-impl', 'spek-console', 'spek-junit', 'spek-samples'
+
+project(':spek-api').projectDir = "$rootDir/spec.api" as File
+project(':spek-impl').projectDir = "$rootDir/spec.impl" as File
+project(':spek-console').projectDir = "$rootDir/spec.console" as File
+project(':spek-junit').projectDir = "$rootDir/spec.junit" as File
+project(':spek-samples').projectDir = "$rootDir/spec.samples" as File

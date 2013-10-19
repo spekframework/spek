@@ -15,7 +15,7 @@ class IncUtilJUnitSpecs: JUnitSpek() {{
 
             it("should return 10") {
 
-                shouldEqual(result, 10)
+                shouldEqual(10, result)
 
             }
         }
@@ -24,7 +24,7 @@ class IncUtilJUnitSpecs: JUnitSpek() {{
             val result = incUtil.incValueBy(10, 2)
 
             it("shut return 12") {
-                assertEquals(result, 10)
+                assertEquals(12, result)
             }
         }
     }
