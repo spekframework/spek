@@ -5,15 +5,14 @@ dependencies {
     compile project(':spek-impl')
     compile group: 'junit', name: 'junit', version: '4.11'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$ext.kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
 buildscript {
-    ext.kotlin_version = '0.6.+'
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$ext.kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 apply plugin: 'kotlin'

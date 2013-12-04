@@ -7,8 +7,8 @@ buildscript {
     }
 }
 
+group='org.spek'
 version="${kotlinVersion}"
-apply plugin: 'maven'
 apply plugin: 'kotlin'
 
 allprojects {
@@ -16,6 +16,7 @@ allprojects {
         mavenCentral()
     }
     apply plugin: 'idea'
+    apply plugin: 'maven'
 }
 
 subprojects {
@@ -38,4 +39,16 @@ subprojects {
 
 task wrapper(type: Wrapper) {
     gradleVersion = 1.9
+}
+
+dependencies {
+
+    compile project(':spek-api')
+    compile project(':spek-console')
+    compile project(':spek-impl')
+    compile project(':spek-junit')
+}
+
+jar {
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
