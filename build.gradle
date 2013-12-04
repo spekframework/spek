@@ -35,3 +35,7 @@ subprojects {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     }
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = 1.9
+}
