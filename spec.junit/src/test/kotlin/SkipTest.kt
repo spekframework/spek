@@ -171,7 +171,6 @@ class PendingItSpek: JUnitSpek() {{
 class PendingOnSpek: JUnitSpek() {{
     given("a situation") {
         //default pending.
-        on("an event")
 
         on("another event") {
             pending("not implemented yet")

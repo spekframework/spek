@@ -39,17 +39,17 @@ public class JUnitLogger(val notifier: RunNotifier): Listener {
 
             override fun executionSkipped(why: String) {
                 notifier.fireTestIgnored(Description
-                        .createTestDescription("$given : $on", "Skipped. Reason: $why"))
+                        .createTestDescription("$given, $on", "Skipped. Reason: $why"))
 
             }
             override fun executionPending(why: String) {
                 notifier.fireTestIgnored(Description
-                        .createTestDescription("$given : $on", "Pending. Reason: $why"))
+                        .createTestDescription("$given, $on", "Pending. Reason: $why"))
 
             }
             override fun executionFailed(error: Throwable) {
                 notifier.fireTestFailure(Failure(
-                        Description.createTestDescription("$given : $on", "on"),
+                        Description.createTestDescription("$given, $on", "on"),
                         error))
             }
         }
@@ -57,7 +57,7 @@ public class JUnitLogger(val notifier: RunNotifier): Listener {
 
     override fun it(given: String, on: String, it: String): StepListener {
 
-        val desc = Description.createTestDescription("$given : $on", it)
+        val desc = Description.createTestDescription("$given, $on", it)
 
         return object : StepListener {
             override fun executionStarted() {
@@ -70,12 +70,12 @@ public class JUnitLogger(val notifier: RunNotifier): Listener {
 
             override fun executionSkipped(why: String) {
                 notifier.fireTestIgnored(Description
-                        .createTestDescription("$given : $on : $it", "Skipped. Reason: $why"))
+                        .createTestDescription("$given, $on, $it", "Skipped. Reason: $why"))
             }
 
             override fun executionPending(why: String) {
                 notifier.fireTestIgnored(Description
-                        .createTestDescription("$given : $on : $it", "Pending. Reason: $why"))
+                        .createTestDescription("$given, $on,  $it", "Pending. Reason: $why"))
             }
 
             override fun executionFailed(error: Throwable) {

@@ -53,7 +53,7 @@ public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
     public override fun on(description: String, onExpression: On.() -> Unit) {
         recordedActions.add(
                 object : TestOnAction {
-                    public override fun description() = description
+                    public override fun description() = "on " + description
                     public override fun performInit(): List<TestItAction> {
                         val on = OnImpl()
                         on.onExpression()
@@ -71,7 +71,7 @@ public class OnImpl: OnWithDefaults, SkipSupportImpl() {
     public override fun it(description: String, itExpression: It.()->Unit) {
         recordedActions.add(
                 object : TestItAction {
-                    public override fun description() = description
+                    public override fun description() = "it " + description
                     public override fun run() = It().itExpression()
                 })
     }

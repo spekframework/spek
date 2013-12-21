@@ -42,7 +42,7 @@ public class It {
     }
 
     fun shouldBeFalse<T>(actual: T) {
-        assertFalse(actual == false)
+        assertTrue(actual == false)
     }
 }
 
