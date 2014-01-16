@@ -3,7 +3,6 @@ description = 'Spek Console'
 dependencies {
     compile project(':spek-api')
     compile project(':spek-impl')
-    compile group: 'org.reflections', name: 'reflections', version: '0.9.8'
 }
 apply plugin: 'application'
 
