@@ -34,6 +34,8 @@ subprojects {
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+        testCompile group: 'junit', name:':junit', version:'${junitVersion}'
+        testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     }
 }
 
@@ -42,7 +44,6 @@ task wrapper(type: Wrapper) {
 }
 
 dependencies {
-
     compile project(':spek-api')
     compile project(':spek-console')
     compile project(':spek-impl')

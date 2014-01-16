@@ -3,22 +3,10 @@ description = 'Spek JUnit'
 dependencies {
     compile project(':spek-api')
     compile project(':spek-impl')
-    compile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile group: 'junit', name: 'junit', version: '${junitVersion}'
 }
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    }
-}
-apply plugin: 'kotlin'
-repositories {
-    mavenCentral()
-}
+
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
 }
+
