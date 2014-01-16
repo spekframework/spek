@@ -1,6 +1,11 @@
 package org.spek.impl
 
 import org.spek.api.*
+import kotlin.test.assertEquals
+import kotlin.test.assertNot
+import kotlin.test.assertNull
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 public trait TestFixtureAction {
     fun description(): String
@@ -72,7 +77,7 @@ public class OnImpl: OnWithDefaults, SkipSupportImpl() {
         recordedActions.add(
                 object : TestItAction {
                     public override fun description() = "it " + description
-                    public override fun run() = It().itExpression()
+                    public override fun run() = ItImpl().itExpression()
                 })
     }
 }
@@ -82,6 +87,27 @@ open class SkipSupportImpl: SkipSupportWithDefaults {
     override fun skip(why: String) = throw SkippedException(why)
 
     override fun pending(why: String) = throw PendingException(why)
+}
+
+open class ItImpl : It {
+    override fun shouldEqual<T>(expected: T, actual: T) {
+        assertEquals(expected, actual)
+    }
+    override fun shouldNotEqual<T>(expected: T, actual: T) {
+        assertNot { expected == actual }
+    }
+    override fun shouldBeNull<T>(actual: T) {
+        assertNull(actual)
+    }
+    override fun shouldNotBeNull<T>(actual: T) {
+        assertNotNull(actual)
+    }
+    override fun shouldBeTrue<T>(actual: T) {
+        assertTrue(actual == true)
+    }
+    override fun shouldBeFalse<T>(actual: T) {
+        assertTrue(actual == false)
+    }
 }
 
 class SkippedException(message: String): RuntimeException(message)
