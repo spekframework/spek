@@ -21,7 +21,7 @@ public object FileClassLoader {
     public fun findTestsInPackage(packageName : String ) : List<DetectedSpek>{
         val result = arrayListOf<DetectedSpek>()
 
-        var reflectionConfig = ConfigurationBuilder.build(packageName)!!
+        val reflectionConfig = ConfigurationBuilder.build(packageName)!!
         reflectionConfig.addScanners(SubTypesScanner())
         reflectionConfig.addScanners(MethodAnnotationsScanner())
         reflectionConfig.useParallelExecutor()
