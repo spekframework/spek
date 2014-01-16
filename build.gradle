@@ -6,9 +6,9 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     }
 }
+group = 'org.spek'
 
-group='org.spek'
-version="${kotlinVersion}"
+version = "${kotlinVersion}"
 apply plugin: 'kotlin'
 
 allprojects {
