@@ -1,6 +1,7 @@
 # Java specific
 *.class
 target
+classes/
 
 # OS / App generated files
 .DS_Store*
