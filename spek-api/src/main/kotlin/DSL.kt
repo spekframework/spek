@@ -10,6 +10,8 @@ public trait Spek: SkipSupport {
 }
 
 public trait Given: SkipSupport {
+    fun beforeOn(it : () -> Unit)
+    fun afterOn(it : () -> Unit)
     fun on(description: String, onExpression: On.() -> Unit)
     fun on(description: String)
 }

@@ -55,8 +55,25 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
 
 public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
     private val recordedActions = linkedListOf<TestOnAction>()
+    private val beforeActions = linkedListOf<()->Unit>()
+    private val afterActions = linkedListOf<()->Unit>()
 
-    public fun iterateOn(it : (TestOnAction) -> Unit) : Unit = removingIterator(recordedActions, it)
+    public fun iterateOn(callback : (TestOnAction) -> Unit) : Unit = removingIterator(recordedActions) {
+        beforeActions forEach { it() }
+        try {
+            callback(it)
+        } finally {
+            afterActions forEach { it() }
+        }
+    }
+
+    override fun beforeOn(it: () -> Unit) {
+        beforeActions add it
+    }
+
+    override fun afterOn(it: () -> Unit) {
+        afterActions add it
+    }
 
     public override fun on(description: String, onExpression: On.() -> Unit) {
         recordedActions.add(
