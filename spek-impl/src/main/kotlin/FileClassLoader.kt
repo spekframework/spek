@@ -1,4 +1,4 @@
-package org.spek.console.reflect;
+package org.spek.reflect;
 
 import org.reflections.Reflections
 import org.spek.impl.TestGivenAction

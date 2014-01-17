@@ -10,6 +10,7 @@ import org.spek.console.reflect.BufferedOutputDevice
 import org.spek.console.listeners.text.PlainTextListener
 import kotlin.test.assertEquals
 import org.spek.api.annotations.skip
+import org.spek.reflect.SpecificationRunner
 
 public class SkipTest {
     val notifier = Mockito.mock(javaClass<RunNotifier>())

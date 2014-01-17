@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.junit.runner.Runner
 import org.junit.runner.Description
 import org.junit.runner.notification.RunNotifier
-import org.spek.console.reflect.SpecificationRunner
+import org.spek.reflect.SpecificationRunner
 import org.spek.junit.impl.JUnitLogger
 import org.junit.Test
 

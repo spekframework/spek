@@ -1,7 +1,7 @@
 package org.spek.console.cmd
 
 import org.spek.impl.events.*
-import org.spek.console.reflect.*
+import org.spek.reflect.*
 import org.spek.console.listeners.*
 import org.spek.console.listeners.text.*
 import org.spek.console.output.file.*

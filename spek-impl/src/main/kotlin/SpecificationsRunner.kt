@@ -1,26 +1,22 @@
-package org.spek.console.reflect;
+package org.spek.reflect;
 
 import org.spek.impl.*
 import org.spek.impl.events.*
-import org.spek.console.reflect.*
+import org.spek.reflect.*
 import org.spek.api.annotations.skip
 
 public class SpecificationRunner(val listener: Listener) {
     public fun runSpecs(packageName: String) {
-        val classes = FileClassLoader.findTestsInPackage(packageName)
-        doTestRun(classes)
+        doTestRun(FileClassLoader.findTestsInPackage(packageName))
     }
 
     public fun runSpecs(clazz: Class<*>) {
-        val classes = FileClassLoader.findTestsInClass(clazz)
-        doTestRun(classes)
+        doTestRun(FileClassLoader.findTestsInClass(clazz))
     }
 
     private fun doTestRun(classes : List<DetectedSpek>) {
-        classes forEach { specificationClass ->
-            Util.safeExecute( specificationClass, listener.spek(specificationClass.name())) {
-                allGiven() forEach { Runner.executeSpec(it, listener) }
-            }
+        classes forEach {
+            Runner.executeSpek(it, listener)
         }
     }
 }
