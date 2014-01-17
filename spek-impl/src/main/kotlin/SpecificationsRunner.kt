@@ -14,7 +14,7 @@ public class SpecificationRunner(val listener: Listener) {
         doTestRun(FileClassLoader.findTestsInClass(clazz))
     }
 
-    private fun doTestRun(classes : List<DetectedSpek>) {
+    private fun doTestRun(classes : List<TestFixtureAction>) {
         classes forEach {
             Runner.executeSpek(it, listener)
         }

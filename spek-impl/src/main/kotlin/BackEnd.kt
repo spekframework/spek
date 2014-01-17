@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
 
 public trait TestFixtureAction {
     fun description(): String
-    fun performInit(): List<TestGivenAction>
+    fun allGiven(): List<TestGivenAction>
 }
 
 public trait TestGivenAction {
@@ -28,7 +28,7 @@ public trait TestItAction {
 }
 
 open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
-    private val recordedActions = arrayListOf<TestGivenAction>()
+    private val recordedActions = linkedListOf<TestGivenAction>()
 
     ///workaround for KT-3628
     override fun given(description: String) {
@@ -51,7 +51,7 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
 }
 
 public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
-    private val recordedActions = arrayListOf<TestOnAction>()
+    private val recordedActions = linkedListOf<TestOnAction>()
 
     public fun getActions(): List<TestOnAction> = recordedActions
 
@@ -69,7 +69,8 @@ public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
 }
 
 public class OnImpl: OnWithDefaults, SkipSupportImpl() {
-    private val recordedActions = arrayListOf<TestItAction>()
+    private val recordedActions = linkedListOf<TestItAction>()
+
 
     public fun getActions(): List<TestItAction> = recordedActions
 

@@ -13,13 +13,14 @@ import org.reflections.util.ConfigurationBuilder
 import org.reflections.scanners.MethodAnnotationsScanner
 import org.reflections.scanners.SubTypesScanner
 import java.lang.reflect.Modifier
+import org.spek.impl.TestFixtureAction
 
 /**
  * @author hadihariri, jonnyzzz
  */
 public object FileClassLoader {
-    public fun findTestsInPackage(packageName : String ) : List<DetectedSpek>{
-        val result = arrayListOf<DetectedSpek>()
+    public fun findTestsInPackage(packageName : String ) : List<TestFixtureAction>{
+        val result = arrayListOf<TestFixtureAction>()
 
         val reflectionConfig = ConfigurationBuilder.build(packageName)!!
         reflectionConfig.addScanners(SubTypesScanner())
@@ -37,8 +38,8 @@ public object FileClassLoader {
         return result
     }
 
-    public fun findTestsInClass(clazz : Class<*>) : List<DetectedSpek>{
-        val result = arrayListOf<DetectedSpek>()
+    public fun findTestsInClass(clazz : Class<*>) : List<TestFixtureAction>{
+        val result = arrayListOf<TestFixtureAction>()
 
         if (javaClass<SpekImpl>().isAssignableFrom(clazz)) {
             result add ClassSpek(clazz as Class<SpekImpl>)
@@ -52,11 +53,6 @@ public object FileClassLoader {
     }
 }
 
-public trait DetectedSpek {
-    fun allGiven() : List<TestGivenAction>
-    fun name() : String
-}
-
 private fun AnnotatedElement.checkSkipped() {
     /*
     * TODO: need to be refactored when #KT-3534, KT-3534 got fixed.
@@ -65,8 +61,8 @@ private fun AnnotatedElement.checkSkipped() {
     if (skip != null) throw SkippedException(skip.value() ?: "")
 }
 
-public data class ExtensionFunctionSpek(val method : Method) : DetectedSpek {
-    override fun name(): String = method.toString()
+public data class ExtensionFunctionSpek(val method : Method) : TestFixtureAction {
+    override fun description(): String = method.toString()
     override fun allGiven(): List<TestGivenAction> {
         val builder = SpekImpl()
         //TODO: assert method signature
@@ -78,8 +74,8 @@ public data class ExtensionFunctionSpek(val method : Method) : DetectedSpek {
     }
 }
 
-public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) : DetectedSpek {
-    override fun name(): String = specificationClass.toString()
+public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) : TestFixtureAction {
+    override fun description(): String = specificationClass.toString()
     override fun allGiven(): List<TestGivenAction> {
         specificationClass.checkSkipped()
         return specificationClass.newInstance().allGiven()

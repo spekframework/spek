@@ -1,11 +1,10 @@
 package org.spek.impl
 
 import org.spek.impl.events.*
-import org.spek.reflect.DetectedSpek
 
 public object Runner {
-    public fun executeSpek(specificationClass: DetectedSpek, listener: Listener) {
-        safeExecute(specificationClass, listener.spek(specificationClass.name())) {
+    public fun executeSpek(specificationClass: TestFixtureAction, listener: Listener) {
+        safeExecute(specificationClass, listener.spek(specificationClass.description())) {
             allGiven() forEach { Runner.executeSpec(it, listener) }
         }
     }
