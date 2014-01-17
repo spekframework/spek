@@ -8,7 +8,6 @@ import org.spek.console.listeners.text.PlainTextListener
 import org.spek.console.output.console.ConsoleDevice
 import java.lang.annotation.Retention
 import java.lang.annotation.RetentionPolicy
-import org.spek.api.annotations.skip
 import org.spek.reflect.SpecificationRunner
 
 class SkipSampleTest {
