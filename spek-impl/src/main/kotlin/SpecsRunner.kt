@@ -5,17 +5,15 @@ import org.spek.impl.events.*
 public object Runner {
     public fun executeSpek(specificationClass: TestFixtureAction, listener: Listener) {
         safeExecute(specificationClass, listener.spek(specificationClass.description())) {
-            allGiven() forEach { Runner.executeSpec(it, listener) }
-        }
-    }
-
-    public fun executeSpec(given : TestGivenAction, listener : Listener) {
-        safeExecute(given, listener.given(given.description())) {
-            performInit() forEach { on ->
-                safeExecute(on, listener.on(given.description(), on.description())) {
-                    performInit() forEach { it ->
-                        safeExecute(it, listener.it(given.description(), on.description(), it.description())) {
-                            run()
+            allGiven() forEach { given ->
+                safeExecute(given, listener.given(given.description())) {
+                    performInit() forEach { on ->
+                        safeExecute(on, listener.on(given.description(), on.description())) {
+                            performInit() forEach { it ->
+                                safeExecute(it, listener.it(given.description(), on.description(), it.description())) {
+                                    run()
+                                }
+                            }
                         }
                     }
                 }
