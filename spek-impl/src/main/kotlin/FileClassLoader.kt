@@ -63,21 +63,23 @@ private fun AnnotatedElement.checkSkipped() {
 
 public data class ExtensionFunctionSpek(val method : Method) : TestFixtureAction {
     override fun description(): String = method.toString()
-    override fun allGiven(): List<TestGivenAction> {
+
+    override fun iterateGiven(it: (TestGivenAction) -> Unit) {
         val builder = SpekImpl()
         //TODO: assert method signature
 
         method.checkSkipped()
         method.invoke(null, builder)
 
-        return builder.allGiven()
+        builder.iterateGiven(it)
     }
 }
 
 public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) : TestFixtureAction {
     override fun description(): String = specificationClass.toString()
-    override fun allGiven(): List<TestGivenAction> {
+
+    override fun iterateGiven(it: (TestGivenAction) -> Unit) {
         specificationClass.checkSkipped()
-        return specificationClass.newInstance().allGiven()
+        specificationClass.newInstance().iterateGiven(it)
     }
 }

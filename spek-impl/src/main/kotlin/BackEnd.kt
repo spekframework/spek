@@ -9,17 +9,17 @@ import kotlin.test.assertTrue
 
 public trait TestFixtureAction {
     fun description(): String
-    fun allGiven(): List<TestGivenAction>
+    fun iterateGiven(it:(TestGivenAction) -> Unit)
 }
 
 public trait TestGivenAction {
     fun description(): String
-    fun performInit(): List<TestOnAction>
+    fun iterateOn(it: (TestOnAction) -> Unit)
 }
 
 public trait TestOnAction {
     fun description(): String
-    fun performInit(): List<TestItAction>
+    fun iterateIt(it : (TestItAction) -> Unit)
 }
 
 public trait TestItAction {
@@ -39,13 +39,16 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
         recordedActions.add(
                 object : TestGivenAction {
                     public override fun description() = "given " + description
-                    public override fun performInit(): List<TestOnAction> {
+
+                    public override fun iterateOn(it: (TestOnAction) -> Unit) {
                         val given = GivenImpl()
                         given.givenExpression()
-                        return given.getActions()
+                        given.iterateOn(it)
                     }
                 })
     }
+
+    public fun iterateGiven(it:(TestGivenAction) -> Unit) : Unit = removingIterator(recordedActions, it)
 
     public fun allGiven(): List<TestGivenAction> = recordedActions
 }
@@ -53,16 +56,16 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
 public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
     private val recordedActions = linkedListOf<TestOnAction>()
 
-    public fun getActions(): List<TestOnAction> = recordedActions
+    public fun iterateOn(it : (TestOnAction) -> Unit) : Unit = removingIterator(recordedActions, it)
 
     public override fun on(description: String, onExpression: On.() -> Unit) {
         recordedActions.add(
                 object : TestOnAction {
                     public override fun description() = "on " + description
-                    public override fun performInit(): List<TestItAction> {
+                    public override fun iterateIt(it: (TestItAction) -> Unit) {
                         val on = OnImpl()
                         on.onExpression()
-                        return on.getActions()
+                        return on.iterateIt(it)
                     }
                 })
     }
@@ -71,8 +74,7 @@ public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
 public class OnImpl: OnWithDefaults, SkipSupportImpl() {
     private val recordedActions = linkedListOf<TestItAction>()
 
-
-    public fun getActions(): List<TestItAction> = recordedActions
+    public fun iterateIt(it : (TestItAction) -> Unit) : Unit = removingIterator(recordedActions, it)
 
     public override fun it(description: String, itExpression: It.()->Unit) {
         recordedActions.add(
