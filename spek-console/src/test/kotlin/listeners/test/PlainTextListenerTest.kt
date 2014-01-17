@@ -16,7 +16,7 @@ public class TextListenerTest {
         //when execution started
         listener.executionStarted()
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("Given A Given")
+        Mockito.verify(device)!!.output("  Given A Given")
 
         //when execution completed
         listener.executionCompleted()
@@ -26,7 +26,7 @@ public class TextListenerTest {
         //when execution failed
         listener.executionFailed(RuntimeException())
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("Failed: java.lang.RuntimeException")
+        Mockito.verify(device)!!.output("  Failed: java.lang.RuntimeException")
     }
 
     test fun on() {
@@ -36,12 +36,12 @@ public class TextListenerTest {
         //when execution started
         listener.executionStarted()
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("  On An On")
+        Mockito.verify(device)!!.output("    On An On")
 
         //when execution failed
         listener.executionFailed(RuntimeException())
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("  Failed: java.lang.RuntimeException")
+        Mockito.verify(device)!!.output("    Failed: java.lang.RuntimeException")
     }
 
     test fun it() {
@@ -51,11 +51,11 @@ public class TextListenerTest {
         //when execution started
         listener.executionStarted()
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("    It An It")
+        Mockito.verify(device)!!.output("      It An It")
 
         //when execution failed
         listener.executionFailed(RuntimeException())
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("    Failed: java.lang.RuntimeException")
+        Mockito.verify(device)!!.output("      Failed: java.lang.RuntimeException")
     }
 }
