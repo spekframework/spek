@@ -5,6 +5,8 @@ import org.spek.impl.Runner
 import org.spek.impl.TestFixtureAction
 import org.spek.impl.StepListener
 import org.spek.impl.events.Listener
+import org.spek.api.Spek
+import org.junit.Assert
 
 
 public open class IntegrationTestCase {
@@ -13,7 +15,26 @@ public open class IntegrationTestCase {
         val list = arrayListOf<String>()
         Runner.executeSpek(case, TestLogger(list))
         if (expected.size == 0) return
-        assertEquals(expected.map { it.trim()} . filter {it.length > 0} .toList(), list)
+        val actualDump = list.map { it + "\n" }.fold("") { r, i -> r + i }
+        val expectedLog = expected
+                .flatMap { it
+                    .trim()
+                    .split("[\r\n]+")
+                    .map { it.trim() }
+                    .filter { it.length > 0 }
+        } . filter { it.length > 0 }  . toList()
+
+        Assert.assertEquals(
+                actualDump,
+                expectedLog,
+                list
+                )
+    }
+
+    public fun data(f:Spek.() -> Unit) : TestFixtureAction {
+        val d = Data()
+        d.f()
+        return d
     }
 
     public open class Data : SpekImpl(), TestFixtureAction {
