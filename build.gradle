@@ -36,6 +36,15 @@ subprojects {
         testCompile group: 'junit', name:'junit', version:"${junitVersion}"
         testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     }
+
+    test {
+       // set heap size for the test JVM(s)
+       minHeapSize = "128m"
+       maxHeapSize = "512m"
+
+       // set JVM arguments for the test JVM(s)
+       jvmArgs '-XX:MaxPermSize=256m'
+    }
 }
 
 task wrapper(type: Wrapper) {
