@@ -1,23 +1,6 @@
 package org.spek.samples
 
 import org.spek.console.api.ConsoleSpek
-import org.spek.impl.Runner
-import org.spek.impl.events.Multicaster
-import org.junit.Test as test
-import org.spek.console.listeners.text.PlainTextListener
-import org.spek.console.output.console.ConsoleDevice
-import kotlin.test.assertEquals
-
-class SampleIncUtilTest {
-
-    test fun incUtil() {
-        val listeners = Multicaster()
-        listeners.addListener(PlainTextListener(ConsoleDevice()))
-
-        Runner.executeSpek(IncUtilConsoleSpecs(), listeners)
-    }
-}
-
 
 class IncUtilConsoleSpecs: ConsoleSpek() {{
     given("an inc util") {
@@ -39,7 +22,7 @@ class IncUtilConsoleSpecs: ConsoleSpek() {{
             val result = incUtil.incValueBy(10, 2)
 
             it("shut return 12") {
-                assertEquals(result, 10)
+                shouldNotEqual(result, 10)
             }
         }
     }

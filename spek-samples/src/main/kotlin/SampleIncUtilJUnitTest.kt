@@ -1,8 +1,6 @@
 package org.spek.samples
 
-import org.junit.Test as test
 import org.spek.junit.api.JUnitSpek
-import kotlin.test.assertEquals
 
 class IncUtilJUnitSpecs: JUnitSpek() {{
     given("an inc util") {
@@ -24,7 +22,7 @@ class IncUtilJUnitSpecs: JUnitSpek() {{
             val result = incUtil.incValueBy(10, 2)
 
             it("shut return 12") {
-                assertEquals(12, result)
+                shouldNotEqual(12, result)
             }
         }
     }

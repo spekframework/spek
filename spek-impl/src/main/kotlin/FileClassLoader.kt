@@ -19,13 +19,13 @@ import org.spek.impl.TestFixtureAction
  * @author hadihariri, jonnyzzz
  */
 public object FileClassLoader {
-    public fun findTestsInPackage(packageName : String ) : List<TestFixtureAction>{
+    public fun findTestsInPackage(packageName : String) : List<TestFixtureAction>{
         val result = arrayListOf<TestFixtureAction>()
 
-        val reflectionConfig = ConfigurationBuilder.build(packageName)!!
-        reflectionConfig.addScanners(SubTypesScanner())
-        reflectionConfig.addScanners(MethodAnnotationsScanner())
-        reflectionConfig.useParallelExecutor()
+        val reflectionConfig = ConfigurationBuilder
+                .build(packageName, MethodAnnotationsScanner(), SubTypesScanner())!!
+                .useParallelExecutor()
+
         val reflections = Reflections(reflectionConfig);
 
         result addAll (reflections.getSubTypesOf(javaClass<SpekImpl>())!! map { ClassSpek(it) })

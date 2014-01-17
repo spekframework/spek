@@ -1,23 +1,8 @@
 package org.spek.samples
 
-import org.spek.console.api.ConsoleSpek
-import org.spek.impl.Runner
-import org.spek.impl.events.Multicaster
-import org.junit.Test as test
-import org.spek.console.listeners.text.PlainTextListener
-import org.spek.console.output.console.ConsoleDevice
+import org.spek.junit.api.JUnitSpek
 
-class SampleCalculatorTest {
-    test fun calculate() {
-        val listeners = Multicaster()
-        listeners.addListener(PlainTextListener(ConsoleDevice()))
-
-        Runner.executeSpek(CalculatorConsoleSpecs(), listeners)
-    }
-}
-
-
-class CalculatorConsoleSpecs: ConsoleSpek() {{
+class CalculatorJUnitSpecs: JUnitSpek() {{
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {
@@ -43,6 +28,5 @@ class CalculatorConsoleSpecs: ConsoleSpek() {{
             }
         }
     }
-}
-}
+}}
 

@@ -8,7 +8,7 @@ import org.spek.console.output.file.*
 import org.spek.console.output.console.*
 import org.spek.console.output.OutputDevice
 
-fun main(args: Array<String>) {
+public fun main(vararg args: String) {
     if (args.size < 2) {
         printUsage()
     } else {
@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
         val specRunner = setupRunner(options)
         specRunner.runSpecs(options.packageName)
     }
+    //TODO: call System.exit to pass right exit code
 }
 
 fun getOptions(args: Array<String>): Options {
