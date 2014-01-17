@@ -23,8 +23,7 @@ Given given a calculator
         val listeners = Multicaster()
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = SampleCalculatorSpecs().allGiven()
-        givenActions forEach { Runner.executeSpec(it, listeners) }
+        Runner.executeSpek(SampleCalculatorSpecs(), listeners)
 
         assertEquals(expected.trim(), buffer.toString().trim())
     }

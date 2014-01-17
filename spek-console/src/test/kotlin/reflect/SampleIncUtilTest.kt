@@ -21,8 +21,7 @@ Given given an inc util
         val listeners = Multicaster()
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = SampleIncUtilSpecs().allGiven()
-        givenActions forEach { Runner.executeSpec(it, listeners) }
+        Runner.executeSpek(SampleIncUtilSpecs(), listeners)
 
         assertEquals(expected.trim(), buffer.toString().trim())
     }

@@ -14,8 +14,7 @@ class SampleIncUtilTest {
         val listeners = Multicaster()
         listeners.addListener(PlainTextListener(ConsoleDevice()))
 
-        val givenActions = IncUtilConsoleSpecs().allGiven()
-        givenActions forEach {  Runner.executeSpec(it, listeners) }
+        Runner.executeSpek(IncUtilConsoleSpecs(), listeners)
     }
 }
 
