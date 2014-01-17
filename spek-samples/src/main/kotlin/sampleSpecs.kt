@@ -1,12 +1,27 @@
-package org.spek.junit.test.samples
+package org.spek.samples.s1
 
 import org.spek.api.*
-import org.spek.junit.api.*
+import org.spek.console.api.*
+import org.spek.api.annotations.spek
 
-public class calculatorSpecs : JUnitSpek() {{
+spek fun Spek.this_is_test() {
+    given("Outside it is raining") {
+        on("umbrella") {
+            it("should not be raining") {
+                shouldBeTrue(true)
+            }
+            it("should not be sunny") {
+                shouldBeTrue(false)
+            }
+        }
+    }
+}
+
+
+class calculatorSpecs : ConsoleSpek() {{
     given("a calculator")
      {
-         val calculator = JCalculator()
+         val calculator = Calculator()
          on("calling sum with two numbers")
          {
 
@@ -37,9 +52,9 @@ public class calculatorSpecs : JUnitSpek() {{
      }
 }}
 
-public class incUtilSpecs : JUnitSpek() {{
+class incUtilSpecs : ConsoleSpek() {{
     given("an inc util") {
-        val incUtil = JIncUtil()
+        val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {
             val result = incUtil.incValueBy(4, 6)
             it("should return 10") {
@@ -49,11 +64,11 @@ public class incUtilSpecs : JUnitSpek() {{
     }
 }}
 
-class JIncUtil {
+class IncUtil {
     fun incValueBy(value: Int, inc: Int) = value + inc
 }
 
-class JCalculator {
+class Calculator {
     fun sum(x: Int, y: Int) = x + y
     fun subtract(x: Int, y: Int) = x - y
 }
