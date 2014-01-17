@@ -13,19 +13,17 @@ public trait StepListener {
     }
 }
 
-public object Util {
-    public fun safeExecute<T>(t: T, listener: StepListener, action: T.() -> Unit) {
-        listener.executionStarted()
-        try {
-            t.action()
-        } catch(e: SkippedException) {
-            listener.executionSkipped(e.getMessage()!!)
-        } catch(e: PendingException) {
-            listener.executionPending(e.getMessage()!!)
-        } catch(e: Throwable) {
-            listener.executionFailed(e)
-        } finally {
-            listener.executionCompleted()
-        }
+public fun safeExecute<T>(t: T, listener: StepListener, action: T.() -> Unit) {
+    listener.executionStarted()
+    try {
+        t.action()
+    } catch(e: SkippedException) {
+        listener.executionSkipped(e.getMessage()!!)
+    } catch(e: PendingException) {
+        listener.executionPending(e.getMessage()!!)
+    } catch(e: Throwable) {
+        listener.executionFailed(e)
+    } finally {
+        listener.executionCompleted()
     }
 }
