@@ -14,11 +14,11 @@ import org.spek.reflect.SpecificationRunner
 import org.spek.impl.TestFixtureAction
 
 public class SkipTest {
-    val notifier = Mockito.mock(javaClass<RunNotifier>())
-    val listeners = Multicaster()
-    val buffer = StringBuilder()
 
     fun runTest(case: TestFixtureAction, expected: String) {
+        val listeners = Multicaster()
+        val buffer = StringBuilder()
+
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
         Runner.executeSpek(case, listeners)
         assertEquals(expected.trim(), buffer.toString().trim())
