@@ -28,7 +28,7 @@ Given given a situation
 """
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = SkipItSpek().allGivens()
+        val givenActions = SkipItSpek().allGiven()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
         assertEquals(expectedIt.trim(), buffer.toString().trim())
@@ -45,7 +45,7 @@ Given given a situation
 """
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = SkipOnSpek().allGivens()
+        val givenActions = SkipOnSpek().allGiven()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
         assertEquals(expectedOn.trim(), buffer.toString().trim())
@@ -60,7 +60,7 @@ Skipped Given 'given a situation'. Reason: for some reason
 """
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = SkipGivenSpek().allGivens()
+        val givenActions = SkipGivenSpek().allGiven()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
         assertEquals(expectedGiven.trim(), buffer.toString().trim())
@@ -82,7 +82,7 @@ Given given a situation
 """
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = PendingItSpek().allGivens()
+        val givenActions = PendingItSpek().allGiven()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
         assertEquals(expectedIt.trim(), buffer.toString().trim())
@@ -99,7 +99,7 @@ Given given a situation
 """
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = PendingOnSpek().allGivens()
+        val givenActions = PendingOnSpek().allGiven()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
         assertEquals(expectedOn.trim(), buffer.toString().trim())
@@ -117,7 +117,7 @@ Pending Given 'given another situation'. Reason: not given
 """
         listeners.addListener(PlainTextListener(BufferedOutputDevice(buffer)))
 
-        val givenActions = PendingGivenSpek().allGivens()
+        val givenActions = PendingGivenSpek().allGiven()
         givenActions forEach { Runner.executeSpec(it, listeners) }
 
         assertEquals(expectedGiven.trim(), buffer.toString().trim())

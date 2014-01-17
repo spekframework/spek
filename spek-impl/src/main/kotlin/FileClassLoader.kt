@@ -74,7 +74,7 @@ public data class ExtensionFunctionSpek(val method : Method) : DetectedSpek {
         method.checkSkipped()
         method.invoke(null, builder)
 
-        return builder.allGivens()
+        return builder.allGiven()
     }
 }
 
@@ -82,6 +82,6 @@ public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) 
     override fun name(): String = specificationClass.toString()
     override fun allGiven(): List<TestGivenAction> {
         specificationClass.checkSkipped()
-        return specificationClass.newInstance().allGivens()
+        return specificationClass.newInstance().allGiven()
     }
 }

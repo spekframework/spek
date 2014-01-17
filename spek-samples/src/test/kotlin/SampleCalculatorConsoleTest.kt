@@ -12,8 +12,7 @@ class SampleCalculatorTest {
         val listeners = Multicaster()
         listeners.addListener(PlainTextListener(ConsoleDevice()))
 
-        val givenActions = CalculatorConsoleSpecs().allGivens()
-        givenActions forEach { Runner.executeSpec(it, listeners) }
+        Runner.executeSpek(CalculatorConsoleSpecs(), listeners)
     }
 }
 

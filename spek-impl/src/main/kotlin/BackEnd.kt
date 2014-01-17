@@ -47,7 +47,7 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
                 })
     }
 
-    fun allGivens(): List<TestGivenAction> = recordedActions
+    public fun allGiven(): List<TestGivenAction> = recordedActions
 }
 
 public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {

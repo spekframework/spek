@@ -13,9 +13,9 @@ public class APITest {
         spek.given("Second") {}
         spek.given("Third") {}
         //then there must be 3 TestGivenActions
-        assertEquals(3, spek.allGivens().size)
-        assertEquals("given First", spek.allGivens().get(0).description())
-        assertEquals("given Second", spek.allGivens().get(1).description())
-        assertEquals("given Third", spek.allGivens().get(2).description())
+        assertEquals(3, spek.allGiven().size)
+        assertEquals("given First", spek.allGiven().get(0).description())
+        assertEquals("given Second", spek.allGiven().get(1).description())
+        assertEquals("given Third", spek.allGiven().get(2).description())
     }
 }

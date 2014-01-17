@@ -18,7 +18,7 @@ public class BackEndTest {
             }
         }
 
-        val givenAction = spek.allGivens().get(0)
+        val givenAction = spek.allGiven().get(0)
         //when we ask for the description
         //then it should return 'given Test'
         assertEquals("given given Test", givenAction.description())
