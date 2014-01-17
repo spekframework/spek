@@ -15,7 +15,7 @@ public class UtilTest {
         var verification = false
 
         //when safeExecution finished successfully.
-        Util.safeExecute(action, listener) {
+        safeExecute(action, listener) {
             verification = true
         }
         // then the action function has been called.
@@ -32,7 +32,7 @@ public class UtilTest {
         //given an action and a listener
        //when safeExecution finished with an error (exception).
         val throwable = RuntimeException("an exception")
-        Util.safeExecute(action, listener) {
+        safeExecute(action, listener) {
             throw throwable
         }
         //then execution started
