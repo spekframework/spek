@@ -23,7 +23,7 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
         }
     }
 
-    override fun given(given: String): StepListener {
+    override fun given(spek: String, given: String): StepListener {
         return object : StepListener {
             override fun executionStarted() {
                 output("  Given $given")
@@ -44,7 +44,7 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
         }
     }
 
-    override fun on(given: String, on: String): StepListener {
+    override fun on(spek: String, given: String, on: String): StepListener {
         return object : StepListener {
             override fun executionStarted() {
                 output("    On $on")
@@ -62,7 +62,7 @@ public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by 
         }
     }
 
-    override fun it(given: String, on: String, it: String): StepListener {
+    override fun it(spek: String, given: String, on: String, it: String): StepListener {
         return object : StepListener {
             override fun executionStarted() {
                 output("      It $it")

@@ -4,13 +4,16 @@ import org.spek.impl.events.*
 
 public object Runner {
     public fun executeSpek(specificationClass: TestFixtureAction, listener: Listener) {
-        safeExecute(specificationClass, listener.spek(specificationClass.description())) {
+        val spekDescription = specificationClass.description()
+        safeExecute(specificationClass, listener.spek(spekDescription)) {
             iterateGiven { given ->
-                safeExecute(given, listener.given(given.description())) {
+                val givenDescription = given.description()
+                safeExecute(given, listener.given(spekDescription, givenDescription)) {
                     iterateOn { on ->
-                        safeExecute(on, listener.on(given.description(), on.description())) {
+                        val onDescription = on.description()
+                        safeExecute(on, listener.on(spekDescription, givenDescription, onDescription)) {
                             iterateIt { it ->
-                                safeExecute(it, listener.it(given.description(), on.description(), it.description())) {
+                                safeExecute(it, listener.it(spekDescription, givenDescription, onDescription, it.description())) {
                                     run()
                                 }
                             }

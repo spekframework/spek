@@ -17,17 +17,17 @@ public class SkipTest : IntegrationTestCase() {
                         it("should B") { }
                     }
                 }
-            }, """SPEK:42 START
-                GIVEN:given a situation START
-                GIVEN:given a situation ON:on an event START
-                GIVEN:given a situation ON:on an event IT:it should A START
-                GIVEN:given a situation ON:on an event IT:it should A SKIP:not ready yet
-                GIVEN:given a situation ON:on an event IT:it should A FINISH
-                GIVEN:given a situation ON:on an event IT:it should B START
-                GIVEN:given a situation ON:on an event IT:it should B FINISH
-                GIVEN:given a situation ON:on an event FINISH
-                GIVEN:given a situation FINISH
-                SPEK:42 FINISH""")
+            }, """SPEK: 42 START
+                SPEK: 42 GIVEN: given a situation START
+                SPEK: 42 GIVEN: given a situation ON: on an event START
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A START
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A SKIP:not ready yet
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A FINISH
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B START
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B FINISH
+                SPEK: 42 GIVEN: given a situation ON: on an event FINISH
+                SPEK: 42 GIVEN: given a situation FINISH
+                SPEK: 42 FINISH""")
 
 
     test fun skipOn() =
@@ -44,17 +44,17 @@ public class SkipTest : IntegrationTestCase() {
                         it("should B") { }
                     }
                 }
-            }, """SPEK:42 START
-                GIVEN:given a situation START
-                GIVEN:given a situation ON:on an event START
-                GIVEN:given a situation ON:on an event SKIP:not ready yet
-                GIVEN:given a situation ON:on an event FINISH
-                GIVEN:given a situation ON:on another event START
-                GIVEN:given a situation ON:on another event IT:it should B START
-                GIVEN:given a situation ON:on another event IT:it should B FINISH
-                GIVEN:given a situation ON:on another event FINISH
-                GIVEN:given a situation FINISH
-                SPEK:42 FINISH""")
+            }, """SPEK: 42 START
+                SPEK: 42 GIVEN: given a situation START
+                SPEK: 42 GIVEN: given a situation ON: on an event START
+                SPEK: 42 GIVEN: given a situation ON: on an event SKIP:not ready yet
+                SPEK: 42 GIVEN: given a situation ON: on an event FINISH
+                SPEK: 42 GIVEN: given a situation ON: on another event START
+                SPEK: 42 GIVEN: given a situation ON: on another event IT: it should B START
+                SPEK: 42 GIVEN: given a situation ON: on another event IT: it should B FINISH
+                SPEK: 42 GIVEN: given a situation ON: on another event FINISH
+                SPEK: 42 GIVEN: given a situation FINISH
+                SPEK: 42 FINISH""")
 
 
     test fun skipGiven() =
@@ -72,11 +72,11 @@ public class SkipTest : IntegrationTestCase() {
                         }
                     }
                 }
-            }, """ SPEK:42 START
-                GIVEN:given a situation START
-                GIVEN:given a situation SKIP:for some reason
-                GIVEN:given a situation FINISH
-                SPEK:42 FINISH""")
+            }, """ SPEK: 42 START
+                SPEK: 42 GIVEN: given a situation START
+                SPEK: 42 GIVEN: given a situation SKIP:for some reason
+                SPEK: 42 GIVEN: given a situation FINISH
+                SPEK: 42 FINISH""")
 
     test fun pendingIt() =
             runTest(data {
@@ -90,18 +90,18 @@ public class SkipTest : IntegrationTestCase() {
                         it("should B")
                     }
                 }
-            }, """SPEK:42 START
-                GIVEN:given a situation START
-                GIVEN:given a situation ON:on an event START
-                GIVEN:given a situation ON:on an event IT:it should A START
-                GIVEN:given a situation ON:on an event IT:it should A PEND:not implemented yet
-                GIVEN:given a situation ON:on an event IT:it should A FINISH
-                GIVEN:given a situation ON:on an event IT:it should B START
-                GIVEN:given a situation ON:on an event IT:it should B PEND:not given
-                GIVEN:given a situation ON:on an event IT:it should B FINISH
-                GIVEN:given a situation ON:on an event FINISH
-                GIVEN:given a situation FINISH
-                SPEK:42 FINISH""")
+            }, """SPEK: 42 START
+                SPEK: 42 GIVEN: given a situation START
+                SPEK: 42 GIVEN: given a situation ON: on an event START
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A START
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A PEND:not implemented yet
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A FINISH
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B START
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B PEND:not given
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B FINISH
+                SPEK: 42 GIVEN: given a situation ON: on an event FINISH
+                SPEK: 42 GIVEN: given a situation FINISH
+                SPEK: 42 FINISH""")
 
 
     test fun pendingOn() =
@@ -114,16 +114,16 @@ public class SkipTest : IntegrationTestCase() {
                         pending("not implemented yet")
                     }
                 }
-            }, """SPEK:42 START
-                GIVEN:given a situation START
-                GIVEN:given a situation ON:on an event START
-                GIVEN:given a situation ON:on an event PEND:not given
-                GIVEN:given a situation ON:on an event FINISH
-                GIVEN:given a situation ON:on another event START
-                GIVEN:given a situation ON:on another event PEND:not implemented yet
-                GIVEN:given a situation ON:on another event FINISH
-                GIVEN:given a situation FINISH
-                SPEK:42 FINISH""")
+            }, """SPEK: 42 START
+                SPEK: 42 GIVEN: given a situation START
+                SPEK: 42 GIVEN: given a situation ON: on an event START
+                SPEK: 42 GIVEN: given a situation ON: on an event PEND:not given
+                SPEK: 42 GIVEN: given a situation ON: on an event FINISH
+                SPEK: 42 GIVEN: given a situation ON: on another event START
+                SPEK: 42 GIVEN: given a situation ON: on another event PEND:not implemented yet
+                SPEK: 42 GIVEN: given a situation ON: on another event FINISH
+                SPEK: 42 GIVEN: given a situation FINISH
+                SPEK: 42 FINISH""")
 
 
     test fun pendingGiven() =
@@ -135,12 +135,12 @@ public class SkipTest : IntegrationTestCase() {
                 //default pending.
                 given("another situation")
             },
-                    """SPEK:42 START
-            GIVEN:given a situation START
-            GIVEN:given a situation PEND:for some reason
-            GIVEN:given a situation FINISH
-            GIVEN:given another situation START
-            GIVEN:given another situation PEND:not given
-            GIVEN:given another situation FINISH
-            SPEK:42 FINISH""")
+                    """SPEK: 42 START
+            SPEK: 42 GIVEN: given a situation START
+            SPEK: 42 GIVEN: given a situation PEND:for some reason
+            SPEK: 42 GIVEN: given a situation FINISH
+            SPEK: 42 GIVEN: given another situation START
+            SPEK: 42 GIVEN: given another situation PEND:not given
+            SPEK: 42 GIVEN: given another situation FINISH
+            SPEK: 42 FINISH""")
 }

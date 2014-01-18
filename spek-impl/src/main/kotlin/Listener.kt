@@ -4,13 +4,13 @@ import org.spek.impl.*
 
 public trait Listener {
     fun spek(spek: String): StepListener
-    fun given(given: String): StepListener
-    fun on(given: String, on: String): StepListener
-    fun it(given: String, on: String, it: String): StepListener
+    fun given(spek: String, given: String): StepListener
+    fun on(spek: String, given: String, on: String): StepListener
+    fun it(spek: String, given: String, on: String, it: String): StepListener
 }
 
 
-public class Multicaster: Listener {
+public class Multicaster : Listener {
     private val listeners = arrayListOf<Listener>()
 
     public fun addListener(l: Listener) {
@@ -18,21 +18,21 @@ public class Multicaster: Listener {
     }
 
     override fun spek(spek: String): StepListener {
-        return StepMulticaster(listeners.map{ it.spek(spek) })
+        return StepMulticaster(listeners.map { it.spek(spek) })
     }
 
-    override fun given(given: String): StepListener {
-        return StepMulticaster(listeners.map{ it.given(given) })
+    override fun given(spek: String, given: String): StepListener {
+        return StepMulticaster(listeners.map { it.given(spek, given) })
     }
-    override fun on(given: String, on: String): StepListener {
-        return StepMulticaster(listeners.map{ it.on(given, on) })
+    override fun on(spek: String, given: String, on: String): StepListener {
+        return StepMulticaster(listeners.map { it.on(spek, given, on) })
     }
-    override fun it(given: String, on: String, it: String): StepListener {
-        return StepMulticaster(listeners.map{ iit -> iit.it(given, on, it) })
+    override fun it(spek: String, given: String, on: String, it: String): StepListener {
+        return StepMulticaster(listeners.map { iit -> iit.it(spek, given, on, it) })
     }
 }
 
-public class StepMulticaster(val listeners: List<StepListener>): StepListener {
+public class StepMulticaster(val listeners: List<StepListener>) : StepListener {
     override fun executionStarted() {
         listeners forEach { it.executionStarted() }
     }

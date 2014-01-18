@@ -11,7 +11,7 @@ public class TextListenerTest {
 
     test fun given() {
         //given a text listener and a step listener that is bound to it.
-        val listener = textListener.given("A Given")
+        val listener = textListener.given("Spek", "A Given")
 
         //when execution started
         listener.executionStarted()
@@ -31,7 +31,7 @@ public class TextListenerTest {
 
     test fun on() {
         //given a text listener and a step listener that is bound to it.
-        val listener = textListener.on("A Given", "An On")
+        val listener = textListener.on("Spek", "A Given", "An On")
 
         //when execution started
         listener.executionStarted()
@@ -46,7 +46,7 @@ public class TextListenerTest {
 
     test fun it() {
         //given a text listener and a step listener that is bound to it.
-        val listener = textListener.it("A Given", "An On", "An It")
+        val listener = textListener.it("Spek", "A Given", "An On", "An It")
 
         //when execution started
         listener.executionStarted()

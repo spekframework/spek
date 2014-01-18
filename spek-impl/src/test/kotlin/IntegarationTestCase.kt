@@ -60,10 +60,10 @@ public open class IntegrationTestCase {
             }
         }
 
-        override fun spek(spek: String): StepListener = step("SPEK:"+ spek)
-        override fun given(given: String): StepListener = step("GIVEN:" + given)
-        override fun on(given: String, on: String)= step("GIVEN:" + given + " ON:" + on)
-        override fun it(given: String, on: String, it: String) = step("GIVEN:" + given + " ON:" + on + " IT:" + it)
+        override fun spek(spek: String): StepListener = step("SPEK: $spek")
+        override fun given(spek: String, given: String): StepListener = step("SPEK: $spek GIVEN: $given")
+        override fun on(spek: String, given: String, on: String)= step("SPEK: $spek GIVEN: $given ON: $on")
+        override fun it(spek: String, given: String, on: String, it: String) = step("SPEK: $spek GIVEN: $given ON: $on IT: $it")
     }
 
 }

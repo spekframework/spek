@@ -8,56 +8,7 @@ import org.spek.impl.events.Listener
 
 public class JUnitLogger(val notifier: RunNotifier): Listener {
     override fun spek(spek: String): StepListener {
-        return object : StepListener {
-            override fun executionSkipped(why: String) {
-                notifier.fireTestIgnored(Description
-                        .createTestDescription("$spek", "Skipped. Reason: $why"))
-            }
-        }
-    }
-
-    override fun given(given: String): StepListener {
-        return object : StepListener {
-            override fun executionSkipped(why: String) {
-                notifier.fireTestIgnored(Description
-                        .createTestDescription("$given", "Skipped. Reason: $why"))
-            }
-            override fun executionPending(why: String) {
-                notifier.fireTestIgnored(Description
-                        .createTestDescription("$given", "Pending. Reason: $why"))
-            }
-            override fun executionFailed(error: Throwable) {
-                notifier.fireTestFailure(Failure(Description
-                        .createTestDescription("$given", "given"), error))
-            }
-        }
-    }
-
-    override fun on(given: String, on: String): StepListener {
-
-        return object : StepListener {
-
-            override fun executionSkipped(why: String) {
-                notifier.fireTestIgnored(Description
-                        .createTestDescription("$given, $on", "Skipped. Reason: $why"))
-
-            }
-            override fun executionPending(why: String) {
-                notifier.fireTestIgnored(Description
-                        .createTestDescription("$given, $on", "Pending. Reason: $why"))
-
-            }
-            override fun executionFailed(error: Throwable) {
-                notifier.fireTestFailure(Failure(
-                        Description.createTestDescription("$given, $on", "on"),
-                        error))
-            }
-        }
-    }
-
-    override fun it(given: String, on: String, it: String): StepListener {
-
-        val desc = Description.createTestDescription("$given, $on", it)
+        val desc = Description.createSuiteDescription(spek)
 
         return object : StepListener {
             override fun executionStarted() {
@@ -70,12 +21,88 @@ public class JUnitLogger(val notifier: RunNotifier): Listener {
 
             override fun executionSkipped(why: String) {
                 notifier.fireTestIgnored(Description
-                        .createTestDescription("$given, $on, $it", "Skipped. Reason: $why"))
+                        .createTestDescription(spek, "Skipped. Reason: $why"))
+            }
+        }
+    }
+
+    override fun given(spek: String, given: String): StepListener {
+        val desc = Description.createTestDescription(spek, given)
+
+        return object : StepListener {
+            override fun executionStarted() {
+                notifier.fireTestStarted(desc)
+            }
+
+            override fun executionCompleted() {
+                notifier.fireTestFinished(desc)
+            }
+
+            override fun executionSkipped(why: String) {
+                notifier.fireTestIgnored(Description
+                        .createTestDescription(spek, "$given skipped. Reason: $why"))
+            }
+            override fun executionPending(why: String) {
+                notifier.fireTestIgnored(Description
+                        .createTestDescription(spek, "$given pending. Reason: $why"))
+            }
+            override fun executionFailed(error: Throwable) {
+                notifier.fireTestFailure(Failure(desc, error))
+            }
+        }
+    }
+
+    override fun on(spek: String, given: String, on: String): StepListener {
+        val desc = Description.createTestDescription(spek, "$given, $on")
+
+        return object : StepListener {
+            override fun executionStarted() {
+                notifier.fireTestStarted(desc)
+            }
+
+            override fun executionCompleted() {
+                notifier.fireTestFinished(desc)
+            }
+
+            override fun executionSkipped(why: String) {
+                notifier.fireTestIgnored(Description
+                        .createTestDescription(spek, "$given, $on skipped. Reason: $why"))
+
+            }
+            override fun executionPending(why: String) {
+                notifier.fireTestIgnored(Description
+                        .createTestDescription(spek, "$given, $on pending. Reason: $why"))
+
+            }
+            override fun executionFailed(error: Throwable) {
+                notifier.fireTestFailure(Failure(
+                        desc,
+                        error))
+            }
+        }
+    }
+
+    override fun it(spek: String, given: String, on: String, it: String): StepListener {
+
+        val desc = Description.createTestDescription(spek, "$given, $on, $it")
+
+        return object : StepListener {
+            override fun executionStarted() {
+                notifier.fireTestStarted(desc)
+            }
+
+            override fun executionCompleted() {
+                notifier.fireTestFinished(desc)
+            }
+
+            override fun executionSkipped(why: String) {
+                notifier.fireTestIgnored(Description
+                        .createTestDescription(spek, "$given, $on, $it skipped. Reason: $why"))
             }
 
             override fun executionPending(why: String) {
                 notifier.fireTestIgnored(Description
-                        .createTestDescription("$given, $on,  $it", "Pending. Reason: $why"))
+                        .createTestDescription(spek, "$given, $on,  $it pending. Reason: $why"))
             }
 
             override fun executionFailed(error: Throwable) {
