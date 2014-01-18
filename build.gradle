@@ -7,7 +7,7 @@ buildscript {
     }
 }
 group = 'org.spek'
-version = "1.0.0-SNAODPSHOT"
+version = "1.0.0-SNAPSHOT"
 apply plugin: 'kotlin'
 
 allprojects {
