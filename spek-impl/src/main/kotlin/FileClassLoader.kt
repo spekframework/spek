@@ -76,7 +76,7 @@ public data class ExtensionFunctionSpek(val method : Method) : TestFixtureAction
 }
 
 public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) : TestFixtureAction {
-    override fun description(): String = specificationClass.toString()
+    override fun description(): String = specificationClass.getName()
 
     override fun iterateGiven(it: (TestGivenAction) -> Unit) {
         specificationClass.checkSkipped()
