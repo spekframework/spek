@@ -74,7 +74,4 @@ dependencies {
     compile project(':spek-junit')
 }
 
-jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
 
