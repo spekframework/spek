@@ -15,6 +15,9 @@ allprojects {
         mavenCentral()
     }
     apply plugin: 'idea'
+
+    sourceCompatibility = '1.5'
+    targetCompatibility = '1.5'
 }
 
 subprojects {
@@ -37,6 +40,7 @@ subprojects {
     }
 
     test {
+
        // set heap size for the test JVM(s)
        minHeapSize = "128m"
        maxHeapSize = "512m"
@@ -72,3 +76,4 @@ dependencies {
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
+
