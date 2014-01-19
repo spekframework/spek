@@ -6,6 +6,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     }
 }
+
 group = 'org.spek'
 version = "1.0.0-SNAODPSHOT"
 apply plugin: 'kotlin'
@@ -16,8 +17,8 @@ allprojects {
     }
     apply plugin: 'idea'
 
-    sourceCompatibility = '1.5'
-    targetCompatibility = '1.5'
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
 }
 
 subprojects {
