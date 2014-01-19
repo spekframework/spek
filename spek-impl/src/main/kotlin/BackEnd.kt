@@ -1,11 +1,6 @@
 package org.spek.impl
 
 import org.spek.api.*
-import kotlin.test.assertEquals
-import kotlin.test.assertNot
-import kotlin.test.assertNull
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 
 public trait TestFixtureAction {
     fun description(): String
@@ -27,13 +22,8 @@ public trait TestItAction {
     fun run()
 }
 
-open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
+open public class SpekImpl: Specification {
     private val recordedActions = linkedListOf<TestGivenAction>()
-
-    ///workaround for KT-3628
-    override fun given(description: String) {
-        super<SpekWithDefaults>.given(description)
-    }
 
     override fun given(description: String, givenExpression: Given.() -> Unit) {
         recordedActions.add(
@@ -46,6 +36,7 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
                         given.iterateOn(it)
                     }
                 })
+
     }
 
     public fun iterateGiven(it:(TestGivenAction) -> Unit) : Unit = removingIterator(recordedActions, it)
@@ -53,7 +44,7 @@ open public class SpekImpl: SpekWithDefaults, SkipSupportImpl() {
     public fun allGiven(): List<TestGivenAction> = recordedActions
 }
 
-public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
+public class GivenImpl: Given {
     private val recordedActions = linkedListOf<TestOnAction>()
     private val beforeActions = linkedListOf<()->Unit>()
     private val afterActions = linkedListOf<()->Unit>()
@@ -88,7 +79,7 @@ public class GivenImpl: GivenWithDefaults, SkipSupportImpl() {
     }
 }
 
-public class OnImpl: OnWithDefaults, SkipSupportImpl() {
+public class OnImpl: On {
     private val recordedActions = linkedListOf<TestItAction>()
 
     public fun iterateIt(it : (TestItAction) -> Unit) : Unit = removingIterator(recordedActions, it)
@@ -102,34 +93,5 @@ public class OnImpl: OnWithDefaults, SkipSupportImpl() {
     }
 }
 
-open class SkipSupportImpl: SkipSupportWithDefaults {
+open class ItImpl : It {}
 
-    override fun skip(why: String) = throw SkippedException(why)
-
-    override fun pending(why: String) = throw PendingException(why)
-}
-
-open class ItImpl : It {
-    override fun shouldEqual<T>(expected: T, actual: T) {
-        assertEquals(expected, actual)
-    }
-    override fun shouldNotEqual<T>(expected: T, actual: T) {
-        assertNot { expected == actual }
-    }
-    override fun shouldBeNull<T>(actual: T) {
-        assertNull(actual)
-    }
-    override fun shouldNotBeNull<T>(actual: T) {
-        assertNotNull(actual)
-    }
-    override fun shouldBeTrue<T>(actual: T) {
-        assertTrue(actual == true)
-    }
-    override fun shouldBeFalse<T>(actual: T) {
-        assertTrue(actual == false)
-    }
-}
-
-class SkippedException(message: String): RuntimeException(message)
-
-class PendingException(message: String): RuntimeException(message)

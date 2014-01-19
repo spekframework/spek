@@ -1,5 +1,7 @@
 package org.spek.impl
 
+import org.spek.api.*
+
 public trait StepListener {
     fun executionStarted() {
     }

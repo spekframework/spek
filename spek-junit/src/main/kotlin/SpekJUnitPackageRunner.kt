@@ -11,10 +11,12 @@ import org.junit.Test
 public open class SpekJUnitPackageRunner(_ : Class<*>) : Runner() {
     private fun packageName() : String = getClass().getPackage()!!.getName()!!
 
-    public override fun getDescription(): Description? = Description.createSuiteDescription(packageName())
+    val suiteDescription = Description.createSuiteDescription(packageName())!!
+
+    public override fun getDescription(): Description = suiteDescription
 
     public override fun run(notifier: RunNotifier?) {
-        SpecificationRunner(JUnitLogger(notifier!!)).runSpecs(packageName())
+        SpecificationRunner(JUnitLogger(notifier!!, suiteDescription)).runSpecs(packageName())
     }
 
     Test public fun mockTest() {}

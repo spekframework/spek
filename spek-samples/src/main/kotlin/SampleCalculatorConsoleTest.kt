@@ -1,6 +1,7 @@
 package org.spek.samples
 
 import org.spek.console.api.ConsoleSpek
+import org.spek.api.*
 
 class CalculatorConsoleSpecs: ConsoleSpek() {{
     given("a calculator") {

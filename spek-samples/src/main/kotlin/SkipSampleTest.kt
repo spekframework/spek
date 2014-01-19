@@ -1,6 +1,7 @@
 package org.spek.samples
 
 import org.spek.console.api.ConsoleSpek
+import org.spek.api.*
 
 class SkipSample: ConsoleSpek() {{
     given("a sample") {
@@ -9,7 +10,7 @@ class SkipSample: ConsoleSpek() {{
             it("should return 10") {
                 shouldEqual(result, 10)
             }
-            skip()
+            skip("skip")
             it("should not return 11") {
                 shouldNotEqual(result, 11)
             }

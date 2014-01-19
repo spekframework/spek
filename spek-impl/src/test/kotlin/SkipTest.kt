@@ -4,6 +4,7 @@ import org.junit.Test as test
 import org.spek.impl.IntegrationTestCase.Data
 import kotlin.test.fail
 import org.junit.Assert
+import org.spek.api.*
 
 public class SkipTest : IntegrationTestCase() {
     test fun skipIt() =

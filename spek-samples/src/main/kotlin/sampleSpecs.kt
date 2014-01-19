@@ -2,9 +2,8 @@ package org.spek.samples.s1
 
 import org.spek.api.*
 import org.spek.console.api.*
-import org.spek.api.annotations.spek
 
-spek fun Spek.this_is_test() {
+spek fun Specification.this_is_test() {
     given("Outside it is raining") {
         on("umbrella") {
             it("should not be raining") {

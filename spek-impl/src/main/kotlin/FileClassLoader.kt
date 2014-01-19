@@ -1,25 +1,14 @@
 package org.spek.reflect;
 
-import org.reflections.Reflections
-import org.spek.impl.TestGivenAction
-import org.spek.api.annotations.skip
-import org.spek.impl.SkippedException
-import org.spek.impl.SpekImpl
-import java.lang.reflect.Method
-import java.lang.reflect.AnnotatedElement
-import org.spek.api.annotations.spek
-import org.spek.impl.AnnotationsHelper
-import org.reflections.util.ConfigurationBuilder
-import org.reflections.scanners.MethodAnnotationsScanner
-import org.reflections.scanners.SubTypesScanner
-import java.lang.reflect.Modifier
-import org.spek.impl.TestFixtureAction
+import org.reflections.*
+import org.spek.api.*
+import java.lang.reflect.*
+import org.reflections.util.*
+import org.reflections.scanners.*
+import org.spek.impl.*
 
-/**
- * @author hadihariri, jonnyzzz
- */
 public object FileClassLoader {
-    public fun findTestsInPackage(packageName : String) : List<TestFixtureAction>{
+    public fun findTestsInPackage(packageName : String) : MutableList<TestFixtureAction>{
         val result = arrayListOf<TestFixtureAction>()
 
         val reflectionConfig = ConfigurationBuilder
@@ -38,7 +27,7 @@ public object FileClassLoader {
         return result
     }
 
-    public fun findTestsInClass(clazz : Class<*>) : List<TestFixtureAction>{
+    public fun findTestsInClass(clazz : Class<*>) : MutableList<TestFixtureAction>{
         val result = arrayListOf<TestFixtureAction>()
 
         if (javaClass<SpekImpl>().isAssignableFrom(clazz)) {
@@ -57,8 +46,8 @@ private fun AnnotatedElement.checkSkipped() {
     /*
     * TODO: need to be refactored when #KT-3534, KT-3534 got fixed.
     */
-    val skip = AnnotationsHelper.getAnnotation(this, javaClass<skip>())
-    if (skip != null) throw SkippedException(skip.value() ?: "")
+    val skip = AnnotationsHelper.getAnnotation(this, javaClass<ignored>())
+    if (skip != null) throw SkippedException(skip.why)
 }
 
 public data class ExtensionFunctionSpek(val method : Method) : TestFixtureAction {

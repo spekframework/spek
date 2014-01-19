@@ -5,7 +5,7 @@ import org.spek.impl.Runner
 import org.spek.impl.TestFixtureAction
 import org.spek.impl.StepListener
 import org.spek.impl.events.Listener
-import org.spek.api.Spek
+import org.spek.api.Specification
 import org.junit.Assert
 
 
@@ -31,7 +31,7 @@ public open class IntegrationTestCase {
                 )
     }
 
-    public fun data(f:Spek.() -> Unit) : TestFixtureAction {
+    public fun data(f: Specification.() -> Unit) : TestFixtureAction {
         val d = Data()
         d.f()
         return d

@@ -1,20 +1,19 @@
 package org.spek.samples
 
 import org.spek.junit.api.JUnitSpek
+import org.spek.api.*
 
 class CalculatorJUnitSpecs: JUnitSpek() {{
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {
-
             val sum = calculator.sum(2, 4)
-
 
             it("should return the result of adding the first number to the second number") {
                 shouldEqual(6, sum)
             }
 
-            it("should another") {
+            it("should still be same value") {
                 shouldEqual(6, sum)
             }
         }
@@ -23,7 +22,6 @@ class CalculatorJUnitSpecs: JUnitSpek() {{
             val subtract = calculator.subtract(4, 2)
 
             it("should return the result of substracting the second number from the first number") {
-
                 shouldEqual(2, subtract)
             }
         }

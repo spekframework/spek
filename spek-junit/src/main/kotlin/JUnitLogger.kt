@@ -6,17 +6,16 @@ import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunNotifier
 import org.spek.impl.events.Listener
 
-public class JUnitLogger(val notifier: RunNotifier): Listener {
+public class JUnitLogger(val notifier: RunNotifier, val spekDescription: Description): Listener {
     override fun spek(spek: String): StepListener {
-        val desc = Description.createSuiteDescription(spek)
 
         return object : StepListener {
             override fun executionStarted() {
-                notifier.fireTestStarted(desc)
+                notifier.fireTestStarted(spekDescription)
             }
 
             override fun executionCompleted() {
-                notifier.fireTestFinished(desc)
+                notifier.fireTestFinished(spekDescription)
             }
 
             override fun executionSkipped(why: String) {
