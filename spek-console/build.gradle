@@ -7,8 +7,3 @@ dependencies {
 apply plugin: 'application'
 
 mainClassName = 'org.spek.console.cmd.CmdPackage'
-
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-}
-

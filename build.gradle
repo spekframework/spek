@@ -48,7 +48,7 @@ subprojects {
 
 task wrapper(type: Wrapper) {
     gradleVersion = 1.10
-    
+
     doLast() {
       def gradleOpts = "-XX:MaxPermSize=300m -Xmx1024m"
       def gradlew_sh = file("gradlew")
