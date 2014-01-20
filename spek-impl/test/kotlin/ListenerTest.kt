@@ -2,16 +2,16 @@ package org.spek.impl.events
 
 import org.junit.Test as test
 import org.mockito.Mockito
-import org.spek.impl.StepListener
+import org.spek.impl.ExecutionReporter
 import org.mockito.BDDMockito
 import kotlin.test.assertEquals
 import org.junit.Before
 
 public class ListenerTest {
-    val firstStepListener = Mockito.mock(javaClass<StepListener>())
+    val firstStepListener = Mockito.mock(javaClass<ExecutionReporter>())
     val firstListener = Mockito.mock(javaClass<Listener>())!!
 
-    val secondStepListener = Mockito.mock(javaClass<StepListener>())
+    val secondStepListener = Mockito.mock(javaClass<ExecutionReporter>())
     val secondListener = Mockito.mock(javaClass<Listener>())!!
 
     val throwable = RuntimeException("Test Exception")
@@ -30,22 +30,22 @@ public class ListenerTest {
         val stepListener = multicaster.given("Spek", "Test")
 
         //when execution started.
-        stepListener.executionStarted();
+        stepListener.started();
         //then "executionStarted" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionStarted()
-        Mockito.verify(secondStepListener)!!.executionStarted()
+        Mockito.verify(firstStepListener)!!.started()
+        Mockito.verify(secondStepListener)!!.started()
 
         //when execution completed.
-        stepListener.executionCompleted()
+        stepListener.completed()
         //then "executionCompleted" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionCompleted()
-        Mockito.verify(secondStepListener)!!.executionCompleted()
+        Mockito.verify(firstStepListener)!!.completed()
+        Mockito.verify(secondStepListener)!!.completed()
 
         //when execution execution failed.
-        stepListener.executionFailed(throwable)
+        stepListener.failed(throwable)
         //then "executionFailed" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionFailed(throwable)
-        Mockito.verify(secondStepListener)!!.executionFailed(throwable)
+        Mockito.verify(firstStepListener)!!.failed(throwable)
+        Mockito.verify(secondStepListener)!!.failed(throwable)
     }
 
     test fun onExecution() {
@@ -55,22 +55,22 @@ public class ListenerTest {
         val stepListener = multicaster.on("Spek", "Test", "Test")
 
         //when execution started.
-        stepListener.executionStarted();
+        stepListener.started();
         //then "executionStarted" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionStarted()
-        Mockito.verify(secondStepListener)!!.executionStarted()
+        Mockito.verify(firstStepListener)!!.started()
+        Mockito.verify(secondStepListener)!!.started()
 
         //when execution completed.
-        stepListener.executionCompleted()
+        stepListener.completed()
         //then "executionCompleted" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionCompleted()
-        Mockito.verify(secondStepListener)!!.executionCompleted()
+        Mockito.verify(firstStepListener)!!.completed()
+        Mockito.verify(secondStepListener)!!.completed()
 
         //when execution execution failed.
-        stepListener.executionFailed(throwable)
+        stepListener.failed(throwable)
         //then "executionFailed" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionFailed(throwable)
-        Mockito.verify(secondStepListener)!!.executionFailed(throwable)
+        Mockito.verify(firstStepListener)!!.failed(throwable)
+        Mockito.verify(secondStepListener)!!.failed(throwable)
     }
 
     test fun itExecution() {
@@ -81,21 +81,21 @@ public class ListenerTest {
         val stepListener = multicaster.it("Spek", "Test", "Test", "Test")
 
         //when execution started.
-        stepListener.executionStarted();
+        stepListener.started();
         //then "executionStarted" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionStarted()
-        Mockito.verify(secondStepListener)!!.executionStarted()
+        Mockito.verify(firstStepListener)!!.started()
+        Mockito.verify(secondStepListener)!!.started()
 
         //when execution completed.
-        stepListener.executionCompleted()
+        stepListener.completed()
         //then "executionCompleted" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionCompleted()
-        Mockito.verify(secondStepListener)!!.executionCompleted()
+        Mockito.verify(firstStepListener)!!.completed()
+        Mockito.verify(secondStepListener)!!.completed()
 
         //when execution execution failed.
-        stepListener.executionFailed(throwable)
+        stepListener.failed(throwable)
         //then "executionFailed" in both step listeners must be called.
-        Mockito.verify(firstStepListener)!!.executionFailed(throwable)
-        Mockito.verify(secondStepListener)!!.executionFailed(throwable)
+        Mockito.verify(firstStepListener)!!.failed(throwable)
+        Mockito.verify(secondStepListener)!!.failed(throwable)
     }
 }

@@ -2,7 +2,7 @@ package org.spek.impl
 
 import org.spek.api.*
 
-public trait TestFixtureAction {
+public trait TestSpekAction {
     fun description(): String
     fun iterateGiven(it:(TestGivenAction) -> Unit)
 }

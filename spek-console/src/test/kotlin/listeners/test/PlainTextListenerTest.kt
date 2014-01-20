@@ -14,17 +14,17 @@ public class TextListenerTest {
         val listener = textListener.given("Spek", "A Given")
 
         //when execution started
-        listener.executionStarted()
+        listener.started()
         //then a log message is written to output device
         Mockito.verify(device)!!.output("Given A Given")
 
         //when execution completed
-        listener.executionCompleted()
+        listener.completed()
         //then a log message is written to output device
         Mockito.verify(device)!!.output("")
 
         //when execution failed
-        listener.executionFailed(RuntimeException())
+        listener.failed(RuntimeException())
         //then a log message is written to output device
         Mockito.verify(device)!!.output("Failed: java.lang.RuntimeException")
     }
@@ -34,12 +34,12 @@ public class TextListenerTest {
         val listener = textListener.on("Spek", "A Given", "An On")
 
         //when execution started
-        listener.executionStarted()
+        listener.started()
         //then a log message is written to output device
         Mockito.verify(device)!!.output("  On An On")
 
         //when execution failed
-        listener.executionFailed(RuntimeException())
+        listener.failed(RuntimeException())
         //then a log message is written to output device
         Mockito.verify(device)!!.output("  Failed: java.lang.RuntimeException")
     }
@@ -49,12 +49,12 @@ public class TextListenerTest {
         val listener = textListener.it("Spek", "A Given", "An On", "An It")
 
         //when execution started
-        listener.executionStarted()
+        listener.started()
         //then a log message is written to output device
         Mockito.verify(device)!!.output("    It An It")
 
         //when execution failed
-        listener.executionFailed(RuntimeException())
+        listener.failed(RuntimeException())
         //then a log message is written to output device
         Mockito.verify(device)!!.output("    Failed: java.lang.RuntimeException")
     }

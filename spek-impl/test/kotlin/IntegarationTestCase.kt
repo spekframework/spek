@@ -1,9 +1,8 @@
 package org.spek.impl
 
 import kotlin.test.assertEquals
-import org.spek.impl.Runner
-import org.spek.impl.TestFixtureAction
-import org.spek.impl.StepListener
+import org.spek.impl.TestSpekAction
+import org.spek.impl.ExecutionReporter
 import org.spek.impl.events.Listener
 import org.spek.api.Specification
 import org.junit.Assert
@@ -11,9 +10,9 @@ import org.junit.Assert
 
 public open class IntegrationTestCase {
 
-    fun runTest(case: TestFixtureAction, vararg expected: String) {
+    fun runTest(case: TestSpekAction, vararg expected: String) {
         val list = arrayListOf<String>()
-        Runner.executeSpek(case, TestLogger(list))
+        executeSpek(case, TestLogger(list))
         if (expected.size == 0) return
         val actualDump = list.map { it + "\n" }.fold("") { r, i -> r + i }
         val expectedLog = expected
@@ -31,37 +30,37 @@ public open class IntegrationTestCase {
                 )
     }
 
-    public fun data(f: Specification.() -> Unit) : TestFixtureAction {
+    public fun data(f: Specification.() -> Unit) : TestSpekAction {
         val d = Data()
         d.f()
         return d
     }
 
-    public open class Data : SpekImpl(), TestFixtureAction {
+    public open class Data : SpekImpl(), TestSpekAction {
         override fun description(): String = "42"
     }
 
     public class TestLogger(val output: MutableList<String>): Listener {
-        private fun step(prefix:String) : StepListener = object : StepListener {
-            override fun executionStarted() {
+        private fun step(prefix:String) : ExecutionReporter = object : ExecutionReporter {
+            override fun started() {
                 output add prefix + " START"
             }
-            override fun executionCompleted() {
+            override fun completed() {
                 output add prefix + " FINISH"
             }
-            override fun executionSkipped(why: String) {
+            override fun skipped(why: String) {
                 output add prefix + " SKIP:" + why
             }
-            override fun executionPending(why: String) {
+            override fun pending(why: String) {
                 output add prefix + " PEND:" + why
             }
-            override fun executionFailed(error: Throwable) {
+            override fun failed(error: Throwable) {
                 output add prefix + " FAIL:" + error.getMessage()
             }
         }
 
-        override fun spek(spek: String): StepListener = step("SPEK: $spek")
-        override fun given(spek: String, given: String): StepListener = step("SPEK: $spek GIVEN: $given")
+        override fun spek(spek: String): ExecutionReporter = step("SPEK: $spek")
+        override fun given(spek: String, given: String): ExecutionReporter = step("SPEK: $spek GIVEN: $given")
         override fun on(spek: String, given: String, on: String)= step("SPEK: $spek GIVEN: $given ON: $on")
         override fun it(spek: String, given: String, on: String, it: String) = step("SPEK: $spek GIVEN: $given ON: $on IT: $it")
     }

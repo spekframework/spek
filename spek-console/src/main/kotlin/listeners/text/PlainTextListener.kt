@@ -1,80 +1,80 @@
 package org.spek.console.listeners.text
 
 import org.spek.impl.events.*
-import org.spek.impl.StepListener
+import org.spek.impl.ExecutionReporter
 import org.spek.console.output.OutputDevice
 
 public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by output {
-    override fun spek(spek: String): StepListener {
-        return object : StepListener {
-            override fun executionStarted() {
+    override fun spek(spek: String): ExecutionReporter {
+        return object : ExecutionReporter {
+            override fun started() {
                 output(spek)
             }
-            override fun executionFailed(error: Throwable) {
+            override fun failed(error: Throwable) {
                 output("Failed: " + error.getMessage() + " " + error)
                 output("")
             }
-            override fun executionSkipped(why: String) {
+            override fun skipped(why: String) {
                 output("Skipped Spek '$spek'. Reason: $why")
             }
-            override fun executionPending(why: String) {
+            override fun pending(why: String) {
                 output("Pending Spek '$spek'. Reason: $why")
             }
         }
     }
 
-    override fun given(spek: String, given: String): StepListener {
-        return object : StepListener {
-            override fun executionStarted() {
+    override fun given(spek: String, given: String): ExecutionReporter {
+        return object : ExecutionReporter {
+            override fun started() {
                 output("  Given $given")
             }
-            override fun executionCompleted() {
+            override fun completed() {
                 output("")
             }
-            override fun executionSkipped(why: String) {
+            override fun skipped(why: String) {
                 output("  Skipped Given '$given'. Reason: $why")
             }
-            override fun executionPending(why: String) {
+            override fun pending(why: String) {
                 output("  Pending Given '$given'. Reason: $why")
             }
-            override fun executionFailed(error: Throwable) {
+            override fun failed(error: Throwable) {
                 output("  Failed: $error")
                 output("")
             }
         }
     }
 
-    override fun on(spek: String, given: String, on: String): StepListener {
-        return object : StepListener {
-            override fun executionStarted() {
+    override fun on(spek: String, given: String, on: String): ExecutionReporter {
+        return object : ExecutionReporter {
+            override fun started() {
                 output("    On $on")
             }
-            override fun executionFailed(error: Throwable) {
+            override fun failed(error: Throwable) {
                 output("    Failed: $error")
                 output("")
             }
-            override fun executionSkipped(why: String) {
+            override fun skipped(why: String) {
                 output("    Skipped On '$on'. Reason: $why")
             }
-            override fun executionPending(why: String) {
+            override fun pending(why: String) {
                 output("    Pending On '$on'. Reason: $why")
             }
         }
     }
 
-    override fun it(spek: String, given: String, on: String, it: String): StepListener {
-        return object : StepListener {
-            override fun executionStarted() {
+    override fun it(spek: String, given: String, on: String, it: String): ExecutionReporter {
+        return object : ExecutionReporter {
+            override fun started() {
                 output("      It $it")
             }
-            override fun executionFailed(error: Throwable) {
+            override fun failed(error: Throwable) {
                 output("      Failed: $error")
                 output("")
             }
-            override fun executionSkipped(why: String) {
+            override fun skipped(why: String) {
                 output("      Skipped It '$it'. Reason: $why")
             }
-            override fun executionPending(why: String) {
+            override fun pending(why: String) {
                 output("      Pending It '$it'. Reason: $why")
             }
         }

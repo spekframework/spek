@@ -8,8 +8,8 @@ import org.reflections.scanners.*
 import org.spek.impl.*
 
 public object FileClassLoader {
-    public fun findTestsInPackage(packageName : String) : MutableList<TestFixtureAction>{
-        val result = arrayListOf<TestFixtureAction>()
+    public fun findTestsInPackage(packageName : String) : MutableList<TestSpekAction>{
+        val result = arrayListOf<TestSpekAction>()
 
         val reflectionConfig = ConfigurationBuilder
                 .build(packageName, MethodAnnotationsScanner(), SubTypesScanner())!!
@@ -27,8 +27,8 @@ public object FileClassLoader {
         return result
     }
 
-    public fun findTestsInClass(clazz : Class<*>) : MutableList<TestFixtureAction>{
-        val result = arrayListOf<TestFixtureAction>()
+    public fun findTestsInClass(clazz : Class<*>) : MutableList<TestSpekAction>{
+        val result = arrayListOf<TestSpekAction>()
 
         if (javaClass<SpekImpl>().isAssignableFrom(clazz)) {
             result add ClassSpek(clazz as Class<SpekImpl>)
@@ -50,7 +50,7 @@ private fun AnnotatedElement.checkSkipped() {
     if (skip != null) throw SkippedException(skip.why)
 }
 
-public data class ExtensionFunctionSpek(val method : Method) : TestFixtureAction {
+public data class ExtensionFunctionSpek(val method : Method) : TestSpekAction {
     override fun description(): String = method.toString()
 
     override fun iterateGiven(it: (TestGivenAction) -> Unit) {
@@ -64,7 +64,7 @@ public data class ExtensionFunctionSpek(val method : Method) : TestFixtureAction
     }
 }
 
-public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) : TestFixtureAction {
+public data class ClassSpek<T : SpekImpl>(val specificationClass: Class<out T>) : TestSpekAction {
     override fun description(): String = specificationClass.getName()
 
     override fun iterateGiven(it: (TestGivenAction) -> Unit) {

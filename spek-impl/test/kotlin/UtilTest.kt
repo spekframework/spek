@@ -7,23 +7,23 @@ import kotlin.test.assertTrue
 import org.mockito.Matchers
 
 public class UtilTest {
-    val listener = Mockito.mock(javaClass<StepListener>())!!
-    val action = Mockito.mock(javaClass<StepListener>())!!
+    val listener = Mockito.mock(javaClass<ExecutionReporter>())!!
+    val action = Mockito.mock(javaClass<ExecutionReporter>())!!
 
     test fun successfulSafeExecution() {
         //given an action and a listener
         var verification = false
 
         //when safeExecution finished successfully.
-        safeExecute(action, listener) {
+        executeWithReporting(action, listener) {
             verification = true
         }
         // then the action function has been called.
         assertTrue(verification)
         //and execution started
-        Mockito.verify(listener)!!.executionStarted()
+        Mockito.verify(listener)!!.started()
         // and execution finished.
-        Mockito.verify(listener)!!.executionCompleted()
+        Mockito.verify(listener)!!.completed()
         // and execution is not Failed.
         Mockito.verifyNoMoreInteractions(listener)
     }
@@ -32,14 +32,14 @@ public class UtilTest {
         //given an action and a listener
        //when safeExecution finished with an error (exception).
         val throwable = RuntimeException("an exception")
-        safeExecute(action, listener) {
+        executeWithReporting(action, listener) {
             throw throwable
         }
         //then execution started
-        Mockito.verify(listener)!!.executionStarted()
+        Mockito.verify(listener)!!.started()
         // and execution finished.
-        Mockito.verify(listener)!!.executionCompleted()
+        Mockito.verify(listener)!!.completed()
         // but execution Failed.
-        Mockito.verify(listener)!!.executionFailed(throwable)
+        Mockito.verify(listener)!!.failed(throwable)
     }
 }
