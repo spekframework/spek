@@ -1,6 +1,2 @@
 description = 'Spek API'
 
-sourceSets {
-    main.java.srcDirs += 'kotlin'
-}
-

@@ -6,6 +6,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
     }
 }
+
 group = 'org.spek'
 version = "1.0.0-SNAPSHOT"
 apply plugin: 'kotlin'
@@ -15,6 +16,9 @@ allprojects {
         mavenCentral()
     }
     apply plugin: 'idea'
+
+    sourceCompatibility = '1.7'
+    targetCompatibility = '1.7'
 }
 
 subprojects {
@@ -37,6 +41,7 @@ subprojects {
     }
 
     test {
+
        // set heap size for the test JVM(s)
        minHeapSize = "128m"
        maxHeapSize = "512m"
@@ -48,7 +53,7 @@ subprojects {
 
 task wrapper(type: Wrapper) {
     gradleVersion = 1.10
-    
+
     doLast() {
       def gradleOpts = "-XX:MaxPermSize=300m -Xmx1024m"
       def gradlew_sh = file("gradlew")
@@ -69,6 +74,4 @@ dependencies {
     compile project(':spek-junit')
 }
 
-jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
+
