@@ -1,11 +1,10 @@
 package org.spek.impl.events
 
 import org.junit.Test as test
-import org.mockito.Mockito
-import org.spek.impl.ExecutionReporter
-import org.mockito.BDDMockito
-import kotlin.test.assertEquals
-import org.junit.Before
+import org.mockito.*
+import org.spek.impl.*
+import kotlin.test.*
+import org.junit.*
 
 public class ListenerTest {
     val firstStepListener = Mockito.mock(javaClass<ExecutionReporter>())

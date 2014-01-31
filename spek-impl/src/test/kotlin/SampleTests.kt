@@ -2,8 +2,8 @@ package org.spek.impl
 
 import org.junit.Test as test
 import org.spek.impl.IntegrationTestCase.Data
-import kotlin.test.fail
-import org.junit.Assert
+import kotlin.test.*
+import org.junit.*
 import org.spek.api.*
 
 public class SampleCalculatorIntegrationTest : IntegrationTestCase() {

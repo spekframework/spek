@@ -1,12 +1,9 @@
 package org.spek.impl
 
-import kotlin.test.assertEquals
-import org.spek.impl.TestSpekAction
-import org.spek.impl.ExecutionReporter
-import org.spek.impl.events.Listener
-import org.spek.api.Specification
-import org.junit.Assert
-
+import kotlin.test.*
+import org.spek.impl.*
+import org.spek.api.*
+import org.junit.*
 
 public open class IntegrationTestCase {
 

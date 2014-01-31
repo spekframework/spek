@@ -1,10 +1,8 @@
 package org.spek.impl
 
 import org.junit.Test as test
-import org.mockito.Mockito
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
-import org.mockito.Matchers
+import org.mockito.*
+import kotlin.test.*
 
 public class UtilTest {
     val listener = Mockito.mock(javaClass<ExecutionReporter>())!!

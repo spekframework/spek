@@ -1,10 +1,8 @@
 package org.spek.junit.impl
 
-import org.junit.runner.Description
-import org.spek.impl.ExecutionReporter
-import org.junit.runner.notification.Failure
-import org.junit.runner.notification.RunNotifier
-import org.spek.impl.events.Listener
+import org.junit.runner.*
+import org.spek.impl.*
+import org.junit.runner.notification.*
 
 public class JUnitLogger(val notifier: RunNotifier, val spekDescription: Description): Listener {
     override fun spek(spek: String): ExecutionReporter {
