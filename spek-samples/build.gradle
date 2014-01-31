@@ -5,3 +5,8 @@ dependencies {
     compile project(':spek-console')
     compile project(':spek-junit')
 }
+
+sourceSets {
+    main.kotlin.srcDirs += 'kotlin'
+    main.kotlin.srcDirs += 'test/kotlin'
+}

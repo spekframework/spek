@@ -5,3 +5,7 @@ dependencies {
     compile project(':spek-impl')
     compile group: 'junit', name: 'junit', version: "${junitVersion}"
 }
+
+sourceSets {
+    main.kotlin.srcDirs += 'kotlin'
+}
