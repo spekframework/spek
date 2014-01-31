@@ -1,7 +1,6 @@
 package org.spek.console.listeners.text
 
-import org.spek.impl.events.*
-import org.spek.impl.ExecutionReporter
+import org.spek.impl.*
 import org.spek.console.output.OutputDevice
 
 public class PlainTextListener(output: OutputDevice): Listener, OutputDevice by output {

@@ -1,6 +1,5 @@
 package org.spek.impl;
 
-import org.spek.impl.events.*
 import org.spek.reflect.*
 import org.spek.api.*
 

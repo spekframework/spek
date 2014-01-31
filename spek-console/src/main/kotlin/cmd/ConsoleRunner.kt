@@ -1,6 +1,5 @@
 package org.spek.console.cmd
 
-import org.spek.impl.events.*
 import org.spek.impl.*
 import org.spek.reflect.*
 import org.spek.console.listeners.*

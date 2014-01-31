@@ -1,4 +1,4 @@
-package org.spek.impl.events
+package org.spek.impl
 
 import org.spek.impl.*
 

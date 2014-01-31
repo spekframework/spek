@@ -2,7 +2,6 @@ package org.spek.console.listeners.html
 
 import org.spek.*
 import org.spek.impl.*
-import org.spek.impl.events.*
 
 //Not supported for now
 /*
