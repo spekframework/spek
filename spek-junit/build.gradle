@@ -7,5 +7,5 @@ dependencies {
 }
 
 sourceSets {
-    main.kotlin.srcDirs += 'kotlin'
+    main.java.srcDirs += 'kotlin'
 }

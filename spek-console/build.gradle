@@ -9,6 +9,6 @@ apply plugin: 'application'
 mainClassName = 'org.spek.console.cmd.CmdPackage'
 
 sourceSets {
-    main.kotlin.srcDirs += 'kotlin'
+    main.java.srcDirs += 'kotlin'
     main.java.srcDirs += 'test/java'
 }
