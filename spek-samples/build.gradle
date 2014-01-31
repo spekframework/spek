@@ -5,8 +5,3 @@ dependencies {
     compile project(':spek-console')
     compile project(':spek-junit')
 }
-
-sourceSets {
-    main.java.srcDirs += 'kotlin'
-    main.java.srcDirs += 'test/kotlin'
-}

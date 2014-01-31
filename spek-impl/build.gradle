@@ -4,9 +4,3 @@ dependencies {
     compile project(':spek-api')
     compile group: 'org.reflections', name: 'reflections', version: '0.9.8'
 }
-
-sourceSets {
-    main.java.srcDirs += 'java'
-    main.java.srcDirs += 'kotlin'
-    main.java.srcDirs += 'test/kotlin'
-}
