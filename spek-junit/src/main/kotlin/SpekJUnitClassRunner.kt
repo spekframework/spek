@@ -6,6 +6,14 @@ import org.junit.runner.notification.*
 import org.spek.impl.*
 import org.spek.api.*
 import kotlin.properties.Delegates
+import java.io.Serializable
+
+data class SpekUniqueId(val id : Int) : Serializable {
+    class object {
+        var id = 0
+        fun next() = SpekUniqueId(id++)
+    }
+}
 
 public fun testAction(description: Description, notifier: RunNotifier, action: () -> Unit) {
     notifier.fireTestStarted(description)
@@ -21,7 +29,6 @@ public fun testAction(description: Description, notifier: RunNotifier, action: (
     }
 }
 
-
 public class SpekJUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction, val on: TestOnAction) : ParentRunner<TestItAction>(specificationClass) {
 
     val _children by Delegates.lazy {
@@ -31,19 +38,22 @@ public class SpekJUnitOnRunner<T>(val specificationClass: Class<T>, val given: T
     }
 
     val _description by Delegates.lazy {
-        val desc = Description.createSuiteDescription(on.description())!!
+        val desc = Description.createSuiteDescription(on.description(), SpekUniqueId.next())!!
         for (item in getChildren()) {
             desc.addChild(describeChild(item))
         }
         desc
     }
 
+    val childrenDescriptions = hashMapOf<String, Description>()
 
     override fun getChildren(): MutableList<TestItAction> = _children
     override fun getDescription(): Description? = _description
 
     protected override fun describeChild(child: TestItAction?): Description? {
-        return Description.createSuiteDescription(child!!.description())
+        return childrenDescriptions.getOrPut(child!!.description(), {
+            Description.createSuiteDescription(child.description(), SpekUniqueId.next())!!
+        })
     }
 
     protected override fun runChild(child: TestItAction?, notifier: RunNotifier?) {
@@ -62,7 +72,7 @@ public class SpekJUnitGivenRunner<T>(val specificationClass: Class<T>, val given
     }
 
     val _description by Delegates.lazy {
-        val desc = Description.createSuiteDescription(given.description())!!
+        val desc = Description.createSuiteDescription(given.description(), SpekUniqueId.next())!!
         for (item in getChildren()) {
             desc.addChild(describeChild(item))
         }
