@@ -16,7 +16,7 @@ data class SpekUniqueId(val id : Int) : Serializable {
 }
 
 public fun testAction(description: Description, notifier: RunNotifier, action: () -> Unit) {
-    notifier.fireTestStarted(description)
+    if (description.isTest()) notifier.fireTestStarted(description)
     try {
         action()
     } catch(e: SkippedException) {
@@ -25,7 +25,7 @@ public fun testAction(description: Description, notifier: RunNotifier, action: (
     } catch(e: Throwable) {
         notifier.fireTestFailure(Failure(description, e))
     } finally {
-        notifier.fireTestFinished(description)
+        if (description.isTest()) notifier.fireTestFinished(description)
     }
 }
 
