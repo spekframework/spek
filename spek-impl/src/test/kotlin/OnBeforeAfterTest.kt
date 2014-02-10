@@ -16,7 +16,7 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
               afterOn { log add "after"  }
 
               on("1") {
-                  it("ddd")
+                  it("ddd") {}
                   log add "on"
               }
               on("2") { it("zzz") { log add "it"; fail("rrr") } }

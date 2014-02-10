@@ -7,50 +7,48 @@ import org.reflections.util.*
 import org.reflections.scanners.*
 import org.spek.impl.*
 
-public object FileClassLoader {
-    public fun findTestsInPackage(packageName : String) : MutableList<TestSpekAction>{
-        val result = arrayListOf<TestSpekAction>()
+public fun findTestsInPackage(packageName: String): MutableList<TestSpekAction> {
+    val result = arrayListOf<TestSpekAction>()
 
-        val reflectionConfig = ConfigurationBuilder
-                .build(packageName, MethodAnnotationsScanner(), SubTypesScanner())!!
-                .useParallelExecutor()
+    val reflectionConfig = ConfigurationBuilder
+            .build(packageName, MethodAnnotationsScanner(), SubTypesScanner())!!
+            .useParallelExecutor()
 
-        val reflections = Reflections(reflectionConfig);
+    val reflections = Reflections(reflectionConfig);
 
-        result addAll (reflections.getSubTypesOf(javaClass<SpekImpl>())!! map { ClassSpek(it) })
+    result addAll (reflections.getSubTypesOf(javaClass<SpekImpl>())!! map { ClassSpek(it) })
 
-        val spekClazz = AnnotationsHelper.toAnnotationClazz(javaClass<spek>())
-        val annotatedMethods = reflections.getMethodsAnnotatedWith(spekClazz)!!
+    val spekClazz = toAnnotationClazz(javaClass<spek>())
+    val annotatedMethods = reflections.getMethodsAnnotatedWith(spekClazz)!!
 
-        result addAll (annotatedMethods map { ExtensionFunctionSpek(it)})
+    result addAll (annotatedMethods map { ExtensionFunctionSpek(it) })
 
-        return result
+    return result
+}
+
+public fun findTestsInClass(clazz: Class<*>): MutableList<TestSpekAction> {
+    val result = arrayListOf<TestSpekAction>()
+
+    if (javaClass<SpekImpl>().isAssignableFrom(clazz)) {
+        result add ClassSpek(clazz as Class<SpekImpl>)
     }
 
-    public fun findTestsInClass(clazz : Class<*>) : MutableList<TestSpekAction>{
-        val result = arrayListOf<TestSpekAction>()
+    result addAll clazz.getMethods()
+            .filter { Modifier.isStatic(it.getModifiers()) && hasAnnotationClazz(it, javaClass<spek>()) }
+            .map { ExtensionFunctionSpek(it) }
 
-        if (javaClass<SpekImpl>().isAssignableFrom(clazz)) {
-            result add ClassSpek(clazz as Class<SpekImpl>)
-        }
-
-        result addAll clazz.getMethods()
-                .filter { Modifier.isStatic(it.getModifiers()) &&  AnnotationsHelper.hasAnnotationClazz(it, javaClass<spek>()) }
-                .map { ExtensionFunctionSpek(it)}
-
-        return result
-    }
+    return result
 }
 
 private fun AnnotatedElement.checkSkipped() {
     /*
     * TODO: need to be refactored when #KT-3534, KT-3534 got fixed.
     */
-    val skip = AnnotationsHelper.getAnnotation(this, javaClass<ignored>())
+    val skip = getAnnotation(this, javaClass<ignored>())
     if (skip != null) throw SkippedException(skip.why)
 }
 
-public data class ExtensionFunctionSpek(val method : Method) : TestSpekAction {
+public data class ExtensionFunctionSpek(val method: Method) : TestSpekAction {
     override fun description(): String = method.toString()
 
     override fun iterateGiven(it: (TestGivenAction) -> Unit) {

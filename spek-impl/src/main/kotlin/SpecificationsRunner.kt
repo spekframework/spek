@@ -5,11 +5,11 @@ import org.spek.api.*
 
 public class SpecificationRunner(val listener: Listener) {
     public fun runSpecs(packageName: String) {
-        doTestRun(FileClassLoader.findTestsInPackage(packageName))
+        doTestRun(findTestsInPackage(packageName))
     }
 
     public fun runSpecs(clazz: Class<*>) {
-        doTestRun(FileClassLoader.findTestsInClass(clazz))
+        doTestRun(findTestsInClass(clazz))
     }
 
     private fun doTestRun(classes : List<TestSpekAction>) {
