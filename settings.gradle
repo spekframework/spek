@@ -1,3 +1,3 @@
 rootProject.name = 'spek'
-include 'spek-api', 'spek-impl', 'spek-console', 'spek-junit', 'spek-samples'
+include 'spek-core', 'spek-samples'
 

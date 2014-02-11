@@ -68,12 +68,8 @@ task wrapper(type: Wrapper) {
 }
 
 dependencies {
-    compile project(':spek-api')
-    compile project(':spek-console')
-    compile project(':spek-impl')
-    compile project(':spek-junit')
+    compile project(':spek-core')
 }
-
 
 jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }

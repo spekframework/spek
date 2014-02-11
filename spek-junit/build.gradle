@@ -1,7 +1,0 @@
-description = 'Spek JUnit'
-
-dependencies {
-    compile project(':spek-api')
-    compile project(':spek-impl')
-    compile group: 'junit', name: 'junit', version: "${junitVersion}"
-}
