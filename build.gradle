@@ -9,7 +9,7 @@ buildscript {
 
 group = 'org.spek'
 if (hasProperty("teamcity")) {
-    version = teamcity["build.version"]+ "." + teamcity["build.number"]
+    version = teamcity["build.number"]
 } else
     version = "1.0.0-SNAPSHOT"
 
