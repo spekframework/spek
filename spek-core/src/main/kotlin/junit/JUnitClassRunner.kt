@@ -99,7 +99,7 @@ public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunne
     override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children
 
     val _children by Delegates.lazy {
-        if (javaClass<Spek>().isAssignableFrom(specificationClass)) {
+        if (javaClass<Spek>().isAssignableFrom(specificationClass) && !specificationClass.isLocalClass()) {
             val spek = specificationClass.newInstance() as Spek
             val result = arrayListOf<JUnitGivenRunner<T>>()
             spek.iterateGiven { result.add(JUnitGivenRunner(specificationClass, it)) }
