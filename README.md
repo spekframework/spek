@@ -14,10 +14,10 @@ in a fluent and easy to read way.
 
 ### Writing specifications
 
-A specification is a class that is inherited either from `JUnitSpec` or from `ConsoleSpec`:
+A specification is a class that is inherited either from `Spek`:
 
 ```kotlin
-public class calculatorSpecs : JUnitSpec() {{
+public class calculatorSpecs : Spek() {{
     given("a calculator")
     {
         val calculator = Calculator()
@@ -34,9 +34,6 @@ public class calculatorSpecs : JUnitSpec() {{
     }
 }}
 ```
-
-Since they are merely functions, specifications do not need to belong to a class and can be declared as top-level
-functions in Kotlin. This gives you complete liberty to organize your specifications as you wish.
 
 ### Runners
 
