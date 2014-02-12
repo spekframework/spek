@@ -1,21 +1,22 @@
-package org.spek.impl.events
+package org.spek.test
 
 import org.junit.Test as test
 import org.mockito.*
 import org.spek.impl.*
 import kotlin.test.*
 import org.junit.*
+import org.spek.console.*
 
 public class ListenerTest {
-    val firstStepListener = Mockito.mock(javaClass<ExecutionReporter>())
-    val firstListener = Mockito.mock(javaClass<Listener>())!!
+    val firstStepListener = Mockito.mock(javaClass<ActionStatusReporter>())
+    val firstListener = Mockito.mock(javaClass<WorkflowReporter>())!!
 
-    val secondStepListener = Mockito.mock(javaClass<ExecutionReporter>())
-    val secondListener = Mockito.mock(javaClass<Listener>())!!
+    val secondStepListener = Mockito.mock(javaClass<ActionStatusReporter>())
+    val secondListener = Mockito.mock(javaClass<WorkflowReporter>())!!
 
     val throwable = RuntimeException("Test Exception")
 
-    val multicaster = Multicaster()
+    val multicaster = CompositeWorkflowReporter()
 
     Before fun setup() {
         multicaster.addListener(firstListener)

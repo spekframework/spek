@@ -1,9 +1,9 @@
 package org.spek.samples
 
-import org.spek.console.api.ConsoleSpek
-import org.spek.api.*
+import org.spek.console.*
+import org.spek.*
 
-class CalculatorConsoleSpecs: ConsoleSpek() {{
+class CalculatorConsoleSpecs: Spek() {{
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {

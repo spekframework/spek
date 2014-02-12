@@ -1,10 +1,10 @@
-package org.spek.impl
+package org.spek.test
 
 import org.junit.Test as test
-import org.spek.impl.IntegrationTestCase.Data
+import org.spek.test.IntegrationTestCase.Data
 import kotlin.test.*
 import org.junit.*
-import org.spek.api.*
+import org.spek.*
 
 public class SkipTest : IntegrationTestCase() {
     test fun skipIt() =
@@ -98,7 +98,7 @@ public class SkipTest : IntegrationTestCase() {
                 SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A PEND:not implemented yet
                 SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A FINISH
                 SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B START
-                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B PEND:not given
+                SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B PEND:Not implemented.
                 SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B FINISH
                 SPEK: 42 GIVEN: given a situation ON: on an event FINISH
                 SPEK: 42 GIVEN: given a situation FINISH
@@ -118,7 +118,7 @@ public class SkipTest : IntegrationTestCase() {
             }, """SPEK: 42 START
                 SPEK: 42 GIVEN: given a situation START
                 SPEK: 42 GIVEN: given a situation ON: on an event START
-                SPEK: 42 GIVEN: given a situation ON: on an event PEND:not given
+                SPEK: 42 GIVEN: given a situation ON: on an event PEND:Not implemented.
                 SPEK: 42 GIVEN: given a situation ON: on an event FINISH
                 SPEK: 42 GIVEN: given a situation ON: on another event START
                 SPEK: 42 GIVEN: given a situation ON: on another event PEND:not implemented yet
@@ -141,7 +141,7 @@ public class SkipTest : IntegrationTestCase() {
             SPEK: 42 GIVEN: given a situation PEND:for some reason
             SPEK: 42 GIVEN: given a situation FINISH
             SPEK: 42 GIVEN: given another situation START
-            SPEK: 42 GIVEN: given another situation PEND:not given
+            SPEK: 42 GIVEN: given another situation PEND:Not implemented.
             SPEK: 42 GIVEN: given another situation FINISH
             SPEK: 42 FINISH""")
 }

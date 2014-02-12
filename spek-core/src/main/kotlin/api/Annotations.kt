@@ -1,5 +1,3 @@
-package org.spek.api
-
-annotation class spek()
+package org.spek
 
 annotation class ignored(val why : String = "")

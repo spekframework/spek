@@ -1,8 +1,8 @@
-package org.spek.console.cmd
+package org.spek.console
 
 fun printUsage() {
     println(
-    """
+            """
 
     usage: spek <package> <options>
         where:

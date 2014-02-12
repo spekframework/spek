@@ -1,13 +1,13 @@
-package org.spek.console.listeners.text
+package org.spek.console.test
 
 import org.junit.Test as test
 import kotlin.test.assertTrue
 import org.mockito.Mockito
-import org.spek.console.output.OutputDevice
+import org.spek.console.*
 
 public class TextListenerTest {
     val device = Mockito.mock(javaClass<OutputDevice>())!!
-    val textListener = PlainTextListener(device)
+    val textListener = OutputDeviceWorkflowReporter(device)
 
     test fun given() {
         //given a text listener and a step listener that is bound to it.

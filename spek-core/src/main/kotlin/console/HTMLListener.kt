@@ -1,7 +1,4 @@
-package org.spek.console.listeners.html
-
-import org.spek.*
-import org.spek.impl.*
+package org.spek.console
 
 //Not supported for now
 /*

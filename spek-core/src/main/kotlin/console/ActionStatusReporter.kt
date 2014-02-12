@@ -1,16 +1,21 @@
-package org.spek.impl
+package org.spek.console
 
-import org.spek.api.*
+import org.spek.*
 
-public trait ExecutionReporter {
-    fun started() {}
-    fun completed() {}
-    fun skipped(why: String) {}
-    fun pending(why: String) {}
-    fun failed(error: Throwable) {}
+public trait ActionStatusReporter {
+    fun started() {
+    }
+    fun completed() {
+    }
+    fun skipped(why: String) {
+    }
+    fun pending(why: String) {
+    }
+    fun failed(error: Throwable) {
+    }
 }
 
-public class CompositeExecutionReporter(val reporters: List<ExecutionReporter>) : ExecutionReporter {
+public class CompositeActionStatusReporter(val reporters: List<ActionStatusReporter>) : ActionStatusReporter {
     override fun started() {
         for (reporter in reporters)
             reporter.started()
@@ -33,7 +38,7 @@ public class CompositeExecutionReporter(val reporters: List<ExecutionReporter>) 
     }
 }
 
-public fun executeWithReporting<T>(t: T, reporter: ExecutionReporter, action: T.() -> Unit) {
+public fun executeWithReporting<T>(t: T, reporter: ActionStatusReporter, action: T.() -> Unit) {
     reporter.started()
     try {
         t.action()

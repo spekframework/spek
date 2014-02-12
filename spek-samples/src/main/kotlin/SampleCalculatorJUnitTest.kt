@@ -1,9 +1,9 @@
 package org.spek.samples
 
-import org.spek.junit.api.JUnitSpek
-import org.spek.api.*
+import org.spek.junit.*
+import org.spek.*
 
-class CalculatorJUnitSpecs: JUnitSpek() {{
+class CalculatorJUnitSpecs: Spek() {{
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {

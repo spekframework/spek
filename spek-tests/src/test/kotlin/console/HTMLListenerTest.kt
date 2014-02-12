@@ -1,4 +1,4 @@
-package org.spek.console.listeners.html
+package org.spek.console.test
 
 import org.junit.Test as test
 import kotlin.test.assertTrue

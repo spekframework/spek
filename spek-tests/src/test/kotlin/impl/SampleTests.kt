@@ -1,10 +1,10 @@
-package org.spek.impl
+package org.spek.test
 
 import org.junit.Test as test
-import org.spek.impl.IntegrationTestCase.Data
+import org.spek.test.IntegrationTestCase.Data
 import kotlin.test.*
 import org.junit.*
-import org.spek.api.*
+import org.spek.*
 
 public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
     test fun inc() = runTest(data{

@@ -1,4 +1,4 @@
-package org.spek.console.cmd
+package org.spek.console
 
 data class Options(
         val packageName: String,

@@ -1,9 +1,9 @@
 package org.spek.samples
 
-import org.spek.junit.api.JUnitSpek
-import org.spek.api.*
+import org.spek.junit.*
+import org.spek.*
 
-class IncUtilJUnitSpecs: JUnitSpek() {{
+class IncUtilJUnitSpecs: Spek() {{
     given("an inc util") {
 
         val incUtil = SampleIncUtil()

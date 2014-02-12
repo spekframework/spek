@@ -1,7 +1,8 @@
-package org.spek.console.cmd
+package org.spek.console.test
 
 import org.junit.Test as test
 import kotlin.test.assertEquals
+import org.spek.console.*
 
 public class ConsoleRunnerTest {
     test fun getEmptyOptions() {

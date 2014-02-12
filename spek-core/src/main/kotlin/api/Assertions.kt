@@ -1,4 +1,4 @@
-package org.spek.api
+package org.spek
 
 import kotlin.test.*
 

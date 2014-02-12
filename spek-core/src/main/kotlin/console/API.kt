@@ -1,8 +1,8 @@
-package org.spek.console.api
+package org.spek.console
 
 import org.spek.impl.*
-import java.util.HashMap
+import org.spek.*
 
-public abstract class ConsoleSpek: SpekImpl(), TestSpekAction {
+public abstract class ConsoleSpek : Spek(), TestSpekAction {
     override fun description(): String = javaClass.getName()
 }

@@ -69,6 +69,7 @@ task wrapper(type: Wrapper) {
 
 dependencies {
     compile project(':spek-core')
+    compile project(':spek-tests')
 }
 
 jar {

@@ -1,4 +1,4 @@
-package org.spek.reflect;
+package org.spek.console
 
 import java.lang.reflect.AnnotatedElement
 

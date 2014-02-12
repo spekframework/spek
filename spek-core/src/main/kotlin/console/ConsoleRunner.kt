@@ -1,12 +1,4 @@
-package org.spek.console.cmd
-
-import org.spek.impl.*
-import org.spek.reflect.*
-import org.spek.console.listeners.*
-import org.spek.console.listeners.text.*
-import org.spek.console.output.file.*
-import org.spek.console.output.console.*
-import org.spek.console.output.OutputDevice
+package org.spek.console
 
 public fun main(vararg args: String) {
     if (args.size < 2) {
@@ -27,35 +19,35 @@ fun getOptions(args: Array<String>): Options {
     var packageName = ""
     if (args.size >= 1) {
         packageName = args[0]
-        textPresent = args.find { it.contains("-text")} != null
-        htmlPresent = args.find { it.contains("-html")} != null
+        textPresent = args.find { it.contains("-text") } != null
+        htmlPresent = args.find { it.contains("-html") } != null
         val filePos = args.toList().indexOf("-file")
         if (filePos > 0) {
-            filename = args[filePos+1]
+            filename = args[filePos + 1]
         }
         val cssPos = args.toList().indexOf("-css")
         if (cssPos > 0) {
-            cssFile = args[cssPos+1]
+            cssFile = args[cssPos + 1]
         }
     }
     return Options(packageName, textPresent, htmlPresent, filename, cssFile)
 }
 
-fun setupRunner(options: Options): SpecificationRunner {
-    val listeners = Multicaster()
+fun setupRunner(options: Options): Runner {
+    val listeners = CompositeWorkflowReporter()
 
     var device: OutputDevice
     if (options.filename != "") {
-        device = FileDevice(options.filename)
+        device = FileOutputDevice(options.filename)
     } else {
-        device = ConsoleDevice()
+        device = ConsoleOutputDevice()
     }
     if (options.toText) {
-        listeners.addListener(PlainTextListener(device))
+        listeners.addListener(OutputDeviceWorkflowReporter(device))
     }
     if (options.toHtml) {
         throw RuntimeException("NOT supported")
-//        main.listeners.add(HTMLListener(device, options.cssFile))
+        //        main.listeners.add(HTMLListener(device, options.cssFile))
     }
-    return SpecificationRunner(listeners)
+    return Runner(listeners)
 }

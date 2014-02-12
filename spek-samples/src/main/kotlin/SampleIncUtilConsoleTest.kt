@@ -1,9 +1,9 @@
 package org.spek.samples
 
-import org.spek.console.api.ConsoleSpek
-import org.spek.api.*
+import org.spek.console.*
+import org.spek.*
 
-class IncUtilConsoleSpecs: ConsoleSpek() {{
+public class IncUtilConsoleSpecs: Spek() {{
     given("an inc util") {
 
         val incUtil = SampleIncUtil()

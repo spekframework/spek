@@ -1,9 +1,9 @@
 package org.spek.samples.s1
 
-import org.spek.api.*
-import org.spek.console.api.*
+import org.spek.console.*
+import org.spek.*
 
-spek fun Specification.this_is_test() {
+fun Specification.this_is_test() {
     given("Outside it is raining") {
         on("umbrella") {
             it("should not be raining") {
@@ -17,7 +17,7 @@ spek fun Specification.this_is_test() {
 }
 
 
-class calculatorSpecs : ConsoleSpek() {{
+class calculatorSpecs : Spek() {{
     given("a calculator")
      {
          val calculator = Calculator()
@@ -51,7 +51,7 @@ class calculatorSpecs : ConsoleSpek() {{
      }
 }}
 
-class incUtilSpecs : ConsoleSpek() {{
+class incUtilSpecs : Spek() {{
     given("an inc util") {
         val incUtil = IncUtil()
         on("calling incVaueBy with 4 and given number 6") {

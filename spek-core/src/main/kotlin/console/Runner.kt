@@ -1,25 +1,24 @@
-package org.spek.impl;
+package org.spek.console
 
-import org.spek.reflect.*
-import org.spek.api.*
+import org.spek.impl.*
 
-public class SpecificationRunner(val listener: Listener) {
+public class Runner(val listener: WorkflowReporter) {
     public fun runSpecs(packageName: String) {
-        doTestRun(findTestsInPackage(packageName))
+        run(findTestsInPackage(packageName))
     }
 
     public fun runSpecs(clazz: Class<*>) {
-        doTestRun(findTestsInClass(clazz))
+        run(findTestsInClass(clazz))
     }
 
-    private fun doTestRun(classes : List<TestSpekAction>) {
+    private fun run(classes: List<TestSpekAction>) {
         classes forEach {
             executeSpek(it, listener)
         }
     }
 }
 
-public fun executeSpek(specificationClass: TestSpekAction, listener: Listener) {
+public fun executeSpek(specificationClass: TestSpekAction, listener: WorkflowReporter) {
     val spekDescription = specificationClass.description()
     executeWithReporting(specificationClass, listener.spek(spekDescription)) {
         iterateGiven { given ->

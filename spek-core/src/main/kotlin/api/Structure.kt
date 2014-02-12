@@ -1,4 +1,4 @@
-package org.spek.api
+package org.spek
 
 public trait Specification {
     fun given(description: String, givenExpression: Given.() -> Unit)

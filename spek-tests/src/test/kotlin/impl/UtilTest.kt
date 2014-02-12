@@ -1,12 +1,13 @@
-package org.spek.impl
+package org.spek.test
 
 import org.junit.Test as test
 import org.mockito.*
 import kotlin.test.*
+import org.spek.console.*
 
 public class UtilTest {
-    val listener = Mockito.mock(javaClass<ExecutionReporter>())!!
-    val action = Mockito.mock(javaClass<ExecutionReporter>())!!
+    val listener = Mockito.mock(javaClass<ActionStatusReporter>())!!
+    val action = Mockito.mock(javaClass<ActionStatusReporter>())!!
 
     test fun successfulSafeExecution() {
         //given an action and a listener

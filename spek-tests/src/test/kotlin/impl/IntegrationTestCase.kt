@@ -1,8 +1,9 @@
-package org.spek.impl
+package org.spek.test
 
 import kotlin.test.*
 import org.spek.impl.*
-import org.spek.api.*
+import org.spek.*
+import org.spek.console.*
 import org.junit.*
 
 public open class IntegrationTestCase {
@@ -28,17 +29,17 @@ public open class IntegrationTestCase {
     }
 
     public fun data(f: Specification.() -> Unit) : TestSpekAction {
-        val d = Data()
+        val d = object : Data() {}
         d.f()
         return d
     }
 
-    public open class Data : SpekImpl(), TestSpekAction {
+    public abstract class Data : Spek(), TestSpekAction {
         override fun description(): String = "42"
     }
 
-    public class TestLogger(val output: MutableList<String>): Listener {
-        private fun step(prefix:String) : ExecutionReporter = object : ExecutionReporter {
+    public class TestLogger(val output: MutableList<String>): WorkflowReporter {
+        private fun step(prefix:String) : ActionStatusReporter = object : ActionStatusReporter {
             override fun started() {
                 output add prefix + " START"
             }
@@ -56,8 +57,8 @@ public open class IntegrationTestCase {
             }
         }
 
-        override fun spek(spek: String): ExecutionReporter = step("SPEK: $spek")
-        override fun given(spek: String, given: String): ExecutionReporter = step("SPEK: $spek GIVEN: $given")
+        override fun spek(spek: String): ActionStatusReporter = step("SPEK: $spek")
+        override fun given(spek: String, given: String): ActionStatusReporter = step("SPEK: $spek GIVEN: $given")
         override fun on(spek: String, given: String, on: String)= step("SPEK: $spek GIVEN: $given ON: $on")
         override fun it(spek: String, given: String, on: String, it: String) = step("SPEK: $spek GIVEN: $given ON: $on IT: $it")
     }

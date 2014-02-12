@@ -1,9 +1,9 @@
 package org.spek.samples
 
-import org.spek.console.api.ConsoleSpek
-import org.spek.api.*
+import org.spek.console.*
+import org.spek.*
 
-class SkipSample: ConsoleSpek() {{
+class SkipSample: Spek() {{
     given("a sample") {
         on("calling a functiono") {
             val result = 10
