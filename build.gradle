@@ -64,13 +64,9 @@ task wrapper(type: Wrapper) {
                                                   "set GRADLE_OPTS=$gradleOpts %GRADLE_OPTS%\nset DEFAULT_JVM_OPTS=")
 
     }
-
 }
 
 dependencies {
     compile project(':spek-core')
-}
-
-jar {
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    testCompile project(':spek-tests')
 }
