@@ -22,6 +22,7 @@ public fun junitAction(description: Description, notifier: RunNotifier, action: 
     } catch(e: SkippedException) {
         notifier.fireTestIgnored(description)
     } catch(e: PendingException) {
+        notifier.fireTestIgnored(description)
     } catch(e: Throwable) {
         notifier.fireTestFailure(Failure(description, e))
     } finally {
@@ -33,7 +34,11 @@ public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestG
 
     val _children by Delegates.lazy {
         val result = arrayListOf<TestItAction>()
-        on.iterateIt { result.add(it) }
+        try {
+            on.iterateIt { result.add(it) }
+        } catch (e: SkippedException) {
+        } catch (e: PendingException) {
+        }
         result
     }
 
@@ -67,7 +72,11 @@ public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: Te
 
     val _children by Delegates.lazy {
         val result = arrayListOf<JUnitOnRunner<T>>()
-        given.iterateOn { result.add(JUnitOnRunner(specificationClass, given, it)) }
+        try {
+            given.iterateOn { result.add(JUnitOnRunner(specificationClass, given, it)) }
+        } catch (e: SkippedException) {
+        } catch (e: PendingException) {
+        }
         result
     }
 
