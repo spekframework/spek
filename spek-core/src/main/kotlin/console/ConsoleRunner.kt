@@ -58,7 +58,7 @@ fun setupRunner(options: Options): Runner {
 
     when (options.format) {
         "text" -> listeners.addListener(OutputDeviceWorkflowReporter(device))
-        "html" -> throw UnsupportedOperationException("HTML is not supported yet")
+        "html" -> listeners.addListener(HtmlWorkflowReporter(options.packageName, device, options.cssFile))
         else -> throw UnsupportedOperationException("Unknown format: ${options.format}")
     }
     return Runner(listeners)

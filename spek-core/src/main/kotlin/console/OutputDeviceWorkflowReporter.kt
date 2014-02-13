@@ -11,10 +11,10 @@ public class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowRe
                 device.output("")
             }
             override fun skipped(why: String) {
-                device.output("Skipped Spek '$spek'. Reason: $why")
+                device.output("Skipped '$spek'. Reason: $why")
             }
             override fun pending(why: String) {
-                device.output("Pending Spek '$spek'. Reason: $why")
+                device.output("Pending '$spek'. Reason: $why")
             }
         }
     }
@@ -22,16 +22,16 @@ public class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowRe
     override fun given(spek: String, given: String): ActionStatusReporter {
         return object : ActionStatusReporter {
             override fun started() {
-                device.output("  Given $given")
+                device.output("  $given")
             }
             override fun completed() {
                 device.output("")
             }
             override fun skipped(why: String) {
-                device.output("  Skipped Given '$given'. Reason: $why")
+                device.output("  Skipped '$given'. Reason: $why")
             }
             override fun pending(why: String) {
-                device.output("  Pending Given '$given'. Reason: $why")
+                device.output("  Pending '$given'. Reason: $why")
             }
             override fun failed(error: Throwable) {
                 device.output("  Failed: $error")
@@ -43,17 +43,17 @@ public class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowRe
     override fun on(spek: String, given: String, on: String): ActionStatusReporter {
         return object : ActionStatusReporter {
             override fun started() {
-                device.output("    On $on")
+                device.output("    $on")
             }
             override fun failed(error: Throwable) {
                 device.output("    Failed: $error")
                 device.output("")
             }
             override fun skipped(why: String) {
-                device.output("    Skipped On '$on'. Reason: $why")
+                device.output("    Skipped '$on'. Reason: $why")
             }
             override fun pending(why: String) {
-                device.output("    Pending On '$on'. Reason: $why")
+                device.output("    Pending '$on'. Reason: $why")
             }
         }
     }
@@ -61,17 +61,17 @@ public class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowRe
     override fun it(spek: String, given: String, on: String, it: String): ActionStatusReporter {
         return object : ActionStatusReporter {
             override fun started() {
-                device.output("      It $it")
+                device.output("      $it")
             }
             override fun failed(error: Throwable) {
                 device.output("      Failed: $error")
                 device.output("")
             }
             override fun skipped(why: String) {
-                device.output("      Skipped It '$it'. Reason: $why")
+                device.output("      Skipped '$it'. Reason: $why")
             }
             override fun pending(why: String) {
-                device.output("      Pending It '$it'. Reason: $why")
+                device.output("      Pending '$it'. Reason: $why")
             }
         }
     }
