@@ -17,7 +17,9 @@ public fun findTestsInPackage(packageName: String): MutableList<TestSpekAction> 
 
     val reflections = Reflections(reflectionConfig);
 
-    result addAll (reflections.getSubTypesOf(javaClass<Spek>())!! map { ClassSpek(it) })
+    result addAll (reflections.getSubTypesOf(javaClass<Spek>())!!
+        .filterNot { it.isLocalClass() || Modifier.isAbstract(it.getModifiers()) }
+        .map { ClassSpek(it) })
 
     /*
         val spekClazz = toAnnotationClazz(javaClass<specification>())

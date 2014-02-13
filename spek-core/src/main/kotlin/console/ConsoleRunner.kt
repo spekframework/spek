@@ -1,53 +1,65 @@
 package org.spek.console
 
 public fun main(vararg args: String) {
-    if (args.size < 2) {
+    if (args.size == 0) {
         printUsage()
     } else {
-        val options = getOptions(args)
-        val specRunner = setupRunner(options)
-        specRunner.runSpecs(options.packageName)
+        try {
+            val options = getOptions(args)
+            val specRunner = setupRunner(options)
+            specRunner.runSpecs(options.packageName)
+        } catch (e: UnsupportedOperationException) {
+            println("ERROR: ${e.getMessage()}")
+            System.exit(2)
+        } catch (e: Throwable) {
+            println("ERROR: ${e.getMessage()}\n")
+            e.printStackTrace()
+            System.exit(2)
+        }
     }
-    //TODO: call System.exit to pass right exit code
+    System.exit(0)
 }
 
 fun getOptions(args: Array<String>): Options {
-    var textPresent = false
-    var htmlPresent = false
+    var index = 1
+    var format = "text"
     var filename = ""
     var cssFile = ""
-    var packageName = ""
-    if (args.size >= 1) {
-        packageName = args[0]
-        textPresent = args.find { it.contains("-text") } != null
-        htmlPresent = args.find { it.contains("-html") } != null
-        val filePos = args.toList().indexOf("-file")
-        if (filePos > 0) {
-            filename = args[filePos + 1]
+    var packageName = args[0]
+
+    while (index < args.size) {
+        when (args[index]) {
+            "-f", "--format" -> {
+                format = args[++index]
+            }
+            "-o", "--output" -> {
+                filename = args[++index]
+            }
+            "-s", "--css" -> {
+                cssFile = args[++index]
+            }
+            else -> {
+                throw UnsupportedOperationException("Unknown parameter: ${args[index]}")
+            }
         }
-        val cssPos = args.toList().indexOf("-css")
-        if (cssPos > 0) {
-            cssFile = args[cssPos + 1]
-        }
+        index++
     }
-    return Options(packageName, textPresent, htmlPresent, filename, cssFile)
+
+    return Options(packageName, format, filename, cssFile)
 }
 
 fun setupRunner(options: Options): Runner {
     val listeners = CompositeWorkflowReporter()
-
-    var device: OutputDevice
-    if (options.filename != "") {
-        device = FileOutputDevice(options.filename)
+    val device = if (options.filename != "") {
+        FileOutputDevice(options.filename)
     } else {
-        device = ConsoleOutputDevice()
+        ConsoleOutputDevice()
     }
-    if (options.toText) {
-        listeners.addListener(OutputDeviceWorkflowReporter(device))
-    }
-    if (options.toHtml) {
-        throw RuntimeException("NOT supported")
-        //        main.listeners.add(HTMLListener(device, options.cssFile))
+
+    when (options.format) {
+        "text" -> listeners.addListener(OutputDeviceWorkflowReporter(device))
+        "html" -> throw UnsupportedOperationException("HTML is not supported yet")
+        else -> throw UnsupportedOperationException("Unknown format: ${options.format}")
     }
     return Runner(listeners)
 }
