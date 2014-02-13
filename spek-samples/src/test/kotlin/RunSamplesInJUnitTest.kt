@@ -18,7 +18,6 @@ public class RunSamplesInJUnitTest {
     }
 
     test fun try_console() {
-        //TODO: org.Reflections detects no test classes if "org.spek.samples" is specified
-        org.spek.console.main("org.spek", "-text")
+        org.spek.console.main("org.spek.samples", "-f", "text")
     }
 }

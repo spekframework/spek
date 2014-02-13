@@ -13,19 +13,17 @@ public class ConsoleRunnerTest {
         assertEquals("", options.packageName)
         assertEquals("", options.filename)
         assertEquals("", options.cssFile)
-        assertEquals(false, options.toText)
-        assertEquals(false, options.toHtml)
+        assertEquals("text", options.format)
     }
 
     test fun getOptions() {
         //given an empty array
         //when we call getOptions
-        val options = getOptions(array("my.package", "-text", "-html", "-file", "file.txt", "-css", "css.css"))
+        val options = getOptions(array("my.package", "-f", "text", "--output", "file.txt", "--css", "css.css"))
         //then
         assertEquals("my.package", options.packageName)
         assertEquals("file.txt", options.filename)
         assertEquals("css.css", options.cssFile)
-        assertEquals(true, options.toText)
-        assertEquals(true, options.toHtml)
+        assertEquals("text", options.format)
     }
 }

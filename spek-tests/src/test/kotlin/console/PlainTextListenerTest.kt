@@ -16,7 +16,7 @@ public class TextListenerTest {
         //when execution started
         listener.started()
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("  Given A Given")
+        Mockito.verify(device)!!.output("  A Given")
 
         //when execution completed
         listener.completed()
@@ -36,7 +36,7 @@ public class TextListenerTest {
         //when execution started
         listener.started()
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("    On An On")
+        Mockito.verify(device)!!.output("    An On")
 
         //when execution failed
         listener.failed(RuntimeException())
@@ -51,7 +51,7 @@ public class TextListenerTest {
         //when execution started
         listener.started()
         //then a log message is written to output device
-        Mockito.verify(device)!!.output("      It An It")
+        Mockito.verify(device)!!.output("      An It")
 
         //when execution failed
         listener.failed(RuntimeException())

@@ -5,14 +5,14 @@ import org.spek.*
 
 class SkipSample: Spek() {{
     given("a sample") {
-        on("calling a functiono") {
+        on("calling a function") {
             val result = 10
             it("should return 10") {
+                skip("Obsolete")
                 shouldEqual(result, 10)
             }
-            skip("skip")
             it("should not return 11") {
-                shouldNotEqual(result, 11)
+                pending("waiting for John to implement some functionality")
             }
         }
     }

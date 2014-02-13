@@ -23,7 +23,7 @@ class IncUtilJUnitSpecs: Spek() {{
             val result = incUtil.incValueBy(10, 2)
 
             it("should return 12") {
-                shouldNotEqual(12, result)
+                shouldEqual(12, result)
             }
         }
     }
