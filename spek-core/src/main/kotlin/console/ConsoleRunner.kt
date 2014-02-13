@@ -1,6 +1,6 @@
 package org.spek.console
 
-public fun main(vararg args: String) {
+public fun main(vararg args: String) : Int {
     if (args.size == 0) {
         printUsage()
     } else {
@@ -10,14 +10,14 @@ public fun main(vararg args: String) {
             specRunner.runSpecs(options.packageName)
         } catch (e: UnsupportedOperationException) {
             println("ERROR: ${e.getMessage()}")
-            System.exit(2)
+            return 1
         } catch (e: Throwable) {
             println("ERROR: ${e.getMessage()}\n")
             e.printStackTrace()
-            System.exit(2)
+            return 1
         }
     }
-    System.exit(0)
+    return 0
 }
 
 fun getOptions(args: Array<String>): Options {
@@ -25,7 +25,7 @@ fun getOptions(args: Array<String>): Options {
     var format = "text"
     var filename = ""
     var cssFile = ""
-    var packageName = args[0]
+    var packageName = if (args.size > 0) args[0] else ""
 
     while (index < args.size) {
         when (args[index]) {
