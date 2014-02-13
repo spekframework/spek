@@ -12,6 +12,10 @@ Licensed under Modified BSD (See LICENSE.TXT) for full license
 Spek is a specification framework for Kotlin, allowing you to define your specifications
 in a fluent and easy to read way.
 
+## Download
+
+Get artifacts from [last successful build](http://teamcity.jetbrains.com/viewLog.html?buildTypeId=Spek_BuildAndTests&buildId=lastSuccessful&buildBranch=%3Cdefault%3E&tab=artifacts)
+
 ### Writing specifications
 
 A specification is a class that is inherited either from `Spek`:
