@@ -15,9 +15,7 @@ class CalculatorConsoleSpecs: Spek() {{
                 shouldEqual(6, sum)
             }
 
-            it("should another") {
-                shouldEqual(6, sum)
-            }
+
         }
 
         on("calling substract with two numbers") {

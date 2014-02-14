@@ -17,22 +17,15 @@ fun Specification.this_is_test() {
 }
 
 
-class calculatorSpecs : Spek() {{
+class CalculatorSpecs : Spek() {{
+
     given("a calculator")
      {
          val calculator = Calculator()
          on("calling sum with two numbers")
          {
-
              val sum = calculator.sum(2, 4)
-
-
              it("should return the result of adding the first number to the second number")
-             {
-                 shouldEqual(6, sum)
-             }
-
-             it("should another")
              {
                  shouldEqual(6, sum)
              }
