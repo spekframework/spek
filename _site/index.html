@@ -14,6 +14,7 @@
 
     <!-- Add custom CSS here -->
     <link href="css/business-casual.css" rel="stylesheet">
+    <link href="css/syntax.css" rel="stylesheet">
 </head>
 
 <body>
@@ -86,13 +87,59 @@
                 </a>
             </div>
 </div>
-            <div class="col-lg-12 text-center">
-                <h2>A Specification Framework</h2>
-                <p>Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes nemo minima rerums unsers sadips amets. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+            <div class="col-lg-12 text-left">
+
+                <p><br /></p>
+
+<h3 id="your-typical-test-code">Your typical test code</h3>
+<p>Here’s some typical test code found in many codebases</p>
+
+<div class="highlight"><pre><code class="java"><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCalculateTaxRate</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="n">TaxRateCalculator</span> <span class="n">calculator</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TaxRateCalculator</span><span class="o">();</span>
+
+    <span class="n">Int</span> <span class="n">value</span> <span class="o">=</span> <span class="n">calculator</span><span class="o">.</span><span class="na">calculateRate</span><span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+
+    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>This code suffers from several issues. Under what <strong>conditions</strong> is the tax rate calculated? What exactly is it <strong>doing</strong>? What is the <strong>expected outcome</strong>?</p>
+
+<h3 id="being-concise-with-spek">Being concise with Spek</h3>
+
+<p>Spek makes it easy to define these three important aspects without restoring to long method names or underscores:</p>
+
+<div class="highlight"><pre><code class="kotlin"><span class="k">class</span> <span class="nc">TaxCalculatorSpecs</span><span class="p">:</span> <span class="n">Spek</span><span class="p">()</span> <span class="p">{{</span>
+
+    <span class="n">given</span><span class="p">(</span><span class="s">&quot;Tax rate calculator with default locale settings&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="n">taxRateCalculator</span> <span class="p">=</span> <span class="n">TaxRateCalculator</span><span class="p">()</span>
+        <span class="n">on</span><span class="p">(</span><span class="s">&quot;calculating the rate for an income of 200 and an average change of 10 per semester&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="n">value</span> <span class="p">=</span> <span class="n">taxRateCalculator</span><span class="p">.</span><span class="n">calculateRate</span><span class="p">(</span><span class="m">200</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+            <span class="n">it</span><span class="p">(</span><span class="s">&quot;should result in a value of 300&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">assertEquals</span><span class="p">(</span><span class="m">300</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}}</span>
+</code></pre></div>
+
+<h3 id="tests-are-specifications">Tests are specifications</h3>
+
+<p>Tests are executable specifications of your system. They are real-time compilable code that tell you how a piece of code should behave and under what conditions is a certain
+outcome expected. That is why it is important to be explicit, concise and unambiguous when it comes to defining specifications. Spek helps you do that.</p>
+
+<h3 id="spek-works-with-java">Spek works with Java</h3>
+
+<p>Spek is written in Kotlin and as such is 100% compatible with Java. You can write your specifications (notice we say specification, not test) in Kotlin and
+test new or existing code written in Java or Kotlin.</p>
+
+<p><br />
+<a href="/download.html" class="btn btn-success btn-lg">Get Started</a>
+<a href="/docs.html" class="btn btn-primary btn-lg">Learn More</a></p>
 
 
-
-                <a href="#" class="btn btn-default btn-lg">Get Started</a>
             </div>
 
         </div>
