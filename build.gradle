@@ -14,6 +14,9 @@ if (hasProperty("teamcity")) {
     version = "1.0.0-SNAPSHOT"
 
 apply plugin: 'kotlin'
+apply plugin: 'application'
+
+mainClassName = 'org.spek.console.ConsolePackage'
 
 allprojects {
     repositories {

@@ -21,12 +21,6 @@ public fun findTestsInPackage(packageName: String): MutableList<TestSpekAction> 
         .filterNot { it.isLocalClass() || Modifier.isAbstract(it.getModifiers()) }
         .map { ClassSpek(it) })
 
-    /*
-        val spekClazz = toAnnotationClazz(javaClass<specification>())
-        val annotatedMethods = reflections.getMethodsAnnotatedWith(spekClazz)!!
-
-        result addAll (annotatedMethods map { ExtensionFunctionSpek(it) })
-    */
 
     return result
 }
@@ -38,18 +32,13 @@ public fun findTestsInClass(clazz: Class<*>): MutableList<TestSpekAction> {
         result add ClassSpek(clazz as Class<Spek>)
     }
 
-    /*
-        result addAll clazz.getMethods()
-                .filter { Modifier.isStatic(it.getModifiers()) && hasAnnotationClazz(it, javaClass<specification>()) }
-                .map { ExtensionFunctionSpek(it) }
-    */
 
     return result
 }
 
 private fun AnnotatedElement.checkSkipped() {
     /*
-    * TODO: need to be refactored when #KT-3534, KT-3534 got fixed.
+    * TODO: need to be refactored when #KT-3534, KT-3534 get fixed.
     */
     val skip = getAnnotation(this, javaClass<ignored>())
     if (skip != null) throw SkippedException(skip.why)
