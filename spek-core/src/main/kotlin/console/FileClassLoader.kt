@@ -2,25 +2,10 @@ package org.spek.console
 
 import org.spek.*
 import org.spek.impl.*
-import org.reflections.*
 import java.lang.reflect.*
-import org.reflections.util.*
-import org.reflections.scanners.*
-import org.reflections.adapters.MetadataAdapter
 
 public fun findTestsInPackage(packageName: String): MutableList<TestSpekAction> {
     val result = arrayListOf<TestSpekAction>()
-
-    val reflectionConfig = ConfigurationBuilder
-            .build(packageName, SubTypesScanner())!!
-            .useParallelExecutor()
-
-    val reflections = Reflections(reflectionConfig);
-
-    result addAll (reflections.getSubTypesOf(javaClass<Spek>())!!
-        .filterNot { it.isLocalClass() || Modifier.isAbstract(it.getModifiers()) }
-        .map { ClassSpek(it) })
-
 
     return result
 }

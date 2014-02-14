@@ -1,6 +1,7 @@
 package org.spek.console
 
-public fun main(vararg args: String) : Int {
+
+public fun main(args: Array<String>)  {
     if (args.size == 0) {
         printUsage()
     } else {
@@ -10,14 +11,14 @@ public fun main(vararg args: String) : Int {
             specRunner.runSpecs(options.packageName)
         } catch (e: UnsupportedOperationException) {
             println("ERROR: ${e.getMessage()}")
-            return 1
+            System.exit(1)
         } catch (e: Throwable) {
             println("ERROR: ${e.getMessage()}\n")
             e.printStackTrace()
-            return 1
+            System.exit(1)
         }
     }
-    return 0
+    System.exit(0)
 }
 
 fun getOptions(args: Array<String>): Options {
