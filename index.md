@@ -25,7 +25,7 @@ public void testCalculateTaxRate() {
 This code suffers from several issues. Under what **conditions** is the tax rate calculated? What exactly is it **doing**? What is the **expected outcome**?
 
 
-### Being concise with Spek
+### Being explicit with Spek
 
 
 Spek makes it easy to define these three important aspects without restoring to long method names or underscores:

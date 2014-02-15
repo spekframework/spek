@@ -41,9 +41,9 @@
                 </li>
                 <li><a href="/docs.html">Docs</a>
                 </li>
-                <li><a href="d.html">Download</a>
+                <li><a href="/download.html">Download</a>
                 </li>
-                <li><a href="https://github.com/hhariri/spek">Contribute</a>
+                <li><a href="/contribute.html">Contribute</a>
                 </li>
             </ul>
         </div>
@@ -58,37 +58,75 @@
         <div class="box">
             <div class="col-lg-12 text-left">
 
-                <h3 id="spek-is-kotlin">Spek is Kotlin</h3>
+                <h3 id="why-a-specification-framework">Why a Specification Framework?</h3>
 
-<h1 id="spek">Spek</h1>
+<p>Tests are not only to check the code you’ve written executes and works, but also that it works as it should, that is, that as a developer
+what’s been implemented matches the requirements.</p>
 
-<p>A Specification framework for Kotlin</p>
+<p>A green test doesn’t tell you that the code correctly implements the specification. The user does, once they try it. However, we can try and make sure
+we’ve correctly understood the specifications by contrasting the code with the specs. And what better place to have these specs to lookup than in the same
+place we write the test code?</p>
 
-<h2 id="license">License</h2>
+<p>That’s what Spek does. It is a specification framework that allows you to easily define specifications in a clear, understandable, human readable way.</p>
 
-<p>Licensed under Modified BSD (See LICENSE.TXT) for full license</p>
+<p>You call them tests. We call them specifications.</p>
 
-<h2 id="usage">Usage</h2>
+<h3 id="why-kotlin">Why Kotlin?</h3>
 
-<p>Spek is a specification framework for Kotlin, allowing you to define your specifications
-in a fluent and easy to read way.</p>
+<p><a href="http://kotlinlang.org">Kotlin</a> is statically typed OSS language developed (primarily) and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
+and the ability to create nice DSL. It’s 100% compatible with Java which means you can call Java from Kotlin and Kotlin from Java. And it’s also easy to pick up.</p>
 
-<h2 id="download">Download</h2>
+<p>Spek is written in Kotlin and specifications you write will be written in Kotlin. However, your SUT (System under Test) can be Java or Kotlin. As such
+you can easily use Kotlin for your specifications. Yes, you call them tests. Start calling them specifications.</p>
 
-<p>Get artifacts from <a href="http://teamcity.jetbrains.com/viewLog.html?buildTypeId=Spek_BuildAndTests&amp;buildId=lastSuccessful&amp;buildBranch=%3Cdefault%3E&amp;tab=artifacts">last successful build</a></p>
+<h4 id="spek-and-junit">Spek and JUnit</h4>
 
-<h3 id="writing-specifications">Writing specifications</h3>
+<p>You might notice that JUnit ships with Spek. Why? Because we rely on it for test runners, etc (for now).</p>
 
-<p>A specification is a class that is inherited either from <code>Spek</code>:</p>
+<h3 id="usage">Usage</h3>
 
-<p>// TODO Put exmaples (After you figure out how to escape this double curly</p>
+<p>Your specifications need to inherit from the Spek() base class. The primary reason for this is so that we leverage a lot of the functionality of JUnit.</p>
 
-<h3 id="runners">Runners</h3>
+<div class="highlight"><pre><code class="kotlin"><span class="k">class</span> <span class="nc">TaxCalculatorSpecs</span><span class="p">:</span> <span class="n">Spek</span><span class="p">()</span> <span class="p">{{</span>
 
-<p>You may write tests with Spek either for provided standalone console runner, or
-as JUnit tests. JUnit tests are run under standard JUnit 4.x tests runner.</p>
+    <span class="n">given</span><span class="p">(</span><span class="s">&quot;Tax rate calculator with default locale settings&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">val</span> <span class="n">taxRateCalculator</span> <span class="p">=</span> <span class="n">TaxRateCalculator</span><span class="p">()</span>
+        <span class="n">on</span><span class="p">(</span><span class="s">&quot;calculating the rate for an income of 200 and an average change of 10 per semester&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">val</span> <span class="n">value</span> <span class="p">=</span> <span class="n">taxRateCalculator</span><span class="p">.</span><span class="n">calculateRate</span><span class="p">(</span><span class="m">200</span><span class="p">,</span> <span class="m">10</span><span class="p">)</span>
+            <span class="n">it</span><span class="p">(</span><span class="s">&quot;should result in a value of 300&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">assertEquals</span><span class="p">(</span><span class="m">300</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}}</span>
+</code></pre></div>
 
-<h2 id="faq">FAQ</h2>
+<p>Each specification consists of:</p>
+
+<ul>
+  <li><strong>given</strong>: Only one of these should be present. Given indicates the context, the setup. Think of it as the arrange in the arrange, act, assert setup.</li>
+  <li><strong>on</strong>: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.</li>
+  <li><strong>it</strong>: One or more of these. Each it is a consequence of the action. The assert. Normally it’s good practice to have a single assertion per it.</li>
+</ul>
+
+<h3 id="running-tests">Running Tests</h3>
+
+<p><strong>Console Runner</strong></p>
+
+<p>Spek ships with a console runner that can be used via a built-in script file on OSX/Linux (spek) or Windows (spek.bat), located in the bin folder. Execute it without
+parameters for more usage information.</p>
+
+<p>The runner also has the option to output HTML.</p>
+
+<p><strong>IntelliJ IDEA Test Runner</strong></p>
+
+<p>If you’re using IntelliJ IDEA, you can simply run Spek from inside the IDE</p>
+
+<p><strong>TeamCity Test Runner</strong></p>
+
+<p>Since it uses JUnit under the covers, TeamCity already supports Spek. And like TeamCity, other CI servers that support JUnit should too.</p>
+
+<h3 id="faq">FAQ</h3>
 
 <p><strong>Q: What is Kotlin?</strong>
 <br /><a href="http://kotlin.jetbrains.org">Kotlin</a> is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by <a href="http://www.jetbrains.com">JetBrains</a>
@@ -121,7 +159,7 @@ comply with this guidance. You can have multiple <em>it</em> but you limit each 
 Dutch. So why not have bacon as a logo? After all, we love bacon!</p>
 
 <p><strong>Q: Can I contribute?</strong>
-<br />Please do!</p>
+<br /><a href="https://github.com/hhariri/spek">Please do</a>!</p>
 
 
 

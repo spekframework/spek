@@ -2,18 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0d585f7-6749-4eb4-abd0-a118c9e39976" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_config.yml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/download.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_layouts/other.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_site/img/slide-2.png" afterPath="$PROJECT_DIR$/_site/img/slide-2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/slide-2.png" afterPath="$PROJECT_DIR$/img/slide-2.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_site/img/slide-3.png" afterPath="$PROJECT_DIR$/_site/img/slide-3.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/slide-3.png" afterPath="$PROJECT_DIR$/img/slide-3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/download.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/download.html" afterPath="$PROJECT_DIR$/contribute.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/slide-1.png" afterPath="$PROJECT_DIR$/img/slide-1.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/default.html" afterPath="$PROJECT_DIR$/_layouts/default.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_site/docs.html" afterPath="$PROJECT_DIR$/_site/docs.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs.md" afterPath="$PROJECT_DIR$/docs.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_site/index.html" afterPath="$PROJECT_DIR$/_site/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.md" afterPath="$PROJECT_DIR$/index.md" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/other.html" afterPath="$PROJECT_DIR$/_layouts/other.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/spek.iml" afterPath="$PROJECT_DIR$/.idea/spek.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="spek.iws" />
@@ -37,31 +34,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="default.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="default.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_layouts/default.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.708333" vertical-offset="1162" max-vertical-offset="1860">
-              <caret line="93" column="0" selection-start="3474" selection-end="3474" />
+            <state vertical-scroll-proportion="0.525641" vertical-offset="478" max-vertical-offset="1860">
+              <caret line="51" column="24" selection-start="1807" selection-end="1807" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="download.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/download.html">
+      <file leaf-file-name="download.md" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/download.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="135">
-              <caret line="2" column="15" selection-start="33" selection-end="33" />
+            <state vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="390">
+              <caret line="18" column="0" selection-start="423" selection-end="423" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="business-casual.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/business-casual.css">
+      <file leaf-file-name="bg.jpg" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/img/bg.jpg">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="contribute.md" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/contribute.md">
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8076925" vertical-offset="1364" max-vertical-offset="2670">
-              <caret line="101" column="21" selection-start="1464" selection-end="1464" />
+            <state vertical-scroll-proportion="-3.3333333" vertical-offset="0" max-vertical-offset="315">
+              <caret line="6" column="0" selection-start="71" selection-end="71" />
               <folding />
             </state>
           </provider>
@@ -83,8 +90,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.695122" vertical-offset="470" max-vertical-offset="990">
-              <caret line="57" column="5" selection-start="1781" selection-end="1781" />
+            <state vertical-scroll-proportion="-4.4444447" vertical-offset="0" max-vertical-offset="990">
+              <caret line="8" column="0" selection-start="73" selection-end="73" />
               <folding />
             </state>
           </provider>
@@ -93,8 +100,8 @@
       <file leaf-file-name="other.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_layouts/other.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.625" vertical-offset="729" max-vertical-offset="1380">
-              <caret line="64" column="0" selection-start="1980" selection-end="1980" />
+            <state vertical-scroll-proportion="-9.458333" vertical-offset="418" max-vertical-offset="1380">
+              <caret line="43" column="52" selection-start="1564" selection-end="1564" />
               <folding />
             </state>
           </provider>
@@ -104,20 +111,20 @@
         <entry file="file://$PROJECT_DIR$/_config.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-              <caret line="3" column="0" selection-start="67" selection-end="67" />
+              <caret line="3" column="41" selection-start="108" selection-end="108" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="docs.md" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="docs.md" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.9433962" vertical-offset="265" max-vertical-offset="1245">
-              <caret line="51" column="0" selection-start="1489" selection-end="1489" />
+            <state vertical-scroll-proportion="-15.740741" vertical-offset="1210" max-vertical-offset="1770">
+              <caret line="109" column="34" selection-start="5475" selection-end="5475" />
               <folding />
             </state>
           </provider>
@@ -149,12 +156,14 @@
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/test.md" />
         <option value="$PROJECT_DIR$/_layouts/index.html" />
-        <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/css/business-casual.css" />
-        <option value="$PROJECT_DIR$/_layouts/default.html" />
         <option value="$PROJECT_DIR$/index.md" />
-        <option value="$PROJECT_DIR$/download.html" />
         <option value="$PROJECT_DIR$/docs.md" />
+        <option value="$PROJECT_DIR$/_config.yml" />
+        <option value="$PROJECT_DIR$/download.html" />
+        <option value="$PROJECT_DIR$/_layouts/default.html" />
+        <option value="$PROJECT_DIR$/download.md" />
+        <option value="$PROJECT_DIR$/contribute.md" />
         <option value="$PROJECT_DIR$/_layouts/other.html" />
       </list>
     </option>
@@ -287,8 +296,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/_layouts" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/_layouts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/_layouts" />
@@ -364,7 +373,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3295964" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3297619" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3297619" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
@@ -427,22 +436,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="864">
-          <caret line="0" column="0" selection-start="0" selection-end="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/_config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-          <caret line="3" column="0" selection-start="67" selection-end="67" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/business-casual.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.8076925" vertical-offset="1364" max-vertical-offset="2670">
@@ -459,10 +452,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/default.html">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.708333" vertical-offset="1162" max-vertical-offset="1860">
-          <caret line="93" column="0" selection-start="3474" selection-end="3474" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="864">
+          <caret line="0" column="0" selection-start="0" selection-end="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/_config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
+          <caret line="3" column="41" selection-start="108" selection-end="108" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/bg.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.740741" vertical-offset="1210" max-vertical-offset="1770">
+          <caret line="109" column="34" selection-start="5475" selection-end="5475" />
           <folding />
         </state>
       </provider>
@@ -472,35 +489,43 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.695122" vertical-offset="470" max-vertical-offset="990">
-          <caret line="57" column="5" selection-start="1781" selection-end="1781" />
+        <state vertical-scroll-proportion="-4.4444447" vertical-offset="0" max-vertical-offset="990">
+          <caret line="8" column="0" selection-start="73" selection-end="73" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/download.html">
+    <entry file="file://$PROJECT_DIR$/download.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="135">
-          <caret line="2" column="15" selection-start="33" selection-end="33" />
+        <state vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="390">
+          <caret line="18" column="0" selection-start="423" selection-end="423" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/contribute.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3333333" vertical-offset="0" max-vertical-offset="315">
+          <caret line="6" column="0" selection-start="71" selection-end="71" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/_layouts/other.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.625" vertical-offset="729" max-vertical-offset="1380">
-          <caret line="64" column="0" selection-start="1980" selection-end="1980" />
+        <state vertical-scroll-proportion="-9.458333" vertical-offset="418" max-vertical-offset="1380">
+          <caret line="43" column="52" selection-start="1564" selection-end="1564" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/docs.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/_layouts/default.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9433962" vertical-offset="265" max-vertical-offset="1245">
-          <caret line="51" column="0" selection-start="1489" selection-end="1489" />
+        <state vertical-scroll-proportion="0.525641" vertical-offset="478" max-vertical-offset="1860">
+          <caret line="51" column="24" selection-start="1807" selection-end="1807" />
           <folding />
         </state>
       </provider>
