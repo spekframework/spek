@@ -1,1 +1,1 @@
-See [Documentation Site](http://hhariri.github.io/spek) for more information
+See [Documentation Site](http://jetbrains.github.io/spek) for more information
