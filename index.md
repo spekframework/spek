@@ -53,7 +53,7 @@ outcome expected. That is why it is important to be explicit, concise and unambi
 ### Spek works with Java
 
 Spek is written in Kotlin and as such is 100% compatible with Java. You can write your specifications (notice we say specification, not test) in Kotlin and
-test new or existing code written in Java or Kotlin.
+verify new or existing code written in Java or Kotlin.
 
 <br/>
 <a href="{{ site.baseurl }}/download.html" class="btn btn-success btn-lg">Get Started</a>
