@@ -56,5 +56,5 @@ Spek is written in Kotlin and as such is 100% compatible with Java. You can writ
 test new or existing code written in Java or Kotlin.
 
 <br/>
-<a href="{{ site.url }}/download.html" class="btn btn-success btn-lg">Get Started</a>
-<a href="{{ site.url }}/docs.html" class="btn btn-primary btn-lg">Learn More</a>
+<a href="{{ site.baseurl }}/download.html" class="btn btn-success btn-lg">Get Started</a>
+<a href="{{ site.baseurl }}/docs.html" class="btn btn-primary btn-lg">Learn More</a>
