@@ -12,23 +12,6 @@ Thumbs.db
 *.sass-cache
 *~
 
-# Eclipse
-.settings
-.classpath
-.project
-target-eclipse
-
-# IntelliJ
-overlays
-*.iml
-*.iws
-*.ipr
-.idea/
-
-# Gradle
-build/
-out/
-src/gen
 .gradle/
 
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/spek.iml" filepath="$PROJECT_DIR$/spek.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spek-core/spek-core.iml" filepath="$PROJECT_DIR$/spek-core/spek-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spek-samples/spek-samples.iml" filepath="$PROJECT_DIR$/spek-samples/spek-samples.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spek-tests/spek-tests.iml" filepath="$PROJECT_DIR$/spek-tests/spek-tests.iml" />
+    </modules>
+  </component>
+</project>
+
