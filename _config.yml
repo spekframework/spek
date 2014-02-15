@@ -1,4 +1,5 @@
 timezone:    Europe/Madrid
 pygments:    true
 markdown:    kramdown
-github:      https://github.com/hhariri/spek
+github:      https://github.com/jetbrains/spek
+baseurl:     /spek
