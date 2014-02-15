@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a0d585f7-6749-4eb4-abd0-a118c9e39976" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/download.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/download.html" afterPath="$PROJECT_DIR$/contribute.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/img/slide-1.png" afterPath="$PROJECT_DIR$/img/slide-1.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/default.html" afterPath="$PROJECT_DIR$/_layouts/default.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs.md" afterPath="$PROJECT_DIR$/docs.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.md" afterPath="$PROJECT_DIR$/index.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/other.html" afterPath="$PROJECT_DIR$/_layouts/other.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/spek.iml" afterPath="$PROJECT_DIR$/.idea/spek.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="spek.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,10 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="default.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="default.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_layouts/default.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.525641" vertical-offset="478" max-vertical-offset="1860">
+            <state vertical-scroll-proportion="-11.958333" vertical-offset="478" max-vertical-offset="1860">
               <caret line="51" column="24" selection-start="1807" selection-end="1807" />
               <folding />
             </state>
@@ -84,14 +75,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.md" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.4444447" vertical-offset="0" max-vertical-offset="990">
-              <caret line="8" column="0" selection-start="73" selection-end="73" />
+            <state vertical-scroll-proportion="0.509434" vertical-offset="180" max-vertical-offset="990">
+              <caret line="30" column="76" selection-start="651" selection-end="651" />
               <folding />
             </state>
           </provider>
@@ -157,7 +148,6 @@
         <option value="$PROJECT_DIR$/test.md" />
         <option value="$PROJECT_DIR$/_layouts/index.html" />
         <option value="$PROJECT_DIR$/css/business-casual.css" />
-        <option value="$PROJECT_DIR$/index.md" />
         <option value="$PROJECT_DIR$/docs.md" />
         <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/download.html" />
@@ -165,6 +155,7 @@
         <option value="$PROJECT_DIR$/download.md" />
         <option value="$PROJECT_DIR$/contribute.md" />
         <option value="$PROJECT_DIR$/_layouts/other.html" />
+        <option value="$PROJECT_DIR$/index.md" />
       </list>
     </option>
   </component>
@@ -484,17 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4444447" vertical-offset="0" max-vertical-offset="990">
-          <caret line="8" column="0" selection-start="73" selection-end="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/download.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.25" vertical-offset="0" max-vertical-offset="390">
@@ -524,8 +504,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_layouts/default.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.525641" vertical-offset="478" max-vertical-offset="1860">
+        <state vertical-scroll-proportion="-11.958333" vertical-offset="478" max-vertical-offset="1860">
           <caret line="51" column="24" selection-start="1807" selection-end="1807" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.509434" vertical-offset="180" max-vertical-offset="990">
+          <caret line="30" column="76" selection-start="651" selection-end="651" />
           <folding />
         </state>
       </provider>

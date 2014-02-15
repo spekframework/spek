@@ -28,7 +28,7 @@ This code suffers from several issues. Under what **conditions** is the tax rate
 ### Being explicit with Spek
 
 
-Spek makes it easy to define these three important aspects without restoring to long method names or underscores:
+Spek makes it easy to define these three important aspects without resorting to long method names or underscores:
 
 {% highlight kotlin %}
 class TaxCalculatorSpecs: Spek() {{ "{{" }}
