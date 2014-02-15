@@ -14,7 +14,7 @@ If you want to download as source code, clone the [repository]({{ site.github }}
 
 ### Binaries
 
-Download the latest artifacts from the [Build Server]
+Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests)
 
 ### Maven and Gradle
 
