@@ -18,3 +18,27 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 
 ### Maven and Gradle
 
+Spek has not been released yet and as such is not made available on Maven Central. However you can download it from the [JetBrains Artifactory](http://repository.jetbrains.com).
+
+To use it in Maven:
+
+{% highlight xml %}
+<dependency>
+    <groupId>org</groupId>
+    <artifactId>spek</artifactId>
+    <version>0.1-SNAPSHOT</version>
+    <type>.xml</type>
+</dependency>
+{% endhighligh %}
+
+To use it in Gradle
+
+{% highlight %}
+
+compile(group: 'org', name: 'spek', version: '0.1-SNAPSHOT', ext: '.xml')
+
+{% endhighlight %}
+
+
+
+
