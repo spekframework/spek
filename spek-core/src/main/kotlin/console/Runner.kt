@@ -3,12 +3,8 @@ package org.spek.console
 import org.spek.impl.*
 
 public class Runner(val listener: WorkflowReporter) {
-    public fun runSpecs(packageName: String) {
-        run(findTestsInPackage(packageName))
-    }
-
-    public fun runSpecs(clazz: Class<*>) {
-        run(findTestsInClass(clazz))
+    public fun runSpecs(paths: List<String> , packageName: String) {
+        run(findSpecs(paths, packageName))
     }
 
     private fun run(classes: List<TestSpekAction>) {
