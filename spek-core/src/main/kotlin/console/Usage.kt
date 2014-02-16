@@ -4,9 +4,10 @@ fun printUsage() {
     println(
             """
 
-    usage: spek <package> [options]
+    usage: spek <paths> <packageName> [options]
         where:
-            <package> base package to search for speks to run tests
+            <paths> comma separated files containing tests. Can be *.class or *.jar
+            <packageName> package where tests are contained
 
         NOTE:  Assumes to be started with classpath that contains all spek classes and dependencies
 

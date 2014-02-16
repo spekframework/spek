@@ -2,13 +2,13 @@ package org.spek.console
 
 
 public fun main(args: Array<String>)  {
-    if (args.size == 0) {
+    if (args.size < 2) {
         printUsage()
     } else {
         try {
             val options = getOptions(args)
             val specRunner = setupRunner(options)
-            specRunner.runSpecs(options.packageName)
+            specRunner.runSpecs(options.paths, options.packageName)
         } catch (e: UnsupportedOperationException) {
             println("ERROR: ${e.getMessage()}")
             System.exit(1)
@@ -22,11 +22,12 @@ public fun main(args: Array<String>)  {
 }
 
 fun getOptions(args: Array<String>): Options {
-    var index = 1
+    var index = 2
     var format = "text"
     var filename = ""
     var cssFile = ""
-    var packageName = if (args.size > 0) args[0] else ""
+    var paths = args[0].split(',').toList()
+    var packageName = args[1]
 
     while (index < args.size) {
         when (args[index]) {
@@ -46,7 +47,7 @@ fun getOptions(args: Array<String>): Options {
         index++
     }
 
-    return Options(packageName, format, filename, cssFile)
+    return Options(paths, packageName, format, filename, cssFile)
 }
 
 fun setupRunner(options: Options): Runner {
