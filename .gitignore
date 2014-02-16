@@ -11,9 +11,9 @@ Thumbs.db
 *.swp
 *.sass-cache
 *~
-
+build/
 .gradle/
-.build/artifacts
+*build/artifacts
 .idea/artifacts
 bin/
 obj/

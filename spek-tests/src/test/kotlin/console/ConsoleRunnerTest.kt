@@ -10,6 +10,7 @@ public class ConsoleRunnerTest {
         //when we call getOptions
         val options = getOptions(array())
         //then
+        assertEquals(listOf<String>(), options.paths)
         assertEquals("", options.packageName)
         assertEquals("", options.filename)
         assertEquals("", options.cssFile)
@@ -19,8 +20,9 @@ public class ConsoleRunnerTest {
     test fun getOptions() {
         //given an empty array
         //when we call getOptions
-        val options = getOptions(array("my.package", "-f", "text", "--output", "file.txt", "--css", "css.css"))
+        val options = getOptions(array("paths", "my.package", "-f", "text", "--output", "file.txt", "--css", "css.css"))
         //then
+        assertEquals(listOf("paths"), options.paths)
         assertEquals("my.package", options.packageName)
         assertEquals("file.txt", options.filename)
         assertEquals("css.css", options.cssFile)

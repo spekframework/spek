@@ -26,8 +26,15 @@ fun getOptions(args: Array<String>): Options {
     var format = "text"
     var filename = ""
     var cssFile = ""
-    var paths = args[0].split(',').toList()
-    var packageName = args[1]
+    var paths = listOf<String>()
+    var packageName = ""
+
+    if (args.size > 0 ) {
+        paths = args[0].split(',').toList()
+    }
+    if (args.size > 1) {
+        packageName = args[1]
+    }
 
     while (index < args.size) {
         when (args[index]) {

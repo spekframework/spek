@@ -18,6 +18,6 @@ public class RunSamplesInJUnitTest {
     }
 
     test fun try_console() {
-        org.spek.console.main(array("org.spek.samples", "-f", "text"))
+        org.spek.console.main(array(".", "org.spek.samples", "-f", "text"))
     }
 }
