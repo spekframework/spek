@@ -13,8 +13,8 @@ Thumbs.db
 *~
 
 .gradle/
-
-
+.build/artifacts
+.idea/artifacts
 bin/
 obj/
 _ReSharper.*

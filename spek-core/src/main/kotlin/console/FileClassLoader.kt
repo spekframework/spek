@@ -14,7 +14,6 @@ import java.net.URI
 
 public fun getUrlsForPaths(paths: List<String>): List<URL> {
     val urls = arrayListOf<URL>()
-
     paths.forEach {
         val file = File(it)
         if (file.exists()) {
@@ -35,9 +34,8 @@ public fun findClassesInClassPath(packageName: String): List<String> {
 public fun findClassesInUrls(urls: List<URL>, packageName: String): List<String> {
     val names = arrayListOf<String>()
     for (url in urls) {
-        if (url.getProtocol().equals("jar")) {
+        if (url.toString().endsWith(".jar")) {
             var jarFilename = URLDecoder.decode(url.getFile()!!, "UTF-8")
-            jarFilename = jarFilename.substring(5,jarFilename.indexOf("!"))
             val jarFile = JarFile(jarFilename)
             var jarEntries = jarFile.entries()
             while (jarEntries.hasMoreElements())  {
@@ -68,7 +66,6 @@ public fun findSpecs(paths: List<String>, packageName: String): MutableList<Test
     val result = arrayListOf<TestSpekAction>()
     val urls = getUrlsForPaths(paths)
     val classloader = URLClassLoader.newInstance(urls.copyToArray())!!
-
     urls.forEach {
         val classes = findClassesInUrls(urls, packageName)
         classes.forEach {
