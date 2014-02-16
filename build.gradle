@@ -18,6 +18,11 @@ apply plugin: 'application'
 
 mainClassName = 'org.spek.console.ConsolePackage'
 
+distZip {
+    archiveName = 'console-runner.zip'
+}
+
+
 allprojects {
     repositories {
         mavenCentral()
@@ -83,3 +88,4 @@ jar {
     println "Building version: " + version
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
+

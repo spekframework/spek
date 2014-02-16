@@ -3,5 +3,4 @@ description = 'Spek Core'
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     compile group: 'junit', name:'junit', version:"${junitVersion}"
-    compile group: 'org.reflections', name: 'reflections', version: '0.9.8'
 }
