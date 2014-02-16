@@ -29,11 +29,11 @@ To use it in Maven:
     <version>0.1-SNAPSHOT</version>
     <type>.xml</type>
 </dependency>
-{% endhighligh %}
+{% endhighlight %}
 
 To use it in Gradle
 
-{% highlight %}
+{% highlight xml %}
 
 compile(group: 'org', name: 'spek', version: '0.1-SNAPSHOT', ext: '.xml')
 
