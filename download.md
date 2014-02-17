@@ -1,6 +1,6 @@
 ---
 layout: other
-title: Download
+title: Spek - Download
 ---
 
 **Build Status**:

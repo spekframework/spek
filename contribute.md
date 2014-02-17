@@ -1,6 +1,6 @@
 ---
 layout: other
-title: Contribute
+title: Spek - Contribute
 ---
 
 ### Any and all contributions

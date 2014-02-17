@@ -1,6 +1,6 @@
 ---
 layout: other
-title: Documentation
+title: Spek - Documentation
 ---
 
 
