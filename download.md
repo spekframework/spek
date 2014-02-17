@@ -35,10 +35,9 @@ To use it in Gradle
 
 {% highlight xml %}
 
-compile(group: 'org', name: 'spek', version: '0.1-SNAPSHOT', ext: '.xml')
+testCompile 'org.spek:spek:0.1-SNAPSHOT'
 
 {% endhighlight %}
-
 
 
 
