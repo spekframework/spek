@@ -24,6 +24,13 @@ To use it in Maven insert the following in your pom.xml file:
 
 
 {% highlight xml %}
+ 
+ <dependency>
+     <groupId>org</groupId>
+     <artifactId>spek</artifactId>
+     <version>0.1-SNAPSHOT</version>
+     <type>.xml</type>
+ </dependency>
 
  <repositories>
     <repository>
