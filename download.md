@@ -41,6 +41,9 @@ To use it in Maven insert the following in your pom.xml file:
 
 {% endhighlight %}
 
+
+For Gradle:
+
 {% highlight xml %}
 
 repositories {
