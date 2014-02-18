@@ -41,11 +41,17 @@ To use it in Maven insert the following in your pom.xml file:
 
 {% endhighlight %}
 
-To use it in Gradle
-
 {% highlight xml %}
 
-testCompile 'org.spek:spek:0.1-SNAPSHOT'
+repositories {
+    maven {
+        url "http://repository.jetbrains.com/all"
+    }
+}
+
+dependencies {
+    testCompile 'org.spek:spek:0.1-SNAPSHOT'
+}
 
 {% endhighlight %}
 
