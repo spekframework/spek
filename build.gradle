@@ -45,6 +45,16 @@ subprojects {
         compile group: 'junit', name:'junit', version:"${junitVersion}"
     }
 
+    jar.doFirst {
+       manifest {
+          attributes \
+            'Implementation-Title': "Spek", \
+            'Implementation-Version': rootProject.version, \
+            'Implementation-Kotlin-Version': rootProject.kotlinVersion, \
+            'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+          }
+    }
+
     test {
 
        // set heap size for the test JVM(s)
