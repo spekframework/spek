@@ -6,6 +6,7 @@ apply plugin: 'maven-publish'
 
 
 mainClassName = 'org.spek.console.ConsolePackage'
+version = rootProject.version
 
 dependencies {
     compile project(':spek-core')
@@ -13,7 +14,7 @@ dependencies {
 
 
 distZip {
-    archiveName = 'spek-console.zip'
+    archiveName = "spek-console-${rootProject.version}.zip"
 }
 
 
