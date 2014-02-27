@@ -18,7 +18,7 @@ distZip {
 
 
 jar {
-    println "Building version: " + version
+    println "Building version: ${rootProject.version}"
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 

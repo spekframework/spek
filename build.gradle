@@ -41,6 +41,7 @@ subprojects {
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+        compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
         compile group: 'junit', name:'junit', version:"${junitVersion}"
     }
 
