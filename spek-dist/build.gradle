@@ -23,6 +23,10 @@ jar {
 }
 
 
+task sourceJar(type: Jar) {
+    from project(':spek-core').sourceSets.main.allSource
+}
+
 publishing {
    publications {
        mavenJava(MavenPublication) {
@@ -31,6 +35,11 @@ publishing {
           version = "0.1-SNAPSHOT-${rootProject.version}"
          
           from project(':spek-core').components.java
+
+
+          artifact sourceJar {
+                classifier "sources"
+          }
        }
    }
 
