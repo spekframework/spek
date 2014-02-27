@@ -13,19 +13,18 @@ dependencies {
 
 
 distZip {
-    archiveName = 'console-runner.zip'
-}
-
-
-jar {
-    println "Building version: ${rootProject.version}"
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    archiveName = 'spek-console.zip'
 }
 
 
 task sourceJar(type: Jar) {
     from project(':spek-core').sourceSets.main.allSource
 }
+
+applicationDistribution.from(sourceJar) {
+    into "sources"
+}
+
 
 publishing {
    publications {
