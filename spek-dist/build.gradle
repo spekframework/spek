@@ -28,22 +28,24 @@ publishing {
        mavenJava(MavenPublication) {
           groupId = "org.spek"
           artifactId = "spek"
-          version = "0.1-SNAPSHOT-${version}"
+          version = "0.1-SNAPSHOT-${rootProject.version}"
          
-          from components.java
+          from project(':spek-core').components.java
        }
    }
 
-/*
+
    repositories {
        maven {
             url "http://repository.jetbrains.com/spek"
-            credentials { 
-               username "${deploy_username}"
-               password "${deploy_password}"
+            if (rootProject.hasProperty("deploy_username") && rootProject.hasProperty("deploy_password")) { 
+               credentials { 
+                 username "${rootProject.deploy_username}"
+                 password "${rootProject.deploy_password}"
+               }
             }
        }
    }
-*/
+
 }
 
