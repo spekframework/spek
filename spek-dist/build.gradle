@@ -32,7 +32,7 @@ publishing {
        mavenJava(MavenPublication) {
           groupId = "org.spek"
           artifactId = "spek"
-          version = "0.1-SNAPSHOT-${rootProject.version}"
+          version = "${rootProject.version}"
          
           from project(':spek-core').components.java
 
