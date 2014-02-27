@@ -2,6 +2,7 @@ description = 'Spek Distribution packages'
 
 apply plugin: 'application'
 apply plugin: 'maven'
+apply plugin: 'maven-publish'
 
 
 mainClassName = 'org.spek.console.ConsolePackage'
@@ -21,15 +22,28 @@ jar {
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://repository.jetbrains.com/spek") {
-                authentication(userName: deploy_username, password: deploy_password)
+
+publishing {
+   publications {
+       mavenJava(MavenPublication) {
+          groupId = "org.spek"
+          artifactId = "spek"
+          version = "0.1-SNAPSHOT-${version}"
+         
+          from components.java
+       }
+   }
+
+/*
+   repositories {
+       maven {
+            url "http://repository.jetbrains.com/spek"
+            credentials { 
+               username "${deploy_username}"
+               password "${deploy_password}"
             }
-            pom.groupId = "org.spek"
-            pom.artifactId = "spek"
-            pom.version = "0.1-SNAPSHOT"
-        }
-    }
+       }
+   }
+*/
 }
+
