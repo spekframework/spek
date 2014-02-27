@@ -1,0 +1,35 @@
+description = 'Spek Distribution packages'
+
+apply plugin: 'application'
+apply plugin: 'maven'
+
+
+mainClassName = 'org.spek.console.ConsolePackage'
+
+dependencies {
+    compile project(':spek-core')
+}
+
+
+distZip {
+    archiveName = 'console-runner.zip'
+}
+
+
+jar {
+    println "Building version: " + version
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "http://repository.jetbrains.com/spek") {
+                authentication(userName: deploy_username, password: deploy_password)
+            }
+            pom.groupId = "org.spek"
+            pom.artifactId = "spek"
+            pom.version = "0.1-SNAPSHOT"
+        }
+    }
+}

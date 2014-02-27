@@ -14,14 +14,6 @@ if (hasProperty("teamcity")) {
     version = "1.0.0-SNAPSHOT"
 
 apply plugin: 'kotlin'
-apply plugin: 'application'
-apply plugin: 'maven'
-
-mainClassName = 'org.spek.console.ConsolePackage'
-
-distZip {
-    archiveName = 'console-runner.zip'
-}
 
 
 allprojects {
@@ -78,27 +70,4 @@ task wrapper(type: Wrapper) {
 
     }
 
-}
-
-dependencies {
-    compile project(':spek-core')
-    testCompile project(':spek-tests')
-}
-
-jar {
-    println "Building version: " + version
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://repository.jetbrains.com/spek") {
-                authentication(userName: deploy_username, password: deploy_password)
-            }
-            pom.groupId = "org.spek"
-            pom.artifactId = "spek"
-            pom.version = "0.1-SNAPSHOT"
-        }
-    }
 }
