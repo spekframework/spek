@@ -45,8 +45,9 @@ subprojects {
         compile group: 'junit', name:'junit', version:"${junitVersion}"
     }
 
-    jar.doFirst {
-       manifest {
+
+    tasks.withType(Jar) { task ->
+       task.manifest {
           attributes \
             'Implementation-Title': "Spek", \
             'Implementation-Version': rootProject.version, \
