@@ -18,12 +18,11 @@ distZip {
     archiveName = "spek-console-${rootProject.version}.zip"
 }
 
-/*
-task startScripts {
-    applicationName = 'spek'
+task distJar(type: Jar) {
+    archiveName = "spek-${rootProject.version}.jar"
+    from project(':spek-core').sourceSets.main.output.classesDir
+    from project(':spek-core').configurations.include_unpacked_jars.incoming.files.collect { zipTree(it) }
 }
-*/
-
 
 task sourceJar(type: Jar) {
     from project(':spek-core').sourceSets.main.allSource

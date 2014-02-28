@@ -38,11 +38,18 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'kotlin'
+   
+    configurations {
+        include_unpacked_jars /// used when packing 'spek.jar' for download
+    }
+
+    def junitDependency = "junit:junit:${junitVersion}"
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
         compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
-        compile group: 'junit', name:'junit', version:"${junitVersion}"
+        compile junitDependency
+        include_unpacked_jars junitDependency
     }
 
 
