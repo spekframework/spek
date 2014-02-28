@@ -7,6 +7,7 @@ apply plugin: 'maven-publish'
 
 mainClassName = 'org.spek.console.ConsolePackage'
 version = rootProject.version
+applicationName = 'spek'
 
 dependencies {
     compile project(':spek-core')
@@ -16,6 +17,12 @@ dependencies {
 distZip {
     archiveName = "spek-console-${rootProject.version}.zip"
 }
+
+/*
+task startScripts {
+    applicationName = 'spek'
+}
+*/
 
 
 task sourceJar(type: Jar) {
