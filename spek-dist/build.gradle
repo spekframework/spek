@@ -33,7 +33,13 @@ publishing {
           groupId = "org.spek"
           artifactId = "spek"
           version = "${rootProject.version}"
-         
+
+          pom.withXml {
+            asNode().dependencies.dependency.each { 
+              it.scope[0].value = ("compile")
+            }
+
+          }         
           from project(':spek-core').components.java
 
 
