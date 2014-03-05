@@ -1,0 +1,72 @@
+description = 'Spek Distribution packages'
+
+apply plugin: 'application'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+
+mainClassName = 'org.spek.console.ConsolePackage'
+version = rootProject.version
+applicationName = 'spek'
+
+dependencies {
+    compile project(':spek-core')
+}
+
+
+distZip {
+    archiveName = "spek-console-${rootProject.version}.zip"
+}
+
+task distJar(type: Jar) {
+    archiveName = "spek-${rootProject.version}.jar"
+    from project(':spek-core').sourceSets.main.output.classesDir
+    from project(':spek-core').configurations.include_unpacked_jars.incoming.files.collect { zipTree(it) }
+}
+
+task sourceJar(type: Jar) {
+    from project(':spek-core').sourceSets.main.allSource
+}
+
+applicationDistribution.from(sourceJar) {
+    into "sources"
+}
+
+
+publishing {
+   publications {
+       mavenJava(MavenPublication) {
+          groupId = "org.spek"
+          artifactId = "spek"
+          version = "${rootProject.version}"
+
+          pom.withXml {
+            asNode().dependencies.dependency.each { 
+              it.scope[0].value = ("compile")
+            }
+
+          }         
+          from project(':spek-core').components.java
+
+
+          artifact sourceJar {
+                classifier "sources"
+          }
+       }
+   }
+
+
+   repositories {
+       maven {
+            url "http://repository.jetbrains.com/spek"
+            if (rootProject.hasProperty("deploy_username") && rootProject.hasProperty("deploy_password")) { 
+               credentials { 
+                 username "${rootProject.deploy_username}"
+                 password "${rootProject.deploy_password}"
+               }
+            }
+       }
+   }
+
+}
+

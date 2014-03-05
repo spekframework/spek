@@ -14,14 +14,6 @@ if (hasProperty("teamcity")) {
     version = "1.0.0-SNAPSHOT"
 
 apply plugin: 'kotlin'
-apply plugin: 'application'
-apply plugin: 'maven'
-
-mainClassName = 'org.spek.console.ConsolePackage'
-
-distZip {
-    archiveName = 'console-runner.zip'
-}
 
 
 allprojects {
@@ -46,11 +38,29 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'kotlin'
+   
+    configurations {
+        include_unpacked_jars /// used when packing 'spek.jar' for download
+    }
+
+    def junitDependency = "junit:junit:${junitVersion}"
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-        testCompile group: 'junit', name:'junit', version:"${junitVersion}"
-        testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+        compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
+        compile junitDependency
+        include_unpacked_jars junitDependency
+    }
+
+
+    tasks.withType(Jar) { task ->
+       task.manifest {
+          attributes \
+            'Implementation-Title': "Spek", \
+            'Implementation-Version': rootProject.version, \
+            'Implementation-Kotlin-Version': rootProject.kotlinVersion, \
+            'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+          }
     }
 
     test {
@@ -65,7 +75,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = 1.10
+    gradleVersion = 1.11
 
     doLast() {
       def gradleOpts = "-XX:MaxPermSize=300m -Xmx1024m"
@@ -78,27 +88,4 @@ task wrapper(type: Wrapper) {
 
     }
 
-}
-
-dependencies {
-    compile project(':spek-core')
-    testCompile project(':spek-tests')
-}
-
-jar {
-    println "Building version: " + version
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-}
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: "http://repository.jetbrains.com/spek") {
-                authentication(userName: deploy_username, password: deploy_password)
-            }
-            pom.groupId = "org.spek"
-            pom.artifactId = "spek"
-            pom.version = "0.1-SNAPSHOT"
-        }
-    }
 }

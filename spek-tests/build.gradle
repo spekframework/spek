@@ -2,7 +2,5 @@ description = 'Spek Tests'
 
 dependencies {
     compile project(':spek-core')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-    compile group: 'junit', name:'junit', version:"${junitVersion}"
-    compile group: 'org.reflections', name: 'reflections', version: '0.9.8'
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
 }
