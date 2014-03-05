@@ -11,7 +11,7 @@ group = 'org.spek'
 if (hasProperty("teamcity")) {
     version = teamcity["build.number"]
 } else
-    version = "1.0.0-SNAPSHOT"
+    version = "0.1-SNAPSHOT"
 
 apply plugin: 'kotlin'
 
