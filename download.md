@@ -26,10 +26,10 @@ To use it in Maven insert the following in your pom.xml file:
 {% highlight xml %}
  
  <dependency>
-     <groupId>org</groupId>
-     <artifactId>spek</artifactId>
-     <version>0.1-SNAPSHOT</version>
-     <type>.xml</type>
+    <groupId>org.spek</groupId>
+    <artifactId>spek</artifactId>
+    <version>$version</version>
+    <type>pom</type>
  </dependency>
 
  <repositories>
@@ -53,7 +53,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'org.spek:spek:0.1-SNAPSHOT'
+    testCompile 'org.spek:spek:$version'
 }
 
 {% endhighlight %}
