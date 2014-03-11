@@ -1,5 +1,5 @@
 if (hasProperty("teamcity")) {
-    if (teamcity["teamcity.build.branch"] == "master") {
+    if (teamcity["build.branch"] == "master") {
         version = '0.1-SNAPSHOT'
         kotlinVersion = '0.1-SNAPSHOT'
     } else {
