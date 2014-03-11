@@ -3,6 +3,7 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="disableWrapperSourceDistributionNotification" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="gradleHome" value="$USER_HOME$/tools/gradle" />
@@ -10,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/spek-core" />
+            <option value="$PROJECT_DIR$/spek-dist" />
             <option value="$PROJECT_DIR$/spek-samples" />
             <option value="$PROJECT_DIR$/spek-tests" />
           </set>

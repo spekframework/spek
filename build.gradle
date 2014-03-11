@@ -1,6 +1,22 @@
+junitVersion = 4.11
+
+if (hasProperty("teamcity")) {
+    if (teamcity["vcsroot.branchName"] == "master") {
+        version = '0.1-SNAPSHOT'
+        kotlinVersion = '0.1-SNAPSHOT'
+    } else {
+        version = teamcity["build.number"]
+        kotlinVersion = "0.6.1673"
+    }
+} else
+    version = "0.1-SNAPSHOT"
+
 buildscript {
     repositories {
         mavenCentral()
+        maven {
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
@@ -8,10 +24,6 @@ buildscript {
 }
 
 group = 'org.spek'
-if (hasProperty("teamcity")) {
-    version = teamcity["build.number"]
-} else
-    version = "0.1-SNAPSHOT"
 
 apply plugin: 'kotlin'
 
