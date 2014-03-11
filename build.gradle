@@ -1,5 +1,4 @@
 if (hasProperty("teamcity")) {
-    println "Branch is" + teamcity_branch_name
     if (teamcity_branch_name == "master") {
         version = '0.1-SNAPSHOT'
         kotlinVersion = '0.1-SNAPSHOT'
