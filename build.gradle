@@ -8,8 +8,10 @@ if (hasProperty("teamcity")) {
         version = teamcity["build.number"]
         kotlinVersion = "0.6.1673"
     }
-} else
+} else {
     version = "0.1-SNAPSHOT"
+    kotlinVersion = "0.6.1.673"
+}
 
 buildscript {
     repositories {
