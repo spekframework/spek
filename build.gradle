@@ -1,6 +1,6 @@
 if (hasProperty("teamcity")) {
-    println "The branch is:"  + teamcity["build.branch"]
-    if (teamcity["build.branch"] == "master") {
+    println "The branch is:"  + teamcity["vcsroot.branchName"]
+    if (teamcity["vcsroot.branch"] == "master") {
         version = '0.1-SNAPSHOT'
         kotlinVersion = '0.1-SNAPSHOT'
     } else {
