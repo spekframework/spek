@@ -1,14 +1,17 @@
-if (hasProperty("teamcity")) {
-    if (teamcity_branch_name == "master") {
-        version = '0.1-SNAPSHOT'
-        kotlinVersion = '0.1-SNAPSHOT'
-        println "Building master with kotlinVersion " + kotlinVersion
-    } else {
-        version = teamcity["build.number"]
-        kotlinVersion = "0.6.1673"
-    }
+if (hasProperty('teamcity') && teamcity_branch_name == "master") {
+    println "Teamcity master branch"
+    version = '0.1-SNAPSHOT'
 } else {
-    version = "0.1-SNAPSHOT"
+    version = teamcity["build.number"]
+}
+
+String getKotlinVer() {
+    println "This shit works"
+    if (hasProperty("teamcity") && teamcity_branch_name == "master") {
+        return '0.1-SNAPSHOT'
+    } else {
+        return '0.6.1673'
+    }
 }
 
 buildscript {
@@ -19,7 +22,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVer}"
     }
 }
 
@@ -41,24 +44,11 @@ allprojects {
 subprojects {
     buildscript {
 
-        if (hasProperty("teamcity")) {
-            if (teamcity_branch_name == "master") {
-                version = '0.1-SNAPSHOT'
-                kotlinVersion = '0.1-SNAPSHOT'
-                println "Building master with kotlinVersion " + kotlinVersion
-            } else {
-                version = teamcity["build.number"]
-                kotlinVersion = "0.6.1673"
-            }
-        } else {
-            version = "0.1-SNAPSHOT"
-        }
-
         repositories {
             mavenCentral()
         }
         dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVer}"
         }
     }
 
@@ -72,9 +62,9 @@ subprojects {
     def junitDependency = "junit:junit:${junitVersion}"
 
     dependencies {
-        println "Building stdlib with version " + kotlinVersion
-        compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-        compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
+        println "Building stdlib with version " + kotlinVer
+        compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVer}"
+        compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVer}"
         compile junitDependency
         include_unpacked_jars junitDependency
     }
@@ -85,7 +75,7 @@ subprojects {
           attributes \
             'Implementation-Title': "Spek", \
             'Implementation-Version': rootProject.version, \
-            'Implementation-Kotlin-Version': rootProject.kotlinVersion, \
+            'Implementation-Kotlin-Version': kotlinVer, \
             'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
           }
     }
