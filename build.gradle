@@ -22,7 +22,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVer}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getKotlinVer()}"
     }
 }
 
@@ -48,7 +48,7 @@ subprojects {
             mavenCentral()
         }
         dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVer}"
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${getKotlinVer()}"
         }
     }
 
@@ -62,9 +62,9 @@ subprojects {
     def junitDependency = "junit:junit:${junitVersion}"
 
     dependencies {
-        println "Building stdlib with version " + kotlinVer
-        compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVer}"
-        compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVer}"
+        println "Building stdlib with version " + getKotlinVer()
+        compile "org.jetbrains.kotlin:kotlin-stdlib:${getKotlinVer()}"
+        compile "org.jetbrains.kotlin:kotlin-runtime:${getKotlinVer()}"
         compile junitDependency
         include_unpacked_jars junitDependency
     }
@@ -75,7 +75,7 @@ subprojects {
           attributes \
             'Implementation-Title': "Spek", \
             'Implementation-Version': rootProject.version, \
-            'Implementation-Kotlin-Version': kotlinVer, \
+            'Implementation-Kotlin-Version': getKotlinVer(), \
             'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
           }
     }
