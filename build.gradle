@@ -58,6 +58,7 @@ subprojects {
     def junitDependency = "junit:junit:${junitVersion}"
 
     dependencies {
+        println "Building stdlib with version " ${kotlinVersion}
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
         compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
         compile junitDependency

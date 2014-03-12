@@ -1,19 +1,5 @@
 description = 'Spek Distribution packages'
 
-if (hasProperty("teamcity")) {
-    if (teamcity_branch_name == "master") {
-        version = '0.1-SNAPSHOT'
-        kotlinVersion = '0.1-SNAPSHOT'
-        println "Building master with kotlinVersion " + kotlinVersion
-    } else {
-        version = teamcity["build.number"]
-        kotlinVersion = "0.6.1673"
-    }
-} else {
-    version = "0.1-SNAPSHOT"
-}
-
-
 apply plugin: 'application'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
