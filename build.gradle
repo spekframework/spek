@@ -39,21 +39,21 @@ allprojects {
 }
 
 subprojects {
-
-    if (hasProperty("teamcity")) {
-        if (teamcity_branch_name == "master") {
-            version = '0.1-SNAPSHOT'
-            kotlinVersion = '0.1-SNAPSHOT'
-            println "Building master with kotlinVersion " + kotlinVersion
-        } else {
-            version = teamcity["build.number"]
-            kotlinVersion = "0.6.1673"
-        }
-    } else {
-        version = "0.1-SNAPSHOT"
-    }
-
     buildscript {
+
+        if (hasProperty("teamcity")) {
+            if (teamcity_branch_name == "master") {
+                version = '0.1-SNAPSHOT'
+                kotlinVersion = '0.1-SNAPSHOT'
+                println "Building master with kotlinVersion " + kotlinVersion
+            } else {
+                version = teamcity["build.number"]
+                kotlinVersion = "0.6.1673"
+            }
+        } else {
+            version = "0.1-SNAPSHOT"
+        }
+
         repositories {
             mavenCentral()
         }
