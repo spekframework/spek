@@ -30,6 +30,9 @@ subprojects {
 
         repositories {
             mavenCentral()
+            maven {
+                url 'http://oss.sonatype.org/content/repositories/snapshots'
+            }
         }
         dependencies {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
@@ -44,7 +47,11 @@ subprojects {
     }
 
     def junitDependency = "junit:junit:${junitVersion}"
-
+    repositories {
+        maven {
+            url 'http://oss.sonatype.org/content/repositories/snapshots'
+        }
+    }
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
         compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
