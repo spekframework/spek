@@ -30,6 +30,7 @@ To use it in Maven insert the following in your pom.xml file:
     <artifactId>spek</artifactId>
     <version>$version</version>
     <type>pom</type>
+    <scope>test</scope>
  </dependency>
 
  <repositories>
