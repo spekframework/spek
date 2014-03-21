@@ -18,5 +18,8 @@ Works with stable version of Kotlin M6.2
 
 Works with stable version of Kotlin M7
 
+## Artifacts and versions
+
+Check http://repository.jetbrains.com for available artifacts
 
 See [Documentation Site](http://jetbrains.github.io/spek) for more information
