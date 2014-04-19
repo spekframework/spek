@@ -2,6 +2,7 @@ package org.spek
 
 public trait Specification {
     fun given(description: String, givenExpression: Given.() -> Unit)
+    fun givenData<T>(data: Iterable<T>, givenExpression: Given.(T) -> Unit)
 }
 
 public trait Given {

@@ -6,6 +6,7 @@ import org.spek.impl.*
 
 RunWith(javaClass<JUnitClassRunner<*>>())
 public abstract class Spek : Specification {
+
     private val recordedActions = linkedListOf<TestGivenAction>()
 
     override fun given(description: String, givenExpression: Given.() -> Unit) {
@@ -20,6 +21,14 @@ public abstract class Spek : Specification {
                     }
                 })
 
+    }
+
+    override fun <T> givenData(data: Iterable<T>, givenExpression: Given.(T) -> Unit) {
+        for (entry in data) {
+            given(entry.toString()) {
+                givenExpression(entry)
+            }
+        }
     }
 
     public fun iterateGiven(it: (TestGivenAction) -> Unit): Unit = removingIterator(recordedActions, it)
