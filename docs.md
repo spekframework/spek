@@ -107,6 +107,6 @@ comply with this guidance. You can have multiple *it* but you limit each to one 
 Dutch. So why not have bacon as a logo? After all, we love bacon!
 
 **Q: Can I contribute?**
-<br/>[Please do]({{ site.github }})!
+<br/>[Please do](http://github.com/jetbrains/spek)!
 
 
