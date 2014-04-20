@@ -7,11 +7,5 @@ public fun On.it(description: String): Unit = it(description) { pending("Not imp
 public fun pending(message : String) : Unit = throw PendingException(message)
 public fun skip(message : String) : Unit = throw SkippedException(message)
 
-public fun <T> Specification.givenData(data: Iterable<T>, givenExpression: Given.(T) -> Unit) {
-    for (entry in data) {
-        given(entry.toString()) {
-            givenExpression(entry)
-        }
-    }
-}
+
 
