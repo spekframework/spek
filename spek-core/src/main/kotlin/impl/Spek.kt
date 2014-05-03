@@ -31,7 +31,7 @@ public abstract class Spek : Specification {
 
 public fun <T> Spek.givenData(data: Iterable<T>, givenExpression: Given.(T) -> Unit) {
     for (entry in data) {
-        given("given ${entry.toString()}") {
+        given(entry.toString()) {
             givenExpression(entry)
         }
     }
