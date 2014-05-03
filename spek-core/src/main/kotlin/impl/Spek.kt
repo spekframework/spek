@@ -28,9 +28,10 @@ public abstract class Spek : Specification {
     public fun allGiven(): List<TestGivenAction> = recordedActions
 }
 
+
 public fun <T> Spek.givenData(data: Iterable<T>, givenExpression: Given.(T) -> Unit) {
     for (entry in data) {
-        given(entry.toString()) {
+        given("given ${entry.toString()}") {
             givenExpression(entry)
         }
     }
