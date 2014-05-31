@@ -10,7 +10,7 @@ title: Spek - Download
 
 ### Source Code
 
-If you want to download as source code, clone the [repository]({{ site.github }}).
+If you want to download as source code, clone the [repository](https://github.com/jetbrains/spek}).
 
 ### Binaries
 
@@ -20,7 +20,6 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 
 * 0.1.106 corresponds to Spek release 0.1.x (branch 0.1.m6.2 on GitHub) and uses Kotlin release M6.2
 * 0.1.107 corresponds to Spek release 0.1.x (branch 0.1.m7 on GitHub) and uses Kotlin release M7
-
 * 0.1.118 corresponds to Spek release master (branch master on GitHub) and uses Kotlin release M7
 
 
