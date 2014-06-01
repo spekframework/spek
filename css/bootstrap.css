@@ -177,12 +177,12 @@ optgroup {
   font-weight: bold;
 }
 table {
-  border-spacing: 0;
+  border-spacing: 2px;
   border-collapse: collapse;
 }
 td,
 th {
-  padding: 0;
+  padding: 2px;
 }
 @media print {
   * {
