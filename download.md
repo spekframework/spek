@@ -18,10 +18,10 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 
 ### Versions
 
-|| Artifact Version || Github Branch || Kotlin Version ||
-| [0.106](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.106) | 0.1.m6.2 | M6.2
-| [0.122](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.122) | 0.1.m7 | M7
-| x | master | Kotlin Snapshot
+| Artifact Version | Github Branch | Kotlin Version |
+| [0.106](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.106) | 0.1.m6.2 | M6.2 |
+| [0.122](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.122) | 0.1.m7 | M7 |
+| x | master | Kotlin Snapshot |
 
 ### Maven and Gradle
 
