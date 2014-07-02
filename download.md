@@ -22,7 +22,7 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 | ---------------- | ------------- | -------------- |
 | [0.106](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.106) | 0.1.m6.2 | M6.2 |
 | [0.122](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.122) | 0.1.m7 | M7 |
-| [0.122](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.127) | 0.1.m8 | M8 |
+| [0.127](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.127) | 0.1.m8 | M8 |
 | [0.1-SNAPSHOT](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1-SNAPSHOT) | master | Kotlin Snapshot |
 
 ### Maven and Gradle
