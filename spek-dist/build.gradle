@@ -34,11 +34,13 @@ applicationDistribution.from(sourceJar) {
 }
 
 
+
 /*
 signing {
     sign configurations.archives
 }
 */
+
 
 
 publishing {
@@ -78,13 +80,16 @@ publishing {
 
 }
 
+/*
 uploadArchives {
     repositories {
         mavenDeployer {
-//            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
+            if (rootProject.hasProperty("sonatypeUsername") && rootProject.hasProperty("sonatypePassword")) {
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots") {
+                    authentication(userName: sonatypeUsername, password: sonatypePassword)
+                }
             }
 
             pom.project {
@@ -106,4 +111,5 @@ uploadArchives {
         }
     }
 }
+*/
 
