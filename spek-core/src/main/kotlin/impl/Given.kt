@@ -7,21 +7,19 @@ open class GivenImpl: Given {
     private val beforeActions = linkedListOf<()->Unit>()
     private val afterActions = linkedListOf<()->Unit>()
 
-    public fun iterateOn(callback : (TestOnAction) -> Unit) : Unit = removingIterator(recordedActions) {
-        beforeActions forEach { it() }
-        try {
+    public fun iterateOn(callback : (TestOnAction) -> Unit) {
+        removingIterator(recordedActions) {
+            beforeActions.forEach { it() }
             callback(it)
-        } finally {
-            afterActions forEach { it() }
         }
     }
 
-    override fun beforeOn(it: () -> Unit) {
-        beforeActions add it
+    override fun beforeOn(codeBlock: () -> Unit) {
+        beforeActions.add(codeBlock)
     }
 
-    override fun afterOn(it: () -> Unit) {
-        afterActions add it
+    override fun afterOn(codeBlock: () -> Unit) {
+        afterActions.add(codeBlock)
     }
 
     public override fun on(description: String, onExpression: On.() -> Unit) {
