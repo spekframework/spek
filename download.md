@@ -10,7 +10,7 @@ title: Spek - Download
 
 ### Source Code
 
-If you want to download as source code, clone the [repository](https://github.com/jetbrains/spek}).
+If you want to download as source code, clone the [repository](https://github.com/jetbrains/spek).
 
 ### Binaries
 
