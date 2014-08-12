@@ -9,8 +9,13 @@ open class GivenImpl: Given {
 
     public fun iterateOn(callback : (TestOnAction) -> Unit) {
         removingIterator(recordedActions) {
+            // This doesn't actually work. Tests pass but tests are wrong
             beforeActions.forEach { it() }
-            callback(it)
+            try {
+                callback(it)
+            } finally {
+                afterActions.forEach { it() }
+            }
         }
     }
 
