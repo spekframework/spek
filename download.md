@@ -29,7 +29,10 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 
 Spek has not been released yet and as such is not made available on Maven Central. However you can download it from the [JetBrains Artifactory](http://repository.jetbrains.com).
 
-#### 0.106 to 0.127
+*Versions 0.106 to 0.127*
+
+This is only applicable to version 0.106 through to 0.127. For Snapshot and higher versions, see below. 
+
 To use it in Maven insert the following in your pom.xml file:
 
 
@@ -70,7 +73,7 @@ dependencies {
 {% endhighlight %}
 
 
-#### Versions after 0.127 and 0.1-SNAPSHOT
+*Versions after 0.127 and 0.1-SNAPSHOT*
 
 Spek has moved packages to org.jetbrains.spek. As such, the Maven/Gradle packages have changed:
 
