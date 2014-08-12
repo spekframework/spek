@@ -1,6 +1,6 @@
-package org.spek.samples
+package org.jetbrains.spek.samples
 
-import org.spek.Spek
+import org.jetbrains.spek.api.Spek
 
 
 class TimingSpecification: Spek() {{

@@ -10,7 +10,7 @@ buildscript {
     }
 }
 
-group = 'org.spek'
+group = 'org.jetbrains.spek'
 
 apply plugin: 'kotlin'
 

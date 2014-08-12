@@ -5,7 +5,7 @@ apply plugin: 'maven'
 apply plugin: 'maven-publish'
 
 
-mainClassName = 'org.spek.console.ConsolePackage'
+mainClassName = 'org.jetbrains.spek.console.ConsolePackage'
 version = rootProject.version
 applicationName = 'spek'
 
@@ -36,7 +36,7 @@ applicationDistribution.from(sourceJar) {
 publishing {
    publications {
        mavenJava(MavenPublication) {
-          groupId = "org.spek"
+          groupId = "org.jetbrains.spek"
           artifactId = "spek"
           version = "${rootProject.version}"
 

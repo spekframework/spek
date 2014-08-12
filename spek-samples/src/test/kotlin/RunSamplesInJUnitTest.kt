@@ -1,12 +1,11 @@
-package org.spek.samples
+package org.jetbrains.spek.samples
 
 
 import org.junit.Test as test
 import org.junit.runner.JUnitCore
-import org.spek.console.*
-import org.spek.*
 import org.junit.internal.RealSystem
 import org.junit.internal.TextListener
+import org.jetbrains.spek.console.main
 
 
 public class RunSamplesInJUnitTest {
@@ -18,6 +17,6 @@ public class RunSamplesInJUnitTest {
     }
 
     test fun try_console() {
-        org.spek.console.main(array(".", "org.spek.samples", "-f", "text"))
+        main(array(".", "org.jetbrains.spek.samples", "-f", "text"))
     }
 }
