@@ -3,7 +3,7 @@ package org.jetbrains.spek.console
 import java.io.*
 
 public trait OutputDevice {
-    fun output(message: String)
+    public fun output(message: String)
 }
 
 public class FileOutputDevice(filename: String) : OutputDevice, Closeable {

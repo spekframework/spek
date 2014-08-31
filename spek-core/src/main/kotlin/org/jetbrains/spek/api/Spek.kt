@@ -9,7 +9,7 @@ public abstract class Spek : org.jetbrains.spek.api.Specification {
 
     private val recordedActions = linkedListOf<org.jetbrains.spek.api.TestGivenAction>()
 
-    override fun given(description: String, givenExpression: org.jetbrains.spek.api.Given.() -> Unit) {
+    public override fun given(description: String, givenExpression: org.jetbrains.spek.api.Given.() -> Unit) {
         recordedActions.add(
                 object : org.jetbrains.spek.api.TestGivenAction {
                     public override fun description() = "given " + description

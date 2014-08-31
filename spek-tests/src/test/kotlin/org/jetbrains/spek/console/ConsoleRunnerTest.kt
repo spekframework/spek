@@ -16,7 +16,7 @@ public class ConsoleRunnerTest {
         assertEquals("text", options.format)
     }
 
-    test fun getOptions() {
+    test fun getNonEmptyOptions() {
         //given an empty array
         //when we call getOptions
         val options = getOptions(array("paths", "my.package", "-f", "text", "--output", "file.txt", "--css", "css.css"))

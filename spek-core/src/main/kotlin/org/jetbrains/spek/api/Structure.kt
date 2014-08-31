@@ -1,17 +1,17 @@
 package org.jetbrains.spek.api
 
 public trait Specification {
-    fun given(description: String, givenExpression: Given.() -> Unit)
+    public fun given(description: String, givenExpression: Given.() -> Unit)
 }
 
 public trait Given {
-    fun beforeOn(it: () -> Unit)
-    fun afterOn(it: () -> Unit)
-    fun on(description: String, onExpression: On.() -> Unit)
+    public fun beforeOn(it: () -> Unit)
+    public fun afterOn(it: () -> Unit)
+    public fun on(description: String, onExpression: On.() -> Unit)
 }
 
 public trait On {
-    fun it(description: String, itExpression: It.() -> Unit)
+    public fun it(description: String, itExpression: It.() -> Unit)
 }
 
 public trait It {}

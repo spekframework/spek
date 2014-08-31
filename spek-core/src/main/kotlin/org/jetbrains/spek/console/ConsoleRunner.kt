@@ -21,7 +21,7 @@ public fun main(args: Array<String>)  {
     System.exit(0)
 }
 
-fun getOptions(args: Array<String>): Options {
+public fun getOptions(args: Array<String>): Options {
     var index = 2
     var format = "text"
     var filename = ""

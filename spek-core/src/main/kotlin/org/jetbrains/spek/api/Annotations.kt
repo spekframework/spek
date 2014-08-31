@@ -1,3 +1,3 @@
 package org.jetbrains.spek.api
 
-annotation class ignored(val why : String = "")
+public annotation class ignored(val why : String = "")

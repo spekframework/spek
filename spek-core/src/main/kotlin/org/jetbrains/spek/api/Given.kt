@@ -20,11 +20,11 @@ open class GivenImpl: org.jetbrains.spek.api.Given {
         }
     }
 
-    override fun beforeOn(codeBlock: () -> Unit) {
+    public override fun beforeOn(codeBlock: () -> Unit) {
         beforeActions.add(codeBlock)
     }
 
-    override fun afterOn(codeBlock: () -> Unit) {
+    public override fun afterOn(codeBlock: () -> Unit) {
         afterActions.add(codeBlock)
     }
 

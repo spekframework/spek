@@ -3,15 +3,15 @@ package org.jetbrains.spek.console
 import org.jetbrains.spek.api.*
 
 public trait ActionStatusReporter {
-    fun started() {
+    public fun started() {
     }
-    fun completed() {
+    public fun completed() {
     }
-    fun skipped(why: String) {
+    public fun skipped(why: String) {
     }
-    fun pending(why: String) {
+    public fun pending(why: String) {
     }
-    fun failed(error: Throwable) {
+    public fun failed(error: Throwable) {
     }
 }
 

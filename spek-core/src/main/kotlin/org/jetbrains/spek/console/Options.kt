@@ -1,8 +1,8 @@
 package org.jetbrains.spek.console
 
-data class Options(
-        val paths: List<String>,
-        val packageName: String,
-        val format: String,
-        val filename: String,
-        val cssFile: String)
+public data class Options(
+        public val paths: List<String>,
+        public val packageName: String,
+        public val format: String,
+        public val filename: String,
+        public val cssFile: String)
