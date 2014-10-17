@@ -13,6 +13,11 @@ buildscript {
     }
 }
 
+if (hasProperty("teamcity") && kotlin_version != '0.1-SNAPSHOT') {
+    version = teamcity["build.number"]
+} else
+    version = "0.1-SNAPSHOT"
+
 group = 'org.jetbrains.spek'
 
 apply plugin: 'kotlin'
