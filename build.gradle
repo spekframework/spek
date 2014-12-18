@@ -23,7 +23,6 @@ group = 'org.jetbrains.spek'
 apply plugin: 'kotlin'
 
 configurations.all {
-    // check for updates every build
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
