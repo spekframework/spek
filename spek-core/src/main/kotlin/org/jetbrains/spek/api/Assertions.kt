@@ -25,3 +25,10 @@ public fun It.shouldBeTrue<T>(actual: T) : Unit {
 public fun It.shouldBeFalse<T>(actual: T) : Unit {
     assertTrue(actual == false)
 }
+
+public fun It.shouldThrow<T: Throwable>(exceptionClass: Class<T>, block: () -> Any): T {
+    return failsWith(exceptionClass, block)
+}
+
+
+
