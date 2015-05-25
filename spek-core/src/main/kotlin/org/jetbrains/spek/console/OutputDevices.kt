@@ -2,7 +2,7 @@ package org.jetbrains.spek.console
 
 import java.io.*
 
-public trait OutputDevice {
+public interface OutputDevice {
     public fun output(message: String)
 }
 

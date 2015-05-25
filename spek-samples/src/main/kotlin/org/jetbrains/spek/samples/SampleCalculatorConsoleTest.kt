@@ -3,7 +3,8 @@ package org.jetbrains.spek.samples
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.samples.SampleCalculator
 
-class CalculatorConsoleSpecs: org.jetbrains.spek.api.Spek() {{
+class CalculatorConsoleSpecs: org.jetbrains.spek.api.Spek() {
+    init {
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {

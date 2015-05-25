@@ -8,7 +8,8 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
 
     test public fun callOnBefore() {
         val log = arrayListOf<String>()
-        runTest(object: Data() {{
+        runTest(object: Data() {
+            init {
             given("a") {
                 beforeOn { log add "before"}
                 on("1") {
@@ -23,7 +24,8 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
 
     test public fun callOnAfter() {
         val log = arrayListOf<String>()
-        runTest(object: Data() {{
+        runTest(object: Data() {
+            init {
             given("a") {
                 afterOn { log add "after"}
                 on("1") {
@@ -38,7 +40,8 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
 
     test public fun callOnBeforeAndOnAfter() {
         val log = arrayListOf<String>()
-        runTest(object : Data() {{
+        runTest(object : Data() {
+            init {
             given("a") {
                 beforeOn { log add "before"  }
                 afterOn { log add "after"  }

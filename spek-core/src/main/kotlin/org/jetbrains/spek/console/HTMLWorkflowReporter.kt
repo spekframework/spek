@@ -4,7 +4,7 @@ public class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, v
     //TODO: could use markdown + js
     var css = ""
 
-    {
+    init {
         if (cssFile != "") {
             css = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssFile\">"
         }

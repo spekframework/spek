@@ -1,22 +1,22 @@
 package org.jetbrains.spek.api
 
 
-public trait TestSpekAction {
+public interface TestSpekAction {
     public fun description(): String
     public fun iterateGiven(it:(TestGivenAction) -> Unit)
 }
 
-public trait TestGivenAction {
+public interface TestGivenAction {
     public fun description(): String
     public fun iterateOn(it: (TestOnAction) -> Unit)
 }
 
-public trait TestOnAction {
+public interface TestOnAction {
     public fun description(): String
     public fun iterateIt(it : (TestItAction) -> Unit)
 }
 
-public trait TestItAction {
+public interface TestItAction {
     public fun description(): String
     public fun run()
 }
