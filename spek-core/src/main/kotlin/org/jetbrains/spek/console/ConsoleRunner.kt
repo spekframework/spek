@@ -2,7 +2,7 @@ package org.jetbrains.spek.console
 
 
 public fun main(args: Array<String>)  {
-    if (args.size < 2) {
+    if (args.size() < 2) {
         printUsage()
     } else {
         try {
@@ -29,14 +29,14 @@ public fun getOptions(args: Array<String>): Options {
     var paths = listOf<String>()
     var packageName = ""
 
-    if (args.size > 0 ) {
+    if (args.size() > 0 ) {
         paths = args[0].split(',').toList()
     }
-    if (args.size > 1) {
+    if (args.size() > 1) {
         packageName = args[1]
     }
 
-    while (index < args.size) {
+    while (index < args.size()) {
         when (args[index]) {
             "-f", "--format" -> {
                 format = args[++index]

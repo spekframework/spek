@@ -2,7 +2,8 @@ package org.jetbrains.spek.samples
 
 import org.jetbrains.spek.api.*
 
-class SkipSample: Spek() {{
+class SkipSample: Spek() {
+    init {
     given("a sample") {
         on("calling a function") {
             val result = 10

@@ -2,7 +2,7 @@ package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.*
 
-public trait ActionStatusReporter {
+public interface ActionStatusReporter {
     public fun started() {
     }
     public fun completed() {

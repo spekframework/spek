@@ -12,15 +12,15 @@ public open class IntegrationTestCase {
     fun runTest(case: TestSpekAction, vararg expected: String) {
         val list = arrayListOf<String>()
         executeSpek(case, TestLogger(list))
-        if (expected.size == 0) return
+        if (expected.size() == 0) return
         val actualDump = list.map { it + "\n" }.fold("") { r, i -> r + i }
         val expectedLog = expected
                 .flatMap { it
                     .trim()
-                    .split("[\r\n]+")
+                    .split("[\r\n]+".toRegex())
                     .map { it.trim() }
-                    .filter { it.length > 0 }
-        } . filter { it.length > 0 }  . toList()
+                    .filter { it.length() > 0 }
+        } . filter { it.length() > 0 }  . toList()
 
         Assert.assertEquals(
                 actualDump,

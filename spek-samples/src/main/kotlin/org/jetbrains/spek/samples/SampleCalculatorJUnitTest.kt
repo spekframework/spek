@@ -5,7 +5,8 @@ import org.jetbrains.spek.junit.*
 import org.jetbrains.spek.api.*
 import org.jetbrains.spek.samples.SampleCalculator
 
-class CalculatorJUnitSpecs: org.jetbrains.spek.api.Spek() {{
+class CalculatorJUnitSpecs: org.jetbrains.spek.api.Spek() {
+    init {
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {

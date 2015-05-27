@@ -6,9 +6,7 @@ public fun <T : Annotation> getAnnotation(element: AnnotatedElement, clazz: Clas
     //Dirty workaround for KT-3534
     if (!javaClass<Annotation>().isAssignableFrom(clazz))
         throw RuntimeException("$clazz must be an annotation")
-    val annotation = element.getAnnotation(clazz)
-    if (annotation == null)
-        return null
+    val annotation = element.getAnnotation(clazz) ?: return null
     return clazz.cast(annotation)
 }
 

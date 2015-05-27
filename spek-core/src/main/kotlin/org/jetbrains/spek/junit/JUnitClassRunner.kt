@@ -9,7 +9,7 @@ import org.jetbrains.spek.*
 import org.jetbrains.spek.api.*
 
 data class JUnitUniqueId(val id: Int) : Serializable {
-    class object {
+    companion object {
         var id = 0
         fun next() = JUnitUniqueId(id++)
     }
@@ -97,7 +97,7 @@ public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: Te
 
     protected override fun runChild(child: JUnitOnRunner<T>?, notifier: RunNotifier?) {
         junitAction(describeChild(child)!!, notifier!!) {
-            child!!.run(notifier!!)
+            child!!.run(notifier)
         }
     }
 }
@@ -123,7 +123,7 @@ public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunne
 
     protected override fun runChild(child: JUnitGivenRunner<T>?, notifier: RunNotifier?) {
         junitAction(describeChild(child)!!, notifier!!) {
-            child!!.run(notifier!!)
+            child!!.run(notifier)
         }
     }
 }

@@ -3,7 +3,8 @@ package org.jetbrains.spek.samples
 import org.jetbrains.spek.api.Spek
 
 
-class TimingSpecification: Spek() {{
+class TimingSpecification: Spek() {
+    init {
 
     given("something") {
         beforeOn({println("beforeOn")})

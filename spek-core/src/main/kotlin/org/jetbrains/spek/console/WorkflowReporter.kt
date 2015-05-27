@@ -1,6 +1,6 @@
 package org.jetbrains.spek.console
 
-public trait WorkflowReporter {
+public interface WorkflowReporter {
     public fun spek(spek: String): ActionStatusReporter
     public fun given(spek: String, given: String): ActionStatusReporter
     public fun on(spek: String, given: String, on: String): ActionStatusReporter

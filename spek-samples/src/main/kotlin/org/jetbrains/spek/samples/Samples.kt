@@ -11,7 +11,8 @@ class SampleIncUtil {
     fun incValueBy(value: Int, inc: Int) = value + inc
 }
 
-class ba: Spek() { {
+class ba: Spek() {
+    init {
 
     given("abc") {
         beforeOn { println("before") }

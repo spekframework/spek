@@ -2,7 +2,8 @@ package org.jetbrains.spek.samples
 
 import org.jetbrains.spek.api.*
 
-class IncUtilJUnitSpecs: Spek() {{
+class IncUtilJUnitSpecs: Spek() {
+    init {
     given("an inc util") {
 
         val incUtil = SampleIncUtil()

@@ -17,6 +17,6 @@ public class RunSamplesInJUnitTest {
     }
 
     test fun try_console() {
-        main(array(".", "org.jetbrains.spek.samples", "-f", "text"))
+        main(arrayOf(".", "org.jetbrains.spek.samples", "-f", "text"))
     }
 }

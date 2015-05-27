@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.jetbrains.spek.junit.*
 import org.jetbrains.spek.api.*
 
-RunWith(javaClass<JUnitClassRunner<*>>())
+RunWith(JUnitClassRunner::class)
 public abstract class Spek : org.jetbrains.spek.api.Specification {
 
     private val recordedActions = linkedListOf<org.jetbrains.spek.api.TestGivenAction>()

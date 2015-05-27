@@ -2,10 +2,12 @@
   <library name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:0.1-SNAPSHOT">
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/0.1-SNAPSHOT/8cebbdc10724b0c4b5d30806f2f5aa4e609823b2/kotlin-stdlib-0.1-SNAPSHOT.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/0.1-SNAPSHOT/42a6914bfc94f4bd6d777dc3f131d5dd33f613c5/kotlin-stdlib-0.1-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/0.1-SNAPSHOT/b7eb4a567c4dff8830d070b860ab9ba49cc4ff18/kotlin-stdlib-0.1-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/0.1-SNAPSHOT/486afd3067cf766b805d459efc7b8e663981de78/kotlin-stdlib-0.1-SNAPSHOT-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
