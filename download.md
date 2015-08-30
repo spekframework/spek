@@ -20,21 +20,21 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 
 | Artifact Version | Github Branch | Kotlin Version |
 | ---------------- | ------------- | -------------- |
-| [0.106](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.106) | 0.1.m6.2 | M6.2 |
-| [0.122](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.122) | 0.1.m7 | M7 |
-| [0.127](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.127) | 0.1.m8 | M8 |
-| [0.142](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.142) | 0.1.m9 | M9 | 
-| [0.145](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.142) | 0.1.m10 | M10 | 
-| [0.164](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.164) | 0.1.m12 | M12 0.12.200 | 
-| [0.166](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.165) | 0.1.m12.213 | M12 0.12.213| |[0.1-SNAPSHOT](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1-SNAPSHOT) | master | Kotlin Snapshot |
+| [0.1.106](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.106) | 0.1.m6.2 | M6.2 |
+| [0.1.122](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.122) | 0.1.m7 | M7 |
+| [0.1.127](http://repository.jetbrains.com/simple/spek/org/spek/spek/0.1.127) | 0.1.m8 | M8 |
+| [0.1.142](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.142) | 0.1.m9 | M9 | 
+| [0.1.145](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.145) | 0.1.m10 | M10 | 
+| [0.1.164](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.164) | 0.1.m12 | M12 0.12.200 | 
+| [0.1.165](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.165) | 0.1.m12.213 | M12 0.12.213| |[0.1-SNAPSHOT](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1-SNAPSHOT) | master | Kotlin Snapshot |
 
 ### Maven and Gradle
 
 Spek has not been released yet and as such is not made available on Maven Central. However you can download it from the [JetBrains Artifactory](http://repository.jetbrains.com).
 
-*Versions 0.106 to 0.127*
+*Versions 0.1.106 to 0.1.127*
 
-This is only applicable to version 0.106 through to 0.127. For Snapshot and higher versions, see below. 
+This is only applicable to version 0.1.106 through to 0.1.127. For Snapshot and higher versions, see below. 
 
 To use it in Maven insert the following in your pom.xml file:
 
@@ -76,7 +76,7 @@ dependencies {
 {% endhighlight %}
 
 
-*Versions after 0.127 and 0.1-SNAPSHOT*
+*Versions after 0.1.127 and 0.1-SNAPSHOT*
 
 Spek has moved packages to org.jetbrains.spek. As such, the Maven/Gradle packages have changed:
 
