@@ -1,11 +1,9 @@
 package org.jetbrains.spek.api
 
 import org.junit.Test as test
-import kotlin.test.*
-import org.junit.*
 
 public class SkipTest : IntegrationTestCase() {
-    test fun skipIt() =
+    @test fun skipIt() =
             runTest(data {
                 given("a situation") {
                     on("an event") {
@@ -29,7 +27,7 @@ public class SkipTest : IntegrationTestCase() {
                 SPEK: 42 FINISH""")
 
 
-    test fun skipOn() =
+    @test fun skipOn() =
             runTest(data {
                 given("a situation") {
                     on("an event") {
@@ -56,7 +54,7 @@ public class SkipTest : IntegrationTestCase() {
                 SPEK: 42 FINISH""")
 
 
-    test fun skipGiven() =
+    @test fun skipGiven() =
             runTest(data {
                 given("a situation") {
                     skip("for some reason")
@@ -77,7 +75,7 @@ public class SkipTest : IntegrationTestCase() {
                 SPEK: 42 GIVEN: given a situation FINISH
                 SPEK: 42 FINISH""")
 
-    test fun pendingIt() =
+    @test fun pendingIt() =
             runTest(data {
                 given("a situation") {
                     on("an event") {
@@ -103,7 +101,7 @@ public class SkipTest : IntegrationTestCase() {
                 SPEK: 42 FINISH""")
 
 
-    test fun pendingOn() =
+    @test fun pendingOn() =
             runTest(data {
                 given("a situation") {
                     //default pending.
@@ -125,7 +123,7 @@ public class SkipTest : IntegrationTestCase() {
                 SPEK: 42 FINISH""")
 
 
-    test fun pendingGiven() =
+    @test fun pendingGiven() =
             runTest(data {
                 given("a situation") {
                     pending("for some reason")

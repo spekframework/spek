@@ -1,11 +1,9 @@
 package org.jetbrains.spek.api
 
-import kotlin.test.*
-import org.jetbrains.spek.api.*
-import org.junit.*
-import org.jetbrains.spek.console.executeSpek
-import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.ActionStatusReporter
+import org.jetbrains.spek.console.WorkflowReporter
+import org.jetbrains.spek.console.executeSpek
+import org.junit.Assert
 
 public open class IntegrationTestCase {
 

@@ -7,10 +7,10 @@ import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.executeWithReporting
 
 public class UtilTest {
-    val listener = Mockito.mock(javaClass<ActionStatusReporter>())!!
-    val action = Mockito.mock(javaClass<ActionStatusReporter>())!!
+    val listener = Mockito.mock(ActionStatusReporter::class.java)!!
+    val action = Mockito.mock(ActionStatusReporter::class.java)!!
 
-    test fun successfulSafeExecution() {
+    @test fun successfulSafeExecution() {
         //given an action and a listener
         var verification = false
 
@@ -28,7 +28,7 @@ public class UtilTest {
         Mockito.verifyNoMoreInteractions(listener)
     }
 
-    test fun failedSafeExecution() {
+    @test fun failedSafeExecution() {
         //given an action and a listener
        //when safeExecution finished with an error (exception).
         val throwable = RuntimeException("an exception")

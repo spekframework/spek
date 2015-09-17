@@ -1,11 +1,9 @@
 package org.jetbrains.spek.api
 
 import org.junit.Test as test
-import kotlin.test.*
-import org.junit.*
 
 public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
-    test fun inc() = runTest(data{
+    @test fun inc() = runTest(data{
         class SampleIncUtil {
             fun incValueBy(value: Int, inc: Int) = value + inc
         }
@@ -28,7 +26,7 @@ public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
         SPEK: 42 GIVEN: given an inc util FINISH
         SPEK: 42 FINISH""")
 
-    test fun calculate() = runTest(data{
+    @test fun calculate() = runTest(data{
             class SampleCalculator {
                 fun sum(x: Int, y: Int) = x + y
                 fun subtract(x: Int, y: Int) = x - y

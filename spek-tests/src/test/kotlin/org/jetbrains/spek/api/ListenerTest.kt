@@ -1,30 +1,30 @@
 package org.jetbrains.spek.api
 
 import org.junit.Test as test
+import org.junit.Before as before
 import org.mockito.*
-import kotlin.test.*
 import org.junit.*
 import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.CompositeWorkflowReporter
 
 public class ListenerTest {
-    val firstStepListener = Mockito.mock(javaClass<ActionStatusReporter>())
-    val firstListener = Mockito.mock(javaClass<WorkflowReporter>())!!
+    val firstStepListener = Mockito.mock(ActionStatusReporter::class.java)
+    val firstListener = Mockito.mock(WorkflowReporter::class.java)!!
 
-    val secondStepListener = Mockito.mock(javaClass<ActionStatusReporter>())
-    val secondListener = Mockito.mock(javaClass<WorkflowReporter>())!!
+    val secondStepListener = Mockito.mock(ActionStatusReporter::class.java)
+    val secondListener = Mockito.mock(WorkflowReporter::class.java)!!
 
     val throwable = RuntimeException("Test Exception")
 
     val multicaster = CompositeWorkflowReporter()
 
-    Before fun setup() {
+    @before fun setup() {
         multicaster.addListener(firstListener)
         multicaster.addListener(secondListener)
     }
 
-    test fun givenExecution() {
+    @test fun givenExecution() {
         //given two listener with following conditions.
         BDDMockito.given(firstListener.given("Spek", "Test"))!!.willReturn(firstStepListener)
         BDDMockito.given(secondListener.given("Spek", "Test"))!!.willReturn(secondStepListener)
@@ -49,7 +49,7 @@ public class ListenerTest {
         Mockito.verify(secondStepListener)!!.failed(throwable)
     }
 
-    test fun onExecution() {
+    @test fun onExecution() {
         //given two listener with following conditions.
         BDDMockito.given(firstListener.on("Spek", "Test", "Test"))!!.willReturn(firstStepListener)
         BDDMockito.given(secondListener.on("Spek", "Test", "Test"))!!.willReturn(secondStepListener)
@@ -74,7 +74,7 @@ public class ListenerTest {
         Mockito.verify(secondStepListener)!!.failed(throwable)
     }
 
-    test fun itExecution() {
+    @test fun itExecution() {
         //given two listener with following conditions.
         BDDMockito.given(firstListener.it("Spek", "Test", "Test", "Test"))!!.willReturn(firstStepListener)
         BDDMockito.given(secondListener.it("Spek", "Test", "Test", "Test"))!!.willReturn(secondStepListener)
