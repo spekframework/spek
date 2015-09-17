@@ -1,14 +1,13 @@
 package org.jetbrains.spek.console
 
-import org.junit.Test as test
-import kotlin.test.assertTrue
 import org.mockito.Mockito
+import org.junit.Test as test
 
 public class TextListenerTest {
-    val device = Mockito.mock(javaClass<OutputDevice>())!!
+    val device = Mockito.mock(OutputDevice::class.java)!!
     val textListener = OutputDeviceWorkflowReporter(device)
 
-    test fun given() {
+    @test fun given() {
         //given a text listener and a step listener that is bound to it.
         val listener = textListener.given("Spek", "A Given")
 
@@ -28,7 +27,7 @@ public class TextListenerTest {
         Mockito.verify(device)!!.output("  Failed: java.lang.RuntimeException")
     }
 
-    test fun on() {
+    @test fun on() {
         //given a text listener and a step listener that is bound to it.
         val listener = textListener.on("Spek", "A Given", "An On")
 
@@ -43,7 +42,7 @@ public class TextListenerTest {
         Mockito.verify(device)!!.output("    Failed: java.lang.RuntimeException")
     }
 
-    test fun it() {
+    @test fun it() {
         //given a text listener and a step listener that is bound to it.
         val listener = textListener.it("Spek", "A Given", "An On", "An It")
 

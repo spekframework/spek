@@ -6,7 +6,7 @@ import org.jetbrains.spek.api.IntegrationTestCase.Data
 
 public class OnBeforeAfterTest : IntegrationTestCase() {
 
-    test public fun callOnBefore() {
+    @test public fun callOnBefore() {
         val log = arrayListOf<String>()
         runTest(object: Data() {
             init {
@@ -22,7 +22,7 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
         assertEquals(arrayListOf("before", "on"), log)
     }
 
-    test public fun callOnAfter() {
+    @test public fun callOnAfter() {
         val log = arrayListOf<String>()
         runTest(object: Data() {
             init {
@@ -38,7 +38,7 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
         assertEquals(arrayListOf("on", "after"), log)
     }
 
-    test public fun callOnBeforeAndOnAfter() {
+    @test public fun callOnBeforeAndOnAfter() {
         val log = arrayListOf<String>()
         runTest(object : Data() {
             init {

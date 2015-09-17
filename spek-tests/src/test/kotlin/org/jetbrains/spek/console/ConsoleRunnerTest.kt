@@ -4,10 +4,10 @@ import org.junit.Test as test
 import kotlin.test.assertEquals
 
 public class ConsoleRunnerTest {
-    test fun getEmptyOptions() {
+    @test fun getEmptyOptions() {
         //given an empty array
         //when we call getOptions
-        val options = getOptions(array())
+        val options = getOptions(arrayOf<String>())
         //then
         assertEquals(listOf<String>(), options.paths)
         assertEquals("", options.packageName)
@@ -16,10 +16,10 @@ public class ConsoleRunnerTest {
         assertEquals("text", options.format)
     }
 
-    test fun getNonEmptyOptions() {
+    @test fun getNonEmptyOptions() {
         //given an empty array
         //when we call getOptions
-        val options = getOptions(array("paths", "my.package", "-f", "text", "--output", "file.txt", "--css", "css.css"))
+        val options = getOptions(arrayOf("paths", "my.package", "-f", "text", "--output", "file.txt", "--css", "css.css"))
         //then
         assertEquals(listOf("paths"), options.paths)
         assertEquals("my.package", options.packageName)

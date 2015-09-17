@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import org.jetbrains.spek.api.Spek
 
 public class APITest {
-    test fun allGivens() {
+    @test fun allGivens() {
         //given a spek
         val spek = object : Spek() {}
 
