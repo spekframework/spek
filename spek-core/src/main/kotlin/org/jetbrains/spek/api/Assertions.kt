@@ -15,7 +15,7 @@ public fun It.shouldBeNull<T>(actual: T) : Unit {
 }
 
 public fun It.shouldNotBeNull<T>(actual: T) : Unit {
-    assertNotNull(actual)
+    assertNull(actual, "")
 }
 
 public fun It.shouldBeTrue<T>(actual: T) : Unit {

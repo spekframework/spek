@@ -9,14 +9,14 @@ import org.jetbrains.spek.console.main
 
 
 public class RunSamplesInJUnitTest {
-    test fun try_junit() {
+    @test fun try_junit() {
         with(JUnitCore()) {
             addListener(TextListener(RealSystem()))
             run(javaClass<IncUtilJUnitSpecs>(), javaClass<CalculatorJUnitSpecs>())
         }
     }
 
-    test fun try_console() {
+    @test fun try_console() {
         main(arrayOf(".", "org.jetbrains.spek.samples", "-f", "text"))
     }
 }
