@@ -1,10 +1,8 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.api.*
-import org.jetbrains.spek.samples.SampleCalculator
+import org.jetbrains.spek.api.shouldEqual
 
-class CalculatorConsoleSpecs: org.jetbrains.spek.api.Spek() {
-    init {
+class CalculatorConsoleSpecs: org.jetbrains.spek.api.Spek({
     given("a calculator") {
         val calculator = SampleCalculator()
         on("calling sum with two numbers") {
@@ -28,6 +26,5 @@ class CalculatorConsoleSpecs: org.jetbrains.spek.api.Spek() {
             }
         }
     }
-}
-}
+})
 
