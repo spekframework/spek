@@ -4,8 +4,8 @@ title: Spek - Download
 ---
 
 **Build Status**:
-<a href="http://teamcity.jetbrains.com/viewType.html?buildTypeId=TeamCityPluginsByJetBrains_TeamcityRunDeck_Build">
-<img src="http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:TeamCityPluginsByJetBrains_TeamcityRunDeck_Build)/statusIcon"/>
+<a href="http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests">
+<img src="http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Spek_BuildAndTests)/statusIcon"/>
 </a>
 
 ### Source Code
