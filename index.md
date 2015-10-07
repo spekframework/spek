@@ -31,7 +31,7 @@ This code suffers from several issues. Under what **conditions** is the tax rate
 Spek makes it easy to define these three important aspects without resorting to long method names or underscores:
 
 {% highlight kotlin %}
-class TaxCalculatorSpecs: Spek() {{ "{{" }}
+class TaxCalculatorSpecs: Spek() {{ "{ init {" }}
 
     given("Tax rate calculator with default locale settings") {
         val taxRateCalculator = TaxRateCalculator()
