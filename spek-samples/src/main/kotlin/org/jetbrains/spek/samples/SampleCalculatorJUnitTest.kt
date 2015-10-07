@@ -24,7 +24,7 @@ class CalculatorJUnitSpecs: org.jetbrains.spek.api.Spek() {
         on("calling substract with two numbers") {
             val subtract = calculator.subtract(4, 2)
 
-            it("should return the result of substracting the second number from the first number") {
+            it("should return the result of subtracting the second number from the first number") {
                 shouldEqual(2, subtract)
             }
         }

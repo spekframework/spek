@@ -57,7 +57,7 @@ public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestG
 
     protected override fun describeChild(child: TestItAction?): Description? {
         return childrenDescriptions.getOrPut(child!!.description(), {
-            Description.createSuiteDescription(child.description(), JUnitUniqueId.next())!!
+            Description.createSuiteDescription("${child.description()} (${on.description()})", JUnitUniqueId.next())!!
         })
     }
 

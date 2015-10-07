@@ -16,8 +16,16 @@
             <option value="$PROJECT_DIR$/spek-tests" />
           </set>
         </option>
+        <option name="myModules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/spek-core" />
+            <option value="$PROJECT_DIR$/spek-dist" />
+            <option value="$PROJECT_DIR$/spek-samples" />
+            <option value="$PROJECT_DIR$/spek-tests" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>
 </project>
-

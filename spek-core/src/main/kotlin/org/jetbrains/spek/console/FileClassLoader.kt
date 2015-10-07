@@ -64,7 +64,7 @@ public fun findClassesInUrls(urls: List<URL>, packageName: String): List<String>
 public fun findSpecs(paths: List<String>, packageName: String): MutableList<TestSpekAction> {
     val result = arrayListOf<TestSpekAction>()
     val urls = getUrlsForPaths(paths)
-    val classloader = URLClassLoader.newInstance(urls.copyToArray())!!
+    val classloader = URLClassLoader.newInstance(urls.toTypedArray())!!
     urls.forEach {
         val classes = findClassesInUrls(urls, packageName)
         classes.forEach {
