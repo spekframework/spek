@@ -2,8 +2,7 @@
 
 ### Master Branch (0.1-SNAPSHOT)
 
-Always contains the active development including new features and bug fixes. Master always works with latest
-snapshot version of Kotlin (0.1-SNAPSHOT). Artifact version is 0.1-SNAPSHOT
+Master branch corresponds to 1.0.0-beta-1038
 
 ### 0.1.x Releases
 
