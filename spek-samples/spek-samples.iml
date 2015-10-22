@@ -19,8 +19,8 @@
     <orderEntry type="module" module-name="spek-core" exported="" />
     <orderEntry type="library" exported="" name="Gradle: junit:junit:4.11" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:0.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:0.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-1038" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:1.0.0-beta-1038" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.jetbrains.kotlin:kotlin-reflect:1.0.0-beta-1038" level="project" />
   </component>
 </module>
