@@ -7,7 +7,7 @@ public class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowRe
                 device.output(spek)
             }
             override fun failed(error: Throwable) {
-                device.output("Failed: " + error.getMessage() + " " + error)
+                device.output("Failed: " + error.message + " " + error)
                 device.output("")
             }
             override fun skipped(why: String) {

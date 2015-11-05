@@ -1,7 +1,5 @@
 package org.jetbrains.spek.api
 
-import org.jetbrains.spek.api.*
-
 open class OnImpl: On {
     private val recordedActions = linkedListOf<TestItAction>()
 

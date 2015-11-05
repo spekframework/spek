@@ -12,7 +12,7 @@ public class RunSamplesInJUnitTest {
     @test fun try_junit() {
         with(JUnitCore()) {
             addListener(TextListener(RealSystem()))
-            run(javaClass<IncUtilJUnitSpecs>(), javaClass<CalculatorJUnitSpecs>())
+            run(IncUtilJUnitSpecs::class.java, CalculatorJUnitSpecs::class.java)
         }
     }
 

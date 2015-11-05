@@ -20,12 +20,12 @@ open class GivenImpl: org.jetbrains.spek.api.Given {
         }
     }
 
-    public override fun beforeOn(codeBlock: () -> Unit) {
-        beforeActions.add(codeBlock)
+    public override fun beforeOn(it: () -> Unit) {
+        beforeActions.add(it)
     }
 
-    public override fun afterOn(codeBlock: () -> Unit) {
-        afterActions.add(codeBlock)
+    public override fun afterOn(it: () -> Unit) {
+        afterActions.add(it)
     }
 
     public override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {

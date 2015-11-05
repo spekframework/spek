@@ -10,15 +10,15 @@ public open class IntegrationTestCase {
     fun runTest(case: TestSpekAction, vararg expected: String) {
         val list = arrayListOf<String>()
         executeSpek(case, TestLogger(list))
-        if (expected.size() == 0) return
+        if (expected.size == 0) return
         val actualDump = list.map { it + "\n" }.fold("") { r, i -> r + i }
         val expectedLog = expected
                 .flatMap { it
                     .trim()
                     .split("[\r\n]+".toRegex())
                     .map { it.trim() }
-                    .filter { it.length() > 0 }
-        } . filter { it.length() > 0 }  . toList()
+                    .filter { it.length > 0 }
+        } . filter { it.length > 0 }  . toList()
 
         Assert.assertEquals(
                 actualDump,
@@ -40,19 +40,19 @@ public open class IntegrationTestCase {
     public class TestLogger(val output: MutableList<String>): WorkflowReporter {
         private fun step(prefix:String) : ActionStatusReporter = object : ActionStatusReporter {
             override fun started() {
-                output add prefix + " START"
+                output.add(prefix + " START")
             }
             override fun completed() {
-                output add prefix + " FINISH"
+                output.add(prefix + " FINISH")
             }
             override fun skipped(why: String) {
-                output add prefix + " SKIP:" + why
+                output.add(prefix + " SKIP:" + why)
             }
             override fun pending(why: String) {
-                output add prefix + " PEND:" + why
+                output.add(prefix + " PEND:" + why)
             }
             override fun failed(error: Throwable) {
-                output add prefix + " FAIL:" + error.getMessage()
+                output.add(prefix + " FAIL:" + error.message)
             }
         }
 

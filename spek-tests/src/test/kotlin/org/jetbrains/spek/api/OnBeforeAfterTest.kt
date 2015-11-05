@@ -11,10 +11,10 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
         runTest(object: Data() {
             init {
             given("a") {
-                beforeOn { log add "before"}
+                beforeOn { log.add("before")}
                 on("1") {
                     it("ddd") {}
-                    log add ("on")
+                    log.add("on")
                 }
 
             }
@@ -27,10 +27,10 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
         runTest(object: Data() {
             init {
             given("a") {
-                afterOn { log add "after"}
+                afterOn { log.add("after")}
                 on("1") {
                     it("ddd") {}
-                    log add ("on")
+                    log.add("on")
                 }
 
             }
@@ -43,14 +43,14 @@ public class OnBeforeAfterTest : IntegrationTestCase() {
         runTest(object : Data() {
             init {
             given("a") {
-                beforeOn { log add "before"  }
-                afterOn { log add "after"  }
+                beforeOn { log.add("before")  }
+                afterOn { log.add("after")  }
 
                 on("1") {
                     it("ddd") {}
-                    log add "on"
+                    log.add("on")
                 }
-                on("2") { it("zzz") { log add "it"; fail("rrr") } }
+                on("2") { it("zzz") { log.add("it"); fail("rrr") } }
             }
         }})
 
