@@ -9,7 +9,7 @@ public class Runner(val listener: WorkflowReporter) {
     }
 
     private fun run(classes: List<TestSpekAction>) {
-        classes forEach {
+        classes.forEach {
             executeSpek(it, listener)
         }
     }

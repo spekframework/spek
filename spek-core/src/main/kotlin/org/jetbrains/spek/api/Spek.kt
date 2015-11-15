@@ -1,8 +1,7 @@
 package org.jetbrains.spek.api
 
-import org.junit.runner.RunWith
 import org.jetbrains.spek.junit.*
-import org.jetbrains.spek.api.*
+import org.junit.runner.*
 
 @RunWith(JUnitClassRunner::class)
 public abstract class Spek : org.jetbrains.spek.api.Specification {

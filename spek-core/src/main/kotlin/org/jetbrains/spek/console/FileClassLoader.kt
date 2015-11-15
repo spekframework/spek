@@ -1,14 +1,10 @@
 package org.jetbrains.spek.console
 
-import java.lang.reflect.*
-import java.io.File
-import java.net.URLClassLoader
-import java.net.URL
-import java.util.ArrayList
-import java.net.URLDecoder
-import java.util.jar.JarFile
-import java.net.URI
 import org.jetbrains.spek.api.*
+import java.io.*
+import java.lang.reflect.*
+import java.net.*
+import java.util.jar.*
 
 
 public fun getUrlsForPaths(paths: List<String>): List<URL> {
@@ -39,8 +35,8 @@ public fun findClassesInUrls(urls: List<URL>, packageName: String): List<String>
             var jarEntries = jarFile.entries()
             while (jarEntries.hasMoreElements())  {
                 var entryName = jarEntries.nextElement().getName()
-                if (entryName.startsWith(packageName) && entryName.length()>packageName.length()+5) {
-                    entryName = entryName.substring(packageName.length(),entryName.lastIndexOf('.'))
+                if (entryName.startsWith(packageName) && entryName.length > packageName.length +5) {
+                    entryName = entryName.substring(packageName.length,entryName.lastIndexOf('.'))
                     names.add(entryName)
                 }
             }
@@ -69,7 +65,8 @@ public fun findSpecs(paths: List<String>, packageName: String): MutableList<Test
         val classes = findClassesInUrls(urls, packageName)
         classes.forEach {
             val loadedClass = classloader.loadClass(packageName + "." + it)
-            if (javaClass<Spek>().isAssignableFrom(loadedClass!!)) {
+            if (Spek::class.java.isAssignableFrom(loadedClass!!)) {
+                @Suppress("UNCHECKED_CAST")
                 result.add(ClassSpek(loadedClass as Class<Spek>))
             }
         }
@@ -79,10 +76,7 @@ public fun findSpecs(paths: List<String>, packageName: String): MutableList<Test
 
 
 private fun AnnotatedElement.checkSkipped() {
-    /*
-    * TODO: need to be refactored when #KT-3534, KT-3534 get fixed.
-    */
-    val skip = getAnnotation(this, javaClass<ignored>())
+    val skip = getAnnotation(ignored::class.java)
     if (skip != null) throw SkippedException(skip.why)
 }
 

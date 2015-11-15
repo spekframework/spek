@@ -38,14 +38,14 @@ public class CompositeActionStatusReporter(val reporters: List<ActionStatusRepor
     }
 }
 
-public fun executeWithReporting<T>(t: T, reporter: ActionStatusReporter, action: T.() -> Unit) {
+public fun <T> executeWithReporting(t: T, reporter: ActionStatusReporter, action: T.() -> Unit) {
     reporter.started()
     try {
         t.action()
     } catch(e: SkippedException) {
-        reporter.skipped(e.getMessage()!!)
+        reporter.skipped(e.message!!)
     } catch(e: PendingException) {
-        reporter.pending(e.getMessage()!!)
+        reporter.pending(e.message!!)
     } catch(e: Throwable) {
         reporter.failed(e)
     } finally {

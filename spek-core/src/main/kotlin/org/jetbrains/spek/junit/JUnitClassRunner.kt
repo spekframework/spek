@@ -16,7 +16,7 @@ data class JUnitUniqueId(val id: Int) : Serializable {
 }
 
 public fun junitAction(description: Description, notifier: RunNotifier, action: () -> Unit) {
-    if (description.isTest()) notifier.fireTestStarted(description)
+    if (description.isTest) notifier.fireTestStarted(description)
     try {
         action()
     } catch(e: SkippedException) {
@@ -26,13 +26,13 @@ public fun junitAction(description: Description, notifier: RunNotifier, action: 
     } catch(e: Throwable) {
         notifier.fireTestFailure(Failure(description, e))
     } finally {
-        if (description.isTest()) notifier.fireTestFinished(description)
+        if (description.isTest) notifier.fireTestFinished(description)
     }
 }
 
 public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction, val on: TestOnAction) : ParentRunner<TestItAction>(specificationClass) {
 
-    val _children by Delegates.lazy {
+    val _children by lazy(LazyThreadSafetyMode.NONE) {
         val result = arrayListOf<TestItAction>()
         try {
             on.iterateIt { result.add(it) }
@@ -42,9 +42,9 @@ public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestG
         result
     }
 
-    val _description by Delegates.lazy {
+    val _description by lazy(LazyThreadSafetyMode.NONE) {
         val desc = Description.createSuiteDescription(on.description(), JUnitUniqueId.next())!!
-        for (item in getChildren()) {
+        for (item in children) {
             desc.addChild(describeChild(item))
         }
         desc
@@ -70,7 +70,7 @@ public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestG
 
 public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction) : ParentRunner<JUnitOnRunner<T>>(specificationClass) {
 
-    val _children by Delegates.lazy {
+    val _children by lazy(LazyThreadSafetyMode.NONE) {
         val result = arrayListOf<JUnitOnRunner<T>>()
         try {
             given.iterateOn { result.add(JUnitOnRunner(specificationClass, given, it)) }
@@ -80,9 +80,9 @@ public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: Te
         result
     }
 
-    val _description by Delegates.lazy {
+    val _description by lazy(LazyThreadSafetyMode.NONE) {
         val desc = Description.createSuiteDescription(given.description(), JUnitUniqueId.next())!!
-        for (item in getChildren()) {
+        for (item in children) {
             desc.addChild(describeChild(item))
         }
         desc
@@ -92,7 +92,7 @@ public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: Te
     override fun getDescription(): Description? = _description
 
     protected override fun describeChild(child: JUnitOnRunner<T>?): Description? {
-        return child?.getDescription()
+        return child?.description
     }
 
     protected override fun runChild(child: JUnitOnRunner<T>?, notifier: RunNotifier?) {
@@ -107,8 +107,8 @@ public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunne
 
     override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children
 
-    val _children by Delegates.lazy {
-        if (javaClass<Spek>().isAssignableFrom(specificationClass) && !specificationClass.isLocalClass()) {
+    val _children by lazy(LazyThreadSafetyMode.NONE) {
+        if (Spek::class.java.isAssignableFrom(specificationClass) && !specificationClass.isLocalClass) {
             val spek = specificationClass.newInstance() as Spek
             val result = arrayListOf<JUnitGivenRunner<T>>()
             spek.iterateGiven { result.add(JUnitGivenRunner(specificationClass, it)) }
@@ -118,7 +118,7 @@ public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunne
     }
 
     protected override fun describeChild(child: JUnitGivenRunner<T>?): Description? {
-        return child?.getDescription()
+        return child?.description
     }
 
     protected override fun runChild(child: JUnitGivenRunner<T>?, notifier: RunNotifier?) {

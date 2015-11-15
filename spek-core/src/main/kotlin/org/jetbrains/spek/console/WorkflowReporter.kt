@@ -12,7 +12,7 @@ public class CompositeWorkflowReporter : WorkflowReporter {
     private val listeners = arrayListOf<WorkflowReporter>()
 
     public fun addListener(l: WorkflowReporter) {
-        listeners add l
+        listeners.add(l)
     }
 
     override fun spek(spek: String): ActionStatusReporter {

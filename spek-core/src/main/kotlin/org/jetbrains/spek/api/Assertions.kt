@@ -2,32 +2,32 @@ package org.jetbrains.spek.api
 
 import kotlin.test.*
 
-public fun It.shouldEqual<T>(expected: T, actual: T) : Unit {
+public fun <T> It.shouldEqual(expected: T, actual: T) : Unit {
     assertEquals(expected, actual)
 }
 
-public fun It.shouldNotEqual<T>(expected: T, actual: T) : Unit {
-    assertNot { expected == actual }
+public fun <T> It.shouldNotEqual(expected: T, actual: T) : Unit {
+    assertFalse(null) { expected == actual }
 }
 
-public fun It.shouldBeNull<T>(actual: T?) : Unit {
-    assertNull(actual, "Value is not null")
+public fun <T> It.shouldBeNull(actual: T?) : Unit {
+    assertNull(actual)
 }
 
-public fun It.shouldNotBeNull<T>(actual: T?) : Unit {
-    assertNotNull(actual as Any, "Value is null")
+public fun <T> It.shouldNotBeNull(actual: T?) : Unit {
+    assertNotNull(actual as Any, "")
 }
 
-public fun It.shouldBeTrue<T>(actual: T) : Unit {
+public fun <T> It.shouldBeTrue(actual: T) : Unit {
     assertTrue(actual == true)
 }
 
-public fun It.shouldBeFalse<T>(actual: T) : Unit {
+public fun <T> It.shouldBeFalse(actual: T) : Unit {
     assertTrue(actual == false)
 }
 
-public fun It.shouldThrow<T: Throwable>(exceptionClass: Class<T>, block: () -> Any): T {
-    return failsWith(exceptionClass, block)
+public fun <T: Throwable> It.shouldThrow(exceptionClass: Class<T>, block: () -> Unit): T {
+    return assertFailsWith(exceptionClass, block)
 }
 
 
