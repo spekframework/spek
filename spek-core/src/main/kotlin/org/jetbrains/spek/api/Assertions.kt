@@ -10,12 +10,12 @@ public fun It.shouldNotEqual<T>(expected: T, actual: T) : Unit {
     assertNot { expected == actual }
 }
 
-public fun It.shouldBeNull<T>(actual: T) : Unit {
-    assertNull(actual)
+public fun It.shouldBeNull<T>(actual: T?) : Unit {
+    assertNull(actual, "Value is not null")
 }
 
-public fun It.shouldNotBeNull<T>(actual: T) : Unit {
-    assertNull(actual, "")
+public fun It.shouldNotBeNull<T>(actual: T?) : Unit {
+    assertNotNull(actual as Any, "Value is null")
 }
 
 public fun It.shouldBeTrue<T>(actual: T) : Unit {
