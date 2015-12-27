@@ -1,6 +1,6 @@
 buildscript {
     junitVersion = '4.11'
-    kotlinVersion = '1.0.0-beta-3595'
+    kotlinVersion = '1.0.0-beta-4584'
     version = '0.1-SNAPSHOT'
     repositories {
         mavenCentral()
@@ -67,6 +67,7 @@ subprojects {
         compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
         compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
         compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
+        compile "org.jetbrains.kotlin:kotlin-test:${kotlinVersion}"
         compile junitDependency
         include_unpacked_jars junitDependency
     }
