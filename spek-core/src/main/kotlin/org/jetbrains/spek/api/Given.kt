@@ -1,6 +1,7 @@
 package org.jetbrains.spek.api
 
-import org.jetbrains.spek.api.*
+import kotlin.collections.forEach
+import kotlin.collections.linkedListOf
 
 
 open class GivenImpl: org.jetbrains.spek.api.Given {
@@ -20,13 +21,6 @@ open class GivenImpl: org.jetbrains.spek.api.Given {
         }
     }
 
-    public override fun beforeOn(it: () -> Unit) {
-        beforeActions.add(it)
-    }
-
-    public override fun afterOn(it: () -> Unit) {
-        afterActions.add(it)
-    }
 
     public override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {
         recordedActions.add(

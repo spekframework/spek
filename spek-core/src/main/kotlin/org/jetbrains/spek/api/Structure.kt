@@ -5,8 +5,6 @@ public interface Specification {
 }
 
 public interface Given {
-    public fun beforeOn(it: () -> Unit)
-    public fun afterOn(it: () -> Unit)
     public fun on(description: String, onExpression: On.() -> Unit)
 }
 

@@ -1,6 +1,7 @@
 package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.*
+import kotlin.collections.forEach
 
 
 public class Runner(val listener: WorkflowReporter) {

@@ -1,5 +1,8 @@
 package org.jetbrains.spek.console
 
+import kotlin.collections.arrayListOf
+import kotlin.collections.map
+
 public interface WorkflowReporter {
     public fun spek(spek: String): ActionStatusReporter
     public fun given(spek: String, given: String): ActionStatusReporter

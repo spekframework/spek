@@ -5,6 +5,11 @@ import java.io.*
 import java.lang.reflect.*
 import java.net.*
 import java.util.jar.*
+import kotlin.collections.arrayListOf
+import kotlin.collections.forEach
+import kotlin.collections.listOf
+import kotlin.collections.toTypedArray
+import kotlin.text.*
 
 
 public fun getUrlsForPaths(paths: List<String>): List<URL> {

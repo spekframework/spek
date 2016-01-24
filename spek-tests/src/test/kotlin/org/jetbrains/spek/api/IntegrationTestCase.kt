@@ -4,6 +4,10 @@ import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.executeSpek
 import org.junit.Assert
+import kotlin.collections.*
+import kotlin.text.split
+import kotlin.text.toRegex
+import kotlin.text.trim
 
 public open class IntegrationTestCase {
 

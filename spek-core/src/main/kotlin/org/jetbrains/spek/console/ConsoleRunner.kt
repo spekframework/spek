@@ -1,5 +1,9 @@
 package org.jetbrains.spek.console
 
+import kotlin.collections.listOf
+import kotlin.collections.toList
+import kotlin.text.split
+
 
 public fun main(args: Array<String>)  {
     if (args.size < 2) {
