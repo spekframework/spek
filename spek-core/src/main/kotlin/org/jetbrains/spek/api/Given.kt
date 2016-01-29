@@ -9,7 +9,7 @@ open class GivenImpl: org.jetbrains.spek.api.Given {
     private val beforeActions = linkedListOf<()->Unit>()
     private val afterActions = linkedListOf<()->Unit>()
 
-    public fun iterateOn(callback : (org.jetbrains.spek.api.TestOnAction) -> Unit) {
+    fun iterateOn(callback : (org.jetbrains.spek.api.TestOnAction) -> Unit) {
         org.jetbrains.spek.api.removingIterator(recordedActions) {
             // This doesn't actually work. Tests pass but tests are wrong
             beforeActions.forEach { it() }
@@ -22,11 +22,11 @@ open class GivenImpl: org.jetbrains.spek.api.Given {
     }
 
 
-    public override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {
+    override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {
         recordedActions.add(
                 object : org.jetbrains.spek.api.TestOnAction {
-                    public override fun description() = "on " + description
-                    public override fun iterateIt(it: (org.jetbrains.spek.api.TestItAction) -> Unit) {
+                    override fun description() = "on " + description
+                    override fun iterateIt(it: (org.jetbrains.spek.api.TestItAction) -> Unit) {
                         val on = org.jetbrains.spek.api.OnImpl()
                         on.onExpression()
                         return on.iterateIt(it)

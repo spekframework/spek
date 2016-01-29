@@ -1,6 +1,6 @@
 package org.jetbrains.spek.console
 
-public class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowReporter {
+class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowReporter {
     override fun spek(spek: String): ActionStatusReporter {
         return object : ActionStatusReporter {
             override fun started() {

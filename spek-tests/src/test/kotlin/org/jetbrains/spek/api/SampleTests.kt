@@ -2,7 +2,7 @@ package org.jetbrains.spek.api
 
 import org.junit.Test as test
 
-public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
+class SampleCalculatorIntegrationTest : IntegrationTestCase() {
     @test fun inc() = runTest(data{
         class SampleIncUtil {
             fun incValueBy(value: Int, inc: Int) = value + inc

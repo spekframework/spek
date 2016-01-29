@@ -6,7 +6,7 @@ import kotlin.test.*
 import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.executeWithReporting
 
-public class UtilTest {
+class UtilTest {
     val listener = Mockito.mock(ActionStatusReporter::class.java)!!
     val action = Mockito.mock(ActionStatusReporter::class.java)!!
 

@@ -5,15 +5,15 @@ import kotlin.collections.linkedListOf
 open class OnImpl: On {
     private val recordedActions = linkedListOf<TestItAction>()
 
-    public fun iterateIt(it : (TestItAction) -> Unit) {
+    fun iterateIt(it : (TestItAction) -> Unit) {
         removingIterator(recordedActions, it)
     }
 
-    public override fun it(description: String, itExpression: It.()->Unit) {
+    override fun it(description: String, itExpression: It.()->Unit) {
         recordedActions.add(
                 object : TestItAction {
-                    public override fun description() = "it " + description
-                    public override fun run() {
+                    override fun description() = "it " + description
+                    override fun run() {
                         ItImpl().itExpression()
                     }
                 })

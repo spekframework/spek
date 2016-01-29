@@ -2,7 +2,7 @@ package org.jetbrains.spek.api
 
 import org.junit.Test as test
 
-public class SkipTest : IntegrationTestCase() {
+class SkipTest : IntegrationTestCase() {
     @test fun skipIt() =
             runTest(data {
                 given("a situation") {

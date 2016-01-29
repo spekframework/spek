@@ -2,14 +2,14 @@ package org.jetbrains.spek.console
 
 import java.io.*
 
-public interface OutputDevice {
-    public fun output(message: String)
+interface OutputDevice {
+    fun output(message: String)
 }
 
-public class FileOutputDevice(filename: String) : OutputDevice, Closeable {
+class FileOutputDevice(filename: String) : OutputDevice, Closeable {
     val writer = BufferedWriter(PrintWriter(File(filename)))
 
-    public override fun close() {
+    override fun close() {
         writer.close()
     }
 
@@ -20,7 +20,7 @@ public class FileOutputDevice(filename: String) : OutputDevice, Closeable {
     }
 }
 
-public class ConsoleOutputDevice : OutputDevice {
+class ConsoleOutputDevice : OutputDevice {
     override fun output(message: String) {
         println(message)
     }

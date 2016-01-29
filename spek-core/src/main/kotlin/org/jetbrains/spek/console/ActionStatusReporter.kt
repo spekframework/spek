@@ -2,20 +2,20 @@ package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.*
 
-public interface ActionStatusReporter {
-    public fun started() {
+interface ActionStatusReporter {
+    fun started() {
     }
-    public fun completed() {
+    fun completed() {
     }
-    public fun skipped(why: String) {
+    fun skipped(why: String) {
     }
-    public fun pending(why: String) {
+    fun pending(why: String) {
     }
-    public fun failed(error: Throwable) {
+    fun failed(error: Throwable) {
     }
 }
 
-public class CompositeActionStatusReporter(val reporters: List<ActionStatusReporter>) : ActionStatusReporter {
+class CompositeActionStatusReporter(val reporters: List<ActionStatusReporter>) : ActionStatusReporter {
     override fun started() {
         for (reporter in reporters)
             reporter.started()
@@ -38,7 +38,7 @@ public class CompositeActionStatusReporter(val reporters: List<ActionStatusRepor
     }
 }
 
-public fun <T> executeWithReporting(t: T, reporter: ActionStatusReporter, action: T.() -> Unit) {
+fun <T> executeWithReporting(t: T, reporter: ActionStatusReporter, action: T.() -> Unit) {
     reporter.started()
     try {
         t.action()
