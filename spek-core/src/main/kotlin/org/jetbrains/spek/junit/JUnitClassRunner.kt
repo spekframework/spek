@@ -1,11 +1,14 @@
 package org.jetbrains.spek.junit
 
-import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.PendingException
+import org.jetbrains.spek.api.SkippedException
+import org.jetbrains.spek.api.Spek
 import org.junit.runner.Description
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunNotifier
 import org.junit.runners.ParentRunner
 import java.io.Serializable
+import java.util.*
 
 data class JUnitUniqueId(val id: Int) : Serializable {
     companion object {
@@ -14,147 +17,78 @@ data class JUnitUniqueId(val id: Int) : Serializable {
     }
 }
 
-public fun junitAction(description: Description, notifier: RunNotifier, action: () -> Unit) {
-    if (description.isTest) notifier.fireTestStarted(description)
+data class SpekResult(val successful: Boolean = false,
+                      val exception: Throwable? = null)
+
+public fun runSpek(testIdHashCode: Int, results: HashMap<Int, SpekResult>, action: () -> Unit) {
     try {
         action()
-    } catch(e: SkippedException) {
-        notifier.fireTestIgnored(description)
-    } catch(e: PendingException) {
-        notifier.fireTestIgnored(description)
+        results.put(testIdHashCode, SpekResult(successful = true))
     } catch(e: Throwable) {
-        notifier.fireTestFailure(Failure(description, e))
-    } finally {
-        if (description.isTest) notifier.fireTestFinished(description)
+        results.put(testIdHashCode, SpekResult(exception = e))
     }
 }
 
-public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction, val on: TestOnAction) : ParentRunner<TestItAction>(specificationClass) {
-
-    val _children by lazy(LazyThreadSafetyMode.NONE) {
-        val result = arrayListOf<TestItAction>()
-        try {
-            on.iterateIt { result.add(it) }
-        } catch (e: SkippedException) {
-        } catch (e: PendingException) {
+public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: HashMap<Int, SpekResult>) {
+    desc?.children?.forEach { child -> evaluateResults(child, notifier, results) }
+    desc?.apply {
+        val testId = hashCode()
+        val result = results[testId]
+        notifier?.apply {
+            if (desc.isTest) fireTestStarted(desc)
+            when (result?.exception) {
+                is SkippedException -> notifier.fireTestIgnored(desc)
+                is PendingException -> notifier.fireTestIgnored(desc)
+                is Throwable -> notifier.fireTestFailure(Failure(desc, result?.exception))
+            }
+            if (desc.isTest) fireTestFinished(desc)
         }
-        result
     }
+}
+
+public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunner<Unit>(specificationClass) {
+    private val suiteDescription = Description.createSuiteDescription(specificationClass)
+
+    val _spekRunResults: HashMap<Int, SpekResult> = HashMap()
 
     val _description by lazy(LazyThreadSafetyMode.NONE) {
-        val desc = Description.createSuiteDescription(on.description(), JUnitUniqueId.next())!!
-        for (item in children) {
-            desc.addChild(describeChild(item))
+        val suiteDesc = Description.createSuiteDescription(specificationClass)
+        val spek = specificationClass.newInstance() as Spek
+        spek.listGiven().forEach { givenSpek ->
+            val givenId = JUnitUniqueId.next()
+            val givenDesc = Description.createSuiteDescription(givenSpek.description(), givenId)
+            suiteDesc.addChild(givenDesc)
+            runSpek(givenId.hashCode(), _spekRunResults) {
+                givenSpek.listOn().forEach { onSpek ->
+                    val onId = JUnitUniqueId.next()
+                    val onDesc = Description.createSuiteDescription(onSpek.description(), onId)
+                    givenDesc.addChild(onDesc)
+                    runSpek(onId.hashCode(), _spekRunResults) {
+                        givenSpek.run {
+                            onSpek.run {
+                                onSpek.listIt().forEach { itSpek ->
+                                    val itId = JUnitUniqueId.next()
+                                    val itDesc = Description.createSuiteDescription(itSpek.description(), itId)
+                                    onDesc.addChild(itDesc)
+                                    runSpek(itId.hashCode(), _spekRunResults) { itSpek.run {} }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        desc
+        suiteDesc
     }
 
-    val childrenDescriptions = hashMapOf<String, Description>()
+    override fun getDescription(): Description = _description
 
-    override fun getChildren(): MutableList<TestItAction> = _children
-    override fun getDescription(): Description? = _description
+    override fun run(notifier: RunNotifier?) = evaluateResults(_description, notifier, _spekRunResults)
 
-    protected override fun describeChild(child: TestItAction?): Description? {
-        return childrenDescriptions.getOrPut(child!!.description(), {
-            Description.createSuiteDescription("${child.description()} (${on.description()})", JUnitUniqueId.next())!!
-        })
-    }
+    override fun getChildren(): MutableList<Unit> = ArrayList()
 
-    protected override fun runChild(child: TestItAction?, notifier: RunNotifier?) {
-        junitAction(describeChild(child)!!, notifier!!) {
-            child!!.run()
-        }
+    protected override fun describeChild(child: Unit?): Description? = null
+
+    protected override fun runChild(child: Unit?, notifier: RunNotifier?) {
     }
 }
-
-public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction) : ParentRunner<JUnitOnRunner<T>>(specificationClass) {
-
-    val _children by lazy(LazyThreadSafetyMode.NONE) {
-        val result = arrayListOf<JUnitOnRunner<T>>()
-        try {
-            given.iterateOn { result.add(JUnitOnRunner(specificationClass, given, it)) }
-        } catch (e: SkippedException) {
-        } catch (e: PendingException) {
-        }
-        result
-    }
-
-    val _description by lazy(LazyThreadSafetyMode.NONE) {
-        val desc = Description.createSuiteDescription(given.description(), JUnitUniqueId.next())!!
-        for (item in children) {
-            desc.addChild(describeChild(item))
-        }
-        desc
-    }
-
-    override fun getChildren(): MutableList<JUnitOnRunner<T>> = _children
-    override fun getDescription(): Description? = _description
-
-    protected override fun describeChild(child: JUnitOnRunner<T>?): Description? {
-        return child?.description
-    }
-
-    protected override fun runChild(child: JUnitOnRunner<T>?, notifier: RunNotifier?) {
-        junitAction(describeChild(child)!!, notifier!!) {
-            child!!.run(notifier)
-        }
-    }
-}
-
-public open class JUnitClassRunner<T>(val specClass: Class<T>, val specInstance: Spek? = null) : ParentRunner<JUnitGivenRunner<T>>(specClass) {
-
-    constructor(specClass: Class<T>) : this(specClass, null) {
-    }
-
-    private val suiteDescription = Description.createSuiteDescription(specClass)
-
-    override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children
-
-    val _spekInstance by lazy(LazyThreadSafetyMode.NONE) {
-        specInstance ?: if (Spek::class.java.isAssignableFrom(specClass) && !specClass.isLocalClass) specClass.newInstance() as Spek
-        else null
-    }
-
-    val _children by lazy(LazyThreadSafetyMode.NONE) {
-        val result = arrayListOf<JUnitGivenRunner<T>>()
-        _spekInstance?.iterateGiven { result.add(JUnitGivenRunner(specClass, it)) }
-        result
-    }
-
-    protected override fun describeChild(child: JUnitGivenRunner<T>?): Description? {
-        return child?.description
-    }
-
-    protected override fun runChild(child: JUnitGivenRunner<T>?, notifier: RunNotifier?) {
-        junitAction(describeChild(child)!!, notifier!!) {
-            child!!.run(notifier)
-        }
-    }
-}
-
-//public open class JUnitClassRunner<T>(val specClass: Class<T>, val specInstance: Spek? = null) : ParentRunner<JUnitGivenRunner<T>>(specClass) {
-//    private val suiteDescription = Description.createSuiteDescription(specClass)
-//
-//    override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children
-//
-//    val _spekInstance by lazy(LazyThreadSafetyMode.NONE) {
-//        specInstance ?: if (Spek::class.java.isAssignableFrom(specClass) && !specClass.isLocalClass) specClass.newInstance() as Spek
-//        else null
-//    }
-//
-//    val _children by lazy(LazyThreadSafetyMode.NONE) {
-//        val result = arrayListOf<JUnitGivenRunner<T>>()
-//        _spekInstance?.iterateGiven { result.add(JUnitGivenRunner(specClass, it)) }
-//        result
-//    }
-//
-//    protected override fun describeChild(child: JUnitGivenRunner<T>?): Description? {
-//        return child?.description
-//    }
-//
-//    protected override fun runChild(child: JUnitGivenRunner<T>?, notifier: RunNotifier?) {
-//        junitAction(describeChild(child)!!, notifier!!) {
-//            child!!.run(notifier)
-//        }
-//    }
-//}
