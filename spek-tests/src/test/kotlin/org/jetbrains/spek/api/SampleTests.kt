@@ -10,8 +10,7 @@ public class SampleTests {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
-    fun inc(runner: SpekTestCaseRunner) = runner.apply {
-        runTest({
+    fun inc(runner: SpekTestCaseRunner) = runner.runTest({
             class SampleIncUtil {
                 fun incValueBy(value: Int, inc: Int) = value + inc
             }
@@ -33,12 +32,10 @@ public class SampleTests {
                 on calling incValueBy with 4 and given number 6 FINISH
                 given an inc util FINISH
                 42 FINISH""")
-    }
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
-    fun calculate(runner: SpekTestCaseRunner) = runner.apply {
-        runTest({
+    fun calculate(runner: SpekTestCaseRunner) = runner.runTest({
             class SampleCalculator {
                 fun sum(x: Int, y: Int) = x + y
                 fun subtract(x: Int, y: Int) = x - y
@@ -82,7 +79,4 @@ public class SampleTests {
                 on calling substract with two numbers FINISH
                 given a calculator FINISH
                 42 FINISH""")
-    }
-
-
 }
