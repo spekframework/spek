@@ -1,32 +1,44 @@
 package org.jetbrains.spek.api
 
-import org.junit.Test as test
+import junitparams.JUnitParamsRunner
+import junitparams.Parameters
+import org.junit.Test
+import org.junit.runner.RunWith
 
-public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
-    @test fun inc() = runTest(data{
-        class SampleIncUtil {
-            fun incValueBy(value: Int, inc: Int) = value + inc
-        }
+@RunWith(JUnitParamsRunner::class)
+public class SampleCalculatorIntegrationTest {
 
-        given("an inc util") {
-            val incUtil = SampleIncUtil()
-            on("calling incValueBy with 4 and given number 6") {
-                val result = incUtil.incValueBy(4, 6)
-                it("should return 10") {
-                    shouldEqual(result, 10)
+    @Test
+    @Parameters(source = SpekTestCaseRunner::class)
+    fun inc(runner: SpekTestCaseRunner) = runner.apply {
+        runTest({
+            class SampleIncUtil {
+                fun incValueBy(value: Int, inc: Int) = value + inc
+            }
+
+            given("an inc util") {
+                val incUtil = SampleIncUtil()
+                on("calling incValueBy with 4 and given number 6") {
+                    val result = incUtil.incValueBy(4, 6)
+                    it("should return 10") {
+                        shouldEqual(result, 10)
+                    }
                 }
             }
-        }
-    }, """SPEK: 42 START
-        SPEK: 42 GIVEN: given an inc util START
-        SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 START
-        SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 IT: it should return 10 START
-        SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 IT: it should return 10 FINISH
-        SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 FINISH
-        SPEK: 42 GIVEN: given an inc util FINISH
-        SPEK: 42 FINISH""")
+        }, """SPEK: 42 START
+                SPEK: 42 GIVEN: given an inc util START
+                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 START
+                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 IT: it should return 10 START
+                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 IT: it should return 10 FINISH
+                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 FINISH
+                SPEK: 42 GIVEN: given an inc util FINISH
+                SPEK: 42 FINISH""")
+    }
 
-    @test fun calculate() = runTest(data{
+    @Test
+    @Parameters(source = SpekTestCaseRunner::class)
+    fun calculate(runner: SpekTestCaseRunner) = runner.apply {
+        runTest({
             class SampleCalculator {
                 fun sum(x: Int, y: Int) = x + y
                 fun subtract(x: Int, y: Int) = x - y
@@ -56,7 +68,7 @@ public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
                     }
                 }
             }
-        },   """SPEK: 42 START
+        }, """SPEK: 42 START
                 SPEK: 42 GIVEN: given a calculator START
                 SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers START
                 SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers IT: it should return the result of adding the first number to the second number START
@@ -70,5 +82,7 @@ public class SampleCalculatorIntegrationTest : IntegrationTestCase() {
                 SPEK: 42 GIVEN: given a calculator ON: on calling substract with two numbers FINISH
                 SPEK: 42 GIVEN: given a calculator FINISH
                 SPEK: 42 FINISH""")
+    }
+
 
 }

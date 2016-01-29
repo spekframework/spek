@@ -8,27 +8,29 @@ import org.junit.Assert
 /**
  * Created by jakub on 29/01/16.
  */
+abstract class SpekTestCaseRunner {
+
+    companion object Factory {
+        @JvmStatic fun provideTestCaseRunners() = _runners
+        val _runners: Array<Any> by lazy {
+            arrayOf<Any>(ConsoleSpekTestCaseRunner(), JUnitSpekTestCaseRunner())
+        }
+    }
+
+    abstract fun runTest(specExpr: Specification.() -> Unit, vararg expected: String)
+}
+
 public abstract class TestSpek : Spek(), TestSpekAction {
     override fun description(): String = "42"
 }
 
-class SpekTestRunnerProvider {
-    companion object Factory {
-        @JvmStatic fun provideTestRunners() = _runners
-        val _runners: Array<Any> by lazy {
-            arrayOf<Any>(ConsoleSpekTestRunner(), JUnitSpekTestRunner())
-        }
-    }
-}
-
-interface SpekTestRunner {
-    fun runTest(case: TestSpekAction, vararg expected: String)
-}
-
-class ConsoleSpekTestRunner : SpekTestRunner {
-    override fun runTest(case: TestSpekAction, vararg expected: String) {
+class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
+    override fun runTest(specExpr: Specification.() -> Unit, vararg expected: String) {
         val list = arrayListOf<String>()
-        executeSpek(case, TestLogger(list))
+
+        val spec = object: TestSpek() {}
+        spec.specExpr()
+        executeSpek(spec, TestLogger(list))
         if (expected.size == 0) return
         val actualDump = list.map { it + "\n" }.fold("") { r, i -> r + i }
         val expectedLog = expected
@@ -77,8 +79,8 @@ class ConsoleSpekTestRunner : SpekTestRunner {
     }
 }
 
-class JUnitSpekTestRunner : SpekTestRunner {
-    override fun runTest(case: TestSpekAction, vararg expected: String) {
+class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
+    override fun runTest(specExpr: Specification.() -> Unit, vararg expected: String) {
         throw UnsupportedOperationException()
     }
 }
