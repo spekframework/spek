@@ -3,6 +3,7 @@ package org.jetbrains.spek.junit
 import org.jetbrains.spek.api.PendingException
 import org.jetbrains.spek.api.SkippedException
 import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.SpekTestableComponent
 import org.junit.runner.Description
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunNotifier
@@ -30,20 +31,22 @@ public fun runSpek(testIdHashCode: Int, results: HashMap<Int, SpekResult>, actio
 }
 
 public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: HashMap<Int, SpekResult>) {
-    desc?.children?.forEach { child -> evaluateResults(child, notifier, results) }
     desc?.apply {
         val testId = hashCode()
         val result = results[testId]
         notifier?.apply {
-            if (isTest) fireTestStarted(desc)
+            // if (isTest)
+            fireTestStarted(desc)
             when (result?.exception) {
                 is SkippedException -> fireTestIgnored(desc)
                 is PendingException -> fireTestIgnored(desc)
                 is Throwable -> fireTestFailure(Failure(desc, result?.exception))
             }
-            if (isTest) fireTestFinished(desc)
+            // if (isTest)
+            fireTestFinished(desc)
         }
     }
+    desc?.children?.forEach { child -> evaluateResults(child, notifier, results) }
 }
 
 public class JUnitClassRunner<T>(val specClass: Class<T>,
@@ -52,15 +55,16 @@ public class JUnitClassRunner<T>(val specClass: Class<T>,
     constructor(specClass: Class<T>) : this(specClass, null) {
     }
 
-    private val suiteDescription = Description.createSuiteDescription(specClass)
-
     val _spekRunResults: HashMap<Int, SpekResult> = HashMap()
 
     val _description by lazy(LazyThreadSafetyMode.NONE) {
-        val suiteDesc = Description.createSuiteDescription(specClass)
-        val instance = (specInstance as? Spek) ?: (specClass.newInstance() as? Spek)
+        val specInstance = (specInstance as? Spek) ?: (specClass.newInstance() as? Spek)
+        val suiteDesc = when (specInstance) {
+            is SpekTestableComponent -> Description.createSuiteDescription(specInstance.description(), JUnitUniqueId.next())
+            else -> Description.createSuiteDescription(specClass)
+        }
         runSpek(suiteDesc.hashCode(), _spekRunResults) {
-            instance?.listGiven()?.forEach { givenSpek ->
+            specInstance?.listGiven()?.forEach { givenSpek ->
                 val givenId = JUnitUniqueId.next()
                 val givenDesc = Description.createSuiteDescription(givenSpek.description(), givenId)
                 suiteDesc.addChild(givenDesc)

@@ -9,6 +9,7 @@ import org.junit.runner.Description
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
+import java.util.*
 
 /**
  * Created by jakub on 29/01/16.
@@ -95,8 +96,6 @@ class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
         val jUnitRunner = JUnitClassRunner(spec.javaClass, spec)
         val notifier = RunNotifier()
         notifier.addFirstListener(TestJUnitRunListener(log))
-        // todo js build ordered hash map
-        // todo js call order counts!!
         jUnitRunner.run(notifier)
     }
 
