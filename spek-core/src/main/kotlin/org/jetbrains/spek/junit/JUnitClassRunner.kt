@@ -37,6 +37,7 @@ public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: 
         notifier?.apply {
             // if (isTest)
             fireTestStarted(desc)
+            children?.forEach { child -> evaluateResults(child, notifier, results) }
             when (result?.exception) {
                 is SkippedException -> fireTestIgnored(desc)
                 is PendingException -> fireTestIgnored(desc)
@@ -46,7 +47,6 @@ public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: 
             fireTestFinished(desc)
         }
     }
-    desc?.children?.forEach { child -> evaluateResults(child, notifier, results) }
 }
 
 public class JUnitClassRunner<T>(val specClass: Class<T>,
