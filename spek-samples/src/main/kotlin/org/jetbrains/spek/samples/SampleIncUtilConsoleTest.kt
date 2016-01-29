@@ -2,7 +2,7 @@ package org.jetbrains.spek.samples
 
 import org.jetbrains.spek.api.*
 
-public class IncUtilConsoleSpecs: Spek() {
+class IncUtilConsoleSpecs: Spek() {
     init {
     given("an inc util") {
 

@@ -4,8 +4,8 @@ import org.jetbrains.spek.api.*
 import kotlin.collections.forEach
 
 
-public class Runner(val listener: WorkflowReporter) {
-    public fun runSpecs(paths: List<String> , packageName: String) {
+class Runner(val listener: WorkflowReporter) {
+    fun runSpecs(paths: List<String> , packageName: String) {
         run(findSpecs(paths, packageName))
     }
 
@@ -16,7 +16,7 @@ public class Runner(val listener: WorkflowReporter) {
     }
 }
 
-public fun executeSpek(specificationClass: TestSpekAction, listener: WorkflowReporter) {
+fun executeSpek(specificationClass: TestSpekAction, listener: WorkflowReporter) {
     val spekDescription = specificationClass.description()
     executeWithReporting(specificationClass, listener.spek(spekDescription)) {
         iterateGiven { given ->

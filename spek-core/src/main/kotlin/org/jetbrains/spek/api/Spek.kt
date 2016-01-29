@@ -5,17 +5,17 @@ import org.junit.runner.*
 import kotlin.collections.linkedListOf
 
 @RunWith(JUnitClassRunner::class)
-public abstract class Spek : org.jetbrains.spek.api.Specification {
+abstract class Spek : Specification {
 
-    private val recordedActions = linkedListOf<org.jetbrains.spek.api.TestGivenAction>()
+    private val recordedActions = linkedListOf<TestGivenAction>()
 
-    public override fun given(description: String, givenExpression: org.jetbrains.spek.api.Given.() -> Unit) {
+    override fun given(description: String, givenExpression: Given.() -> Unit) {
         recordedActions.add(
-                object : org.jetbrains.spek.api.TestGivenAction {
-                    public override fun description() = "given " + description
+                object : TestGivenAction {
+                    override fun description() = "given " + description
 
-                    public override fun iterateOn(it: (org.jetbrains.spek.api.TestOnAction) -> Unit) {
-                        val given = org.jetbrains.spek.api.GivenImpl()
+                    override fun iterateOn(it: (TestOnAction) -> Unit) {
+                        val given = GivenImpl()
                         given.givenExpression()
                         given.iterateOn(it)
                     }
@@ -23,13 +23,13 @@ public abstract class Spek : org.jetbrains.spek.api.Specification {
 
     }
 
-    public fun iterateGiven(it: (org.jetbrains.spek.api.TestGivenAction) -> Unit): Unit = org.jetbrains.spek.api.removingIterator(recordedActions, it)
+    fun iterateGiven(it: (TestGivenAction) -> Unit): Unit = removingIterator(recordedActions, it)
 
-    public fun allGiven(): List<org.jetbrains.spek.api.TestGivenAction> = recordedActions
+    fun allGiven(): List<TestGivenAction> = recordedActions
 }
 
 
-public fun <T> Spek.givenData(data: Iterable<T>, givenExpression: org.jetbrains.spek.api.Given.(T) -> Unit) {
+fun <T> Spek.givenData(data: Iterable<T>, givenExpression: Given.(T) -> Unit) {
     for (entry in data) {
         given(entry.toString()) {
             givenExpression(entry)

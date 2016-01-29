@@ -1,6 +1,6 @@
 package org.jetbrains.spek.console
 
-public class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, val cssFile: String) : WorkflowReporter {
+class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, val cssFile: String) : WorkflowReporter {
     //TODO: could use markdown + js
     var css = ""
 

@@ -8,7 +8,7 @@ import org.junit.internal.TextListener
 import org.jetbrains.spek.console.main
 
 
-public class RunSamplesInJUnitTest {
+class RunSamplesInJUnitTest {
     @test fun try_junit() {
         with(JUnitCore()) {
             addListener(TextListener(RealSystem()))

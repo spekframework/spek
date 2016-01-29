@@ -17,7 +17,7 @@ data class JUnitUniqueId(val id: Int) : Serializable {
     }
 }
 
-public fun junitAction(description: Description, notifier: RunNotifier, action: () -> Unit) {
+fun junitAction(description: Description, notifier: RunNotifier, action: () -> Unit) {
     if (description.isTest) notifier.fireTestStarted(description)
     try {
         action()
@@ -32,7 +32,7 @@ public fun junitAction(description: Description, notifier: RunNotifier, action: 
     }
 }
 
-public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction, val on: TestOnAction) : ParentRunner<TestItAction>(specificationClass) {
+class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction, val on: TestOnAction) : ParentRunner<TestItAction>(specificationClass) {
 
     val _children by lazy(LazyThreadSafetyMode.NONE) {
         val result = arrayListOf<TestItAction>()
@@ -70,7 +70,7 @@ public class JUnitOnRunner<T>(val specificationClass: Class<T>, val given: TestG
     }
 }
 
-public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction) : ParentRunner<JUnitOnRunner<T>>(specificationClass) {
+class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: TestGivenAction) : ParentRunner<JUnitOnRunner<T>>(specificationClass) {
 
     val _children by lazy(LazyThreadSafetyMode.NONE) {
         val result = arrayListOf<JUnitOnRunner<T>>()
@@ -104,7 +104,7 @@ public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: Te
     }
 }
 
-public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunner<JUnitGivenRunner<T>>(specificationClass) {
+class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunner<JUnitGivenRunner<T>>(specificationClass) {
     private val suiteDescription = Description.createSuiteDescription(specificationClass)
 
     override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children

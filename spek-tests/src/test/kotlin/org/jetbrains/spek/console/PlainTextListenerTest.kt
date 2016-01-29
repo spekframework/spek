@@ -3,7 +3,7 @@ package org.jetbrains.spek.console
 import org.mockito.Mockito
 import org.junit.Test as test
 
-public class TextListenerTest {
+class TextListenerTest {
     val device = Mockito.mock(OutputDevice::class.java)!!
     val textListener = OutputDeviceWorkflowReporter(device)
 

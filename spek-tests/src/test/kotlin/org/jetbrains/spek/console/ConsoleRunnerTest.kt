@@ -4,7 +4,7 @@ import kotlin.collections.listOf
 import org.junit.Test as test
 import kotlin.test.assertEquals
 
-public class ConsoleRunnerTest {
+class ConsoleRunnerTest {
     @test fun getEmptyOptions() {
         //given an empty array
         //when we call getOptions

@@ -8,7 +8,7 @@ import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.CompositeWorkflowReporter
 
-public class ListenerTest {
+class ListenerTest {
     val firstStepListener = Mockito.mock(ActionStatusReporter::class.java)
     val firstListener = Mockito.mock(WorkflowReporter::class.java)!!
 

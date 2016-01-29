@@ -12,7 +12,7 @@ import kotlin.collections.toTypedArray
 import kotlin.text.*
 
 
-public fun getUrlsForPaths(paths: List<String>): List<URL> {
+fun getUrlsForPaths(paths: List<String>): List<URL> {
     val urls = arrayListOf<URL>()
     paths.forEach {
         val file = File(it)
@@ -25,13 +25,13 @@ public fun getUrlsForPaths(paths: List<String>): List<URL> {
 }
 
 
-public fun findClassesInClassPath(packageName: String): List<String> {
+fun findClassesInClassPath(packageName: String): List<String> {
     val classLoader = Thread.currentThread().getContextClassLoader()
     val packageUrl = classLoader?.getResource(packageName.replace('.', '/'))
     return findClassesInUrls(listOf(packageUrl!!), packageName)
 }
 
-public fun findClassesInUrls(urls: List<URL>, packageName: String): List<String> {
+fun findClassesInUrls(urls: List<URL>, packageName: String): List<String> {
     val names = arrayListOf<String>()
     for (url in urls) {
         if (url.toString().endsWith(".jar")) {
@@ -62,7 +62,7 @@ public fun findClassesInUrls(urls: List<URL>, packageName: String): List<String>
     return names
 }
 
-public fun findSpecs(paths: List<String>, packageName: String): MutableList<TestSpekAction> {
+fun findSpecs(paths: List<String>, packageName: String): MutableList<TestSpekAction> {
     val result = arrayListOf<TestSpekAction>()
     val urls = getUrlsForPaths(paths)
     val classloader = URLClassLoader.newInstance(urls.toTypedArray())!!
@@ -85,7 +85,7 @@ private fun AnnotatedElement.checkSkipped() {
     if (skip != null) throw SkippedException(skip.why)
 }
 
-public data class ExtensionFunctionSpek(val method: Method) : TestSpekAction {
+data class ExtensionFunctionSpek(val method: Method) : TestSpekAction {
     override fun description(): String = method.toString()
 
     override fun iterateGiven(it: (TestGivenAction) -> Unit) {
@@ -100,7 +100,7 @@ public data class ExtensionFunctionSpek(val method: Method) : TestSpekAction {
     }
 }
 
-public data class ClassSpek<T : Spek>(val specificationClass: Class<out T>) : TestSpekAction {
+data class ClassSpek<T : Spek>(val specificationClass: Class<out T>) : TestSpekAction {
     override fun description(): String = specificationClass.getName()
 
     override fun iterateGiven(it: (TestGivenAction) -> Unit) {
