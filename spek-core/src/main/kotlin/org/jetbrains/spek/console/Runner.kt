@@ -1,10 +1,10 @@
 package org.jetbrains.spek.console
 
-import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.TestSpekAction
 
 
 public class Runner(val listener: WorkflowReporter) {
-    public fun runSpecs(paths: List<String> , packageName: String) {
+    public fun runSpecs(paths: List<String>, packageName: String) {
         run(findSpecs(paths, packageName))
     }
 
@@ -18,15 +18,19 @@ public class Runner(val listener: WorkflowReporter) {
 public fun executeSpek(specificationClass: TestSpekAction, listener: WorkflowReporter) {
     val spekDescription = specificationClass.description()
     executeWithReporting(specificationClass, listener.spek(spekDescription)) {
-        iterateGiven { given ->
+        listGiven().forEach { given ->
             val givenDescription = given.description()
             executeWithReporting(given, listener.given(spekDescription, givenDescription)) {
-                iterateOn { on ->
-                    val onDescription = on.description()
-                    executeWithReporting(on, listener.on(spekDescription, givenDescription, onDescription)) {
-                        iterateIt { it ->
-                            executeWithReporting(it, listener.it(spekDescription, givenDescription, onDescription, it.description())) {
-                                run()
+                listOn().forEach { on ->
+                    given.run { // calls beforeEach/afterEach
+                        on.run { // calls beforeOn/afterOn
+                            val onDescription = on.description()
+                            executeWithReporting(on, listener.on(spekDescription, givenDescription, onDescription)) {
+                                listIt().forEach { it ->
+                                    executeWithReporting(it, listener.it(spekDescription, givenDescription, onDescription, it.description())) {
+                                        run {}
+                                    }
+                                }
                             }
                         }
                     }
