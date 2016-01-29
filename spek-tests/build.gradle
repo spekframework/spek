@@ -2,5 +2,6 @@ description = 'Spek Tests'
 
 dependencies {
     compile project(':spek-core')
+    testCompile group: 'pl.pragmatists', name: 'JUnitParams', version: '1.0.4'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
 }
