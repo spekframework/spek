@@ -6,7 +6,6 @@ import org.jetbrains.spek.console.executeSpek
 import org.jetbrains.spek.junit.JUnitClassRunner
 import org.junit.Assert
 import org.junit.runner.Description
-import org.junit.runner.Result
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
@@ -20,6 +19,8 @@ object SpekTestCaseRunnerProvider {
 
 public abstract class TestSpek : Spek(), TestSpekAction {
     override fun description(): String = "42"
+    override fun run(action: () -> Unit) {
+    }
 }
 
 public abstract class SpekTestCaseRunner {

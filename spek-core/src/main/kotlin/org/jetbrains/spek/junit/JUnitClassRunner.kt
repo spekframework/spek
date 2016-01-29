@@ -46,15 +46,22 @@ public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: 
     }
 }
 
-public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunner<Unit>(specificationClass) {
-    private val suiteDescription = Description.createSuiteDescription(specificationClass)
+public class JUnitClassRunner<T>(val specClass: Class<T>,
+                                 val specInstance: T? = null) : ParentRunner<Unit>(specClass) {
+
+    constructor(specClass: Class<T>) : this(specClass, null) {
+    }
+
+    private val suiteDescription = Description.createSuiteDescription(specClass)
 
     val _spekRunResults: HashMap<Int, SpekResult> = HashMap()
 
     val _description by lazy(LazyThreadSafetyMode.NONE) {
-        val suiteDesc = Description.createSuiteDescription(specificationClass)
-        val spek = specificationClass.newInstance() as Spek
-        spek.listGiven().forEach { givenSpek ->
+        val suiteDesc = Description.createSuiteDescription(specClass)
+
+        val instance = (specInstance as? Spek) ?: (specClass.newInstance() as? Spek)
+
+        instance?.listGiven()?.forEach { givenSpek ->
             val givenId = JUnitUniqueId.next()
             val givenDesc = Description.createSuiteDescription(givenSpek.description(), givenId)
             suiteDesc.addChild(givenDesc)
