@@ -39,7 +39,7 @@ public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: 
             fireTestStarted(desc)
             children?.forEach { child -> evaluateResults(child, notifier, results) }
             when (result?.exception) {
-                is SkippedException -> fireTestIgnored(desc)
+                is SkippedException -> fireTestAssumptionFailed(Failure(desc, result?.exception))
                 is PendingException -> fireTestIgnored(desc)
                 is Throwable -> fireTestFailure(Failure(desc, result?.exception))
             }
