@@ -8,7 +8,7 @@ import org.junit.runner.RunWith
 @RunWith(JUnitParamsRunner::class)
 public class SkipTest {
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun skipIt(runner: SpekTestCaseRunner) = runner.runTest({
         given("a situation") {
             on("an event") {
@@ -19,20 +19,20 @@ public class SkipTest {
                 it("should B") { }
             }
         }
-    }, """SPEK: 42 START
-            SPEK: 42 GIVEN: given a situation START
-            SPEK: 42 GIVEN: given a situation ON: on an event START
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A START
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A SKIP:not ready yet
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A FINISH
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B START
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B FINISH
-            SPEK: 42 GIVEN: given a situation ON: on an event FINISH
-            SPEK: 42 GIVEN: given a situation FINISH
-            SPEK: 42 FINISH""")
+    }, """42 START
+            given a situation START
+            on an event START
+            it should A START
+            it should A SKIP
+            it should A FINISH
+            it should B START
+            it should B FINISH
+            on an event FINISH
+            given a situation FINISH
+            42 FINISH""")
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun skipOn(runner: SpekTestCaseRunner) = runner.runTest({
         given("a situation") {
             on("an event") {
@@ -46,20 +46,20 @@ public class SkipTest {
                 it("should B") { }
             }
         }
-    }, """SPEK: 42 START
-            SPEK: 42 GIVEN: given a situation START
-            SPEK: 42 GIVEN: given a situation ON: on an event START
-            SPEK: 42 GIVEN: given a situation ON: on an event SKIP:not ready yet
-            SPEK: 42 GIVEN: given a situation ON: on an event FINISH
-            SPEK: 42 GIVEN: given a situation ON: on another event START
-            SPEK: 42 GIVEN: given a situation ON: on another event IT: it should B START
-            SPEK: 42 GIVEN: given a situation ON: on another event IT: it should B FINISH
-            SPEK: 42 GIVEN: given a situation ON: on another event FINISH
-            SPEK: 42 GIVEN: given a situation FINISH
-            SPEK: 42 FINISH""")
+    }, """42 START
+            given a situation START
+            on an event START
+            on an event SKIP
+            on an event FINISH
+            on another event START
+            it should B START
+            it should B FINISH
+            on another event FINISH
+            given a situation FINISH
+            42 FINISH""")
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun skipGiven(runner: SpekTestCaseRunner) = runner.runTest({
         given("a situation") {
             skip("for some reason")
@@ -74,14 +74,14 @@ public class SkipTest {
                 }
             }
         }
-    }, """SPEK: 42 START
-            SPEK: 42 GIVEN: given a situation START
-            SPEK: 42 GIVEN: given a situation SKIP:for some reason
-            SPEK: 42 GIVEN: given a situation FINISH
-            SPEK: 42 FINISH""")
+    }, """42 START
+            given a situation START
+            given a situation SKIP
+            given a situation FINISH
+            42 FINISH""")
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun pendingIt(runner: SpekTestCaseRunner) = runner.runTest({
         given("a situation") {
             on("an event") {
@@ -93,22 +93,22 @@ public class SkipTest {
                 it("should B")
             }
         }
-    }, """SPEK: 42 START
-            SPEK: 42 GIVEN: given a situation START
-            SPEK: 42 GIVEN: given a situation ON: on an event START
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A START
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A PEND:not implemented yet
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should A FINISH
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B START
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B PEND:Not implemented.
-            SPEK: 42 GIVEN: given a situation ON: on an event IT: it should B FINISH
-            SPEK: 42 GIVEN: given a situation ON: on an event FINISH
-            SPEK: 42 GIVEN: given a situation FINISH
-            SPEK: 42 FINISH""")
+    }, """42 START
+            given a situation START
+            on an event START
+            it should A START
+            it should A PEND
+            it should A FINISH
+            it should B START
+            it should B PEND
+            it should B FINISH
+            on an event FINISH
+            given a situation FINISH
+            42 FINISH""")
 
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun pendingOn(runner: SpekTestCaseRunner) = runner.runTest({
         given("a situation") {
             //default pending.
@@ -118,20 +118,20 @@ public class SkipTest {
                 pending("not implemented yet")
             }
         }
-    }, """SPEK: 42 START
-            SPEK: 42 GIVEN: given a situation START
-            SPEK: 42 GIVEN: given a situation ON: on an event START
-            SPEK: 42 GIVEN: given a situation ON: on an event PEND:Not implemented.
-            SPEK: 42 GIVEN: given a situation ON: on an event FINISH
-            SPEK: 42 GIVEN: given a situation ON: on another event START
-            SPEK: 42 GIVEN: given a situation ON: on another event PEND:not implemented yet
-            SPEK: 42 GIVEN: given a situation ON: on another event FINISH
-            SPEK: 42 GIVEN: given a situation FINISH
-            SPEK: 42 FINISH""")
+    }, """42 START
+            given a situation START
+            on an event START
+            on an event PEND
+            on an event FINISH
+            on another event START
+            on another event PEND
+            on another event FINISH
+            given a situation FINISH
+            42 FINISH""")
 
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun pendingGiven(runner: SpekTestCaseRunner) = runner.runTest({
         given("a situation") {
             pending("for some reason")
@@ -139,12 +139,12 @@ public class SkipTest {
 
         //default pending.
         given("another situation")
-    }, """SPEK: 42 START
-            SPEK: 42 GIVEN: given a situation START
-            SPEK: 42 GIVEN: given a situation PEND:for some reason
-            SPEK: 42 GIVEN: given a situation FINISH
-            SPEK: 42 GIVEN: given another situation START
-            SPEK: 42 GIVEN: given another situation PEND:Not implemented.
-            SPEK: 42 GIVEN: given another situation FINISH
-            SPEK: 42 FINISH""")
+    }, """42 START
+            given a situation START
+            given a situation PEND
+            given a situation FINISH
+            given another situation START
+            given another situation PEND
+            given another situation FINISH
+            42 FINISH""")
 }

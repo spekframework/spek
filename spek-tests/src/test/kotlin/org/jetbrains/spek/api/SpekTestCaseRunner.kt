@@ -3,36 +3,33 @@ package org.jetbrains.spek.api
 import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.executeSpek
+import org.jetbrains.spek.junit.JUnitClassRunner
 import org.junit.Assert
+import org.junit.runner.Description
+import org.junit.runner.Result
+import org.junit.runner.notification.Failure
+import org.junit.runner.notification.RunListener
+import org.junit.runner.notification.RunNotifier
 
 /**
  * Created by jakub on 29/01/16.
  */
-abstract class SpekTestCaseRunner {
-
-    companion object Factory {
-        @JvmStatic fun provideTestCaseRunners() = _runners
-        val _runners: Array<Any> by lazy {
-            arrayOf<Any>(ConsoleSpekTestCaseRunner(), JUnitSpekTestCaseRunner())
-        }
-    }
-
-    abstract fun runTest(specExpr: Specification.() -> Unit, vararg expected: String)
+object SpekTestCaseRunnerProvider {
+    @JvmStatic fun provideTestCaseRunners() = arrayOf<Any>(ConsoleSpekTestCaseRunner(), JUnitSpekTestCaseRunner())
 }
 
 public abstract class TestSpek : Spek(), TestSpekAction {
     override fun description(): String = "42"
 }
 
-class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
-    override fun runTest(specExpr: Specification.() -> Unit, vararg expected: String) {
-        val list = arrayListOf<String>()
-
-        val spec = object: TestSpek() {}
+public abstract class SpekTestCaseRunner {
+    fun runTest(specExpr: Specification.() -> Unit, vararg expected: String) {
+        val actualLog = arrayListOf<String>()
+        val spec = object : TestSpek() {}
         spec.specExpr()
-        executeSpek(spec, TestLogger(list))
+        runSpec(spec, actualLog)
         if (expected.size == 0) return
-        val actualDump = list.map { it + "\n" }.fold("") { r, i -> r + i }
+        val actualDump = actualLog.map { it + "\n" }.fold("") { r, i -> r + i }
         val expectedLog = expected
                 .flatMap {
                     it
@@ -45,8 +42,19 @@ class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
         Assert.assertEquals(
                 actualDump,
                 expectedLog,
-                list
+                actualLog
         )
+    }
+
+    protected abstract fun <T> runSpec(spec: T, log: MutableList<String>)
+            where  T : Spek, T : TestSpekAction
+}
+
+class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
+
+    override fun <T> runSpec(spec: T, log: MutableList<String>)
+            where T : Spek, T : TestSpekAction {
+        executeSpek(spec, ConsoleSpekTestCaseRunner.TestLogger(log))
     }
 
     public class TestLogger(val output: MutableList<String>) : WorkflowReporter {
@@ -60,11 +68,11 @@ class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
             }
 
             override fun skipped(why: String) {
-                output.add(prefix + " SKIP:" + why)
+                output.add(prefix + " SKIP")
             }
 
             override fun pending(why: String) {
-                output.add(prefix + " PEND:" + why)
+                output.add(prefix + " PEND")
             }
 
             override fun failed(error: Throwable) {
@@ -72,15 +80,42 @@ class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
             }
         }
 
-        override fun spek(spek: String): ActionStatusReporter = step("SPEK: $spek")
-        override fun given(spek: String, given: String): ActionStatusReporter = step("SPEK: $spek GIVEN: $given")
-        override fun on(spek: String, given: String, on: String) = step("SPEK: $spek GIVEN: $given ON: $on")
-        override fun it(spek: String, given: String, on: String, it: String) = step("SPEK: $spek GIVEN: $given ON: $on IT: $it")
+        override fun spek(spek: String): ActionStatusReporter = step("$spek")
+        override fun given(spek: String, given: String): ActionStatusReporter = step("$given")
+        override fun on(spek: String, given: String, on: String) = step("$on")
+        override fun it(spek: String, given: String, on: String, it: String) = step("$it")
     }
 }
 
 class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
-    override fun runTest(specExpr: Specification.() -> Unit, vararg expected: String) {
-        throw UnsupportedOperationException()
+
+    override fun <T> runSpec(spec: T, log: MutableList<String>)
+            where T : Spek, T : TestSpekAction {
+        val jUnitRunner = JUnitClassRunner(spec.javaClass, spec)
+        val notifier = RunNotifier()
+        notifier.addFirstListener(TestJUnitRunListener(log))
+        jUnitRunner.run(notifier)
+    }
+
+    public class TestJUnitRunListener(val output: MutableList<String>) : RunListener() {
+        override fun testStarted(description: Description?) {
+            output.add("${description?.displayName} START")
+        }
+
+        override fun testAssumptionFailure(failure: Failure?) {
+            output.add("${failure?.description?.displayName} SKIP")
+        }
+
+        override fun testFinished(description: Description?) {
+            output.add("${description?.displayName} FINISH")
+        }
+
+        override fun testFailure(failure: Failure?) {
+            output.add("${failure?.description?.displayName} FAIL: ${failure?.exception?.message}")
+        }
+
+        override fun testIgnored(description: Description?) {
+            output.add("${description?.displayName} PEND")
+        }
     }
 }

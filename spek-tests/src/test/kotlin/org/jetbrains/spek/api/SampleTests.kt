@@ -6,10 +6,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(JUnitParamsRunner::class)
-public class SampleCalculatorIntegrationTest {
+public class SampleTests {
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun inc(runner: SpekTestCaseRunner) = runner.apply {
         runTest({
             class SampleIncUtil {
@@ -25,18 +25,18 @@ public class SampleCalculatorIntegrationTest {
                     }
                 }
             }
-        }, """SPEK: 42 START
-                SPEK: 42 GIVEN: given an inc util START
-                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 START
-                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 IT: it should return 10 START
-                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 IT: it should return 10 FINISH
-                SPEK: 42 GIVEN: given an inc util ON: on calling incValueBy with 4 and given number 6 FINISH
-                SPEK: 42 GIVEN: given an inc util FINISH
-                SPEK: 42 FINISH""")
+        }, """42 START
+                given an inc util START
+                on calling incValueBy with 4 and given number 6 START
+                it should return 10 START
+                it should return 10 FINISH
+                on calling incValueBy with 4 and given number 6 FINISH
+                given an inc util FINISH
+                42 FINISH""")
     }
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun calculate(runner: SpekTestCaseRunner) = runner.apply {
         runTest({
             class SampleCalculator {
@@ -68,20 +68,20 @@ public class SampleCalculatorIntegrationTest {
                     }
                 }
             }
-        }, """SPEK: 42 START
-                SPEK: 42 GIVEN: given a calculator START
-                SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers START
-                SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers IT: it should return the result of adding the first number to the second number START
-                SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers IT: it should return the result of adding the first number to the second number FINISH
-                SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers IT: it should another START
-                SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers IT: it should another FINISH
-                SPEK: 42 GIVEN: given a calculator ON: on calling sum with two numbers FINISH
-                SPEK: 42 GIVEN: given a calculator ON: on calling substract with two numbers START
-                SPEK: 42 GIVEN: given a calculator ON: on calling substract with two numbers IT: it should return the result of substracting the second number from the first number START
-                SPEK: 42 GIVEN: given a calculator ON: on calling substract with two numbers IT: it should return the result of substracting the second number from the first number FINISH
-                SPEK: 42 GIVEN: given a calculator ON: on calling substract with two numbers FINISH
-                SPEK: 42 GIVEN: given a calculator FINISH
-                SPEK: 42 FINISH""")
+        }, """42 START
+                given a calculator START
+                on calling sum with two numbers START
+                it should return the result of adding the first number to the second number START
+                it should return the result of adding the first number to the second number FINISH
+                it should another START
+                it should another FINISH
+                on calling sum with two numbers FINISH
+                on calling substract with two numbers START
+                it should return the result of substracting the second number from the first number START
+                it should return the result of substracting the second number from the first number FINISH
+                on calling substract with two numbers FINISH
+                given a calculator FINISH
+                42 FINISH""")
     }
 
 

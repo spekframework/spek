@@ -1,12 +1,11 @@
 package org.jetbrains.spek.junit
 
-import org.junit.runner.*
-import org.junit.runners.*
-import org.junit.runner.notification.*
-import kotlin.properties.Delegates
-import java.io.Serializable
-import org.jetbrains.spek.*
 import org.jetbrains.spek.api.*
+import org.junit.runner.Description
+import org.junit.runner.notification.Failure
+import org.junit.runner.notification.RunNotifier
+import org.junit.runners.ParentRunner
+import java.io.Serializable
 
 data class JUnitUniqueId(val id: Int) : Serializable {
     companion object {
@@ -102,19 +101,24 @@ public class JUnitGivenRunner<T>(val specificationClass: Class<T>, val given: Te
     }
 }
 
-public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunner<JUnitGivenRunner<T>>(specificationClass) {
-    private val suiteDescription = Description.createSuiteDescription(specificationClass)
+public open class JUnitClassRunner<T>(val specClass: Class<T>, val specInstance: Spek? = null) : ParentRunner<JUnitGivenRunner<T>>(specClass) {
+
+    constructor(specClass: Class<T>) : this(specClass, null) {
+    }
+
+    private val suiteDescription = Description.createSuiteDescription(specClass)
 
     override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children
 
+    val _spekInstance by lazy(LazyThreadSafetyMode.NONE) {
+        specInstance ?: if (Spek::class.java.isAssignableFrom(specClass) && !specClass.isLocalClass) specClass.newInstance() as Spek
+        else null
+    }
+
     val _children by lazy(LazyThreadSafetyMode.NONE) {
-        if (Spek::class.java.isAssignableFrom(specificationClass) && !specificationClass.isLocalClass) {
-            val spek = specificationClass.newInstance() as Spek
-            val result = arrayListOf<JUnitGivenRunner<T>>()
-            spek.iterateGiven { result.add(JUnitGivenRunner(specificationClass, it)) }
-            result
-        } else
-            arrayListOf()
+        val result = arrayListOf<JUnitGivenRunner<T>>()
+        _spekInstance?.iterateGiven { result.add(JUnitGivenRunner(specClass, it)) }
+        result
     }
 
     protected override fun describeChild(child: JUnitGivenRunner<T>?): Description? {
@@ -127,3 +131,30 @@ public class JUnitClassRunner<T>(val specificationClass: Class<T>) : ParentRunne
         }
     }
 }
+
+//public open class JUnitClassRunner<T>(val specClass: Class<T>, val specInstance: Spek? = null) : ParentRunner<JUnitGivenRunner<T>>(specClass) {
+//    private val suiteDescription = Description.createSuiteDescription(specClass)
+//
+//    override fun getChildren(): MutableList<JUnitGivenRunner<T>> = _children
+//
+//    val _spekInstance by lazy(LazyThreadSafetyMode.NONE) {
+//        specInstance ?: if (Spek::class.java.isAssignableFrom(specClass) && !specClass.isLocalClass) specClass.newInstance() as Spek
+//        else null
+//    }
+//
+//    val _children by lazy(LazyThreadSafetyMode.NONE) {
+//        val result = arrayListOf<JUnitGivenRunner<T>>()
+//        _spekInstance?.iterateGiven { result.add(JUnitGivenRunner(specClass, it)) }
+//        result
+//    }
+//
+//    protected override fun describeChild(child: JUnitGivenRunner<T>?): Description? {
+//        return child?.description
+//    }
+//
+//    protected override fun runChild(child: JUnitGivenRunner<T>?, notifier: RunNotifier?) {
+//        junitAction(describeChild(child)!!, notifier!!) {
+//            child!!.run(notifier)
+//        }
+//    }
+//}

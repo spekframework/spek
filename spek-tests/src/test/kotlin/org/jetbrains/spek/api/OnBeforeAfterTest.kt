@@ -12,7 +12,7 @@ import kotlin.test.fail
 public class OnBeforeAfterTest {
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     public fun callOnBefore(runner: SpekTestCaseRunner) {
         val log = arrayListOf<String>()
         runner.runTest({
@@ -29,7 +29,7 @@ public class OnBeforeAfterTest {
     }
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     public fun callOnAfter(runner: SpekTestCaseRunner) {
         val log = arrayListOf<String>()
         runner.runTest({
@@ -46,7 +46,7 @@ public class OnBeforeAfterTest {
     }
 
     @Test
-    @Parameters(source = SpekTestCaseRunner::class)
+    @Parameters(source = SpekTestCaseRunnerProvider::class)
     public fun callOnBeforeAndOnAfter(runner: SpekTestCaseRunner) {
         val log = arrayListOf<String>()
         runner.runTest({
