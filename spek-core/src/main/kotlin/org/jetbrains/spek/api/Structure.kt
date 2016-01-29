@@ -2,6 +2,8 @@ package org.jetbrains.spek.api
 
 public interface Specification {
     public fun given(description: String, givenExpression: Given.() -> Unit)
+    public fun beforeEach(action: () -> Unit)
+    public fun afterEach(action: () -> Unit)
 }
 
 public interface Given {

@@ -7,6 +7,16 @@ import org.junit.runner.RunWith
 public abstract class Spek : org.jetbrains.spek.api.Specification {
 
     private val recordedGivenActions = linkedListOf<org.jetbrains.spek.api.TestGivenAction>()
+    private val recordedBeforeEachActions = linkedListOf<() -> Unit>()
+    private val recordedAfterEachActions = linkedListOf<() -> Unit>()
+
+    override fun beforeEach(action: () -> Unit) {
+        recordedBeforeEachActions.add(action)
+    }
+
+    override fun afterEach(action: () -> Unit) {
+        recordedAfterEachActions.add(action)
+    }
 
     public override fun given(description: String, givenExpression: org.jetbrains.spek.api.Given.() -> Unit) {
         recordedGivenActions.add(
@@ -22,7 +32,9 @@ public abstract class Spek : org.jetbrains.spek.api.Specification {
                     override fun listOn() = given.listOn()
 
                     override fun run(action: () -> Unit) {
+                        recordedBeforeEachActions.forEach { it() }
                         action()
+                        recordedAfterEachActions.forEach { it() }
                     }
                 })
 
