@@ -35,13 +35,13 @@ public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: 
         val testId = hashCode()
         val result = results[testId]
         notifier?.apply {
-            if (desc.isTest) fireTestStarted(desc)
+            if (isTest) fireTestStarted(desc)
             when (result?.exception) {
-                is SkippedException -> notifier.fireTestIgnored(desc)
-                is PendingException -> notifier.fireTestIgnored(desc)
-                is Throwable -> notifier.fireTestFailure(Failure(desc, result?.exception))
+                is SkippedException -> fireTestIgnored(desc)
+                is PendingException -> fireTestIgnored(desc)
+                is Throwable -> fireTestFailure(Failure(desc, result?.exception))
             }
-            if (desc.isTest) fireTestFinished(desc)
+            if (isTest) fireTestFinished(desc)
         }
     }
 }
@@ -58,26 +58,26 @@ public class JUnitClassRunner<T>(val specClass: Class<T>,
 
     val _description by lazy(LazyThreadSafetyMode.NONE) {
         val suiteDesc = Description.createSuiteDescription(specClass)
-
         val instance = (specInstance as? Spek) ?: (specClass.newInstance() as? Spek)
-
-        instance?.listGiven()?.forEach { givenSpek ->
-            val givenId = JUnitUniqueId.next()
-            val givenDesc = Description.createSuiteDescription(givenSpek.description(), givenId)
-            suiteDesc.addChild(givenDesc)
-            runSpek(givenId.hashCode(), _spekRunResults) {
-                givenSpek.listOn().forEach { onSpek ->
-                    val onId = JUnitUniqueId.next()
-                    val onDesc = Description.createSuiteDescription(onSpek.description(), onId)
-                    givenDesc.addChild(onDesc)
-                    runSpek(onId.hashCode(), _spekRunResults) {
-                        givenSpek.run {
-                            onSpek.run {
-                                onSpek.listIt().forEach { itSpek ->
-                                    val itId = JUnitUniqueId.next()
-                                    val itDesc = Description.createSuiteDescription(itSpek.description(), itId)
-                                    onDesc.addChild(itDesc)
-                                    runSpek(itId.hashCode(), _spekRunResults) { itSpek.run {} }
+        runSpek(suiteDesc.hashCode(), _spekRunResults) {
+            instance?.listGiven()?.forEach { givenSpek ->
+                val givenId = JUnitUniqueId.next()
+                val givenDesc = Description.createSuiteDescription(givenSpek.description(), givenId)
+                suiteDesc.addChild(givenDesc)
+                runSpek(givenId.hashCode(), _spekRunResults) {
+                    givenSpek.listOn().forEach { onSpek ->
+                        val onId = JUnitUniqueId.next()
+                        val onDesc = Description.createSuiteDescription(onSpek.description(), onId)
+                        givenDesc.addChild(onDesc)
+                        runSpek(onId.hashCode(), _spekRunResults) {
+                            givenSpek.run {
+                                onSpek.run {
+                                    onSpek.listIt().forEach { itSpek ->
+                                        val itId = JUnitUniqueId.next()
+                                        val itDesc = Description.createSuiteDescription(itSpek.description(), itId)
+                                        onDesc.addChild(itDesc)
+                                        runSpek(itId.hashCode(), _spekRunResults) { itSpek.run {} }
+                                    }
                                 }
                             }
                         }

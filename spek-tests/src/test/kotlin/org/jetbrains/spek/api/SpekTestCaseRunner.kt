@@ -95,6 +95,8 @@ class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
         val jUnitRunner = JUnitClassRunner(spec.javaClass, spec)
         val notifier = RunNotifier()
         notifier.addFirstListener(TestJUnitRunListener(log))
+        // todo js build ordered hash map
+        // todo js call order counts!!
         jUnitRunner.run(notifier)
     }
 
