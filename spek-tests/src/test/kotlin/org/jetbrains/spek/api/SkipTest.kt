@@ -6,7 +6,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(JUnitParamsRunner::class)
-public class SkipTest {
+class SkipTest {
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
     fun skipIt(runner: SpekTestCaseRunner) = runner.runTest({

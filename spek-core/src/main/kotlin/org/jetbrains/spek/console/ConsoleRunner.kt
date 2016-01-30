@@ -1,7 +1,11 @@
 package org.jetbrains.spek.console
 
+import kotlin.collections.listOf
+import kotlin.collections.toList
+import kotlin.text.split
 
-public fun main(args: Array<String>)  {
+
+fun main(args: Array<String>)  {
     if (args.size < 2) {
         printUsage()
     } else {
@@ -21,7 +25,7 @@ public fun main(args: Array<String>)  {
     System.exit(0)
 }
 
-public fun getOptions(args: Array<String>): Options {
+fun getOptions(args: Array<String>): Options {
     var index = 2
     var format = "text"
     var filename = ""

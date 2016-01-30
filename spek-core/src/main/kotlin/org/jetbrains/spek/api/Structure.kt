@@ -1,20 +1,20 @@
 package org.jetbrains.spek.api
 
-public interface Specification {
-    public fun given(description: String, givenExpression: Given.() -> Unit)
-    public fun beforeEach(action: () -> Unit)
-    public fun afterEach(action: () -> Unit)
+interface Specification {
+    fun given(description: String, givenExpression: Given.() -> Unit)
+    fun beforeEach(action: () -> Unit)
+    fun afterEach(action: () -> Unit)
 }
 
-public interface Given {
-    public fun beforeOn(it: () -> Unit)
-    public fun afterOn(it: () -> Unit)
-    public fun on(description: String, onExpression: On.() -> Unit)
+interface Given {
+    fun beforeOn(it: () -> Unit)
+    fun afterOn(it: () -> Unit)
+    fun on(description: String, onExpression: On.() -> Unit)
 }
 
-public interface On {
-    public fun it(description: String, itExpression: It.() -> Unit)
+interface On {
+    fun it(description: String, itExpression: It.() -> Unit)
 }
 
-public interface It {}
+interface It {}
 

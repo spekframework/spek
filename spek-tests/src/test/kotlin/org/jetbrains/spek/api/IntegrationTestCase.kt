@@ -4,8 +4,12 @@ import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.executeSpek
 import org.junit.Assert
+import kotlin.collections.*
+import kotlin.text.split
+import kotlin.text.toRegex
+import kotlin.text.trim
 
-public open class IntegrationTestCase {
+open class IntegrationTestCase {
 
     fun runTest(case: TestSpekAction, vararg expected: String) {
         val list = arrayListOf<String>()
@@ -27,20 +31,20 @@ public open class IntegrationTestCase {
                 )
     }
 
-    public fun data(f: Specification.() -> Unit) : TestSpekAction {
+    fun data(f: Specification.() -> Unit) : TestSpekAction {
         val d = object : Data() {}
         d.f()
         return d
     }
 
-    public abstract class Data : Spek(), TestSpekAction {
+    abstract class Data : Spek(), TestSpekAction {
         override fun description(): String = "42"
         override fun run(action: () -> Unit) {
             throw UnsupportedOperationException()
         }
     }
 
-    public class TestLogger(val output: MutableList<String>): WorkflowReporter {
+    class TestLogger(val output: MutableList<String>): WorkflowReporter {
         private fun step(prefix:String) : ActionStatusReporter = object : ActionStatusReporter {
             override fun started() {
                 output.add(prefix + " START")

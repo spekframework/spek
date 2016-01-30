@@ -15,13 +15,11 @@ class ba: Spek() {
     init {
 
     given("abc") {
-        beforeOn { println("before") }
         on("def") {
             println("on")
             it("should") {
                 println("it")
             }
         }
-        afterOn { println("after")}
     }
 }}

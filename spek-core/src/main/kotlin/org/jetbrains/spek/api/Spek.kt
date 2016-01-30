@@ -4,7 +4,7 @@ import org.jetbrains.spek.junit.JUnitClassRunner
 import org.junit.runner.RunWith
 
 @RunWith(JUnitClassRunner::class)
-public abstract class Spek : org.jetbrains.spek.api.Specification {
+abstract class Spek : org.jetbrains.spek.api.Specification {
 
     private val recordedGivenActions = linkedListOf<org.jetbrains.spek.api.TestGivenAction>()
     private val recordedBeforeEachActions = linkedListOf<() -> Unit>()
@@ -18,7 +18,7 @@ public abstract class Spek : org.jetbrains.spek.api.Specification {
         recordedAfterEachActions.add(action)
     }
 
-    public override fun given(description: String, givenExpression: org.jetbrains.spek.api.Given.() -> Unit) {
+    override fun given(description: String, givenExpression: org.jetbrains.spek.api.Given.() -> Unit) {
         recordedGivenActions.add(
                 object : org.jetbrains.spek.api.TestGivenAction {
                     val given: GivenImpl by lazy {
@@ -27,7 +27,7 @@ public abstract class Spek : org.jetbrains.spek.api.Specification {
                         impl
                     }
 
-                    public override fun description() = "given " + description
+                    override fun description() = "given " + description
 
                     override fun listOn() = given.listOn()
 
@@ -40,13 +40,13 @@ public abstract class Spek : org.jetbrains.spek.api.Specification {
 
     }
 
-    public fun listGiven() = recordedGivenActions
+    fun listGiven() = recordedGivenActions
 
-    public fun allGiven(): List<org.jetbrains.spek.api.TestGivenAction> = recordedGivenActions
+    fun allGiven(): List<org.jetbrains.spek.api.TestGivenAction> = recordedGivenActions
 }
 
 
-public fun <T> Spek.givenData(data: Iterable<T>, givenExpression: org.jetbrains.spek.api.Given.(T) -> Unit) {
+fun <T> Spek.givenData(data: Iterable<T>, givenExpression: org.jetbrains.spek.api.Given.(T) -> Unit) {
     for (entry in data) {
         given(entry.toString()) {
             givenExpression(entry)

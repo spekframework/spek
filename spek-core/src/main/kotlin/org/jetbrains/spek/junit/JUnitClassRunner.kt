@@ -21,7 +21,7 @@ data class JUnitUniqueId(val id: Int) : Serializable {
 data class SpekResult(val successful: Boolean = false,
                       val exception: Throwable? = null)
 
-public fun runSpek(testIdHashCode: Int, results: HashMap<Int, SpekResult>, action: () -> Unit) {
+fun runSpek(testIdHashCode: Int, results: HashMap<Int, SpekResult>, action: () -> Unit) {
     try {
         action()
         results.put(testIdHashCode, SpekResult(successful = true))
@@ -30,7 +30,7 @@ public fun runSpek(testIdHashCode: Int, results: HashMap<Int, SpekResult>, actio
     }
 }
 
-public fun evaluateResults(desc: Description?,
+fun evaluateResults(desc: Description?,
                            notifier: RunNotifier?,
                            results: HashMap<Int, SpekResult>,
                            forceReportAll: Boolean = false) {
@@ -50,7 +50,7 @@ public fun evaluateResults(desc: Description?,
     }
 }
 
-public open class JUnitClassRunner<T>(val specClass: Class<T>,
+open class JUnitClassRunner<T>(val specClass: Class<T>,
                                       val specInstance: T? = null) : ParentRunner<Unit>(specClass) {
 
     constructor(specClass: Class<T>) : this(specClass, null) {

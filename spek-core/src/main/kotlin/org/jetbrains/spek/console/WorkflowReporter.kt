@@ -1,17 +1,20 @@
 package org.jetbrains.spek.console
 
-public interface WorkflowReporter {
-    public fun spek(spek: String): ActionStatusReporter
-    public fun given(spek: String, given: String): ActionStatusReporter
-    public fun on(spek: String, given: String, on: String): ActionStatusReporter
-    public fun it(spek: String, given: String, on: String, it: String): ActionStatusReporter
+import kotlin.collections.arrayListOf
+import kotlin.collections.map
+
+interface WorkflowReporter {
+    fun spek(spek: String): ActionStatusReporter
+    fun given(spek: String, given: String): ActionStatusReporter
+    fun on(spek: String, given: String, on: String): ActionStatusReporter
+    fun it(spek: String, given: String, on: String, it: String): ActionStatusReporter
 }
 
 
-public class CompositeWorkflowReporter : WorkflowReporter {
+class CompositeWorkflowReporter : WorkflowReporter {
     private val listeners = arrayListOf<WorkflowReporter>()
 
-    public fun addListener(l: WorkflowReporter) {
+    fun addListener(l: WorkflowReporter) {
         listeners.add(l)
     }
 

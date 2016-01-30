@@ -6,17 +6,17 @@ open class GivenImpl : org.jetbrains.spek.api.Given {
     private val recordedBeforeActions = linkedListOf<() -> Unit>()
     private val recordedAfterActions = linkedListOf<() -> Unit>()
 
-    public fun listOn() = recordedOnActions
+    fun listOn() = recordedOnActions
 
-    public override fun beforeOn(it: () -> Unit) {
+    override fun beforeOn(it: () -> Unit) {
         recordedBeforeActions.add(it)
     }
 
-    public override fun afterOn(it: () -> Unit) {
+    override fun afterOn(it: () -> Unit) {
         recordedAfterActions.add(it)
     }
 
-    public override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {
+    override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {
         recordedOnActions.add(
                 object : org.jetbrains.spek.api.TestOnAction {
                     val on: OnImpl by lazy {
@@ -25,7 +25,7 @@ open class GivenImpl : org.jetbrains.spek.api.Given {
                         impl
                     }
 
-                    public override fun description() = "on " + description
+                    override fun description() = "on " + description
 
                     override fun listIt() = on.listIt()
 
