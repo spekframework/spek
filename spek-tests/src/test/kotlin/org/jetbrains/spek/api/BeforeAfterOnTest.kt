@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 import kotlin.test.fail
 
 @RunWith(JUnitParamsRunner::class)
-public class OnBeforeAfterTest {
+public class BeforeAfterOnTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
