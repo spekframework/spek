@@ -22,10 +22,10 @@ public fun executeSpek(specificationClass: TestSpekAction, listener: WorkflowRep
             val givenDescription = given.description()
             executeWithReporting(given, listener.given(spekDescription, givenDescription)) {
                 listOn().forEach { on ->
-                    given.run { // calls beforeEach/afterEach
-                        on.run { // calls beforeOn/afterOn
-                            val onDescription = on.description()
-                            executeWithReporting(on, listener.on(spekDescription, givenDescription, onDescription)) {
+                    val onDescription = on.description()
+                    executeWithReporting(on, listener.on(spekDescription, givenDescription, onDescription)) {
+                        given.run { // calls beforeEach/afterEach
+                            on.run { // calls beforeOn/afterOn
                                 listIt().forEach { it ->
                                     executeWithReporting(it, listener.it(spekDescription, givenDescription, onDescription, it.description())) {
                                         run {}

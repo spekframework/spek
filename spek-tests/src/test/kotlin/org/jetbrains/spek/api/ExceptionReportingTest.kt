@@ -11,7 +11,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(JUnitParamsRunner::class)
-public class ExceptionReportingTests {
+public class ExceptionReportingTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
