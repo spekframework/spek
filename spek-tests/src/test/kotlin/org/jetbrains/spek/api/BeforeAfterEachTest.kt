@@ -11,7 +11,7 @@ import kotlin.test.assertEquals
  * Created by jakub on 30/01/16.
  */
 @RunWith(JUnitParamsRunner::class)
-public class BeforeAfterEachTest {
+class BeforeAfterEachTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)

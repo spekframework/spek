@@ -18,13 +18,13 @@ object SpekTestCaseRunnerProvider {
     @JvmStatic fun provideTestCaseRunners() = arrayOf<Any>(ConsoleSpekTestCaseRunner(), JUnitSpekTestCaseRunner())
 }
 
-public abstract class TestSpek : Spek(), TestSpekAction {
+abstract class TestSpek : Spek(), TestSpekAction {
     override fun description(): String = "42"
     override fun run(action: () -> Unit) {
     }
 }
 
-public abstract class SpekTestCaseRunner {
+abstract class SpekTestCaseRunner {
     fun runTest(specExpr: Specification.() -> Unit, vararg expected: String) {
         val actualLog = arrayListOf<String>()
         val spec = object : TestSpek() {}
@@ -59,7 +59,7 @@ class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
         executeSpek(spec, ConsoleSpekTestCaseRunner.TestLogger(log))
     }
 
-    public class TestLogger(val output: MutableList<String>) : WorkflowReporter {
+    class TestLogger(val output: MutableList<String>) : WorkflowReporter {
         private fun step(prefix: String): ActionStatusReporter = object : ActionStatusReporter {
             override fun started() {
                 output.add(prefix + " START")
@@ -99,7 +99,7 @@ class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
         jUnitRunner.run(notifier)
     }
 
-    public class TestJUnitRunListener(val output: MutableList<String>) : RunListener() {
+    class TestJUnitRunListener(val output: MutableList<String>) : RunListener() {
         override fun testStarted(description: Description?) {
             output.add("${description?.displayName} START")
         }

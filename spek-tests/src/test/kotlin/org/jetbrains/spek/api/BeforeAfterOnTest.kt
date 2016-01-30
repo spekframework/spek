@@ -9,11 +9,11 @@ import kotlin.test.assertEquals
 import kotlin.test.fail
 
 @RunWith(JUnitParamsRunner::class)
-public class BeforeAfterOnTest {
+class BeforeAfterOnTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
-    public fun callOnBefore(runner: SpekTestCaseRunner) {
+    fun callOnBefore(runner: SpekTestCaseRunner) {
         val log = arrayListOf<String>()
         runner.runTest({
             given("a") {
@@ -30,7 +30,7 @@ public class BeforeAfterOnTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
-    public fun callOnAfter(runner: SpekTestCaseRunner) {
+    fun callOnAfter(runner: SpekTestCaseRunner) {
         val log = arrayListOf<String>()
         runner.runTest({
             given("a") {
@@ -47,7 +47,7 @@ public class BeforeAfterOnTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
-    public fun callOnBeforeAndOnAfter(runner: SpekTestCaseRunner) {
+    fun callOnBeforeAndOnAfter(runner: SpekTestCaseRunner) {
         val log = arrayListOf<String>()
         runner.runTest({
             given("1") {

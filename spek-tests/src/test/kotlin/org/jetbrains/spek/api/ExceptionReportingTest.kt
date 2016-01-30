@@ -8,10 +8,8 @@ import org.junit.runner.RunWith
 /**
  * Created by jakub on 30/01/16.
  */
-
-
 @RunWith(JUnitParamsRunner::class)
-public class ExceptionReportingTest {
+class ExceptionReportingTest {
 
     @Test
     @Parameters(source = SpekTestCaseRunnerProvider::class)
