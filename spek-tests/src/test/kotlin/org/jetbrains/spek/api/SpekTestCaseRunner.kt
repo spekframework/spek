@@ -4,12 +4,12 @@ import org.jetbrains.spek.console.ActionStatusReporter
 import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.executeSpek
 import org.jetbrains.spek.junit.JUnitClassRunner
+import org.jetbrains.spek.junit.evaluateResults
 import org.junit.Assert
 import org.junit.runner.Description
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
 import org.junit.runner.notification.RunNotifier
-import java.util.*
 
 /**
  * Created by jakub on 29/01/16.
@@ -93,7 +93,7 @@ class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
 
     override fun <T> runSpec(spec: T, log: MutableList<String>)
             where T : Spek, T : TestSpekAction {
-        val jUnitRunner = JUnitClassRunner(spec.javaClass, spec)
+        val jUnitRunner = TestableJUnitClassRunner(spec)
         val notifier = RunNotifier()
         notifier.addFirstListener(TestJUnitRunListener(log))
         jUnitRunner.run(notifier)
@@ -119,5 +119,16 @@ class JUnitSpekTestCaseRunner : SpekTestCaseRunner() {
         override fun testIgnored(description: Description?) {
             output.add("${description?.displayName} PEND")
         }
+    }
+}
+
+/**
+ * This class is needed to build proper logs while traversing JUnits Descriptoin tree.
+ * For non-test purposes, the tree reports start/finish only for leaf nodes, for test runs
+ * it needs to report all nodes to be able to properly gather execution logs
+ */
+class TestableJUnitClassRunner(spec: Spek) : JUnitClassRunner<Spek>(spec.javaClass, spec) {
+    override fun run(notifier: RunNotifier?) {
+        evaluateResults(_description, notifier, _spekRunResults, forceReportAll = true)
     }
 }

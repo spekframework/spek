@@ -30,27 +30,28 @@ public fun runSpek(testIdHashCode: Int, results: HashMap<Int, SpekResult>, actio
     }
 }
 
-public fun evaluateResults(desc: Description?, notifier: RunNotifier?, results: HashMap<Int, SpekResult>) {
+public fun evaluateResults(desc: Description?,
+                           notifier: RunNotifier?,
+                           results: HashMap<Int, SpekResult>,
+                           forceReportAll: Boolean = false) {
     desc?.apply {
         val testId = hashCode()
         val result = results[testId]
         notifier?.apply {
-            // if (isTest)
-            fireTestStarted(desc)
-            children?.forEach { child -> evaluateResults(child, notifier, results) }
+            if (isTest || forceReportAll) fireTestStarted(desc)
+            children?.forEach { child -> evaluateResults(child, notifier, results, forceReportAll) }
             when (result?.exception) {
                 is SkippedException -> fireTestAssumptionFailed(Failure(desc, result?.exception))
                 is PendingException -> fireTestIgnored(desc)
                 is Throwable -> fireTestFailure(Failure(desc, result?.exception))
             }
-            // if (isTest)
-            fireTestFinished(desc)
+            if (isTest || forceReportAll) fireTestFinished(desc)
         }
     }
 }
 
-public class JUnitClassRunner<T>(val specClass: Class<T>,
-                                 val specInstance: T? = null) : ParentRunner<Unit>(specClass) {
+public open class JUnitClassRunner<T>(val specClass: Class<T>,
+                                      val specInstance: T? = null) : ParentRunner<Unit>(specClass) {
 
     constructor(specClass: Class<T>) : this(specClass, null) {
     }
