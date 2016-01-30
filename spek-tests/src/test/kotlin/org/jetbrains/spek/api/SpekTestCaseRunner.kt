@@ -78,7 +78,7 @@ class ConsoleSpekTestCaseRunner : SpekTestCaseRunner() {
             }
 
             override fun failed(error: Throwable) {
-                output.add(prefix + " FAIL:" + error.message)
+                output.add(prefix + " FAIL: " + error.message)
             }
         }
 
