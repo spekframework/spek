@@ -1,9 +1,12 @@
 buildscript {
     junitVersion = '4.11'
-    kotlinVersion = '1.0.0-beta-4589'
+    kotlinVersion = '1.0.0-rc-1007'
     version = '0.1-SNAPSHOT'
     repositories {
         mavenCentral()
+        maven {
+            url 'https://dl.bintray.com/kotlin/kotlin-eap'
+        }
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
