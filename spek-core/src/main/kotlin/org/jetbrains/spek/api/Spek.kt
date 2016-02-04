@@ -2,12 +2,13 @@ package org.jetbrains.spek.api
 
 import org.jetbrains.spek.junit.*
 import org.junit.runner.*
+import java.util.*
 import kotlin.collections.linkedListOf
 
 @RunWith(JUnitClassRunner::class)
 abstract class Spek : Specification {
 
-    private val recordedActions = linkedListOf<TestGivenAction>()
+    private val recordedActions = LinkedList<TestGivenAction>()
 
     override fun given(description: String, givenExpression: Given.() -> Unit) {
         recordedActions.add(

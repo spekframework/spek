@@ -1,13 +1,14 @@
 package org.jetbrains.spek.api
 
+import java.util.*
 import kotlin.collections.forEach
 import kotlin.collections.linkedListOf
 
 
 open class GivenImpl: org.jetbrains.spek.api.Given {
-    private val recordedActions = linkedListOf<org.jetbrains.spek.api.TestOnAction>()
-    private val beforeActions = linkedListOf<()->Unit>()
-    private val afterActions = linkedListOf<()->Unit>()
+    private val recordedActions = LinkedList<TestOnAction>()
+    private val beforeActions = LinkedList<()->Unit>()
+    private val afterActions = LinkedList<()->Unit>()
 
     fun iterateOn(callback : (org.jetbrains.spek.api.TestOnAction) -> Unit) {
         org.jetbrains.spek.api.removingIterator(recordedActions) {

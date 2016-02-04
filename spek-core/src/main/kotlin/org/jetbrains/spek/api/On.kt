@@ -1,9 +1,10 @@
 package org.jetbrains.spek.api
 
+import java.util.*
 import kotlin.collections.linkedListOf
 
 open class OnImpl: On {
-    private val recordedActions = linkedListOf<TestItAction>()
+    private val recordedActions = LinkedList<TestItAction>()
 
     fun iterateIt(it : (TestItAction) -> Unit) {
         removingIterator(recordedActions, it)

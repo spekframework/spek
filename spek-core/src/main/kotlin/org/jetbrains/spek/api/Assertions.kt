@@ -27,7 +27,7 @@ fun <T> It.shouldBeFalse(actual: T) : Unit {
 }
 
 fun <T: Throwable> It.shouldThrow(exceptionClass: Class<T>, block: () -> Unit): T {
-    return assertFailsWith(exceptionClass, block)
+    return assertFailsWith(exceptionClass.kotlin, block)
 }
 
 
