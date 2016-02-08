@@ -2,13 +2,15 @@ package org.jetbrains.spek.api
 
 import org.jetbrains.spek.junit.JUnitClassRunner
 import org.junit.runner.RunWith
+import java.util.*
+import kotlin.collections.linkedListOf
 
 @RunWith(JUnitClassRunner::class)
 abstract class Spek : org.jetbrains.spek.api.Specification {
 
-    private val recordedGivenActions = linkedListOf<org.jetbrains.spek.api.TestGivenAction>()
-    private val recordedBeforeEachActions = linkedListOf<() -> Unit>()
-    private val recordedAfterEachActions = linkedListOf<() -> Unit>()
+    private val recordedGivenActions = LinkedList<TestGivenAction>()
+    private val recordedBeforeEachActions = LinkedList<()->Unit>()
+    private val recordedAfterEachActions = LinkedList<()->Unit>()
 
     override fun beforeEach(action: () -> Unit) {
         recordedBeforeEachActions.add(action)

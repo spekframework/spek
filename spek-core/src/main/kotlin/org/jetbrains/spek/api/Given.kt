@@ -1,23 +1,25 @@
 package org.jetbrains.spek.api
 
+import java.util.*
+import kotlin.collections.forEach
 
-open class GivenImpl : org.jetbrains.spek.api.Given {
-    private val recordedOnActions = linkedListOf<org.jetbrains.spek.api.TestOnAction>()
-    private val recordedBeforeActions = linkedListOf<() -> Unit>()
-    private val recordedAfterActions = linkedListOf<() -> Unit>()
+open class GivenImpl: org.jetbrains.spek.api.Given {
+    private val recordedActions = LinkedList<TestOnAction>()
+    private val beforeActions = LinkedList<()->Unit>()
+    private val afterActions = LinkedList<()->Unit>()
 
-    fun listOn() = recordedOnActions
+    fun listOn() = recordedActions
 
     override fun beforeOn(it: () -> Unit) {
-        recordedBeforeActions.add(it)
+        beforeActions.add(it)
     }
 
     override fun afterOn(it: () -> Unit) {
-        recordedAfterActions.add(it)
+        afterActions.add(it)
     }
 
     override fun on(description: String, onExpression: org.jetbrains.spek.api.On.() -> Unit) {
-        recordedOnActions.add(
+        recordedActions.add(
                 object : org.jetbrains.spek.api.TestOnAction {
                     val on: OnImpl by lazy {
                         val impl = OnImpl()
@@ -30,9 +32,9 @@ open class GivenImpl : org.jetbrains.spek.api.Given {
                     override fun listIt() = on.listIt()
 
                     override fun run(action: () -> Unit) {
-                        recordedBeforeActions.forEach { it() }
+                        beforeActions.forEach { it() }
                         action()
-                        recordedAfterActions.forEach { it() }
+                        afterActions.forEach { it() }
                     }
                 })
     }
