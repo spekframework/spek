@@ -1,8 +1,6 @@
 package org.jetbrains.spek.api
 
 import java.util.*
-import kotlin.collections.forEach
-import kotlin.collections.linkedListOf
 
 
 open class GivenImpl: org.jetbrains.spek.api.Given {

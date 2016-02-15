@@ -1,7 +1,6 @@
 package org.jetbrains.spek.api
 
 import java.util.*
-import kotlin.collections.linkedListOf
 
 open class OnImpl: On {
     private val recordedActions = LinkedList<TestItAction>()

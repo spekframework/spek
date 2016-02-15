@@ -3,7 +3,6 @@ package org.jetbrains.spek.api
 import org.jetbrains.spek.junit.*
 import org.junit.runner.*
 import java.util.*
-import kotlin.collections.linkedListOf
 
 @RunWith(JUnitClassRunner::class)
 abstract class Spek : Specification {
