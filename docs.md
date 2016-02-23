@@ -35,7 +35,7 @@ You might notice that JUnit ships with Spek. Why? Because we rely on it for test
 Your specifications need to inherit from the Spek() base class. The primary reason for this is so that we leverage a lot of the functionality of JUnit.
 
 {% highlight kotlin %}
-class TaxCalculatorSpecs: Spek() {{ "init {{" }}
+class TaxCalculatorSpecs: Spek() { init { " {{" }}
 
     given("Tax rate calculator with default locale settings") {
         val taxRateCalculator = TaxRateCalculator()
