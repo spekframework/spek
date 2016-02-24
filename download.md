@@ -29,45 +29,6 @@ Spek has not been released yet and as such is not made available on Maven Centra
 
 To use it in Maven insert the following in your pom.xml file:
 
-
-{% highlight xml %}
- 
- <dependency>
-    <groupId>org.spek</groupId>
-    <artifactId>spek</artifactId>
-    <version>$version</version>
-    <type>pom</type>
-    <scope>test</scope>
- </dependency>
-
- <repositories>
-    <repository>
-      <id>jebrains-all</id>
-      <url>http://repository.jetbrains.com/all</url>
-    </repository>
-  </repositories>
-
-{% endhighlight %}
-
-
-For Gradle:
-
-{% highlight xml %}
-
-repositories {
-    maven {
-        url "http://repository.jetbrains.com/all"
-    }
-}
-
-dependencies {
-    testCompile 'org.spek:spek:$version'
-}
-
-{% endhighlight %}
-
-
-
 {% highlight xml %}
  
  <dependency>
