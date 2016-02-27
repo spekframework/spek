@@ -2,37 +2,20 @@ package org.jetbrains.spek.api
 
 import org.jetbrains.spek.junit.*
 import org.junit.runner.*
-import java.util.*
 
-@RunWith(JUnitClassRunner::class)
-abstract class Spek : Specification {
+@RunWith(JUnitSpekRunner::class)
+open class Spek(val spekBody: DescribeBody.() -> Unit) {
+    val parentDescribeBody = DescribeTreeGenerator()
 
-    private val recordedActions = LinkedList<TestGivenAction>()
-
-    override fun given(description: String, givenExpression: Given.() -> Unit) {
-        recordedActions.add(
-                object : TestGivenAction {
-                    override fun description() = "given " + description
-
-                    override fun iterateOn(it: (TestOnAction) -> Unit) {
-                        val given = GivenImpl()
-                        given.givenExpression()
-                        given.iterateOn(it)
-                    }
-                })
-
+    init {
+        parentDescribeBody.describe(this.javaClass.simpleName, spekBody)
     }
 
-    fun iterateGiven(it: (TestGivenAction) -> Unit): Unit = removingIterator(recordedActions, it)
+    fun testAction(): TestAction {
+        return parentDescribeBody.recordedActions()[0]
+    }
 
-    fun allGiven(): List<TestGivenAction> = recordedActions
-}
-
-
-fun <T> Spek.givenData(data: Iterable<T>, givenExpression: Given.(T) -> Unit) {
-    for (entry in data) {
-        given(entry.toString()) {
-            givenExpression(entry)
-        }
+    fun run(notifier: Notifier) {
+        parentDescribeBody.recordedActions()[0].run(notifier)
     }
 }
