@@ -3,12 +3,12 @@ package org.jetbrains.spek.api
 import java.util.*
 
 
-open class GivenImpl: org.jetbrains.spek.api.Given {
+open class GivenImpl : org.jetbrains.spek.api.Given {
     private val recordedActions = LinkedList<TestOnAction>()
-    private val beforeActions = LinkedList<()->Unit>()
-    private val afterActions = LinkedList<()->Unit>()
+    private val beforeActions = LinkedList<() -> Unit>()
+    private val afterActions = LinkedList<() -> Unit>()
 
-    fun iterateOn(callback : (org.jetbrains.spek.api.TestOnAction) -> Unit) {
+    fun iterateOn(callback: (org.jetbrains.spek.api.TestOnAction) -> Unit) {
         org.jetbrains.spek.api.removingIterator(recordedActions) {
             // This doesn't actually work. Tests pass but tests are wrong
             beforeActions.forEach { it() }

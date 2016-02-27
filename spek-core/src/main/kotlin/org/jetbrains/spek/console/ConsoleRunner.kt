@@ -5,7 +5,7 @@ import kotlin.collections.toList
 import kotlin.text.split
 
 
-fun main(args: Array<String>)  {
+fun main(args: Array<String>) {
     if (args.size < 2) {
         printUsage()
     } else {
