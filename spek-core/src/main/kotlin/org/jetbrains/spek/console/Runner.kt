@@ -5,7 +5,7 @@ import kotlin.collections.forEach
 
 
 class Runner(val listener: WorkflowReporter) {
-    fun runSpecs(paths: List<String> , packageName: String) {
+    fun runSpecs(paths: List<String>, packageName: String) {
         run(findSpecs(paths, packageName))
     }
 

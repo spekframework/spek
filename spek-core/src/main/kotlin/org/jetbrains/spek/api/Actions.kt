@@ -3,7 +3,7 @@ package org.jetbrains.spek.api
 
 interface TestSpekAction {
     fun description(): String
-    fun iterateGiven(it:(TestGivenAction) -> Unit)
+    fun iterateGiven(it: (TestGivenAction) -> Unit)
 }
 
 interface TestGivenAction {
@@ -13,7 +13,7 @@ interface TestGivenAction {
 
 interface TestOnAction {
     fun description(): String
-    fun iterateIt(it : (TestItAction) -> Unit)
+    fun iterateIt(it: (TestItAction) -> Unit)
 }
 
 interface TestItAction {

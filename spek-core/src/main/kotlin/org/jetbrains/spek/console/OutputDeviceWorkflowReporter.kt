@@ -6,13 +6,16 @@ class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowReporter 
             override fun started() {
                 device.output(spek)
             }
+
             override fun failed(error: Throwable) {
                 device.output("Failed: " + error.message + " " + error)
                 device.output("")
             }
+
             override fun skipped(why: String) {
                 device.output("Skipped '$spek'. Reason: $why")
             }
+
             override fun pending(why: String) {
                 device.output("Pending '$spek'. Reason: $why")
             }
@@ -24,15 +27,19 @@ class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowReporter 
             override fun started() {
                 device.output("  $given")
             }
+
             override fun completed() {
                 device.output("")
             }
+
             override fun skipped(why: String) {
                 device.output("  Skipped '$given'. Reason: $why")
             }
+
             override fun pending(why: String) {
                 device.output("  Pending '$given'. Reason: $why")
             }
+
             override fun failed(error: Throwable) {
                 device.output("  Failed: $error")
                 device.output("")
@@ -45,13 +52,16 @@ class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowReporter 
             override fun started() {
                 device.output("    $on")
             }
+
             override fun failed(error: Throwable) {
                 device.output("    Failed: $error")
                 device.output("")
             }
+
             override fun skipped(why: String) {
                 device.output("    Skipped '$on'. Reason: $why")
             }
+
             override fun pending(why: String) {
                 device.output("    Pending '$on'. Reason: $why")
             }
@@ -63,13 +73,16 @@ class OutputDeviceWorkflowReporter(val device: OutputDevice) : WorkflowReporter 
             override fun started() {
                 device.output("      $it")
             }
+
             override fun failed(error: Throwable) {
                 device.output("      Failed: $error")
                 device.output("")
             }
+
             override fun skipped(why: String) {
                 device.output("      Skipped '$it'. Reason: $why")
             }
+
             override fun pending(why: String) {
                 device.output("      Pending '$it'. Reason: $why")
             }

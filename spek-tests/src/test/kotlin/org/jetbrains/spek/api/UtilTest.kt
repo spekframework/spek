@@ -30,7 +30,7 @@ class UtilTest {
 
     @test fun failedSafeExecution() {
         //given an action and a listener
-       //when safeExecution finished with an error (exception).
+        //when safeExecution finished with an error (exception).
         val throwable = RuntimeException("an exception")
         executeWithReporting(action, listener) {
             throw throwable
