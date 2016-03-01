@@ -9,7 +9,7 @@ This fork of Spek is intended to address some of the problems with the existing 
   - removed assertions `should`, etc -- use kotlin's `assertEquals`, or other library ([AssertJ](http://joel-costigliola.github.io/assertj/), [HamKrest](https://github.com/npryce/hamkrest), etc) instead
 
 ## How to use
-1. Download the [jar](https://github.com/lkogler/spek/releases/download/v0.alpha1/spek-core.jar)
+1. Download the [jar](https://github.com/lkogler/spek/releases)
 2. Make a folder called testLibs in your project and add the jar
 3. Update your `build.gradle`: Remove the current `spek` dependency, and add the following:
 
