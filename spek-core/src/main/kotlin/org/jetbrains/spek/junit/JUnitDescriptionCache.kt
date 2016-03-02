@@ -26,7 +26,7 @@ class JUnitDescriptionCache() {
                 return Description.createSuiteDescription(key.description())
             ActionType.DESCRIBE -> {
                 val description = Description.createSuiteDescription(key.description())  // TODO: use a unique ID to prevent things going bad if two tests have the same name -- See JUnitUniqueId at the top of this file
-                key.recordedActions().forEach {
+                key.children().forEach {
                     description.addChild(this.get(it))
                 }
                 return description

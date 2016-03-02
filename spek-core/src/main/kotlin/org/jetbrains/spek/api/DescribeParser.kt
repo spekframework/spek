@@ -2,34 +2,41 @@ package org.jetbrains.spek.api
 
 import java.util.*
 
-class DescribeTreeGenerator : DescribeBody {
-    private val recordedActions = LinkedList<TestAction>()
-    private val recordedAfterEaches = LinkedList<() -> Unit>()
+class DescribeParser() : DescribeBody {
+    private val children = LinkedList<TestAction>()
+    val befores: LinkedList<() -> Unit> = LinkedList()
+    val afters: LinkedList<() -> Unit> = LinkedList()
 
-    fun recordedActions(): List<TestAction> {
-        if (recordedActions.isEmpty()) {
+    fun children(): List<TestAction> {
+        if (children.isEmpty()) {
             throw RuntimeException(this.javaClass.canonicalName + ": no tests found")
         }
-        return recordedActions
+        return children
     }
 
     override fun describe(description: String, evaluateBody: DescribeBody.() -> Unit) {
-        val inner = DescribeTreeGenerator()
-        recordedActions.add(
+        val inner = DescribeParser()
+        children.add(
                 object : TestAction {
-                    override fun recordedActions(): List<TestAction> {
-                        return inner.recordedActions
+                    override fun children(): List<TestAction> {
+                        return inner.children
                     }
 
                     override fun description() = description
                     override fun type() = ActionType.DESCRIBE
-                    override fun run(notifier: Notifier) {
+                    override fun run(notifier: Notifier, parentContext: SpekContext) {
                         notifier.start(this)
 
-                        for ((index, it) in inner.recordedActions().withIndex()) {
-                            val executor = DescribeExecutor(index)
-                            executor.evaluateBody()
-                            executor.run(notifier)
+                        inner.children().forEach {
+                            it.run(notifier, object : SpekContext {
+                                override fun run(test: () -> Unit) {
+                                    parentContext.run {
+                                        befores.forEach { it() }
+                                        test()
+                                        afters.forEach { it() }
+                                    }
+                                }
+                            })
                         }
 
                         notifier.succeed(this)
@@ -41,16 +48,16 @@ class DescribeTreeGenerator : DescribeBody {
     }
 
     override fun xdescribe(description: String, evaluateBody: DescribeBody.() -> Unit) {
-        val inner = DescribeTreeGenerator()
-        recordedActions.add(
+        val inner = DescribeParser()
+        children.add(
                 object : TestAction {
-                    override fun recordedActions(): List<TestAction> {
-                        return inner.recordedActions
+                    override fun children(): List<TestAction> {
+                        return inner.children
                     }
 
                     override fun description() = description
                     override fun type() = ActionType.DESCRIBE
-                    override fun run(notifier: Notifier) {
+                    override fun run(notifier: Notifier, parentContext: SpekContext) {
                         notifier.ignore(this)
                     }
                 }
@@ -60,15 +67,15 @@ class DescribeTreeGenerator : DescribeBody {
     }
 
     override fun xit(description: String, @Suppress("UNUSED_PARAMETER") assertions: () -> Unit) {
-        recordedActions.add(
+        children.add(
                 object : TestAction {
-                    override fun recordedActions(): List<TestAction> {
+                    override fun children(): List<TestAction> {
                         throw UnsupportedOperationException()
                     }
 
                     override fun description() = "it " + description
 
-                    override fun run(notifier: Notifier) {
+                    override fun run(notifier: Notifier, parentContext: SpekContext) {
                         notifier.ignore(this)
                     }
 
@@ -78,27 +85,26 @@ class DescribeTreeGenerator : DescribeBody {
     }
 
     override fun it(description: String, assertions: () -> Unit) {
-        recordedActions.add(
+        children.add(
                 object : TestAction {
-                    override fun recordedActions(): List<TestAction> {
+                    override fun children(): List<TestAction> {
                         throw UnsupportedOperationException()
                     }
 
                     override fun description() = "it " + description
                     override fun type() = ActionType.IT
 
-                    override fun run(notifier: Notifier) {
+                    override fun run(notifier: Notifier, parentContext: SpekContext) {
                         notifier.start(this)
                         try {
-                            assertions()
+                            parentContext.run {
+                                befores.forEach { it() }
+                                assertions()
+                                afters.forEach { it() }
+                            }
                             notifier.succeed(this)
                         } catch(e: Throwable) {
                             notifier.fail(this, e)
-                        }
-
-                        // TODO: if an afterEach throws, it should mark this test as failed
-                        recordedAfterEaches.forEach {
-                            it()
                         }
 
                     }
@@ -106,7 +112,11 @@ class DescribeTreeGenerator : DescribeBody {
         )
     }
 
+    override fun beforeEach(actions: () -> Unit) {
+        befores.add(actions)
+    }
+
     override fun afterEach(actions: () -> Unit) {
-        recordedAfterEaches.add(actions)
+        afters.add(actions)
     }
 }

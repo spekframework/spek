@@ -1,21 +1,23 @@
 package org.jetbrains.spek.api
 
-import org.jetbrains.spek.junit.*
-import org.junit.runner.*
+import org.jetbrains.spek.junit.JUnitSpekRunner
+import org.junit.runner.RunWith
 
 @RunWith(JUnitSpekRunner::class)
 open class Spek(val spekBody: DescribeBody.() -> Unit) {
-    val parentDescribeBody = DescribeTreeGenerator()
+    val testAction : TestAction
 
     init {
+        val parentDescribeBody = DescribeParser()
         parentDescribeBody.describe(this.javaClass.simpleName, spekBody)
-    }
-
-    fun testAction(): TestAction {
-        return parentDescribeBody.recordedActions()[0]
+        testAction = parentDescribeBody.children()[0]
     }
 
     fun run(notifier: Notifier) {
-        parentDescribeBody.recordedActions()[0].run(notifier)
+        testAction.run(notifier, object : SpekContext {
+            override fun run(test: () -> Unit) {
+                test()
+            }
+        })
     }
 }

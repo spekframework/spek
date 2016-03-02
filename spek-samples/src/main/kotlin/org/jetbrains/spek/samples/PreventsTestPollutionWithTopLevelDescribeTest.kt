@@ -1,11 +1,15 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.api.*
+import org.jetbrains.spek.api.Spek
 import kotlin.test.assertEquals
 
 class PreventsTestPollutionWithTopLevelDescribeTest : Spek({
     describe("describe bodies should be evaluated for each test") {
-        var number = 3
+        var number = 0
+
+        beforeEach {
+            number = 3
+        }
 
         it("should equal 3") {
             assertEquals(number, 3)
@@ -17,8 +21,11 @@ class PreventsTestPollutionWithTopLevelDescribeTest : Spek({
         }
 
         describe("nested describe") {
-            var anotherNumber = 5
-            number = 9
+            var anotherNumber = 0
+            beforeEach {
+                anotherNumber = 5
+                number = 9
+            }
 
             it("works for nested describes") {
                 assertEquals(anotherNumber, 5)

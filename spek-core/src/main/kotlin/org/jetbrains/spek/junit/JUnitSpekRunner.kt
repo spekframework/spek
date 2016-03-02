@@ -7,23 +7,23 @@ import org.junit.runner.notification.RunNotifier
 
 class JUnitSpekRunner(val specificationClass: Class<*>) : Runner() {
     private val junitDescriptionCache = JUnitDescriptionCache()
+    val spek: Spek
 
-    private fun spek(): Spek? = _children
-
-    val _children by lazy(LazyThreadSafetyMode.NONE) {
+    init {
         if (Spek::class.java.isAssignableFrom(specificationClass) && !specificationClass.isLocalClass) {
-            specificationClass.newInstance() as Spek
+            spek = specificationClass.newInstance() as Spek
         } else {
-            null
+            throw RuntimeException(specificationClass.canonicalName + " must be a subclass of "
+                    + Spek::class.qualifiedName
+                    + " in order to use " + JUnitSpekRunner::class.simpleName)
         }
     }
 
     override fun getDescription(): Description? {
-        return junitDescriptionCache.get(spek()!!.testAction())
+        return junitDescriptionCache.get(spek.testAction)
     }
 
     override fun run(junitNotifier: RunNotifier?) {
-        spek()?.run(JUnitNotifier(junitNotifier!!, junitDescriptionCache))
+        spek.run(JUnitNotifier(junitNotifier!!, junitDescriptionCache))
     }
 }
-
