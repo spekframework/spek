@@ -6,6 +6,9 @@ import java.util.*
 
 @RunWith(JUnitClassRunner::class)
 abstract class Spek : Specification {
+    constructor(body: Spek.() -> Unit = {}) {
+        this.body()
+    }
 
     private val recordedActions = LinkedList<TestGivenAction>()
 
