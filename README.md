@@ -5,7 +5,7 @@ This fork of Spek is intended to address some of the problems with the existing 
 1. **Simpler/more flexible DSL** - This reduces the overhead in writing simple tests, and allows for more sophisticated test structures, like arbitrary nesting depth
   - outer `init` is no longer necessary
   - added `beforeEach` and `afterEach` for test setup and teardown
-  - `given`, `on` replaced with `describe`
+  - added Rspec style `describe` and `context` (`given` and `on` are still available as synonyms for `describe`)
   - `describe`s can be nested
   - removed assertions `should`, etc -- use kotlin's `assertEquals`, or other library ([AssertJ](http://joel-costigliola.github.io/assertj/), [HamKrest](https://github.com/npryce/hamkrest), etc) instead
 
