@@ -67,7 +67,7 @@ fun setupRunner(options: Options): ConsoleSpekRunner {
 
     when (options.format) {
         "text" -> notifier.add(OutputDeviceNotifier(device))
-        "html" -> notifier.add(HtmlNotifier(options.packageName, device, options.cssFile))
+        "html" -> notifier.add(HtmlNotifier(options.packageName, device))
         else -> throw UnsupportedOperationException("Unknown format: ${options.format}")
     }
     return ConsoleSpekRunner(notifier)
