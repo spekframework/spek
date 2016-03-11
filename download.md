@@ -61,7 +61,7 @@ repositories {
 }
 
 dependencies {
-    testCompile 'org.spek:spek:$version'
+    testCompile 'org.jetbrains.spek:spek:$version'
 }
 
 {% endhighlight %}
