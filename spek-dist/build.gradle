@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 
-mainClassName = 'org.jetbrains.spek.console.ConsolePackage'
+mainClassName = 'org.jetbrains.spek.console.ConsoleRunnerKt'
 version = rootProject.version
 applicationName = 'spek'
 
