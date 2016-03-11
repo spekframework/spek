@@ -25,7 +25,6 @@ fun getOptions(args: Array<String>): Options {
     var index = 2
     var format = "text"
     var filename = ""
-    var cssFile = ""
     var paths = listOf<String>()
     var packageName = ""
 
@@ -44,9 +43,6 @@ fun getOptions(args: Array<String>): Options {
             "-o", "--output" -> {
                 filename = args[++index]
             }
-            "-s", "--css" -> {
-                cssFile = args[++index]
-            }
             else -> {
                 throw UnsupportedOperationException("Unknown parameter: ${args[index]}")
             }
@@ -54,7 +50,11 @@ fun getOptions(args: Array<String>): Options {
         index++
     }
 
-    return Options(paths, packageName, format, filename, cssFile)
+    if (format == "html" && filename == "") {
+        filename = "out.html"
+    }
+
+    return Options(paths, packageName, format, filename)
 }
 
 fun setupRunner(options: Options): ConsoleSpekRunner {
