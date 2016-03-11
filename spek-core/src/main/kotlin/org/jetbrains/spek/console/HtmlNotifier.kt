@@ -9,7 +9,7 @@ class HtmlNotifier(val suite: String, val device: OutputDevice, val cssFile: Str
         if (cssFile != "") {
             css = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssFile\">"
         }
-        device.output("<html><head><title>$suite</title>$css<body><div class=\"suite\">")
+        device.output("<html><head><title>$suite</title>$css</head><body><div class=\"suite\">")
     }
 
     override fun start(key: TestAction) {
@@ -33,8 +33,7 @@ class HtmlNotifier(val suite: String, val device: OutputDevice, val cssFile: Str
     }
 
     override fun finish() {
-        //TODO fixme
-        device.output("")
+        device.output("</div></body></html>")
     }
 }
 

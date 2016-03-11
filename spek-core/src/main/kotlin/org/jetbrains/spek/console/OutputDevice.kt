@@ -28,11 +28,3 @@ class ConsoleOutputDevice : OutputDevice {
         println(message)
     }
 }
-
-class StringBuilderOutputDevice(buffer: StringBuilder) : OutputDevice {
-    val buffer = buffer
-
-    override fun output(message: String) {
-        buffer.append(message).append("\n")
-    }
-}
