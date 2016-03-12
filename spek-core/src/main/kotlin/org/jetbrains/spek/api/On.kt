@@ -2,7 +2,7 @@ package org.jetbrains.spek.api
 
 import java.util.*
 
-open class OnImpl: On {
+open class OnImpl : On {
     private val recordedActions = LinkedList<TestItAction>()
 
     fun listIt() = recordedActions
@@ -11,10 +11,10 @@ open class OnImpl: On {
         recordedActions.add(
                 object : TestItAction {
                     override fun description() = "it " + description
-
                     override fun run(action: () -> Unit) {
                         ItImpl().itExpression()
                     }
                 })
     }
 }
+

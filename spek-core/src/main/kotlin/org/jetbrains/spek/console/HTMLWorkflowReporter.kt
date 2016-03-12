@@ -17,10 +17,12 @@ class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, val cssF
                 //device.output("<div class=\"runStarted\">Found <div class=\"totalSpecs\">${runStarted.totalSpecifications} specification(s)<div></div>")
                 device.output("<div class=\"spek\"><h1>${spek}</h1>")
             }
+
             override fun completed() {
                 device.output("</div>")
                 //device.output("<div class=\"runFinished\"><div class=\"totalPassed\">Total passed: ${runFinished.passed}</div> <div class=\"totalFailed\">failed: ${runFinished.failed}</div></div></div></body></html>")
             }
+
             override fun failed(error: Throwable) {
                 device.output("Failed: ${error}")
                 device.output("")
@@ -33,9 +35,11 @@ class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, val cssF
             override fun started() {
                 device.output("  <div class=\"given\"><h2>${given}</h2>")
             }
+
             override fun completed() {
                 device.output("  </div>")
             }
+
             override fun failed(error: Throwable) {
                 device.output("  Failed: ${error}")
                 device.output("")
@@ -48,9 +52,11 @@ class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, val cssF
             override fun started() {
                 device.output("    <div class=\"on\"><h3>${on}</h3>")
             }
+
             override fun completed() {
                 device.output("    </div>")
             }
+
             override fun failed(error: Throwable) {
                 device.output("    Failed: ${error}")
                 device.output("")
@@ -63,9 +69,11 @@ class HtmlWorkflowReporter(val suite: String, val device: OutputDevice, val cssF
             override fun started() {
                 device.output("      <div class=\"it\"><h4>${it}</h4>")
             }
+
             override fun completed() {
                 device.output("      </div>")
             }
+
             override fun failed(error: Throwable) {
                 device.output("      Failed: ${error}")
                 device.output("")

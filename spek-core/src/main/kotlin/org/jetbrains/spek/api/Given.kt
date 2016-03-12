@@ -3,10 +3,10 @@ package org.jetbrains.spek.api
 import java.util.*
 import kotlin.collections.forEach
 
-open class GivenImpl: org.jetbrains.spek.api.Given {
+open class GivenImpl : org.jetbrains.spek.api.Given {
     private val recordedActions = LinkedList<TestOnAction>()
-    private val beforeActions = LinkedList<()->Unit>()
-    private val afterActions = LinkedList<()->Unit>()
+    private val beforeActions = LinkedList<() -> Unit>()
+    private val afterActions = LinkedList<() -> Unit>()
 
     fun listOn() = recordedActions
 

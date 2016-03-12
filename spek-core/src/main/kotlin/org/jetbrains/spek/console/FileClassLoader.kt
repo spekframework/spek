@@ -40,10 +40,10 @@ fun findClassesInUrls(urls: List<URL>, packageName: String): List<String> {
             var jarFilename = URLDecoder.decode(url.getFile()!!, "UTF-8")
             val jarFile = JarFile(jarFilename)
             var jarEntries = jarFile.entries()
-            while (jarEntries.hasMoreElements())  {
+            while (jarEntries.hasMoreElements()) {
                 var entryName = jarEntries.nextElement().getName()
-                if (entryName.startsWith(packageName) && entryName.length > packageName.length +5) {
-                    entryName = entryName.substring(packageName.length,entryName.lastIndexOf('.'))
+                if (entryName.startsWith(packageName) && entryName.length > packageName.length + 5) {
+                    entryName = entryName.substring(packageName.length, entryName.lastIndexOf('.'))
                     names.add(entryName)
                 }
             }
