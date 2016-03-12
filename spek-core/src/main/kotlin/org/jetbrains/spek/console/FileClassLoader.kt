@@ -1,15 +1,17 @@
 package org.jetbrains.spek.console
 
-import org.jetbrains.spek.api.*
-import java.io.*
-import java.lang.reflect.*
-import java.net.*
-import java.util.jar.*
-import kotlin.collections.arrayListOf
-import kotlin.collections.forEach
-import kotlin.collections.listOf
-import kotlin.collections.toTypedArray
-import kotlin.text.*
+import org.jetbrains.spek.api.SkippedException
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.TestSpekAction
+import org.jetbrains.spek.api.ignored
+import java.io.File
+import java.lang.reflect.AnnotatedElement
+import java.lang.reflect.Method
+import java.net.URI
+import java.net.URL
+import java.net.URLClassLoader
+import java.net.URLDecoder
+import java.util.jar.JarFile
 
 
 fun getUrlsForPaths(paths: List<String>): List<URL> {
@@ -86,25 +88,34 @@ private fun AnnotatedElement.checkSkipped() {
 }
 
 data class ExtensionFunctionSpek(val method: Method) : TestSpekAction {
-    override fun description(): String = method.toString()
 
-    override fun iterateGiven(it: (TestGivenAction) -> Unit) {
-        val builder = object : Spek() {
-        }
-        //TODO: assert method signature
-
+    val recordedActions by lazy {
+        val builder = object : Spek() {}
         method.checkSkipped()
         method.invoke(null, builder)
+        builder.listGiven()
+    }
 
-        builder.iterateGiven(it)
+    override fun description(): String = method.toString()
+
+    override fun listGiven() = recordedActions
+
+    override fun run(action: () -> Unit) {
+        action()
     }
 }
 
 data class ClassSpek<T : Spek>(val specificationClass: Class<out T>) : TestSpekAction {
     override fun description(): String = specificationClass.getName()
 
-    override fun iterateGiven(it: (TestGivenAction) -> Unit) {
+    val recordedActions by lazy {
         specificationClass.checkSkipped()
-        specificationClass.newInstance().iterateGiven(it)
+        specificationClass.newInstance().listGiven()
+    }
+
+    override fun listGiven() = recordedActions
+
+    override fun run(action: () -> Unit) {
+        action()
     }
 }

@@ -1,23 +1,22 @@
 package org.jetbrains.spek.api
 
-
-interface TestSpekAction {
-    fun description(): String
-    fun iterateGiven(it: (TestGivenAction) -> Unit)
+ interface SpekTestableComponent {
+     fun description(): String
+     fun run(action: () -> Unit)
 }
 
-interface TestGivenAction {
-    fun description(): String
-    fun iterateOn(it: (TestOnAction) -> Unit)
+ interface TestSpekAction : SpekTestableComponent {
+     fun listGiven(): List<TestGivenAction>
 }
 
-interface TestOnAction {
-    fun description(): String
-    fun iterateIt(it: (TestItAction) -> Unit)
+ interface TestGivenAction : SpekTestableComponent {
+     fun listOn(): List<TestOnAction>
 }
 
-interface TestItAction {
-    fun description(): String
-    fun run()
+ interface TestOnAction : SpekTestableComponent {
+     fun listIt(): List<TestItAction>
+}
+
+ interface TestItAction : SpekTestableComponent {
 }
 
