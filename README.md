@@ -20,6 +20,11 @@ This fork of Spek is intended to address some of the problems with the existing 
   testCompile fileTree(dir: 'testLibs', include: ['*.jar'])
   ```
 
+## How to use the console runner
+1. Build by running `./gradlew installApp`
+2. The executable script will be found at `spek-dist/build/install/spek/bin/spek`
+3. To invoke the console runner, you need both the “path” and the “package” arguments.  The “path” should only be the part of the path up until it matches the package path.  For example: `spek-dist/build/install/spek/bin/spek spek-samples/build/classes/main org.jetbrains.spek.samples`
+
 ## Example
 
 ```kotlin
