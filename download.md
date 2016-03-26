@@ -33,7 +33,7 @@ To use it in Maven insert the following in your pom.xml file:
 {% highlight xml %}
  
  <dependency>
-    <groupId>org.spek</groupId>
+    <groupId>org.jetbrains.spek</groupId>
     <artifactId>spek</artifactId>
     <version>$version</version>
     <type>pom</type>
