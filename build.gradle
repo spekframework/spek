@@ -1,7 +1,7 @@
 buildscript {
-    junitVersion = '4.12'
-    kotlinVersion = '1.0.0'
-    version = '0.1-SNAPSHOT'
+    project.ext.set("junitVersion", "4.12")
+    project.ext.set("kotlinVersion", "1.0.0")
+    project.version = '0.1-SNAPSHOT'
     repositories {
         mavenCentral()
         maven {
