@@ -1,5 +1,5 @@
 buildscript {
-    junitVersion = '4.11'
+    junitVersion = '4.12'
     kotlinVersion = '1.0.0'
     version = '0.1-SNAPSHOT'
     repositories {

@@ -1,9 +1,5 @@
 package org.jetbrains.spek.console
 
-import kotlin.collections.listOf
-import kotlin.collections.toList
-import kotlin.text.split
-
 
 fun main(args: Array<String>) {
     if (args.size < 2) {
@@ -29,7 +25,6 @@ fun getOptions(args: Array<String>): Options {
     var index = 2
     var format = "text"
     var filename = ""
-    var cssFile = ""
     var paths = listOf<String>()
     var packageName = ""
 
@@ -48,9 +43,6 @@ fun getOptions(args: Array<String>): Options {
             "-o", "--output" -> {
                 filename = args[++index]
             }
-            "-s", "--css" -> {
-                cssFile = args[++index]
-            }
             else -> {
                 throw UnsupportedOperationException("Unknown parameter: ${args[index]}")
             }
@@ -58,11 +50,15 @@ fun getOptions(args: Array<String>): Options {
         index++
     }
 
-    return Options(paths, packageName, format, filename, cssFile)
+    if (format == "html" && filename == "") {
+        filename = "out.html"
+    }
+
+    return Options(paths, packageName, format, filename)
 }
 
-fun setupRunner(options: Options): Runner {
-    val listeners = CompositeWorkflowReporter()
+fun setupRunner(options: Options): ConsoleSpekRunner {
+    val notifier = CompositeNotifier()
     val device = if (options.filename != "") {
         FileOutputDevice(options.filename)
     } else {
@@ -70,9 +66,9 @@ fun setupRunner(options: Options): Runner {
     }
 
     when (options.format) {
-        "text" -> listeners.addListener(OutputDeviceWorkflowReporter(device))
-        "html" -> listeners.addListener(HtmlWorkflowReporter(options.packageName, device, options.cssFile))
+        "text" -> notifier.add(OutputDeviceNotifier(device))
+        "html" -> notifier.add(HtmlNotifier(options.packageName, device))
         else -> throw UnsupportedOperationException("Unknown format: ${options.format}")
     }
-    return Runner(listeners)
+    return ConsoleSpekRunner(notifier)
 }

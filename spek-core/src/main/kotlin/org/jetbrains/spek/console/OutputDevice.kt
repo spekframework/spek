@@ -1,6 +1,9 @@
 package org.jetbrains.spek.console
 
-import java.io.*
+import java.io.BufferedWriter
+import java.io.Closeable
+import java.io.File
+import java.io.PrintWriter
 
 interface OutputDevice {
     fun output(message: String)
@@ -23,13 +26,5 @@ class FileOutputDevice(filename: String) : OutputDevice, Closeable {
 class ConsoleOutputDevice : OutputDevice {
     override fun output(message: String) {
         println(message)
-    }
-}
-
-class StringBuilderOutputDevice(buffer: StringBuilder) : OutputDevice {
-    val buffer = buffer
-
-    override fun output(message: String) {
-        buffer.append(message).append("\n")
     }
 }

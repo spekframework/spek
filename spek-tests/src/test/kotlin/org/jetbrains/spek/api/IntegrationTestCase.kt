@@ -1,17 +1,11 @@
 package org.jetbrains.spek.api
 
-import org.jetbrains.spek.console.ActionStatusReporter
-import org.jetbrains.spek.console.WorkflowReporter
 import org.jetbrains.spek.console.executeSpek
 import org.junit.Assert
-import kotlin.collections.*
-import kotlin.text.split
-import kotlin.text.toRegex
-import kotlin.text.trim
 
 open class IntegrationTestCase {
 
-    fun runTest(case: TestSpekAction, vararg expected: String) {
+    fun runTest(case: Spek, vararg expected: String) {
         val list = arrayListOf<String>()
         executeSpek(case, TestLogger(list))
         if (expected.size == 0) return
@@ -31,39 +25,26 @@ open class IntegrationTestCase {
                 )
     }
 
-    fun data(f: Specification.() -> Unit) : TestSpekAction {
-        val d = object : Data() {}
-        d.f()
-        return d
+    fun data(f: DescribeBody.() -> Unit) : Spek {
+        return Spek(f)
     }
 
-    abstract class Data : Spek(), TestSpekAction {
-        override fun description(): String = "42"
-    }
-
-    class TestLogger(val output: MutableList<String>): WorkflowReporter {
-        private fun step(prefix:String) : ActionStatusReporter = object : ActionStatusReporter {
-            override fun started() {
-                output.add(prefix + " START")
-            }
-            override fun completed() {
-                output.add(prefix + " FINISH")
-            }
-            override fun skipped(why: String) {
-                output.add(prefix + " SKIP:" + why)
-            }
-            override fun pending(why: String) {
-                output.add(prefix + " PEND:" + why)
-            }
-            override fun failed(error: Throwable) {
-                output.add(prefix + " FAIL:" + error.message)
-            }
+    class TestLogger(val output: MutableList<String>): Notifier {
+        override fun start(key: TestAction) {
+            output.add(key.description() + ": START")
         }
 
-        override fun spek(spek: String): ActionStatusReporter = step("SPEK: $spek")
-        override fun given(spek: String, given: String): ActionStatusReporter = step("SPEK: $spek GIVEN: $given")
-        override fun on(spek: String, given: String, on: String)= step("SPEK: $spek GIVEN: $given ON: $on")
-        override fun it(spek: String, given: String, on: String, it: String) = step("SPEK: $spek GIVEN: $given ON: $on IT: $it")
+        override fun succeed(key: TestAction) {
+            output.add(key.description() + ": FINISH")
+        }
+
+        override fun fail(key: TestAction, error: Throwable) {
+            output.add(key.description() + ": FAIL: " + error.message)
+        }
+
+        override fun ignore(key: TestAction) {
+            output.add(key.description() + ": IGNORE")
+        }
     }
 
 }

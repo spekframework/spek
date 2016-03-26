@@ -12,13 +12,12 @@ fun printUsage() {
         NOTE:  Assumes to be started with classpath that contains all spek classes and dependencies
 
         [options]:
-            -format <format>: Output format, default is text
+            -f, --format <format>: Output format, default is text
                 text: Output in plain text
-                html: Output in HTML
-            -file: Filename for main.output. Defaults to console
-            -css: Filename for CSS for HTML main.output
+                html: Output in HTML to file out.html
+            -o, --output: Filename for main.output. Defaults to console
 
-        example: spek org.spek -text
+        example: spek path/to/tests org.spek --format text
 
     """)
 }
