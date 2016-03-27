@@ -3,3 +3,4 @@ pygments:    true
 markdown:    kramdown
 github:      https://github.com/jetbrains/spek
 baseurl:     /spek
+version:     1.0-eap

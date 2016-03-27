@@ -1,5 +1,5 @@
 ---
-layout: other
+layout: default
 title: Spek - Documentation
 ---
 
