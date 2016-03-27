@@ -28,6 +28,10 @@ a {
   .btn + .btn {
     margin-left: 1rem; }
 
+.header-link {
+  color: #ffffff;
+}
+
 .btn:hover {
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
