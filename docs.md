@@ -55,6 +55,28 @@ Each specification consists of:
 * **on**: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.
 * **it**: One or more of these. Each it is a consequence of the action. The assert. Normally it's good practice to have a single assertion per it.
 
+#### Dependency
+
+Adding the dependency to Spek is needed to use Spek.
+
+For example, gradle users add the following lines to your `build.gradle`
+
+```groovy
+buildscript {
+  // ...
+  ext.spek_version = '1.0.25' //replace the value of spek_version with your Spek version
+  // ...
+}
+repositories {
+  maven {
+    url 'http://repository.jetbrains.com/all'
+  }
+}
+dependencies {
+  testCompile "org.jetbrains.spek:spek:$spek_version"
+}
+```
+
 ### Running Tests
 
 **Console Runner**
