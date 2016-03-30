@@ -1,6 +1,6 @@
 package org.jetbrains.spek.console
 
-import org.jetbrains.spek.api.TestAction
+import org.jetbrains.spek.api.SpekTree
 
 class CompositeNotifier : ConsoleNotifier {
     val notifiers: MutableList<ConsoleNotifier> = mutableListOf()
@@ -9,19 +9,19 @@ class CompositeNotifier : ConsoleNotifier {
         notifiers.add(notifier)
     }
 
-    override fun start(key: TestAction) {
+    override fun start(key: SpekTree) {
         notifiers.forEach { it.start(key) }
     }
 
-    override fun succeed(key: TestAction) {
+    override fun succeed(key: SpekTree) {
         notifiers.forEach { it.succeed(key) }
     }
 
-    override fun fail(key: TestAction, error: Throwable) {
+    override fun fail(key: SpekTree, error: Throwable) {
         notifiers.forEach { it.fail(key, error) }
     }
 
-    override fun ignore(key: TestAction) {
+    override fun ignore(key: SpekTree) {
         notifiers.forEach { it.ignore(key) }
     }
 

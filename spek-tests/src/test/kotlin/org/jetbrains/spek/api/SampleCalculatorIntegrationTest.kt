@@ -48,10 +48,10 @@ class SampleCalculatorIntegrationTest : IntegrationTestCase() {
                     }
                 }
 
-                on("calling substract with two numbers") {
+                on("calling subtract with two numbers") {
                     val subtract = calculator.subtract(4, 2)
 
-                    it("should return the result of substracting the second number from the first number") {
+                    it("should return the result of subtracting the second number from the first number") {
 
                         assertEquals(2, subtract)
                     }
@@ -62,13 +62,23 @@ class SampleCalculatorIntegrationTest : IntegrationTestCase() {
                 calling sum with two numbers: START
                 it should return the result of adding the first number to the second number: START
                 it should return the result of adding the first number to the second number: FINISH
+                calling sum with two numbers: FINISH
+                a calculator: FINISH
+                Spek: FINISH
+                Spek: START
+                a calculator: START
+                calling sum with two numbers: START
                 it should another: START
                 it should another: FINISH
                 calling sum with two numbers: FINISH
-                calling substract with two numbers: START
-                it should return the result of substracting the second number from the first number: START
-                it should return the result of substracting the second number from the first number: FINISH
-                calling substract with two numbers: FINISH
+                a calculator: FINISH
+                Spek: FINISH
+                Spek: START
+                a calculator: START
+                calling subtract with two numbers: START
+                it should return the result of subtracting the second number from the first number: START
+                it should return the result of subtracting the second number from the first number: FINISH
+                calling subtract with two numbers: FINISH
                 a calculator: FINISH
                 Spek: FINISH""")
 

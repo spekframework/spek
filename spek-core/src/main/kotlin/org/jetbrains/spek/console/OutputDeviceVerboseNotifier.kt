@@ -3,41 +3,39 @@ package org.jetbrains.spek.console
 import org.jetbrains.spek.api.ActionType
 import org.jetbrains.spek.api.SpekTree
 
-class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
+class OutputDeviceVerboseNotifier(val device: OutputDevice) : ConsoleNotifier {
+    var indentation = 0
     var testsPassed = 0
     var testsFailed = 0
     var testsIgnored = 0
 
-    val currentMessages: MutableList<String> = mutableListOf()
-
     override fun start(key: SpekTree) {
-        currentMessages.add(key.description)
+        printWithIndentation(key.description)
+        indentation++
     }
 
     override fun succeed(key: SpekTree) {
         if (key.type == ActionType.IT) {
-            device.output(greenText("."))
             testsPassed++
         }
-        currentMessages.remove(key.description)
+        indentation--
     }
 
     override fun fail(key: SpekTree, error: Throwable) {
         if (key.type == ActionType.IT) {
-            device.output(redText("."))
             testsFailed++
         }
-        currentMessages.add(redText("Failed: " + error.message + " " + error))
-        flushMessageBuffer(currentMessages)
+        device.output("")
+        printWithIndentation(redText("Failed: " + error.message + " " + error))
+        device.output("")
+        indentation--
     }
 
     override fun ignore(key: SpekTree) {
         if (key.type == ActionType.IT) {
-            device.output(yellowText("."))
             testsIgnored++
         }
-        currentMessages.add(yellowText("Ignored pending test: ${key.description}"))
-        flushMessageBuffer(currentMessages)
+        printWithIndentation(yellowText("Ignored pending test: ${key.description}"))
     }
 
     override fun finish() {
@@ -60,20 +58,11 @@ class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
         return "\u001B[32m${text}\u001B[0m"
     }
 
-    private fun flushMessageBuffer(messages: MutableList<String>) {
-        var indentation = 0
-        messages.forEach {
-            printWithIndentation(it, indentation)
-            indentation++
-        }
-        messages.clear()
+    private fun printWithIndentation(text: String) {
+        device.output(getIndentationString() + text)
     }
 
-    private fun printWithIndentation(text: String, indentation: Int) {
-        device.output(getIndentationString(indentation) + text)
-    }
-
-    private fun getIndentationString(indentation: Int): String {
+    private fun getIndentationString(): String {
         return "  ".repeat(indentation)
     }
 }

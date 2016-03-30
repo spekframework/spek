@@ -5,19 +5,19 @@ import org.junit.runner.RunWith
 
 @RunWith(JUnitSpekRunner::class)
 open class Spek(val spekBody: DescribeBody.() -> Unit) {
-    val testAction : TestAction
+    val tree: SpekTree
+    val paths: Set<List<Int>>
 
     init {
         val parentDescribeBody = DescribeParser()
         parentDescribeBody.describe(this.javaClass.simpleName, spekBody)
-        testAction = parentDescribeBody.children()[0]
+        tree = parentDescribeBody.children()[0]
+        paths = tree.getPaths()
     }
 
     fun run(notifier: Notifier) {
-        testAction.run(notifier, object : SpekContext {
-            override fun run(test: () -> Unit) {
-                test()
-            }
-        })
+        paths.forEach { path ->
+            tree.runPath(path, notifier)
+        }
     }
 }

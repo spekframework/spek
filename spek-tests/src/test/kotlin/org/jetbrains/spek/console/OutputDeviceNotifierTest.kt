@@ -1,64 +1,65 @@
 package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
-import org.jetbrains.spek.api.TestAction
+import org.jetbrains.spek.api.SpekTree
+import org.jetbrains.spek.api.SpekTreeRunner
 import org.mockito.Mockito
 import kotlin.test.assertEquals
 import org.junit.Test as test
 
 class OutputDeviceNotifierTest {
     val device = Mockito.mock(OutputDevice::class.java)!!
-    val textNotifier = OutputDeviceNotifier(device)
-    val testAction = Mockito.mock(TestAction::class.java)
+    val subject = OutputDeviceVerboseNotifier(device)
 
     @test fun start() {
-        Mockito.`when`(testAction.description()).thenReturn("a test")
-        textNotifier.start(testAction)
+        var spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        subject.start(spekTree)
 
-        Mockito.verify(device)!!.output("a test")
+        Mockito.verify(device).output("a test")
 
-        Mockito.`when`(testAction.description()).thenReturn("another test")
-        textNotifier.start(testAction)
+        spekTree = SpekTree("another test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        subject.start(spekTree)
 
         Mockito.verify(device)!!.output("  another test")
 
-        assertEquals(2, textNotifier.indentation, "notifier indentation level")
+        assertEquals(2, subject.indentation, "notifier indentation level")
     }
 
     @test fun succeed() {
-        textNotifier.indentation = 2
-        textNotifier.succeed(testAction)
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.IT)
-        textNotifier.succeed(testAction)
-        assertEquals(0, textNotifier.indentation, "notifier indentation level")
+        var spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        subject.indentation = 2
+        subject.succeed(spekTree)
 
-        assertEquals(1, textNotifier.testsPassed, "Tests passed")
+        spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        subject.succeed(spekTree)
+
+        assertEquals(0, subject.indentation, "notifier indentation level")
+        assertEquals(1, subject.testsPassed, "Tests passed")
     }
 
     @test fun fail() {
-        textNotifier.indentation = 1
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.IT)
+        subject.indentation = 1
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
 
-        textNotifier.fail(testAction, RuntimeException("test error"))
+        subject.fail(spekTree, RuntimeException("test error"))
 
         Mockito.verify(device, Mockito.times(2))!!.output("")
         Mockito.verify(device)!!.output("  \u001B[31mFailed: test error java.lang.RuntimeException: test error\u001B[0m")
 
-        assertEquals(0, textNotifier.indentation, "notifier indentation level")
-        assertEquals(1, textNotifier.testsFailed, "Tests failed")
+        assertEquals(0, subject.indentation, "notifier indentation level")
+        assertEquals(1, subject.testsFailed, "Tests failed")
     }
 
     @test fun ignore() {
-        Mockito.`when`(testAction.description()).thenReturn("an ignore")
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.IT)
-        textNotifier.ignore(testAction)
+        val spekTree = SpekTree("an ignore", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        subject.ignore(spekTree)
 
         Mockito.verify(device)!!.output("\u001B[33mIgnored pending test: an ignore\u001b[0m")
-        assertEquals(1, textNotifier.testsIgnored, "Tests ignored")
+        assertEquals(1, subject.testsIgnored, "Tests ignored")
     }
 
     @test fun finish() {
-        textNotifier.finish()
+        subject.finish()
 
         Mockito.verify(device)!!.output("")
         Mockito.verify(device)!!.output("Found 0 tests")
@@ -67,16 +68,16 @@ class OutputDeviceNotifierTest {
         Mockito.verify(device)!!.output("\u001b[33m  0 tests ignored\u001b[0m")
 
         val error = RuntimeException("test error")
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.IT)
-        textNotifier.indentation = 2
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        subject.indentation = 2
 
-        textNotifier.fail(testAction, error)
-        textNotifier.succeed(testAction)
-        textNotifier.ignore(testAction)
+        subject.fail(spekTree, error)
+        subject.succeed(spekTree)
+        subject.ignore(spekTree)
 
         Mockito.reset(device)
 
-        textNotifier.finish()
+        subject.finish()
 
         Mockito.verify(device)!!.output("")
         Mockito.verify(device)!!.output("Found 3 tests")
