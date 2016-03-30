@@ -3,7 +3,8 @@ package org.jetbrains.spek.api
 open class SpekTree(val description: String,
                     val type: ActionType,
                     val runner: SpekTreeRunner,
-                    val children: List<SpekTree>) {
+                    val children: List<SpekTree>,
+                    val focused: Boolean = false) {
 
     fun runPath(path: List<Int>, notifier: Notifier) {
         runner.run(this, notifier) {
@@ -27,6 +28,14 @@ open class SpekTree(val description: String,
             result.add(listOf())
         }
         return result
+    }
+
+    fun focused(): Boolean {
+        if (focused) {
+            return true
+        }
+
+        return children.any { it.focused }
     }
 }
 
