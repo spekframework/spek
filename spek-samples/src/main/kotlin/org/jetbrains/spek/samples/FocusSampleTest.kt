@@ -7,7 +7,7 @@ class FocusSampleTest : Spek({
         val calculator = SampleCalculator()
         var result = 0
 
-        describe("focused block") {
+        fdescribe("focused block") {
             beforeEach {
                 result = calculator.sum(2, 4);
             }
