@@ -54,11 +54,26 @@ class DescribeParser() : DescribeBody {
     }
 
     override fun fdescribe(description: String, evaluateBody: DescribeBody.() -> Unit) {
-        describe(description, evaluateBody)
+        val inner = DescribeParser()
+        inner.evaluateBody()
+
+        children.add(SpekTree(
+                description,
+                ActionType.DESCRIBE,
+                SpekStepRunner(befores, afters),
+                inner.children,
+                true
+        ))
     }
 
     override fun fit(description: String, assertions: () -> Unit) {
-        it(description, assertions)
+        children.add(SpekTree(
+                "it " + description,
+                ActionType.IT,
+                SpekStepRunner(befores, afters, assertions),
+                listOf(),
+                true
+        ))
     }
 
 

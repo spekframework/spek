@@ -6,7 +6,7 @@ import org.junit.runner.RunWith
 @RunWith(JUnitSpekRunner::class)
 open class Spek(val spekBody: DescribeBody.() -> Unit) {
     val tree: SpekTree
-    val paths: Set<List<Int>>
+    var paths: Set<Path>
 
     init {
         val parentDescribeBody = DescribeParser()
@@ -16,7 +16,13 @@ open class Spek(val spekBody: DescribeBody.() -> Unit) {
     }
 
     fun run(notifier: Notifier) {
-        paths.forEach { path ->
+        var pathsToRun: List<Path>
+        if(tree.focused()) {
+            pathsToRun = paths.filter { it.focused }
+        } else {
+            pathsToRun = paths.toList()
+        }
+        pathsToRun.forEach { path ->
             tree.runPath(path, notifier)
         }
     }
