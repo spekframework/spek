@@ -1,20 +1,20 @@
 package org.jetbrains.spek.api
 import java.util.*
 
-interface SpekTreeRunner {
-    fun run(tree: SpekTree, notifier: Notifier, action: () -> Unit)
+interface SpekNodeRunner {
+    fun run(tree: SpekTree, notifier: Notifier, innerAction: () -> Unit)
 }
 
 class SpekStepRunner(val befores: LinkedList<() -> Unit> = LinkedList(),
                      val afters: LinkedList<() -> Unit> = LinkedList(),
-                     val assertions: () -> Unit = {}): SpekTreeRunner {
+                     val assertions: () -> Unit = {}): SpekNodeRunner {
 
-    override fun run(tree: SpekTree, notifier: Notifier, action: () -> Unit) {
+    override fun run(tree: SpekTree, notifier: Notifier, innerAction: () -> Unit) {
         notifier.start(tree)
         try {
             befores.forEach { it() }
             assertions()
-            action()
+            innerAction()
             afters.forEach { it() }
             notifier.succeed(tree)
         } catch(e: Throwable) {
@@ -25,8 +25,8 @@ class SpekStepRunner(val befores: LinkedList<() -> Unit> = LinkedList(),
 
 }
 
-class SpekIgnoreRunner() : SpekTreeRunner {
-    override fun run(tree: SpekTree, notifier: Notifier, action: () -> Unit) {
+class SpekIgnoreRunner() : SpekNodeRunner {
+    override fun run(tree: SpekTree, notifier: Notifier, innerAction: () -> Unit) {
         notifier.ignore(tree)
     }
 

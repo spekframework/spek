@@ -2,7 +2,7 @@ package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
 import org.jetbrains.spek.api.SpekTree
-import org.jetbrains.spek.api.SpekTreeRunner
+import org.jetbrains.spek.api.SpekNodeRunner
 import org.mockito.Mockito
 import kotlin.test.assertEquals
 import org.junit.Before as before
@@ -24,7 +24,7 @@ class HTMLNotifierTest {
     }
 
     @test fun startDescribe() {
-        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.start(spekTree)
 
         Mockito.verify(device)!!.output("<li>a test")
@@ -32,7 +32,7 @@ class HTMLNotifierTest {
     }
 
     @test fun startIt() {
-        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
 
         subject.start(spekTree)
 
@@ -40,7 +40,7 @@ class HTMLNotifierTest {
     }
 
     @test fun succeedDescribe() {
-        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.succeed(spekTree)
         Mockito.verify(device)!!.output("</ul>")
         Mockito.verify(device)!!.output("</li>")
@@ -48,7 +48,7 @@ class HTMLNotifierTest {
     }
 
     @test fun succeedIt() {
-        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.succeed(spekTree)
         Mockito.verify(device)!!.output("<span style=\"color: #2C2;\">Passed</span>")
         Mockito.verify(device)!!.output("</li>")
@@ -56,7 +56,7 @@ class HTMLNotifierTest {
     }
 
     @test fun fail() {
-        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.fail(spekTree, RuntimeException("uh oh"))
 
         Mockito.verify(device)!!.output("<p style=\"color: red;\">Failed: java.lang.RuntimeException: uh oh</p>")
@@ -65,7 +65,7 @@ class HTMLNotifierTest {
     }
 
     @test fun ignore() {
-        val spekTree = SpekTree("ignored test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("ignored test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.ignore(spekTree)
 
         Mockito.verify(device)!!.output("<li><span style=\"color: darkgoldenrod;\">Ignored pending test: ignored test</span>")

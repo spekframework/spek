@@ -2,7 +2,7 @@ package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
 import org.jetbrains.spek.api.SpekTree
-import org.jetbrains.spek.api.SpekTreeRunner
+import org.jetbrains.spek.api.SpekNodeRunner
 import org.mockito.Mockito
 import kotlin.test.assertEquals
 import org.junit.Test as test
@@ -12,12 +12,12 @@ class OutputDeviceNotifierTest {
     val subject = OutputDeviceVerboseNotifier(device)
 
     @test fun start() {
-        var spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        var spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.start(spekTree)
 
         Mockito.verify(device).output("a test")
 
-        spekTree = SpekTree("another test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        spekTree = SpekTree("another test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.start(spekTree)
 
         Mockito.verify(device)!!.output("  another test")
@@ -26,11 +26,11 @@ class OutputDeviceNotifierTest {
     }
 
     @test fun succeed() {
-        var spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        var spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.indentation = 2
         subject.succeed(spekTree)
 
-        spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.succeed(spekTree)
 
         assertEquals(0, subject.indentation, "notifier indentation level")
@@ -39,7 +39,7 @@ class OutputDeviceNotifierTest {
 
     @test fun fail() {
         subject.indentation = 1
-        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
 
         subject.fail(spekTree, RuntimeException("test error"))
 
@@ -51,7 +51,7 @@ class OutputDeviceNotifierTest {
     }
 
     @test fun ignore() {
-        val spekTree = SpekTree("an ignore", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("an ignore", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.ignore(spekTree)
 
         Mockito.verify(device)!!.output("\u001B[33mIgnored pending test: an ignore\u001b[0m")
@@ -68,7 +68,7 @@ class OutputDeviceNotifierTest {
         Mockito.verify(device)!!.output("\u001b[33m  0 tests ignored\u001b[0m")
 
         val error = RuntimeException("test error")
-        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekTreeRunner::class.java), listOf())
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
         subject.indentation = 2
 
         subject.fail(spekTree, error)
