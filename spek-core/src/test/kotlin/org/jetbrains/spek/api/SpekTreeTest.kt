@@ -1,58 +1,10 @@
 package org.jetbrains.spek.api
 
-import kotlin.test.assertEquals
+import org.mockito.Mockito.*
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class SpekTreeTest : Spek({
-    fun focusedIt(): SpekTree {
-        return SpekTree(
-                "fit",
-                ActionType.IT,
-                SpekIgnoreRunner(),
-                listOf(),
-                true
-        )
-    }
-
-    fun unfocusedIt(): SpekTree {
-        return SpekTree(
-                "it",
-                ActionType.IT,
-                SpekIgnoreRunner(),
-                listOf(),
-                false
-        )
-    }
-
-    fun focusedDescribe(vararg children: SpekTree): SpekTree {
-        return SpekTree(
-                "fdescribe",
-                ActionType.DESCRIBE,
-                SpekIgnoreRunner(),
-                children.toList(),
-                true
-        )
-    }
-
-    fun unfocusedDescribe(vararg children: SpekTree): SpekTree {
-        return SpekTree(
-                "describe",
-                ActionType.DESCRIBE,
-                SpekIgnoreRunner(),
-                children.toList(),
-                false
-        )
-    }
-//
-//    fun focusedPath(vararg indices: Int): Path {
-//        return Path(indices.toList(), true)
-//    }
-//
-//    fun unfocusedPath(vararg indices: Int): Path {
-//        return Path(indices.toList(), false)
-//    }
-
     describe("containsFocusedNodes") {
         it("should return true for a focused it") {
             val subject = focusedIt()
@@ -77,48 +29,119 @@ class SpekTreeTest : Spek({
         }
     }
 
-//    describe("getPaths") {
-//        it("should return all the paths with the focused flag set appropriately") {
-//            val subject = unfocusedDescribe(
-//                    unfocusedIt(),
-//                    unfocusedDescribe(
-//                            focusedIt(),
-//                            unfocusedIt()
-//                    ),
-//                    unfocusedDescribe(
-//                            unfocusedIt()
-//                    ),
-//                    focusedDescribe(
-//                            unfocusedIt(),
-//                            unfocusedIt()
-//                    ),
-//                    focusedDescribe(
-//                            unfocusedDescribe(
-//                                    unfocusedIt()
-//                            )
-//                    )
-//            )
-//
-//            assertEquals(subject.getPaths(),
-//                    setOf(
-//                            unfocusedPath(0),
-//                            focusedPath(1, 0), unfocusedPath(1, 1),
-//                            unfocusedPath(2,0),
-//                            focusedPath(3, 0), focusedPath(3, 1),
-//                            focusedPath(4,0,0)
-//                    ))
-//        }
-//
-//        it("return paths with the focused flag set to false if none of the nodes are focused") {
-//            val subject = unfocusedDescribe(
-//                    unfocusedIt(),
-//                    unfocusedDescribe(unfocusedIt())
-//            )
-//
-//            assertEquals(subject.getPaths(), setOf(
-//                    unfocusedPath(0),
-//                    unfocusedPath(1, 0)
-//            ))
-//        }
-//    }
-})
+    describe("run") {
+        context("with no focused nodes") {
+            it("should run all the it blocks in the spek") {
+                val unfocusedIt1 = unfocusedIt()
+                val unfocusedIt2 = unfocusedIt()
+
+                val subject = unfocusedDescribe(
+                        unfocusedIt1,
+                        unfocusedDescribe(unfocusedIt2)
+                )
+                val mockNotifier = mock(Notifier::class.java)
+
+                subject.run(mockNotifier)
+                verify(mockNotifier).start(unfocusedIt1)
+                verify(mockNotifier).start(unfocusedIt2)
+            }
+        }
+
+        context("with some focused nodes") {
+            it("should only run it blocks that are focused or have a focused parent") {
+                val focusedIt = focusedIt()
+                val unfocusedIt1 = unfocusedIt()
+                val unfocusedIt2 = unfocusedIt()
+                val unfocusedIt3 = unfocusedIt()
+                val unfocusedIt4 = unfocusedIt()
+                val unfocusedIt5 = unfocusedIt()
+                val unfocusedIt6 = unfocusedIt()
+
+                val subject = unfocusedDescribe(
+                        unfocusedIt1,
+                        unfocusedDescribe(
+                                focusedIt,
+                                unfocusedIt2
+                        ),
+                        unfocusedDescribe(
+                                unfocusedIt3
+                        ),
+                        focusedDescribe(
+                                unfocusedIt4,
+                                unfocusedIt5
+                        ),
+                        unfocusedDescribe(
+                                focusedDescribe(
+                                        unfocusedDescribe(unfocusedIt6)
+                                )
+                        )
+                )
+
+                val mockNotifier = mock(Notifier::class.java)
+
+                subject.run(mockNotifier)
+
+                verify(mockNotifier).start(focusedIt)
+                verify(mockNotifier).start(unfocusedIt4)
+                verify(mockNotifier).start(unfocusedIt5)
+                verify(mockNotifier).start(unfocusedIt6)
+
+                verify(mockNotifier, never()).start(unfocusedIt1)
+                verify(mockNotifier, never()).start(unfocusedIt2)
+                verify(mockNotifier, never()).start(unfocusedIt3)
+            }
+        }
+    }
+}) {
+    companion object {
+        fun focusedIt(): SpekTree {
+            return SpekTree(
+                    "fit",
+                    ActionType.IT,
+                    fakeSpekNodeRunner(),
+                    listOf(),
+                    true
+            )
+        }
+
+        fun unfocusedIt(): SpekTree {
+            return SpekTree(
+                    "it",
+                    ActionType.IT,
+                    fakeSpekNodeRunner(),
+                    listOf(),
+                    false
+            )
+        }
+
+        fun focusedDescribe(vararg children: SpekTree): SpekTree {
+            return SpekTree(
+                    "fdescribe",
+                    ActionType.DESCRIBE,
+                    fakeSpekNodeRunner(),
+                    children.toList(),
+                    true
+            )
+        }
+
+        fun unfocusedDescribe(vararg children: SpekTree): SpekTree {
+            return SpekTree(
+                    "describe",
+                    ActionType.DESCRIBE,
+                    fakeSpekNodeRunner(),
+                    children.toList(),
+                    false
+            )
+        }
+
+        fun fakeSpekNodeRunner(): SpekNodeRunner {
+            return object : SpekNodeRunner {
+                override fun run(tree: SpekTree, notifier: Notifier, innerAction: () -> Unit) {
+                    notifier.start(tree)
+                    innerAction()
+                }
+
+            }
+        }
+    }
+}

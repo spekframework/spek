@@ -65,6 +65,7 @@ class SampleCalculatorIntegrationTest : IntegrationTestCase() {
                 calling sum with two numbers: FINISH
                 a calculator: FINISH
                 Spek: FINISH
+
                 Spek: START
                 a calculator: START
                 calling sum with two numbers: START
@@ -73,6 +74,7 @@ class SampleCalculatorIntegrationTest : IntegrationTestCase() {
                 calling sum with two numbers: FINISH
                 a calculator: FINISH
                 Spek: FINISH
+
                 Spek: START
                 a calculator: START
                 calling subtract with two numbers: START

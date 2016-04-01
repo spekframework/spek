@@ -73,6 +73,7 @@ subprojects {
         compile "org.jetbrains.kotlin:kotlin-test:${kotlinVersion}"
         compile junitDependency
         include_unpacked_jars junitDependency
+        testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     }
 
 
