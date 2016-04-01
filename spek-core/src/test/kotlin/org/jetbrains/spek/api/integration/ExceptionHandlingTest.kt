@@ -1,4 +1,4 @@
-package org.jetbrains.spek.api
+package org.jetbrains.spek.api.integration
 
 import org.junit.Test as test
 

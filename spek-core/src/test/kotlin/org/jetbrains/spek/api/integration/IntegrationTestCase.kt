@@ -1,5 +1,9 @@
-package org.jetbrains.spek.api
+package org.jetbrains.spek.api.integration
 
+import org.jetbrains.spek.api.DescribeBody
+import org.jetbrains.spek.api.Notifier
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.SpekTree
 import org.jetbrains.spek.console.executeSpek
 import org.junit.Assert
 
