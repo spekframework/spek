@@ -32,10 +32,8 @@ class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
     }
 
     override fun ignore(key: SpekTree) {
-        if (key.type == ActionType.IT) {
-            device.output(yellowText("."))
-            testsIgnored++
-        }
+        device.output(yellowText("."))
+        testsIgnored++
         currentMessages.add(yellowText("Ignored pending test: ${key.description}"))
         flushMessageBuffer(currentMessages)
     }
