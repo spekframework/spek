@@ -20,7 +20,7 @@ class JUnitSpekRunner(val specificationClass: Class<*>) : Runner() {
     }
 
     override fun getDescription(): Description? {
-        return junitDescriptionCache.get(spek.testAction)
+        return junitDescriptionCache.get(spek.tree)
     }
 
     override fun run(junitNotifier: RunNotifier?) {

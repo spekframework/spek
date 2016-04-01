@@ -16,6 +16,13 @@ class SkipTest : IntegrationTestCase() {
                 a situation: START
                 an event: START
                 it should A: IGNORE
+                an event: FINISH
+                a situation: FINISH
+                Spek: FINISH
+
+                Spek: START
+                a situation: START
+                an event: START
                 it should B: START
                 it should B: FINISH
                 an event: FINISH
@@ -37,6 +44,11 @@ class SkipTest : IntegrationTestCase() {
             }, """Spek: START
                 a situation: START
                 an event: IGNORE
+                a situation: FINISH
+                Spek: FINISH
+
+                Spek: START
+                a situation: START
                 another event: START
                 it should B: START
                 it should B: FINISH
@@ -74,6 +86,13 @@ class SkipTest : IntegrationTestCase() {
                 a situation: START
                 an event: START
                 it should A: IGNORE
+                an event: FINISH
+                a situation: FINISH
+                Spek: FINISH
+
+                Spek: START
+                a situation: START
+                an event: START
                 it should B: IGNORE
                 an event: FINISH
                 a situation: FINISH
@@ -91,6 +110,11 @@ class SkipTest : IntegrationTestCase() {
             }, """Spek: START
                 a situation: START
                 an event: IGNORE
+                a situation: FINISH
+                Spek: FINISH
+
+                Spek: START
+                a situation: START
                 another event: IGNORE
                 a situation: FINISH
                 Spek: FINISH""")
@@ -101,9 +125,11 @@ class SkipTest : IntegrationTestCase() {
                 xgiven("a situation") { }
 
                 xgiven("another situation") { }
-            },
-                    """Spek: START
+            }, """Spek: START
             a situation: IGNORE
+            Spek: FINISH
+
+            Spek: START
             another situation: IGNORE
             Spek: FINISH""")
 }

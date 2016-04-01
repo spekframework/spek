@@ -1,7 +1,8 @@
 package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
-import org.jetbrains.spek.api.TestAction
+import org.jetbrains.spek.api.SpekTree
+import org.jetbrains.spek.api.SpekNodeRunner
 import org.mockito.Mockito
 import kotlin.test.assertEquals
 import org.junit.Before as before
@@ -9,8 +10,7 @@ import org.junit.Test as test
 
 class HTMLNotifierTest {
     val device = Mockito.mock(OutputDevice::class.java)!!
-    val htmlNotifier = HtmlNotifier("", device)
-    val testAction = Mockito.mock(TestAction::class.java)
+    val subject = HtmlNotifier("", device)
 
     @before fun clearDevice() {
         Mockito.reset(device)
@@ -24,58 +24,57 @@ class HTMLNotifierTest {
     }
 
     @test fun startDescribe() {
-        Mockito.`when`(testAction.description()).thenReturn("a test")
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.DESCRIBE)
-        htmlNotifier.start(testAction)
+        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
+        subject.start(spekTree)
 
         Mockito.verify(device)!!.output("<li>a test")
         Mockito.verify(device)!!.output("<ul>")
     }
 
     @test fun startIt() {
-        Mockito.`when`(testAction.description()).thenReturn("a test")
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.IT)
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
 
-        htmlNotifier.start(testAction)
+        subject.start(spekTree)
 
         Mockito.verify(device)!!.output("<li>a test:")
     }
 
     @test fun succeedDescribe() {
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.DESCRIBE)
-        htmlNotifier.succeed(testAction)
+        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
+        subject.succeed(spekTree)
         Mockito.verify(device)!!.output("</ul>")
         Mockito.verify(device)!!.output("</li>")
-        assertEquals(0, htmlNotifier.testsPassed, "Didn't change passed test count")
+        assertEquals(0, subject.testsPassed, "Didn't change passed test count")
     }
 
     @test fun succeedIt() {
-        Mockito.`when`(testAction.type()).thenReturn(ActionType.IT)
-        htmlNotifier.succeed(testAction)
+        val spekTree = SpekTree("a test", ActionType.IT, Mockito.mock(SpekNodeRunner::class.java), listOf())
+        subject.succeed(spekTree)
         Mockito.verify(device)!!.output("<span style=\"color: #2C2;\">Passed</span>")
         Mockito.verify(device)!!.output("</li>")
-        assertEquals(1, htmlNotifier.testsPassed, "registered the passed test")
+        assertEquals(1, subject.testsPassed, "registered the passed test")
     }
 
     @test fun fail() {
-        htmlNotifier.fail(testAction, RuntimeException("uh oh"))
+        val spekTree = SpekTree("a test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
+        subject.fail(spekTree, RuntimeException("uh oh"))
 
         Mockito.verify(device)!!.output("<p style=\"color: red;\">Failed: java.lang.RuntimeException: uh oh</p>")
         Mockito.verify(device)!!.output("</li>")
-        assertEquals(1, htmlNotifier.testsFailed, "registered the failed test")
+        assertEquals(1, subject.testsFailed, "registered the failed test")
     }
 
     @test fun ignore() {
-        Mockito.`when`(testAction.description()).thenReturn("ignored test")
-        htmlNotifier.ignore(testAction)
+        val spekTree = SpekTree("ignored test", ActionType.DESCRIBE, Mockito.mock(SpekNodeRunner::class.java), listOf())
+        subject.ignore(spekTree)
 
         Mockito.verify(device)!!.output("<li><span style=\"color: darkgoldenrod;\">Ignored pending test: ignored test</span>")
         Mockito.verify(device)!!.output("</li>")
-        assertEquals(1, htmlNotifier.testsIgnored, "registered the ignored test")
+        assertEquals(1, subject.testsIgnored, "registered the ignored test")
     }
 
     @test fun finish() {
-        htmlNotifier.finish()
+        subject.finish()
 
         Mockito.verify(device, Mockito.times(2))!!.output("</ul>")
         Mockito.verify(device)!!.output("<h2>Summary: 0 tests found</h2>")

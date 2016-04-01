@@ -1,48 +1,49 @@
 package org.jetbrains.spek.console
 
-import org.jetbrains.spek.api.TestAction
+import org.jetbrains.spek.api.SpekTree
 import org.mockito.Mockito
 import org.junit.Before as before
 import org.junit.Test as test
 
 class CompositeNotifierTest {
+    val subject = CompositeNotifier()
+
+    val tree = Mockito.mock(SpekTree::class.java)
     val firstNotifier = Mockito.mock(ConsoleNotifier::class.java)!!
     val secondNotifier = Mockito.mock(ConsoleNotifier::class.java)!!
     val throwable = RuntimeException("Test Exception")
-    val multicaster = CompositeNotifier()
-    val testAction = Mockito.mock(TestAction::class.java)
 
     @org.junit.Before fun setup() {
-        multicaster.add(firstNotifier)
-        multicaster.add(secondNotifier)
+        subject.add(firstNotifier)
+        subject.add(secondNotifier)
     }
 
     @org.junit.Test fun startingATest() {
-        multicaster.start(testAction)
-        Mockito.verify(firstNotifier).start(testAction)
-        Mockito.verify(secondNotifier).start(testAction)
+        subject.start(tree)
+        Mockito.verify(firstNotifier).start(tree)
+        Mockito.verify(secondNotifier).start(tree)
     }
 
     @org.junit.Test fun passingATest() {
-        multicaster.succeed(testAction)
-        Mockito.verify(firstNotifier).succeed(testAction)
-        Mockito.verify(secondNotifier).succeed(testAction)
+        subject.succeed(tree)
+        Mockito.verify(firstNotifier).succeed(tree)
+        Mockito.verify(secondNotifier).succeed(tree)
     }
 
     @org.junit.Test fun failingATest() {
-        multicaster.fail(testAction, throwable)
-        Mockito.verify(firstNotifier).fail(testAction, throwable)
-        Mockito.verify(secondNotifier).fail(testAction, throwable)
+        subject.fail(tree, throwable)
+        Mockito.verify(firstNotifier).fail(tree, throwable)
+        Mockito.verify(secondNotifier).fail(tree, throwable)
     }
 
     @org.junit.Test fun ignoringATest() {
-        multicaster.ignore(testAction)
-        Mockito.verify(firstNotifier).ignore(testAction)
-        Mockito.verify(secondNotifier).ignore(testAction)
+        subject.ignore(tree)
+        Mockito.verify(firstNotifier).ignore(tree)
+        Mockito.verify(secondNotifier).ignore(tree)
     }
 
     @org.junit.Test fun finishingTheTestSuite() {
-        multicaster.finish()
+        subject.finish()
         Mockito.verify(firstNotifier).finish()
         Mockito.verify(secondNotifier).finish()
     }

@@ -11,7 +11,11 @@ class ConsoleSpekRunner(val notifier: ConsoleNotifier) {
     }
 
     private fun run(classes: List<Spek>) {
-        classes.forEach {
+        var speksToRun = classes
+        if(classes.any { it.tree.containsFocusedNodes() }) {
+            speksToRun = classes.filter { it.tree.containsFocusedNodes() }
+        }
+        speksToRun.forEach {
             executeSpek(it, notifier)
         }
     }
