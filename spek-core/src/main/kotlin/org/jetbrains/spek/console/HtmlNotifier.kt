@@ -1,7 +1,7 @@
 package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
-import org.jetbrains.spek.api.TestAction
+import org.jetbrains.spek.api.SpekTree
 
 class HtmlNotifier(val suite: String, val device: OutputDevice) : ConsoleNotifier {
     var testsPassed = 0
@@ -17,19 +17,19 @@ class HtmlNotifier(val suite: String, val device: OutputDevice) : ConsoleNotifie
         device.output("<ul>")
     }
 
-    override fun start(key: TestAction) {
-        when (key.type()) {
+    override fun start(key: SpekTree) {
+        when (key.type) {
             ActionType.DESCRIBE -> {
-                device.output("<li>${key.description()}")
+                device.output("<li>${key.description}")
                 device.output("<ul>")
             }
             ActionType.IT ->
-                device.output("<li>${key.description()}:")
+                device.output("<li>${key.description}:")
         }
     }
 
-    override fun succeed(key: TestAction) {
-        when (key.type()) {
+    override fun succeed(key: SpekTree) {
+        when (key.type) {
             ActionType.DESCRIBE ->
                 device.output("</ul>")
             ActionType.IT -> {
@@ -40,14 +40,14 @@ class HtmlNotifier(val suite: String, val device: OutputDevice) : ConsoleNotifie
         device.output("</li>")
     }
 
-    override fun fail(key: TestAction, error: Throwable) {
+    override fun fail(key: SpekTree, error: Throwable) {
         device.output("<p ${failStyle}>Failed: ${error}</p>")
         device.output("</li>")
         testsFailed++
     }
 
-    override fun ignore(key: TestAction) {
-        device.output("<li><span ${ignoreStyle}>Ignored pending test: ${key.description()}</span>")
+    override fun ignore(key: SpekTree) {
+        device.output("<li><span ${ignoreStyle}>Ignored pending test: ${key.description}</span>")
         device.output("</li>")
         testsIgnored++
     }

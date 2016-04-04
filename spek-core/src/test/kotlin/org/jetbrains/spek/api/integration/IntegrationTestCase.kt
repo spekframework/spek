@@ -1,5 +1,9 @@
-package org.jetbrains.spek.api
+package org.jetbrains.spek.api.integration
 
+import org.jetbrains.spek.api.DescribeBody
+import org.jetbrains.spek.api.Notifier
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.SpekTree
 import org.jetbrains.spek.console.executeSpek
 import org.junit.Assert
 
@@ -30,20 +34,20 @@ open class IntegrationTestCase {
     }
 
     class TestLogger(val output: MutableList<String>): Notifier {
-        override fun start(key: TestAction) {
-            output.add(key.description() + ": START")
+        override fun start(key: SpekTree) {
+            output.add(key.description + ": START")
         }
 
-        override fun succeed(key: TestAction) {
-            output.add(key.description() + ": FINISH")
+        override fun succeed(key: SpekTree) {
+            output.add(key.description + ": FINISH")
         }
 
-        override fun fail(key: TestAction, error: Throwable) {
-            output.add(key.description() + ": FAIL: " + error.message)
+        override fun fail(key: SpekTree, error: Throwable) {
+            output.add(key.description + ": FAIL: " + error.message)
         }
 
-        override fun ignore(key: TestAction) {
-            output.add(key.description() + ": IGNORE")
+        override fun ignore(key: SpekTree) {
+            output.add(key.description + ": IGNORE")
         }
     }
 
