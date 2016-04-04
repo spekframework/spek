@@ -5,92 +5,182 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.SpekTree
 import org.jetbrains.spek.api.SpekNodeRunner
 import org.mockito.Mockito.*
-import kotlin.test.assertEquals
 
 class OutputDeviceNotifierTest : Spek({
     val device = mock(OutputDevice::class.java)
-    var subject = OutputDeviceVerboseNotifier(device)
+    var subject = OutputDeviceNotifier(device)
 
     beforeEach {
-        subject = OutputDeviceVerboseNotifier(device)
+        subject = OutputDeviceNotifier(device)
     }
 
     afterEach {
         reset(device)
     }
 
-    it("prints out text for starting a test") {
-        var spekTree = SpekTree("a test", ActionType.DESCRIBE, mock(SpekNodeRunner::class.java), listOf())
-        subject.start(spekTree)
+    context("with a describe") {
+        val describe = SpekTree("a test", ActionType.DESCRIBE, mock(SpekNodeRunner::class.java), listOf())
 
-        verify(device).output("a test")
+        describe("start") {
+            beforeEach() {
+                subject.start(describe)
+            }
 
-        spekTree = SpekTree("another test", ActionType.DESCRIBE, mock(SpekNodeRunner::class.java), listOf())
-        subject.start(spekTree)
+            it("prints no output") {
+                verifyNoMoreInteractions(device)
+            }
 
-        verify(device).output("  another test")
+            it("does not increment any of the total test counts") {
+                subject.finish()
 
-        assertEquals(2, subject.indentation, "notifier indentation level")
+                verify(device).outputLine("Found 0 tests")
+                verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  0 tests ignored\u001b[0m")
+            }
+        }
+
+        describe("succeed") {
+            beforeEach() {
+                subject.succeed(describe)
+            }
+
+            it("prints no output") {
+                verifyNoMoreInteractions(device)
+            }
+
+            it("does not increment any of the total test counts") {
+                subject.finish()
+
+                verify(device).outputLine("Found 0 tests")
+                verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  0 tests ignored\u001b[0m")
+            }
+        }
+
+        describe("fail") {
+            beforeEach() {
+                subject.fail(describe, RuntimeException("uh oh"))
+            }
+
+            it("prints no output") {
+                verifyNoMoreInteractions(device)
+            }
+
+            it("does not increment any of the total test counts") {
+                subject.finish()
+
+                verify(device).outputLine("Found 0 tests")
+                verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  0 tests ignored\u001b[0m")
+            }
+        }
+
+        describe("ignore") {
+            beforeEach() {
+                subject.ignore(describe)
+            }
+
+            it("prints out a yellow dot") {
+                org.mockito.Mockito.verify(device).output("[33m.[0m")
+            }
+
+            it("increments the number of ignored tests") {
+                subject.finish()
+
+                org.mockito.Mockito.verify(device, org.mockito.Mockito.times(3)).outputLine("")
+                org.mockito.Mockito.verify(device).outputLine("[33mIgnored pending test: a test[0m")
+                org.mockito.Mockito.verify(device).outputLine("Found 1 tests")
+                org.mockito.Mockito.verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                org.mockito.Mockito.verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                org.mockito.Mockito.verify(device).outputLine("\u001b[33m  1 tests ignored\u001b[0m")
+            }
+        }
     }
 
-    it("prints decreases the indentation level when passing a test and increments the passed tests") {
-        var spekTree = SpekTree("a test", ActionType.DESCRIBE, mock(SpekNodeRunner::class.java), listOf())
-        subject.indentation = 2
-        subject.succeed(spekTree)
+    context("with an it") {
+        val it = SpekTree("another test", ActionType.IT, mock(SpekNodeRunner::class.java), listOf())
 
-        spekTree = SpekTree("a test", ActionType.IT, mock(SpekNodeRunner::class.java), listOf())
-        subject.succeed(spekTree)
+        describe("start") {
+            beforeEach() {
+                subject.start(it)
+            }
 
-        assertEquals(0, subject.indentation, "notifier indentation level")
-        assertEquals(1, subject.testsPassed, "Tests passed")
-    }
+            it("prints no output") {
+                verifyNoMoreInteractions(device)
+            }
 
-    it("prints out an error message when failing a test and increments the failed tests") {
-        subject.indentation = 1
-        val spekTree = SpekTree("a test", ActionType.IT, mock(SpekNodeRunner::class.java), listOf())
+            it("does not increment any of the total test counts") {
+                subject.finish()
 
-        subject.fail(spekTree, RuntimeException("test error"))
+                verify(device).outputLine("Found 0 tests")
+                verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  0 tests ignored\u001b[0m")
+            }
+        }
 
-        verify(device, times(2))!!.output("")
-        verify(device).output("  \u001B[31mFailed: test error java.lang.RuntimeException: test error\u001B[0m")
+        describe("succeed") {
+            beforeEach() {
+                subject.succeed(it)
+            }
 
-        assertEquals(0, subject.indentation, "notifier indentation level")
-        assertEquals(1, subject.testsFailed, "Tests failed")
-    }
+            it("prints a green dot") {
+                verify(device).output("[32m.[0m")
+            }
 
-    it("prints out a messages for ignoring a test and increments ignored tests") {
-        val spekTree = SpekTree("an ignore", ActionType.IT, mock(SpekNodeRunner::class.java), listOf())
-        subject.ignore(spekTree)
+            it("does not increments the number of passed tests") {
+                subject.finish()
 
-        verify(device).output("\u001B[33mIgnored pending test: an ignore\u001b[0m")
-        assertEquals(1, subject.testsIgnored, "Tests ignored")
-    }
+                verify(device).outputLine("Found 1 tests")
+                verify(device).outputLine("\u001b[32m  1 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  0 tests ignored\u001b[0m")
+            }
+        }
 
-    it("prints out a summary message when finishing the test suite") {
-        subject.finish()
+        describe("fail") {
+            beforeEach() {
+                subject.fail(it, RuntimeException("fail whale"))
+            }
 
-        verify(device).output("")
-        verify(device).output("Found 0 tests")
-        verify(device).output("\u001b[32m  0 tests passed\u001b[0m")
-        verify(device).output("\u001b[31m  0 tests failed\u001b[0m")
-        verify(device).output("\u001b[33m  0 tests ignored\u001b[0m")
+            it("prints a red dot") {
+                verify(device).output("[31m.[0m")
+            }
 
-        val error = RuntimeException("test error")
-        val spekTree = SpekTree("a test", ActionType.IT, mock(SpekNodeRunner::class.java), listOf())
-        subject.indentation = 2
+            it("increments the number of failed tests") {
+                subject.finish()
 
-        subject.fail(spekTree, error)
-        subject.succeed(spekTree)
-        subject.ignore(spekTree)
+                verify(device).outputLine("[31mFailed: fail whale java.lang.RuntimeException: fail whale[0m")
+                verify(device).outputLine("Found 1 tests")
+                verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  1 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  0 tests ignored\u001b[0m")
+            }
+        }
 
-        reset(device)
+        describe("ignore") {
+            beforeEach() {
+                subject.ignore(it)
+            }
 
-        subject.finish()
+            it("prints out a yellow dot") {
+                verify(device).output("[33m.[0m")
+            }
 
-        verify(device).output("")
-        verify(device).output("Found 3 tests")
-        verify(device).output("\u001b[32m  1 tests passed\u001b[0m")
-        verify(device).output("\u001b[31m  1 tests failed\u001b[0m")
-        verify(device).output("\u001b[33m  1 tests ignored\u001b[0m")
+            it("increments the number of ignored tests") {
+                subject.finish()
+
+                verify(device, times(3)).outputLine("")
+                verify(device).outputLine("[33mIgnored pending test: another test[0m")
+                verify(device).outputLine("Found 1 tests")
+                verify(device).outputLine("\u001b[32m  0 tests passed\u001b[0m")
+                verify(device).outputLine("\u001b[31m  0 tests failed\u001b[0m")
+                verify(device).outputLine("\u001b[33m  1 tests ignored\u001b[0m")
+            }
+        }
+
     }
 })

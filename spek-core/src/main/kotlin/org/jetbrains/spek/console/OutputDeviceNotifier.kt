@@ -9,6 +9,7 @@ class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
     var testsIgnored = 0
 
     val currentMessages: MutableList<String> = mutableListOf()
+    val finalMessages: MutableList<String> = mutableListOf()
 
     override fun start(key: SpekTree) {
         currentMessages.add(key.description)
@@ -39,11 +40,13 @@ class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
     }
 
     override fun finish() {
-        device.output("")
-        device.output("Found ${testsPassed + testsFailed + testsIgnored} tests")
-        device.output(greenText("  ${testsPassed} tests passed"))
-        device.output(redText("  ${testsFailed} tests failed"))
-        device.output(yellowText("  ${testsIgnored} tests ignored"))
+        device.outputLine("")
+        finalMessages.forEach { device.outputLine(it) }
+        device.outputLine("")
+        device.outputLine("Found ${testsPassed + testsFailed + testsIgnored} tests")
+        device.outputLine(greenText("  ${testsPassed} tests passed"))
+        device.outputLine(redText("  ${testsFailed} tests failed"))
+        device.outputLine(yellowText("  ${testsIgnored} tests ignored"))
     }
 
     private fun redText(text: String): String {
@@ -60,18 +63,15 @@ class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
 
     private fun flushMessageBuffer(messages: MutableList<String>) {
         var indentation = 0
+        finalMessages.add("")
         messages.forEach {
-            printWithIndentation(it, indentation)
+            finalMessages.add(lineWithIndentation(it, indentation))
             indentation++
         }
         messages.clear()
     }
 
-    private fun printWithIndentation(text: String, indentation: Int) {
-        device.output(getIndentationString(indentation) + text)
-    }
-
-    private fun getIndentationString(indentation: Int): String {
-        return "  ".repeat(indentation)
+    private fun lineWithIndentation(text: String, indentation: Int) : String {
+        return "  ".repeat(indentation) + text
     }
 }

@@ -61,7 +61,7 @@ class ConsoleRunnerTest : Spek ({
 
     describe("setupRunner") {
         context("with text output and verbosity true") {
-            val options = Options(listOf(""), "", "text", "out.txt", true)
+            val options = Options(listOf(""), "", "text", "", true)
 
             it("uses the OutputDeviceVerboseNotifier") {
                 val result = setupRunner(options)
@@ -71,7 +71,7 @@ class ConsoleRunnerTest : Spek ({
         }
 
         context("with text output and verbosity false") {
-            val options = Options(listOf(""), "", "text", "out.txt", false)
+            val options = Options(listOf(""), "", "text", "", false)
 
             it("uses the non-verbose OutputDeviceNotifier") {
                 val result = setupRunner(options)

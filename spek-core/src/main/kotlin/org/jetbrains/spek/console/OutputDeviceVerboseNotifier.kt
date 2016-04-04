@@ -25,9 +25,9 @@ class OutputDeviceVerboseNotifier(val device: OutputDevice) : ConsoleNotifier {
         if (key.type == ActionType.IT) {
             testsFailed++
         }
-        device.output("")
+        device.outputLine("")
         printWithIndentation(redText("Failed: " + error.message + " " + error))
-        device.output("")
+        device.outputLine("")
         indentation--
     }
 
@@ -39,11 +39,11 @@ class OutputDeviceVerboseNotifier(val device: OutputDevice) : ConsoleNotifier {
     }
 
     override fun finish() {
-        device.output("")
-        device.output("Found ${testsPassed + testsFailed + testsIgnored} tests")
-        device.output(greenText("  ${testsPassed} tests passed"))
-        device.output(redText("  ${testsFailed} tests failed"))
-        device.output(yellowText("  ${testsIgnored} tests ignored"))
+        device.outputLine("")
+        device.outputLine("Found ${testsPassed + testsFailed + testsIgnored} tests")
+        device.outputLine(greenText("  ${testsPassed} tests passed"))
+        device.outputLine(redText("  ${testsFailed} tests failed"))
+        device.outputLine(yellowText("  ${testsIgnored} tests ignored"))
     }
 
     private fun redText(text: String): String {
@@ -59,7 +59,7 @@ class OutputDeviceVerboseNotifier(val device: OutputDevice) : ConsoleNotifier {
     }
 
     private fun printWithIndentation(text: String) {
-        device.output(getIndentationString() + text)
+        device.outputLine(getIndentationString() + text)
     }
 
     private fun getIndentationString(): String {

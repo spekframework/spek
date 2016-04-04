@@ -19,8 +19,8 @@ class HTMLNotifierTest : Spek({
     it("prints out initialization text") {
         subject = HtmlNotifier("a test suite", device)
         val expectedText = "<html><head><title>a test suite</title></head><body><h2>a test suite</h2>"
-        verify(device).output(expectedText)
-        verify(device).output("<ul>")
+        verify(device).outputLine(expectedText)
+        verify(device).outputLine("<ul>")
     }
 
     context("with a describe") {
@@ -29,14 +29,14 @@ class HTMLNotifierTest : Spek({
         it("creates <ul> nested in a <li> on start")  {
             subject.start(spekTree)
 
-            verify(device).output("<li>a test")
-            verify(device).output("<ul>")
+            verify(device).outputLine("<li>a test")
+            verify(device).outputLine("<ul>")
         }
 
         it("closes the <ul> and <li> on succeed") {
             subject.succeed(spekTree)
-            verify(device).output("</ul>")
-            verify(device).output("</li>")
+            verify(device).outputLine("</ul>")
+            verify(device).outputLine("</li>")
         }
 
         it("does not change the passed test count on succeed") {
@@ -50,13 +50,13 @@ class HTMLNotifierTest : Spek({
 
         it("creates a <li> on start") {
             subject.start(spekTree)
-            verify(device).output("<li>a test:")
+            verify(device).outputLine("<li>a test:")
         }
 
         it("closes the <li> on succeed") {
             subject.succeed(spekTree)
-            verify(device).output("<span style=\"color: #2C2;\">Passed</span>")
-            verify(device).output("</li>")
+            verify(device).outputLine("<span style=\"color: #2C2;\">Passed</span>")
+            verify(device).outputLine("</li>")
         }
 
         it("increments the passed test count on succeed") {
@@ -67,8 +67,8 @@ class HTMLNotifierTest : Spek({
         it("prints an error message on failure") {
             subject.fail(spekTree, RuntimeException("uh oh"))
 
-            verify(device).output("<p style=\"color: red;\">Failed: java.lang.RuntimeException: uh oh</p>")
-            verify(device).output("</li>")
+            verify(device).outputLine("<p style=\"color: red;\">Failed: java.lang.RuntimeException: uh oh</p>")
+            verify(device).outputLine("</li>")
         }
 
         it("increments the failed test count on failure") {
@@ -78,8 +78,8 @@ class HTMLNotifierTest : Spek({
 
         it("prints a message for ignored tests") {
             subject.ignore(spekTree)
-            verify(device).output("<li><span style=\"color: darkgoldenrod;\">Ignored pending test: a test</span>")
-            verify(device).output("</li>")
+            verify(device).outputLine("<li><span style=\"color: darkgoldenrod;\">Ignored pending test: a test</span>")
+            verify(device).outputLine("</li>")
         }
 
         it("increments the ignored test count on ignore") {
@@ -91,12 +91,12 @@ class HTMLNotifierTest : Spek({
     it("prints out summary text on finish") {
         subject.finish()
 
-        verify(device, times(2))!!.output("</ul>")
-        verify(device).output("<h2>Summary: 0 tests found</h2>")
-        verify(device).output("<ul>")
-        verify(device).output("<li><span style=\"color: #2C2;\">0 tests passed</span></li>")
-        verify(device).output("<li><span style=\"color: red;\">0 tests failed</span></li>")
-        verify(device).output("<li><span style=\"color: darkgoldenrod;\">0 tests ignored</span></li>")
-        verify(device).output("</body></html>")
+        verify(device, times(2))!!.outputLine("</ul>")
+        verify(device).outputLine("<h2>Summary: 0 tests found</h2>")
+        verify(device).outputLine("<ul>")
+        verify(device).outputLine("<li><span style=\"color: #2C2;\">0 tests passed</span></li>")
+        verify(device).outputLine("<li><span style=\"color: red;\">0 tests failed</span></li>")
+        verify(device).outputLine("<li><span style=\"color: darkgoldenrod;\">0 tests ignored</span></li>")
+        verify(device).outputLine("</body></html>")
     }
 })
