@@ -15,7 +15,10 @@ fun printUsage() {
             -f, --format <format>: Output format, default is text
                 text: Output in plain text
                 html: Output in HTML to file out.html
-            -o, --output: Filename for main.output. Defaults to console
+            -o, --output: Filename for main.output. Defaults to console with text
+                          output or out.html with html output
+            -v, --verbose: Print full test description for each test, instead of
+                           dots for passing tests (only affects text output, not html)
 
         example: spek path/to/tests org.spek --format text
 

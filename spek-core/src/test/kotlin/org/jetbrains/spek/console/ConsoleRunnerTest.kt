@@ -2,6 +2,8 @@ package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.Spek
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class ConsoleRunnerTest : Spek ({
     describe("getOptions") {
@@ -12,6 +14,7 @@ class ConsoleRunnerTest : Spek ({
             assertEquals("", options.packageName)
             assertEquals("", options.filename)
             assertEquals("text", options.format)
+            assertEquals(false, options.verbose)
         }
 
         it("defaults to console output when text is selected format") {
@@ -48,6 +51,34 @@ class ConsoleRunnerTest : Spek ({
             assertEquals("my.package", options.packageName)
             assertEquals("file.html", options.filename)
             assertEquals("html", options.format)
+        }
+
+        it("sets the verbose flag to true if -v is specified") {
+            val options = getOptions(arrayOf("paths", "my.package", "-v", "-o", "file.html"))
+            assertEquals(true, options.verbose)
+        }
+    }
+
+    describe("setupRunner") {
+        context("with text output and verbosity true") {
+            val options = Options(listOf(""), "", "text", "out.txt", true)
+
+            it("uses the OutputDeviceVerboseNotifier") {
+                val result = setupRunner(options)
+                val notifier = result.notifier as CompositeNotifier
+                assertTrue(notifier.notifiers.any { it is OutputDeviceVerboseNotifier })
+            }
+        }
+
+        context("with text output and verbosity false") {
+            val options = Options(listOf(""), "", "text", "out.txt", false)
+
+            it("uses the non-verbose OutputDeviceNotifier") {
+                val result = setupRunner(options)
+                val notifier = result.notifier as CompositeNotifier
+                assertTrue(notifier.notifiers.any { it is OutputDeviceNotifier })
+                assertFalse(notifier.notifiers.any { it is OutputDeviceVerboseNotifier })
+            }
         }
     }
 })
