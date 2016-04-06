@@ -102,10 +102,6 @@ framework if it can be called anything. For more information read [What BDD has 
 idea that you test a single *unit*, and at the same time, find it easy to see where a test has failed. In Spek you can still
 comply with this guidance. You can have multiple *it* but you limit each to one assertion.
 
-**Q: Why is the logo a piece of bacon?**
-<br/>We don't have a logo, but if you want to make one, let it be Bacon. English bacon that is. Spek was originally codenamed kspec. Someone suggested to rename it to Spek which kind of fits. Turns out, Spek is Bacon in
-Dutch. So why not have bacon as a logo? After all, we love bacon!
-
 **Q: Can I contribute?**
 <br/>[Please do](http://github.com/jetbrains/spek)!
 
