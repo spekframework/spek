@@ -3,8 +3,6 @@ layout: default
 title: Spek - A Specification Framework
 ---
 
-
-
 <br/>
 
 ### Your typical test code
@@ -13,11 +11,11 @@ Here's some typical test code found in many codebases
 @Test
 public void testCalculateTaxRate() {
 
-TaxRateCalculator calculator = new TaxRateCalculator();
+    TaxRateCalculator calculator = new TaxRateCalculator();
 
-Int value = calculator.calculateRate(200, 10);
+    Int value = calculator.calculateRate(200, 10);
 
-assertEquals(300,value);
+    assertEquals(300,value);
 }
 {% endhighlight %}
 
@@ -33,15 +31,15 @@ Spek makes it easy to define these three important aspects without resorting to 
 {% highlight kotlin %}
 class TaxCalculatorSpecs: Spek() {{ "{ init {" }}
 
-given("Tax rate calculator with default locale settings") {
-val taxRateCalculator = TaxRateCalculator()
-on("calculating the rate for an income of 200 and an average change of 10 per semester") {
-val value = taxRateCalculator.calculateRate(200, 10)
-it("should result in a value of 300") {
-assertEquals(300, value)
-}
-}
-}
+    given("Tax rate calculator with default locale settings") {
+        val taxRateCalculator = TaxRateCalculator()
+        on("calculating the rate for an income of 200 and an average change of 10 per semester") {
+            val value = taxRateCalculator.calculateRate(200, 10)
+            it("should result in a value of 300") {
+                assertEquals(300, value)
+            }
+        }
+    }
 }}
 {% endhighlight %}
 
