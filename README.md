@@ -1,23 +1,17 @@
-This fork of Spek is intended to address some of the problems with the existing version of the library.  
+Spek is a BDD style test framework for Kotlin which includes the following high-level features:
 
-1. **Execution order** - Fixes bugs related to the execution order of `on` blocks (see [#39](https://github.com/JetBrains/spek/issues/39), [#32](https://github.com/JetBrains/spek/issues/32)) .  Improves setup/teardown features for tests: `beforeEach` body blocks are executed before each `it`, and `afterEach` blocks are added.
-1. **Test pollution** - Each `it` is created in a clean context, and all relevant setup code (the `beforeEach`) is executed for *each* test.  (see [#32](https://github.com/JetBrains/spek/issues/32))
-1. **Simpler/more flexible DSL** - This reduces the overhead in writing simple tests, and allows for more sophisticated test structures, like arbitrary nesting depth
-  - outer `init` is no longer necessary
-  - added `beforeEach` and `afterEach` for test setup and teardown
-  - added Rspec style `describe` and `context` (`given` and `on` are still available as synonyms for `describe`)
-  - `describe`s can be nested
-  - removed assertions `should`, etc -- use kotlin's `assertEquals`, or other library ([AssertJ](http://joel-costigliola.github.io/assertj/), [HamKrest](https://github.com/npryce/hamkrest), etc) instead
+1. Arbitrarily nestable `describe` blocks for grouping tests with a shared context (also available under the aliases `context`, `given`, and `on`)
+1. Setup and teardown using `beforeEach` and `afterEach` blocks, which will be run before/after each `it` in the `describe`
+1. The ability to mark tests as pending by using an `x`- prefix (e.g. `xdescribe`)
+1. The ability to run only a subset of "focused" tests by using an `f`- prefix (e.g. `fit`)
+1. Integration with Junit (and IntelliJ via IntelliJ's Junit integration)
+1. A standalone, junit-independent console runner
 
 ## How to use
-1. Download the [jar](https://github.com/lkogler/spek/releases)
-2. Make a folder called testLibs in your project and add the jar
-3. Update your `build.gradle`: Remove the current `spek` dependency, and add the following:
+Add the following line to your build.gradle
 
   ```groovy
-  testCompile 'junit:junit:4.12'  // if not already present
-  testCompile "org.jetbrains.kotlin:kotlin-test:${kotlin_version}"  // if not already present
-  testCompile fileTree(dir: 'testLibs', include: ['*.jar'])
+  testCompile 'org.jetbrains.spek:spek:1.0.0'
   ```
 
 ## How to use the console runner
@@ -59,5 +53,5 @@ class ExampleTest : Spek({
 })
 
 ```
-Please see the [samples folder](https://github.com/lkogler/spek/tree/master/spek-samples/src/main/kotlin/org/jetbrains/spek/samples) for more examples
+Please see the [samples folder](https://github.com/JetBrains/spek/tree/1.0/spek-samples/src/main/kotlin/org/jetbrains/spek/samples) for more examples
 

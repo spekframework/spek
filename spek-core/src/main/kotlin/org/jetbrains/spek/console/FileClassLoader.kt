@@ -21,13 +21,6 @@ fun getUrlsForPaths(paths: List<String>): List<URL> {
     return urls
 }
 
-
-fun findClassesInClassPath(packageName: String): List<String> {
-    val classLoader = Thread.currentThread().getContextClassLoader()
-    val packageUrl = classLoader?.getResource(packageName.replace('.', '/'))
-    return findClassesInUrls(listOf(packageUrl!!), packageName)
-}
-
 fun findClassesInUrls(urls: List<URL>, packageName: String): List<String> {
     val names = arrayListOf<String>()
     for (url in urls) {

@@ -1,7 +1,7 @@
 package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
-import org.jetbrains.spek.api.TestAction
+import org.jetbrains.spek.api.SpekTree
 
 class HtmlNotifier(val suite: String, val device: OutputDevice) : ConsoleNotifier {
     var testsPassed = 0
@@ -13,54 +13,54 @@ class HtmlNotifier(val suite: String, val device: OutputDevice) : ConsoleNotifie
     val ignoreStyle = "style=\"color: darkgoldenrod;\""
 
     init {
-        device.output("<html><head><title>$suite</title></head><body><h2>$suite</h2>")
-        device.output("<ul>")
+        device.outputLine("<html><head><title>$suite</title></head><body><h2>$suite</h2>")
+        device.outputLine("<ul>")
     }
 
-    override fun start(key: TestAction) {
-        when (key.type()) {
+    override fun start(key: SpekTree) {
+        when (key.type) {
             ActionType.DESCRIBE -> {
-                device.output("<li>${key.description()}")
-                device.output("<ul>")
+                device.outputLine("<li>${key.description}")
+                device.outputLine("<ul>")
             }
             ActionType.IT ->
-                device.output("<li>${key.description()}:")
+                device.outputLine("<li>${key.description}:")
         }
     }
 
-    override fun succeed(key: TestAction) {
-        when (key.type()) {
+    override fun succeed(key: SpekTree) {
+        when (key.type) {
             ActionType.DESCRIBE ->
-                device.output("</ul>")
+                device.outputLine("</ul>")
             ActionType.IT -> {
-                device.output("<span ${passStyle}>Passed</span>")
+                device.outputLine("<span ${passStyle}>Passed</span>")
                 testsPassed++
             }
         }
-        device.output("</li>")
+        device.outputLine("</li>")
     }
 
-    override fun fail(key: TestAction, error: Throwable) {
-        device.output("<p ${failStyle}>Failed: ${error}</p>")
-        device.output("</li>")
+    override fun fail(key: SpekTree, error: Throwable) {
+        device.outputLine("<p ${failStyle}>Failed: ${error}</p>")
+        device.outputLine("</li>")
         testsFailed++
     }
 
-    override fun ignore(key: TestAction) {
-        device.output("<li><span ${ignoreStyle}>Ignored pending test: ${key.description()}</span>")
-        device.output("</li>")
+    override fun ignore(key: SpekTree) {
+        device.outputLine("<li><span ${ignoreStyle}>Ignored pending test: ${key.description}</span>")
+        device.outputLine("</li>")
         testsIgnored++
     }
 
     override fun finish() {
-        device.output("</ul>")
-        device.output("<h2>Summary: ${testsPassed + testsFailed + testsIgnored} tests found</h2>")
-        device.output("<ul>")
-        device.output("<li><span ${passStyle}>${testsPassed} tests passed</span></li>")
-        device.output("<li><span ${failStyle}>${testsFailed} tests failed</span></li>")
-        device.output("<li><span ${ignoreStyle}>${testsIgnored} tests ignored</span></li>")
-        device.output("</ul>")
-        device.output("</body></html>")
+        device.outputLine("</ul>")
+        device.outputLine("<h2>Summary: ${testsPassed + testsFailed + testsIgnored} tests found</h2>")
+        device.outputLine("<ul>")
+        device.outputLine("<li><span ${passStyle}>${testsPassed} tests passed</span></li>")
+        device.outputLine("<li><span ${failStyle}>${testsFailed} tests failed</span></li>")
+        device.outputLine("<li><span ${ignoreStyle}>${testsIgnored} tests ignored</span></li>")
+        device.outputLine("</ul>")
+        device.outputLine("</body></html>")
     }
 }
 
