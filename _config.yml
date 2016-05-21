@@ -3,4 +3,4 @@ syntax_highlighter: rouge
 markdown:    kramdown
 github:      https://github.com/jetbrains/spek
 baseurl:     /spek
-version:     1.0-eap
+version:     1.0.x (EAP)
