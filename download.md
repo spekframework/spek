@@ -8,21 +8,20 @@ title: Spek - Download
 <img src="http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Spek_BuildAndTests)/statusIcon"/>
 </a>
 
+
+Spek is currently under EAP for a 1.0 release. 
+
+*Kotlin version: 1.0.2*
+
+
 ### Source Code
 
 If you want to download as source code, clone the [repository](https://github.com/jetbrains/spek).
 
 ### Binaries
 
-Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests)
-
-### Versions
-
-Spek is currently under EAP for a 1.0 release. You can find all versions at:
-
-http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/
-
-Please note that we're currently building with Kotlin version 1.0.2
+Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests) or from
+[JetBrains Artifactory](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/)
 
 ### Maven and Gradle
 
