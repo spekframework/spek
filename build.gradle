@@ -98,7 +98,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = 2.13
+    gradleVersion = 1.11
 
     doLast() {
       def gradleOpts = "-XX:MaxPermSize=300m -Xmx1024m"
