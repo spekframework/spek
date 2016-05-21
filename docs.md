@@ -52,7 +52,7 @@ class SimpleTest : Spek({
 })
 ```
 
-Spek also allow you to use give/on/it nomenclature 
+Spek also allows you to use given/on/it nomenclature 
 
 * **given**: Only one of these should be present. Given indicates the context, the setup. Think of it as the arrange in the arrange, act, assert setup.
 * **on**: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.
