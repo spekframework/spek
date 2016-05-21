@@ -10,7 +10,7 @@ title: Spek - A Specification Framework
 ### Your typical test code
 Here's some typical test code found in many codebases
 
-```
+```java
 @Test
 public void testCalculateTaxRate() {
 
@@ -29,7 +29,7 @@ This code suffers from several issues. Under what **conditions** is the tax rate
 
 Spek makes it easy to define these three important aspects without resorting to long method names or underscores:
 
-```
+```kotlin
 class SimpleTest : Spek({
     describe("a calculator") {
         val calculator = SampleCalculator()
