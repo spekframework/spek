@@ -1,6 +1,6 @@
 buildscript {
     project.ext.set("junitVersion", "4.12")
-    project.ext.set("kotlinVersion", "1.0.0")
+    project.ext.set("kotlinVersion", "1.0.2")
     project.version = '0.1-SNAPSHOT'
     repositories {
         mavenCentral()
@@ -55,7 +55,7 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'kotlin'
-   
+
     configurations {
         include_unpacked_jars /// used when packing 'spek.jar' for download
     }
@@ -99,7 +99,7 @@ subprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = 1.11
+    gradleVersion = 2.13
 
     doLast() {
       def gradleOpts = "-XX:MaxPermSize=300m -Xmx1024m"
