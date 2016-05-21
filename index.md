@@ -9,6 +9,7 @@ title: Spek - A Specification Framework
 
 ### Your typical test code
 Here's some typical test code found in many codebases
+
 ```java
 @Test
 public void testCalculateTaxRate() {
