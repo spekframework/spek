@@ -1,5 +1,5 @@
 timezone:    Europe/Madrid
-pygments:    true
+rouge:       true
 markdown:    kramdown
 github:      https://github.com/jetbrains/spek
 baseurl:     /spek
