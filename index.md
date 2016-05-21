@@ -9,7 +9,7 @@ title: Spek - A Specification Framework
 
 ### Your typical test code
 Here's some typical test code found in many codebases
-{% highlight java %}
+```java
 @Test
 public void testCalculateTaxRate() {
 
@@ -19,31 +19,32 @@ Int value = calculator.calculateRate(200, 10);
 
 assertEquals(300,value);
 }
-{% endhighlight %}
-
+```
 
 This code suffers from several issues. Under what **conditions** is the tax rate calculated? What exactly is it **doing**? What is the **expected outcome**?
 
 
 ### Being explicit with Spek
 
-
 Spek makes it easy to define these three important aspects without resorting to long method names or underscores:
 
-{% highlight kotlin %}
-class TaxCalculatorSpecs: Spek() {{ "{ init {" }}
+```kotlin
+class SimpleTest : Spek({
+    describe("a calculator") {
+        val calculator = SampleCalculator()
 
-given("Tax rate calculator with default locale settings") {
-val taxRateCalculator = TaxRateCalculator()
-on("calculating the rate for an income of 200 and an average change of 10 per semester") {
-val value = taxRateCalculator.calculateRate(200, 10)
-it("should result in a value of 300") {
-assertEquals(300, value)
-}
-}
-}
-}}
-{% endhighlight %}
+        it("should return the result of adding the first number to the second number") {
+            val sum = calculator.sum(2, 4)
+            assertEquals(6, sum)
+        }
+
+        it("should return the result of subtracting the second number from the first number") {
+            val subtract = calculator.subtract(4, 2)
+            assertEquals(2, subtract)
+        }
+    }
+})
+```
 
 ### Tests are specifications
 

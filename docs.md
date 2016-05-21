@@ -34,7 +34,31 @@ You might notice that JUnit ships with Spek. Why? Because we rely on it for test
 
 Your specifications need to inherit from the Spek() base class. The primary reason for this is so that we leverage a lot of the functionality of JUnit.
 
-{% highlight kotlin %}
+```kotlin
+class SimpleTest : Spek({
+    describe("a calculator") {
+        val calculator = SampleCalculator()
+
+        it("should return the result of adding the first number to the second number") {
+            val sum = calculator.sum(2, 4)
+            assertEquals(6, sum)
+        }
+
+        it("should return the result of subtracting the second number from the first number") {
+            val subtract = calculator.subtract(4, 2)
+            assertEquals(2, subtract)
+        }
+    }
+})
+```
+
+Spek also allow you to use give/on/it nomenclature 
+
+* **given**: Only one of these should be present. Given indicates the context, the setup. Think of it as the arrange in the arrange, act, assert setup.
+* **on**: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.
+* **it**: One or more of these. Each it is a consequence of the action. The assert. Normally it's good practice to have a single assertion per it.
+
+```kotlin
 class TaxCalculatorSpecs: Spek() { init { 
 
     given("Tax rate calculator with default locale settings") {
@@ -47,13 +71,8 @@ class TaxCalculatorSpecs: Spek() { init {
         }
     }
 }}
-{% endhighlight %}
+```
 
-Each specification consists of:
-
-* **given**: Only one of these should be present. Given indicates the context, the setup. Think of it as the arrange in the arrange, act, assert setup.
-* **on**: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.
-* **it**: One or more of these. Each it is a consequence of the action. The assert. Normally it's good practice to have a single assertion per it.
 
 ### Running Tests
 
@@ -79,12 +98,6 @@ Since it uses JUnit under the covers, TeamCity already supports Spek. And like T
 <br/>[Kotlin](http://kotlin.jetbrains.org) is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by [JetBrains](http://www.jetbrains.com)
 It is aimed at being a concise modern language for general use. It also rocks!
 
-**Q: Is Kotlin free to use?**
-<br/>While this is not a Kotlin FAQ, it is important to note that Kotlin is free to use and you can use the command line or the Community Edition
-of IntelliJ to develop with it (which is free and OSS). Obviously IntelliJ Ultimate also works!
-There's also an Eclipse plugin in the works. Check the project site for updates.
-
-
 **Q: Is Spek a BDD or a TDD framework?**
 <br/>Spek in Dutch means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
 moment though, we (at least the original author) believe that there is a false distinction in frameworks around what TDD
@@ -104,5 +117,12 @@ comply with this guidance. You can have multiple *it* but you limit each to one 
 
 **Q: Can I contribute?**
 <br/>[Please do](http://github.com/jetbrains/spek)!
+
+**Q: Is Spek an official JetBrains project?**
+<br/>No. Spek was a project initiated by [Hadi Hariri](https://hadihariri.com) and has many contributors both internally from JetBrains as well as externally. While it is 
+hosted on the JetBrains account under GitHub, it is not a project that is officially supported. 
+
+**Q: What is the licensing?**
+<br/>Spek is licensed under [BSD](https://github.com/JetBrains/spek/blob/master/LICENSE.TXT)
 
 

@@ -18,14 +18,15 @@ Download the latest artifacts from the [Build Server](http://teamcity.jetbrains.
 
 ### Versions
 
-| Artifact Version | Github Branch | Kotlin Version |
-| ---------------- | ------------- | -------------- |
-| [0.1.195](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1.195) | - | 1.0.0|
-| [0.1-SNAPSHOT](http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/0.1-SNAPSHOT) | master | Kotlin 0.1-SNAPSHOT |
+Spek is currently under EAP for a 1.0 release. You can find all versions at:
+
+http://repository.jetbrains.com/simple/spek/org/jetbrains/spek/spek/
+
+Please note that we're currently building with Kotlin version 1.0.2
 
 ### Maven and Gradle
 
-Spek has not been released yet and as such is not made available on Maven Central. However you can download it from the [JetBrains Artifactory](http://repository.jetbrains.com).
+You can download it from the [JetBrains Artifactory](http://repository.jetbrains.com).
 
 To use it in Maven insert the following in your pom.xml file:
 
