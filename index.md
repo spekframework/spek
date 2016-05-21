@@ -10,7 +10,7 @@ title: Spek - A Specification Framework
 ### Your typical test code
 Here's some typical test code found in many codebases
 
-```java
+{% highlight java %}
 @Test
 public void testCalculateTaxRate() {
 
@@ -20,7 +20,7 @@ public void testCalculateTaxRate() {
 
     assertEquals(300,value);
 }
-```
+{% endhighglight %}
 
 This code suffers from several issues. Under what **conditions** is the tax rate calculated? What exactly is it **doing**? What is the **expected outcome**?
 
