@@ -4,5 +4,4 @@ data class Options(
         val paths: List<String>,
         val packageName: String,
         val format: String,
-        val filename: String,
-        val verbose: Boolean)
+        val filename: String)

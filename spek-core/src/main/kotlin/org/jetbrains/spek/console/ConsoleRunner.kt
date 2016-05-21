@@ -27,7 +27,6 @@ fun getOptions(args: Array<String>): Options {
     var filename = ""
     var paths = listOf<String>()
     var packageName = ""
-    var verbose = false
 
     if (args.size > 0 ) {
         paths = args[0].split(',').toList()
@@ -44,9 +43,6 @@ fun getOptions(args: Array<String>): Options {
             "-o", "--output" -> {
                 filename = args[++index]
             }
-            "-v", "--verbose" -> {
-                verbose = true
-            }
             else -> {
                 throw UnsupportedOperationException("Unknown parameter: ${args[index]}")
             }
@@ -58,7 +54,7 @@ fun getOptions(args: Array<String>): Options {
         filename = "out.html"
     }
 
-    return Options(paths, packageName, format, filename, verbose)
+    return Options(paths, packageName, format, filename)
 }
 
 fun setupRunner(options: Options): ConsoleSpekRunner {
@@ -70,10 +66,7 @@ fun setupRunner(options: Options): ConsoleSpekRunner {
     }
 
     when (options.format) {
-        "text" -> {
-            val deviceNotifier = if(options.verbose) OutputDeviceVerboseNotifier(device) else OutputDeviceNotifier(device)
-            notifier.add(deviceNotifier)
-        }
+        "text" -> notifier.add(OutputDeviceNotifier(device))
         "html" -> notifier.add(HtmlNotifier(options.packageName, device))
         else -> throw UnsupportedOperationException("Unknown format: ${options.format}")
     }

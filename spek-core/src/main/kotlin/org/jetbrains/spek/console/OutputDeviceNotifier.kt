@@ -1,52 +1,49 @@
 package org.jetbrains.spek.console
 
 import org.jetbrains.spek.api.ActionType
-import org.jetbrains.spek.api.SpekTree
+import org.jetbrains.spek.api.TestAction
 
 class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
+    var indentation = 0
     var testsPassed = 0
     var testsFailed = 0
     var testsIgnored = 0
 
-    val currentMessages: MutableList<String> = mutableListOf()
-    val finalMessages: MutableList<String> = mutableListOf()
-
-    override fun start(key: SpekTree) {
-        currentMessages.add(key.description)
+    override fun start(key: TestAction) {
+        printWithIndentation(key.description())
+        indentation++
     }
 
-    override fun succeed(key: SpekTree) {
-        if (key.type == ActionType.IT) {
-            device.output(greenText("."))
+    override fun succeed(key: TestAction) {
+        if (key.type() == ActionType.IT) {
             testsPassed++
         }
-        currentMessages.remove(key.description)
+        indentation--
     }
 
-    override fun fail(key: SpekTree, error: Throwable) {
-        if (key.type == ActionType.IT) {
-            device.output(redText("."))
+    override fun fail(key: TestAction, error: Throwable) {
+        if (key.type() == ActionType.IT) {
             testsFailed++
         }
-        currentMessages.add(redText("Failed: " + error.message + " " + error))
-        flushMessageBuffer(currentMessages)
+        device.output("")
+        printWithIndentation(redText("Failed: " + error.message + " " + error))
+        device.output("")
+        indentation--
     }
 
-    override fun ignore(key: SpekTree) {
-        device.output(yellowText("."))
-        testsIgnored++
-        currentMessages.add(yellowText("Ignored pending test: ${key.description}"))
-        flushMessageBuffer(currentMessages)
+    override fun ignore(key: TestAction) {
+        if (key.type() == ActionType.IT) {
+            testsIgnored++
+        }
+        printWithIndentation(yellowText("Ignored pending test: ${key.description()}"))
     }
 
     override fun finish() {
-        device.outputLine("")
-        finalMessages.forEach { device.outputLine(it) }
-        device.outputLine("")
-        device.outputLine("Found ${testsPassed + testsFailed + testsIgnored} tests")
-        device.outputLine(greenText("  ${testsPassed} tests passed"))
-        device.outputLine(redText("  ${testsFailed} tests failed"))
-        device.outputLine(yellowText("  ${testsIgnored} tests ignored"))
+        device.output("")
+        device.output("Found ${testsPassed + testsFailed + testsIgnored} tests")
+        device.output(greenText("  ${testsPassed} tests passed"))
+        device.output(redText("  ${testsFailed} tests failed"))
+        device.output(yellowText("  ${testsIgnored} tests ignored"))
     }
 
     private fun redText(text: String): String {
@@ -61,17 +58,11 @@ class OutputDeviceNotifier(val device: OutputDevice) : ConsoleNotifier {
         return "\u001B[32m${text}\u001B[0m"
     }
 
-    private fun flushMessageBuffer(messages: MutableList<String>) {
-        var indentation = 0
-        finalMessages.add("")
-        messages.forEach {
-            finalMessages.add(lineWithIndentation(it, indentation))
-            indentation++
-        }
-        messages.clear()
+    private fun printWithIndentation(text: String) {
+        device.output(getIndentationString() + text)
     }
 
-    private fun lineWithIndentation(text: String, indentation: Int) : String {
-        return "  ".repeat(indentation) + text
+    private fun getIndentationString(): String {
+        return "  ".repeat(indentation)
     }
 }

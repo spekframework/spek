@@ -5,15 +5,19 @@ import org.junit.runner.RunWith
 
 @RunWith(JUnitSpekRunner::class)
 open class Spek(val spekBody: DescribeBody.() -> Unit) {
-    val tree: SpekTree
+    val testAction : TestAction
 
     init {
         val parentDescribeBody = DescribeParser()
         parentDescribeBody.describe(this.javaClass.simpleName, spekBody)
-        tree = parentDescribeBody.children()[0]
+        testAction = parentDescribeBody.children()[0]
     }
 
     fun run(notifier: Notifier) {
-        tree.run(notifier)
+        testAction.run(notifier, object : SpekContext {
+            override fun run(test: () -> Unit) {
+                test()
+            }
+        })
     }
 }
