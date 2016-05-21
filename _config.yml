@@ -1,5 +1,5 @@
 timezone:    Europe/Madrid
-highlighter: rouge
+syntax_highlighter: rouge
 markdown:    kramdown
 github:      https://github.com/jetbrains/spek
 baseurl:     /spek
