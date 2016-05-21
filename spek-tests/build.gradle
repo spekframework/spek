@@ -1,0 +1,6 @@
+description = 'Spek Tests'
+
+dependencies {
+    compile project(':spek-core')
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
+}
