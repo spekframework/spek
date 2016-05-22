@@ -11,7 +11,8 @@ title: Spek - A Specification Framework
 Here's some typical test code found in many codebases
 
 
-<code class="highlight highlight-source-java">
+<pre class="highlight highlight-source-java">
+<code>
 public void testCalculateTaxRate() {
 
     TaxRateCalculator calculator = new TaxRateCalculator();
@@ -21,6 +22,7 @@ public void testCalculateTaxRate() {
     assertEquals(300,value);
 }
 </code>
+</pre>
 
 ```java
 @Test
