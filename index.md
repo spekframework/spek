@@ -10,20 +10,6 @@ title: Spek - A Specification Framework
 ### Your typical test code
 Here's some typical test code found in many codebases
 
-
-<pre class="highlight highlight-source-java">
-<code>
-public void testCalculateTaxRate() {
-
-    TaxRateCalculator calculator = new TaxRateCalculator();
-
-    Int value = calculator.calculateRate(200, 10);
-
-    assertEquals(300,value);
-}
-</code>
-</pre>
-
 ```java
 @Test
 public void testCalculateTaxRate() {
