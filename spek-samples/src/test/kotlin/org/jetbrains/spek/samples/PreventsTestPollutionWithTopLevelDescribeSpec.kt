@@ -1,9 +1,11 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.Spek
+import org.jetbrains.spek.dsl.describe
+import org.jetbrains.spek.dsl.it
 import kotlin.test.assertEquals
 
-class PreventsTestPollutionWithTopLevelDescribeTest : Spek({
+class PreventsTestPollutionWithTopLevelDescribeSpec: Spek({
     describe("describe bodies should be evaluated for each test") {
         var number = 0
 

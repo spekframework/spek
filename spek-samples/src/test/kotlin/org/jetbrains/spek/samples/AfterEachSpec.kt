@@ -1,9 +1,10 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.api.*
+import org.jetbrains.spek.Spek
+import org.jetbrains.spek.dsl.it
 import kotlin.test.assertEquals
 
-class AfterEachTest : Spek({
+class AfterEachSpec: Spek({
     afterEach {
         globalX = 7
     }

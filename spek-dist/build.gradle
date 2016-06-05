@@ -1,3 +1,5 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+
 description = 'Spek Distribution packages'
 
 apply plugin: 'application'
@@ -21,7 +23,7 @@ distZip {
 task distJar(type: Jar) {
     archiveName = "spek-${rootProject.version}.jar"
     from project(':spek-core').sourceSets.main.output.classesDir
-    from project(':spek-core').configurations.include_unpacked_jars.incoming.files.collect { zipTree(it) }
+//    from project(':spek-core').configurations.include_unpacked_jars.incoming.files.collect { zipTree(it) }
 }
 
 task sourceJar(type: Jar) {

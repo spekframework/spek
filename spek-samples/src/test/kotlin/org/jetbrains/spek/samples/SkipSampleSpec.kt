@@ -1,9 +1,10 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.Spek
+import org.jetbrains.spek.dsl.*
 import kotlin.test.assertEquals
 
-class SkipSampleTest : Spek({
+class SkipSampleSpec: Spek({
     val result = 10
 
     it("should return 10") {

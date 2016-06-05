@@ -1,7 +1,4 @@
 buildscript {
-    project.ext.set("junitVersion", "4.12")
-    project.ext.set("kotlinVersion", "1.0.2")
-    project.version = '0.1-SNAPSHOT'
     repositories {
         mavenCentral()
         maven {
@@ -10,20 +7,21 @@ buildscript {
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
+        jcenter()
     }
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
+        classpath 'io.spring.gradle:dependency-management-plugin:0.5.6.RELEASE'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.8'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.0'
+        classpath 'org.junit:junit-gradle:5.0.0-SNAPSHOT'
     }
 }
 
-if (hasProperty("teamcity") && kotlinVersion != '0.1-SNAPSHOT') {
-    version = teamcity["build.number"]
-} else
-    version = "0.1-SNAPSHOT"
+version = "1.0-SNAPSHOT"
 
 group = 'org.jetbrains.spek'
-
-apply plugin: 'kotlin'
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
@@ -32,84 +30,18 @@ configurations.all {
 allprojects {
     repositories {
         mavenCentral()
-    }
-    apply plugin: 'idea'
-
-    sourceCompatibility = '1.7'
-    targetCompatibility = '1.7'
-}
-
-subprojects {
-    buildscript {
-
-        repositories {
-            mavenCentral()
-            maven {
-                url 'http://oss.sonatype.org/content/repositories/snapshots'
-            }
+        mavenCentral()
+        jcenter()
+        maven {
+            url "http://repository.jetbrains.com/all"
         }
-        dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-        }
-    }
-
-    apply plugin: 'java'
-    apply plugin: 'kotlin'
-
-    configurations {
-        include_unpacked_jars /// used when packing 'spek.jar' for download
-    }
-
-    def junitDependency = "junit:junit:${junitVersion}"
-    repositories {
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
     }
-    dependencies {
-        compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-        compile "org.jetbrains.kotlin:kotlin-runtime:${kotlinVersion}"
-        compile "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}"
-        compile "org.jetbrains.kotlin:kotlin-test:${kotlinVersion}"
-        compile junitDependency
-        include_unpacked_jars junitDependency
-        testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-    }
-
-
-    tasks.withType(Jar) { task ->
-       task.manifest {
-          attributes \
-            'Implementation-Title': "Spek", \
-            'Implementation-Version': rootProject.version, \
-            'Implementation-Kotlin-Version': kotlinVersion, \
-            'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-          }
-    }
-
-    test {
-
-       // set heap size for the test JVM(s)
-       minHeapSize = "128m"
-       maxHeapSize = "512m"
-
-       // set JVM arguments for the test JVM(s)
-       jvmArgs '-XX:MaxPermSize=256m'
-    }
+    apply plugin: 'idea'
 }
 
 task wrapper(type: Wrapper) {
     gradleVersion = 2.13
-
-    doLast() {
-      def gradleOpts = "-XX:MaxPermSize=300m -Xmx1024m"
-      def gradlew_sh = file("gradlew")
-      def gradlew_bat = file("gradlew.bat")
-      gradlew_sh.text = gradlew_sh.text.replace("DEFAULT_JVM_OPTS=",
-                                                "GRADLE_OPTS=\"$gradleOpts \$GRADLE_OPTS\"\nDEFAULT_JVM_OPTS=")
-      gradlew_bat.text = gradlew_bat.text.replace("set DEFAULT_JVM_OPTS=",
-                                                  "set GRADLE_OPTS=$gradleOpts %GRADLE_OPTS%\nset DEFAULT_JVM_OPTS=")
-
-    }
-
 }

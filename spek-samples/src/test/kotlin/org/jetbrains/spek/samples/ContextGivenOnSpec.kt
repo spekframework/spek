@@ -1,8 +1,12 @@
 package org.jetbrains.spek.samples
-import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.Spek
+import org.jetbrains.spek.dsl.context
+import org.jetbrains.spek.dsl.given
+import org.jetbrains.spek.dsl.it
+import org.jetbrains.spek.dsl.on
 import kotlin.test.assertEquals
 
-class ContextGivenOnTest : Spek({
+class ContextGivenOnSpec: Spek({
     given("a calculator") {
         val calculator = SampleCalculator()
         var result = 0

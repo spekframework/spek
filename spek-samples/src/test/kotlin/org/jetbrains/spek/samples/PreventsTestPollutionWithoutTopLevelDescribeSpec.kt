@@ -1,9 +1,11 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.Spek
+import org.jetbrains.spek.dsl.describe
+import org.jetbrains.spek.dsl.it
 import kotlin.test.assertEquals
 
-class PreventsTestPollutionWithoutTopLevelDescribeTest : Spek({
+class PreventsTestPollutionWithoutTopLevelDescribeSpec: Spek({
     var outerNumber1 = 0
     var outerNumber2 = 0
 

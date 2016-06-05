@@ -1,0 +1,27 @@
+apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+    dependencies {
+        dependency 'com.natpryce:hamkrest:1.1.0.0'
+        dependency 'com.google.guava:guava:19.0'
+        dependency 'junit:junit:4.12'
+
+        dependency 'net.sf.jopt-simple:jopt-simple:5.0.1'
+
+        dependency 'org.slf4j:slf4j-api:1.7.21'
+        dependency 'ch.qos.logback:logback-classic:1.1.7'
+
+        dependencySet(group: 'org.junit', version: '5.0.0-SNAPSHOT') {
+            entry 'junit-engine-api'
+            entry 'junit5-api'
+            entry 'junit4-runner'
+        }
+
+        dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {
+            entry 'kotlin-stdlib'
+            entry 'kotlin-reflect'
+            entry 'kotlin-test'
+            entry 'kotlin-compiler'
+        }
+    }
+}

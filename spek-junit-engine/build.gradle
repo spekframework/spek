@@ -1,0 +1,17 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply plugin: 'org.junit.gen5.gradle'
+
+junit5 {
+    version '5.0.0-SNAPSHOT'
+    runJunit4 false
+}
+
+dependencies {
+    compile project(':spek-api')
+    compile 'org.jetbrains.kotlin:kotlin-stdlib'
+    compile 'org.jetbrains.kotlin:kotlin-reflect'
+    compile 'org.junit:junit-engine-api'
+
+    testCompile 'org.junit:junit5-api'
+}

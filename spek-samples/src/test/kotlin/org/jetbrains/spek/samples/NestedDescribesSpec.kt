@@ -1,8 +1,10 @@
 package org.jetbrains.spek.samples
-import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.Spek
+import org.jetbrains.spek.dsl.describe
+import org.jetbrains.spek.dsl.it
 import kotlin.test.assertEquals
 
-class NestedDescribesTest : Spek({
+class NestedDescribesSpec: Spek({
     describe("a calculator") {
         val calculator = SampleCalculator()
         var result = 0

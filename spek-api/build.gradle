@@ -1,9 +1,7 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
 
-description = 'Spek Samples'
-
 dependencies {
-    compile project(':spek-api')
-    compile "org.jetbrains.kotlin:kotlin-test"
+    compile 'org.jetbrains.kotlin:kotlin-stdlib'
+    compile 'org.jetbrains.kotlin:kotlin-reflect'
 }
