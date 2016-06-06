@@ -13,20 +13,20 @@ class SkipTest : IntegrationTestCase() {
                     }
                 }
             }, """Spek: START
-                a situation: START
-                an event: START
+                given a situation: START
+                on an event: START
                 it should A: IGNORE
-                an event: FINISH
-                a situation: FINISH
+                on an event: FINISH
+                given a situation: FINISH
                 Spek: FINISH
 
                 Spek: START
-                a situation: START
-                an event: START
+                given a situation: START
+                on an event: START
                 it should B: START
                 it should B: FINISH
-                an event: FINISH
-                a situation: FINISH
+                on an event: FINISH
+                given a situation: FINISH
                 Spek: FINISH""")
 
 
@@ -42,18 +42,18 @@ class SkipTest : IntegrationTestCase() {
                     }
                 }
             }, """Spek: START
-                a situation: START
-                an event: IGNORE
-                a situation: FINISH
+                given a situation: START
+                on an event: IGNORE
+                given a situation: FINISH
                 Spek: FINISH
 
                 Spek: START
-                a situation: START
-                another event: START
+                given a situation: START
+                on another event: START
                 it should B: START
                 it should B: FINISH
-                another event: FINISH
-                a situation: FINISH
+                on another event: FINISH
+                given a situation: FINISH
                 Spek: FINISH""")
 
 
@@ -70,7 +70,7 @@ class SkipTest : IntegrationTestCase() {
                     }
                 }
             }, """Spek: START
-                a situation: IGNORE
+                given a situation: IGNORE
                 Spek: FINISH""")
 
     @test fun pendingIt() =
@@ -83,19 +83,19 @@ class SkipTest : IntegrationTestCase() {
                     }
                 }
             }, """Spek: START
-                a situation: START
-                an event: START
+                given a situation: START
+                on an event: START
                 it should A: IGNORE
-                an event: FINISH
-                a situation: FINISH
+                on an event: FINISH
+                given a situation: FINISH
                 Spek: FINISH
 
                 Spek: START
-                a situation: START
-                an event: START
+                given a situation: START
+                on an event: START
                 it should B: IGNORE
-                an event: FINISH
-                a situation: FINISH
+                on an event: FINISH
+                given a situation: FINISH
                 Spek: FINISH""")
 
 
@@ -108,15 +108,15 @@ class SkipTest : IntegrationTestCase() {
                     xon("another event") { }
                 }
             }, """Spek: START
-                a situation: START
-                an event: IGNORE
-                a situation: FINISH
+                given a situation: START
+                on an event: IGNORE
+                given a situation: FINISH
                 Spek: FINISH
 
                 Spek: START
-                a situation: START
-                another event: IGNORE
-                a situation: FINISH
+                given a situation: START
+                on another event: IGNORE
+                given a situation: FINISH
                 Spek: FINISH""")
 
 
@@ -126,10 +126,10 @@ class SkipTest : IntegrationTestCase() {
 
                 xgiven("another situation") { }
             }, """Spek: START
-            a situation: IGNORE
+            given a situation: IGNORE
             Spek: FINISH
 
             Spek: START
-            another situation: IGNORE
+            given another situation: IGNORE
             Spek: FINISH""")
 }

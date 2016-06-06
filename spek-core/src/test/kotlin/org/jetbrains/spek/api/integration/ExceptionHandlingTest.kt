@@ -12,12 +12,12 @@ class ExceptionHandlingTest : IntegrationTestCase() {
             }
         }
     }, """Spek: START
-        something: START
-        something else: START
+        given something: START
+        on something else: START
         it should fail on exceptions: START
         it should fail on exceptions: FAIL: error occurred
-        something else: FINISH
-        something: FINISH
+        on something else: FINISH
+        given something: FINISH
         Spek: FINISH""")
 
     @test fun exceptionThrownFromBeforeEach() = runTest(data{
@@ -26,10 +26,10 @@ class ExceptionHandlingTest : IntegrationTestCase() {
             it("should fail") { }
         }
     }, """Spek: START
-        something: START
+        given something: START
         it should fail: START
         it should fail: FAIL: error occurred
-        something: FINISH
+        given something: FINISH
         Spek: FINISH""")
 
     @test fun exceptionThrownFromAfterEach() = runTest(data{
@@ -38,9 +38,9 @@ class ExceptionHandlingTest : IntegrationTestCase() {
             it("should fail") { }
         }
     }, """Spek: START
-        something: START
+        given something: START
         it should fail: START
         it should fail: FAIL: error occurred
-        something: FINISH
+        given something: FINISH
         Spek: FINISH""")
 }
