@@ -1,11 +1,11 @@
 package org.jetbrains.spek.api
 
-import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 class DescribeParser() : DescribeBody {
-    val befores: LinkedList<() -> Unit> = LinkedList()
-    val afters: LinkedList<() -> Unit> = LinkedList()
-    val children = LinkedList<SpekTree>()
+    val befores: MutableList<() -> Unit> = CopyOnWriteArrayList()
+    val afters: MutableList<() -> Unit> = CopyOnWriteArrayList()
+    val children: MutableList<SpekTree> = CopyOnWriteArrayList()
 
     fun children(): List<SpekTree> {
         if (children.isEmpty()) {

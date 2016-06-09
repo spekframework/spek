@@ -1,12 +1,11 @@
 package org.jetbrains.spek.api
-import java.util.*
 
 interface SpekNodeRunner {
     fun run(tree: SpekTree, notifier: Notifier, innerAction: () -> Unit)
 }
 
-class SpekStepRunner(val befores: LinkedList<() -> Unit> = LinkedList(),
-                     val afters: LinkedList<() -> Unit> = LinkedList(),
+class SpekStepRunner(val befores: List<() -> Unit> = emptyList(),
+                     val afters: List<() -> Unit> = emptyList(),
                      val assertions: () -> Unit = {}): SpekNodeRunner {
 
     override fun run(tree: SpekTree, notifier: Notifier, innerAction: () -> Unit) {
