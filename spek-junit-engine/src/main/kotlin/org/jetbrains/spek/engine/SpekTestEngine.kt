@@ -82,11 +82,11 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         }
 
         override fun beforeEach(callback: () -> Unit) {
-            root.fixtures.beforeEach = callback
+            root.fixtures.beforeEach.add(callback)
         }
 
         override fun afterEach(callback: () -> Unit) {
-            root.fixtures.afterEach = callback
+            root.fixtures.afterEach.add(callback)
         }
     }
 

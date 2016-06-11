@@ -1,9 +1,18 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply plugin: 'org.junit.gen5.gradle'
+
+junit5 {
+    version '5.0.0-SNAPSHOT'
+    runJunit4 false
+    requiredEngine 'spek'
+}
+
 
 description = 'Spek Samples'
 
 dependencies {
     compile project(':spek-api')
     compile "org.jetbrains.kotlin:kotlin-test"
+    testCompile project(':spek-junit-engine')
 }
