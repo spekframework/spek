@@ -58,26 +58,27 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     private fun resolveSpec(engineDescriptor: EngineDescriptor, klass: Class<Spek>) {
         val instance = klass.kotlin.primaryConstructor!!.call()
         val root = Scope.Group(engineDescriptor.uniqueId.append(CLASS_SEGMENT_TYPE, klass.name), Pending.No)
+        engineDescriptor.addChild(root)
         instance.spec.invoke(Collector(root))
     }
 
     open class Collector(val root: Scope.Group): Dsl {
         override fun group(description: String, pending: Pending, body: Dsl.() -> Unit) {
             val group = Scope.Group(root.uniqueId.append(GROUP_SEGMENT_TYPE, description), pending)
-            group.setParent(root)
+            root.addChild(group)
             body.invoke(Collector(group))
         }
 
         override fun <T: Any> group(subject: KClass<T>, description: String,
                                     pending: Pending, body: SubjectDsl<T>.() -> Unit) {
             val group = Scope.Group(root.uniqueId.append(GROUP_SEGMENT_TYPE, description), pending)
-            group.setParent(root)
+            root.addChild(group)
             body.invoke(SubjectCollector<T>(group))
         }
 
         override fun test(description: String, pending: Pending, body: () -> Unit) {
             val test = Scope.Test(root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, body)
-            test.setParent(root)
+            root.addChild(test)
         }
 
         override fun beforeEach(callback: () -> Unit) {

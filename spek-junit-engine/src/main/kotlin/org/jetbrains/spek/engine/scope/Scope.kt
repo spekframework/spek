@@ -53,7 +53,10 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
 
         private fun invokeAllBeforeEach(scope: Group) {
             if (scope.parent.isPresent) {
-                invokeAllBeforeEach(scope.parent.get() as Group)
+                val parent = scope.parent.get()
+                if (!parent.isRoot) {
+                    invokeAllBeforeEach(scope.parent.get() as Group)
+                }
             }
             scope.fixtures.beforeEach?.invoke()
         }
@@ -61,7 +64,10 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
         private fun invokeAllAfterEach(scope: Group) {
             scope.fixtures.afterEach?.invoke()
             if (scope.parent.isPresent) {
-                invokeAllAfterEach(scope.parent.get() as Group)
+                val parent = scope.parent.get()
+                if (!parent.isRoot) {
+                    invokeAllAfterEach(parent as Group)
+                }
             }
         }
     }

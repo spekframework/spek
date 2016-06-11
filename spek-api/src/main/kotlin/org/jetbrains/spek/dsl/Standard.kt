@@ -88,7 +88,7 @@ fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit) {
+fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) {
     test("[pending] it: $description", Pending.Yes(reason), body)
 }
 
@@ -98,7 +98,7 @@ fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xon(description: String, reason: String? = null, body: () -> Unit) {
+fun Dsl.xon(description: String, reason: String? = null, body: () -> Unit = {}) {
     test("[pending] on: $description", Pending.Yes(reason), body)
 }
 

@@ -15,6 +15,7 @@ dependencyManagement {
             entry 'junit-engine-api'
             entry 'junit5-api'
             entry 'junit4-runner'
+            entry 'junit-launcher'
         }
 
         dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {
