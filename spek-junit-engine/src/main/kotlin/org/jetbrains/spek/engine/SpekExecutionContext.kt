@@ -19,6 +19,5 @@ class SpekExecutionContext: EngineExecutionContext {
     }
     fun afterTest(scope: Scope.Test) {
         listeners.forEach { it.afterTest(scope) }
-
     }
 }

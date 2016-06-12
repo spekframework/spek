@@ -32,6 +32,10 @@ class ExecutionEventRecorder: EngineExecutionListener {
     val dynamicTestRegisteredCount: Int
         get() = countTestEventsByType<ExecutionEvent.DynamicTestRegistered>()
 
+    fun getFailingTestEvents(): Sequence<ExecutionEvent.Finished> {
+        return getTestFinishedEventsByStatus(TestExecutionResult.Status.FAILED)
+    }
+
     override fun executionFinished(testDescriptor: TestDescriptor, testExecutionResult: TestExecutionResult) {
         _executionEvents.add(ExecutionEvent.Finished(testDescriptor, testExecutionResult))
     }

@@ -15,7 +15,6 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
     class Group(uniqueId: UniqueId, pending: Pending)
         : Scope(uniqueId, pending) {
         var subject: SubjectImpl<*>? = null
-
         val fixtures: Fixtures = Fixtures()
         override fun isTest() = false
         override fun isContainer() = true

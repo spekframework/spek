@@ -102,7 +102,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
                 if (root.subject != null) {
                     return root.subject!!.get() as T
                 }
-                throw UnsupportedOperationException()
+                throw SpekException("Subject not configured.")
             }
 
     }

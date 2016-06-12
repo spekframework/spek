@@ -5,7 +5,9 @@ apply plugin: 'org.junit.gen5.gradle'
 junit5 {
     version '5.0.0-SNAPSHOT'
     runJunit4 false
-    requiredEngine 'junit5'
+    engines {
+        exclude 'spek'
+    }
 }
 
 dependencies {
