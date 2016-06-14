@@ -14,4 +14,6 @@ interface Dsl {
 
     fun beforeEach(callback: () -> Unit)
     fun afterEach(callback: () -> Unit)
+
+    // fun <T: Spek> includeSpec(spec: KClass<T>)
 }
