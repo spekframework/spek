@@ -1,6 +1,6 @@
 package org.jetbrains.spek.engine.scope
 
-import org.jetbrains.spek.dsl.Pending
+import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.engine.SpekExecutionContext
 import org.jetbrains.spek.engine.subject.SubjectImpl
 import org.junit.gen5.engine.UniqueId

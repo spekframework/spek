@@ -1,7 +1,7 @@
 package org.jetbrains.spek.samples
 
-import org.jetbrains.spek.Spek
-import org.jetbrains.spek.dsl.it
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.it
 import kotlin.test.assertEquals
 
 class AfterEachSpec: Spek({

@@ -1,4 +1,4 @@
-package org.jetbrains.spek.dsl
+package org.jetbrains.spek.api.dsl
 
 import kotlin.reflect.KClass
 

@@ -1,4 +1,4 @@
-package org.jetbrains.spek.subject
+package org.jetbrains.spek.api.subject
 
 import kotlin.reflect.KProperty
 

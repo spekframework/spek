@@ -1,4 +1,4 @@
-package org.jetbrains.spek.dsl
+package org.jetbrains.spek.api.dsl
 
 import kotlin.reflect.KClass
 
@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
  * @since 1.0
  */
 interface Dsl {
-    fun group(description: String, pending: Pending = Pending.No, body: Dsl.() -> Unit)
+    fun group(description: String, pending: Pending = Pending.No, body: org.jetbrains.spek.api.Dsl.() -> Unit)
     fun <T: Any> group(subject: KClass<T>, description: String,
                        pending: Pending = Pending.No, body: SubjectDsl<T>.() -> Unit)
     fun test(description: String, pending: Pending = Pending.No, body: () -> Unit)

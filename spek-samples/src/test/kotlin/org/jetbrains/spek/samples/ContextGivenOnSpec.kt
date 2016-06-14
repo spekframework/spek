@@ -1,9 +1,9 @@
 package org.jetbrains.spek.samples
-import org.jetbrains.spek.Spek
-import org.jetbrains.spek.dsl.context
-import org.jetbrains.spek.dsl.given
-import org.jetbrains.spek.dsl.it
-import org.jetbrains.spek.dsl.on
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.context
+import org.jetbrains.spek.api.dsl.given
+import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.on
 import kotlin.test.assertEquals
 
 class ContextGivenOnSpec: Spek({

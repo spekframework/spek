@@ -1,12 +1,12 @@
 package org.jetbrains.spek.engine
 
-import org.jetbrains.spek.Spek
-import org.jetbrains.spek.dsl.Dsl
-import org.jetbrains.spek.dsl.Pending
-import org.jetbrains.spek.dsl.SubjectDsl
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.Dsl
+import org.jetbrains.spek.api.dsl.Pending
+import org.jetbrains.spek.api.dsl.SubjectDsl
+import org.jetbrains.spek.api.subject.Subject
 import org.jetbrains.spek.engine.scope.Scope
 import org.jetbrains.spek.engine.subject.SubjectImpl
-import org.jetbrains.spek.subject.Subject
 import org.junit.gen5.commons.util.ReflectionUtils
 import org.junit.gen5.engine.EngineDiscoveryRequest
 import org.junit.gen5.engine.ExecutionRequest

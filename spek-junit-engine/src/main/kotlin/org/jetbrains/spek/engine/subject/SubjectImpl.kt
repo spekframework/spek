@@ -1,7 +1,7 @@
 package org.jetbrains.spek.engine.subject
 
+import org.jetbrains.spek.api.subject.Subject
 import org.jetbrains.spek.engine.memoized.MemoizedHelper
-import org.jetbrains.spek.subject.Subject
 
 /**
  * @author Ranie Jade Ramiso

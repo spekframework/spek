@@ -1,6 +1,6 @@
-package org.jetbrains.spek.dsl
+package org.jetbrains.spek.api.dsl
 
-import org.jetbrains.spek.subject.Subject
+import org.jetbrains.spek.api.subject.Subject
 
 /**
  * @author Ranie Jade Ramiso

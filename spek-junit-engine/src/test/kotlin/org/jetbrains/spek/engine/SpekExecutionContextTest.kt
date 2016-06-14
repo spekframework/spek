@@ -2,7 +2,7 @@ package org.jetbrains.spek.engine
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
-import org.jetbrains.spek.dsl.Pending
+import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.engine.scope.Scope
 import org.junit.gen5.api.Test
 import org.junit.gen5.engine.UniqueId
