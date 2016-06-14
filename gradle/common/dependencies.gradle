@@ -14,6 +14,7 @@ dependencyManagement {
         dependencySet(group: 'org.junit', version: '5.0.0-SNAPSHOT') {
             entry 'junit-engine-api'
             entry 'junit5-api'
+            entry 'junit5-engine'
             entry 'junit4-runner'
             entry 'junit-launcher'
         }

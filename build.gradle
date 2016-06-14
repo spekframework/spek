@@ -19,8 +19,7 @@ buildscript {
     }
 }
 
-version = "1.0-SNAPSHOT"
-
+version = '1.0-SNAPSHOT'
 group = 'org.jetbrains.spek'
 
 configurations.all {
@@ -33,7 +32,7 @@ allprojects {
         mavenCentral()
         jcenter()
         maven {
-            url "http://repository.jetbrains.com/all"
+            url 'http://repository.jetbrains.com/all'
         }
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
@@ -45,3 +44,16 @@ allprojects {
 task wrapper(type: Wrapper) {
     gradleVersion = 2.13
 }
+
+if (hasProperty('bintray_user')) {
+    ext.bintrayUser = getProperty('bintray_user')
+} else {
+    ext.bintrayUser = ''
+}
+
+if (hasProperty('bintray_api_key')) {
+    ext.bintrayApiKey = getProperty('bintray_api_key')
+} else {
+    ext.bintrayApiKey = ''
+}
+

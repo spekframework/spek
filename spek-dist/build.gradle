@@ -15,7 +15,7 @@ publishing {
         api(MavenPublication) {
             groupId = 'org.jetbrains.spek'
             artifactId = 'spek-api'
-            version = project(':spek-api').version
+            version = rootProject.version
 
             from project(':spek-api').components.java
             artifact project(':spek-api').tasks['sourceJar']
@@ -30,10 +30,10 @@ publishing {
         engine(MavenPublication) {
             groupId = 'org.jetbrains.spek'
             artifactId = 'spek-junit-engine'
-            version = project('spek-junit-engine').version
+            version = rootProject.version
 
-            from project('spek-junit-engine').components.java
-            artifact project('spek-junit-engine').tasks['sourceJar']
+            from project(':spek-junit-engine').components.java
+            artifact project(':spek-junit-engine').tasks['sourceJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {

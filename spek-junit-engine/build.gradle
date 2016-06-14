@@ -17,6 +17,7 @@ dependencies {
 
     testCompile 'org.junit:junit5-api'
     testCompile project(':junit-engine-test-support')
+    testRuntime 'org.junit:junit5-engine'
 }
 
 task sourceJar(type: Jar) {
