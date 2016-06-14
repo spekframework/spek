@@ -4,7 +4,6 @@ apply plugin: 'org.junit.gen5.gradle'
 
 junit5 {
     version '5.0.0-SNAPSHOT'
-    runJunit4 false
     engines {
         exclude 'spek'
     }
@@ -18,4 +17,9 @@ dependencies {
 
     testCompile 'org.junit:junit5-api'
     testCompile project(':junit-engine-test-support')
+}
+
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
 }
