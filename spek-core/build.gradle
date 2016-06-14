@@ -1,8 +1,0 @@
-apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin.gradle"
-
-description = 'Spek Core'
-
-dependencies {
-    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
-}
