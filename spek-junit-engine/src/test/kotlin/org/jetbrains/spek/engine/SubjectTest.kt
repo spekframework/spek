@@ -3,27 +3,28 @@ package org.jetbrains.spek.engine
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.sameInstance
-import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.gen5.api.Test
+import org.junit.gen5.junit4.runner.JUnit5
+import org.junit.runner.RunWith
 
 /**
  * @author Ranie Jade Ramiso
  */
+@RunWith(JUnit5::class)
 class SubjectTest: AbstractSpekTestEngineTest() {
     class Foo {
         fun bar() { }
     }
-    class SubjectSpec: Spek({
-        group(Foo::class, "given: a Foo") {
-            subject { Foo() }
-            test("test #1") {
-                subject1 = subject
-            }
+    class SubjectSpec: SubjectSpek<Foo>({
+        subject { Foo() }
+        test("test #1") {
+            subject1 = subject
+        }
 
-            test("test #2") {
-                subject2 = subject
-            }
+        test("test #2") {
+            subject2 = subject
         }
     }) {
         companion object {
@@ -40,11 +41,9 @@ class SubjectTest: AbstractSpekTestEngineTest() {
 
     @Test
     fun testNotConfiguredSubject() {
-        class SubjectSpec: Spek({
-            group(Foo::class, "given a Foo") {
-                test("this should fail") {
-                    subject.bar()
-                }
+        class SubjectSpec: SubjectSpek<Foo>({
+            test("this should fail") {
+                subject.bar()
             }
         })
 
