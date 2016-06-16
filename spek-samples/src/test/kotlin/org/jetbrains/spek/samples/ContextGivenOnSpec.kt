@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 
 class ContextGivenOnSpec: Spek({
     given("a calculator") {
-        val calculator = SampleCalculator()
+        val calculator = Calculator()
         var result = 0
 
         context("addition") {

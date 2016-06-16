@@ -4,8 +4,8 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.dsl.it
 import kotlin.test.assertEquals
 
-class CalculatorSpec: SubjectSpek<SampleCalculator>({
-    subject { SampleCalculator() }
+class CalculatorSpec: SubjectSpek<Calculator>({
+    subject { Calculator() }
 
     it("should return the result of adding the first number to the second number") {
         val sum = subject.sum(2, 4)

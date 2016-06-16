@@ -20,6 +20,7 @@ import org.junit.gen5.engine.support.descriptor.EngineDescriptor
 import org.junit.gen5.engine.support.hierarchical.HierarchicalTestEngine
 import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
+import kotlin.reflect.KProperty
 import kotlin.reflect.primaryConstructor
 
 /**
@@ -62,7 +63,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     private fun resolveSpec(engineDescriptor: EngineDescriptor, klass: Class<*>) {
         val instance = klass.kotlin.primaryConstructor!!.call()
         val name = when(instance) {
-            is SubjectSpek<*> -> (klass.genericSuperclass as ParameterizedType).actualTypeArguments.first().typeName
+            is SubjectSpek<*> -> {
+                "subject ${(klass.genericSuperclass as ParameterizedType).actualTypeArguments.first().typeName}"
+            }
             else -> klass.name
         }
         val root = Scope.Group(engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, name), Pending.No)
@@ -96,7 +99,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         }
     }
 
-    class SubjectCollector<T>(root: Scope.Group): Collector(root), SubjectDsl<T> {
+    open class SubjectCollector<T>(root: Scope.Group): Collector(root), SubjectDsl<T> {
         override fun subject(factory: () -> T): Subject<T> {
             return SubjectImpl(factory).apply {
                 root.subject = this
@@ -112,9 +115,23 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             }
 
         override fun <T, K : SubjectSpek<T>> includeSubjectSpec(spec: KClass<K>) {
-            TODO()
+            val instance = spec.primaryConstructor!!.call()
+            instance.spec.invoke(NestedSubjectCollector<T>(root))
         }
+    }
 
+    class NestedSubjectCollector<T>(root: Scope.Group): SubjectCollector<T>(root) {
+        override fun subject(factory: () -> T): Subject<T> {
+            return object: Subject<T> {
+                override fun getValue(ref: Any?, property: KProperty<*>): T {
+                    val subject = root.subject
+                    if (subject != null) {
+                        return (root.subject as Subject<T>).getValue(ref, property)
+                    }
+                    throw SpekException("Subject not configured")
+                }
+            }
+        }
     }
 
     companion object {

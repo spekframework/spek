@@ -16,7 +16,6 @@ dependencies {
     compile 'org.junit:junit-engine-api'
 
     testCompile 'org.junit:junit5-api'
-    testCompile 'org.junit:junit4-runner'
     testCompile project(':junit-engine-test-support')
     testRuntime 'org.junit:junit5-engine'
 }

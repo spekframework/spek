@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class NestedDescribesSpec: Spek({
     describe("a calculator") {
-        val calculator = SampleCalculator()
+        val calculator = Calculator()
         var result = 0
 
         describe("addition") {

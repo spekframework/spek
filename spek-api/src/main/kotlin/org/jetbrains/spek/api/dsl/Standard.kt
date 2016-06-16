@@ -1,5 +1,6 @@
 package org.jetbrains.spek.api.dsl
 
+import org.jetbrains.spek.api.SubjectSpek
 import kotlin.reflect.KClass
 
 /**
@@ -100,4 +101,14 @@ fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) 
  */
 fun Dsl.xon(description: String, reason: String? = null, body: () -> Unit = {}) {
     test("on $description", Pending.Yes(reason), body)
+}
+
+/**
+ * Alias for [SubjectDsl.includeSubjectSpec].
+ *
+ * @author Ranie Jade Ramiso
+ * @since 1.0
+ */
+fun <T, K: SubjectSpek<T>> SubjectDsl<*>.itBehavesLike(spec: KClass<K>) {
+    includeSubjectSpec(spec)
 }
