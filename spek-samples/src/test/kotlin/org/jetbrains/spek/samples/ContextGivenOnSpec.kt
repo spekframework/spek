@@ -13,7 +13,7 @@ class ContextGivenOnSpec: Spek({
 
         context("addition") {
             beforeEach {
-                result = calculator.sum(2, 4);
+                result = calculator.add(2, 4);
             }
 
             it("should return the result of adding the first number to the second number") {
