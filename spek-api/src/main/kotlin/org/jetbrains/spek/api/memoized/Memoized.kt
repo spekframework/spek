@@ -1,11 +1,10 @@
-package org.jetbrains.spek.api.subject
+package org.jetbrains.spek.api.memoized
 
 import kotlin.reflect.KProperty
 
 /**
  * @author Ranie Jade Ramiso
- * @since 1.0
  */
-interface Subject<T> {
+interface Memoized<T> {
     operator fun getValue(ref: Any?, property: KProperty<*>): T
 }

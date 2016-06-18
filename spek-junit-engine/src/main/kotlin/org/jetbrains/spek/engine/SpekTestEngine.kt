@@ -5,9 +5,10 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.dsl.Dsl
 import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.api.dsl.SubjectDsl
-import org.jetbrains.spek.api.subject.Subject
+import org.jetbrains.spek.api.memoized.CachingMode
+import org.jetbrains.spek.api.memoized.Subject
+import org.jetbrains.spek.engine.memoized.SubjectImpl
 import org.jetbrains.spek.engine.scope.Scope
-import org.jetbrains.spek.engine.subject.SubjectImpl
 import org.junit.gen5.commons.util.ReflectionUtils
 import org.junit.gen5.engine.EngineDiscoveryRequest
 import org.junit.gen5.engine.ExecutionRequest
@@ -100,8 +101,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     open class SubjectCollector<T>(root: Scope.Group): Collector(root), SubjectDsl<T> {
-        override fun subject(factory: () -> T): Subject<T> {
-            return SubjectImpl(factory).apply {
+        override fun subject(mode: CachingMode, factory: () -> T): Subject<T> {
+            return SubjectImpl(mode, factory).apply {
                 root.subject = this
             }
         }
@@ -121,7 +122,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     class NestedSubjectCollector<T>(root: Scope.Group): SubjectCollector<T>(root) {
-        override fun subject(factory: () -> T): Subject<T> {
+        override fun subject(mode: CachingMode, factory: () -> T): Subject<T> {
             return object: Subject<T> {
                 override fun getValue(ref: Any?, property: KProperty<*>): T {
                     val subject = root.subject

@@ -1,9 +1,11 @@
-package org.jetbrains.spek.engine
+package org.jetbrains.spek.engine.memoized
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.sameInstance
 import org.jetbrains.spek.api.SubjectSpek
+import org.jetbrains.spek.api.memoized.CachingMode
+import org.jetbrains.spek.engine.SpekException
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.gen5.api.Test
 
@@ -32,10 +34,33 @@ class SubjectTest: AbstractSpekTestEngineTest() {
         }
     }
 
+    // companion objects not allowed on local classes
+    class Foo2Spec: SubjectSpek<Foo>({
+        subject(CachingMode.GROUP) { Foo() }
+        test("test #1") {
+            subject1 = subject
+        }
+
+        test("test #2") {
+            subject2 = subject
+        }
+    }) {
+        companion object {
+            lateinit var subject1: Foo
+            lateinit var subject2: Foo
+        }
+    }
+
     @Test
     fun testDifferentInstancePerTest() {
         executeTestsForClass(FooSpec::class)
         assertThat(FooSpec.subject1, !sameInstance(FooSpec.subject2))
+    }
+
+    @Test
+    fun testSameInstancePerTest() {
+        executeTestsForClass(Foo2Spec::class)
+        assertThat(Foo2Spec.subject1, sameInstance(Foo2Spec.subject2))
     }
 
     @Test
