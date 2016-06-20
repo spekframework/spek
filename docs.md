@@ -59,8 +59,7 @@ Spek also allows you to use given/on/it nomenclature
 * **it**: One or more of these. Each it is a consequence of the action. The assert. Normally it's good practice to have a single assertion per it.
 
 ```kotlin
-class TaxCalculatorSpecs: Spek() { init { 
-
+class TaxCalculatorSpecs: Spek({ 
     given("Tax rate calculator with default locale settings") {
         val taxRateCalculator = TaxRateCalculator()
         on("calculating the rate for an income of 200 and an average change of 10 per semester") {
@@ -70,7 +69,7 @@ class TaxCalculatorSpecs: Spek() { init {
             }
         }
     }
-}}
+})
 ```
 
 
