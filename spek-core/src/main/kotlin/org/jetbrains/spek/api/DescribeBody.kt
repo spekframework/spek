@@ -5,11 +5,11 @@ interface DescribeBody  {
     fun xdescribe(description: String, evaluateBody: DescribeBody.() -> Unit)
     fun fdescribe(description: String, evaluateBody: DescribeBody.() -> Unit)
 
-    fun it(description: String, assertions: () -> Unit)
-    fun xit(description: String, assertions: () -> Unit)
-    fun fit(description: String, assertions: () -> Unit)
+    fun it(description: String, assertions: AssertionBody.() -> Unit)
+    fun xit(description: String, assertions: AssertionBody.() -> Unit)
+    fun fit(description: String, assertions: AssertionBody.() -> Unit)
 
-    fun beforeEach(actions: () -> Unit)
+    fun beforeEach(actions: AssertionBody.() -> Unit)
     fun afterEach(actions: () -> Unit)
 
     fun on(description: String, evaluateBody: DescribeBody.() -> Unit) = describe(description, evaluateBody)

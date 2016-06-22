@@ -6,8 +6,14 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.SpekTree
 import org.jetbrains.spek.console.executeSpek
 import org.junit.Assert
+import java.io.Closeable
 
 open class IntegrationTestCase {
+
+    class CloseableTest : Closeable {
+        var closed = false
+        override fun close() { closed = true }
+    }
 
     fun runTest(case: Spek, vararg expected: String) {
         val list = arrayListOf<String>()

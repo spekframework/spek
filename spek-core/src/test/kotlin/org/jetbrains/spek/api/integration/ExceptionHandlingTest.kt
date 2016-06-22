@@ -1,5 +1,6 @@
 package org.jetbrains.spek.api.integration
 
+import kotlin.test.assertTrue
 import org.junit.Test as test
 
 class ExceptionHandlingTest : IntegrationTestCase() {
@@ -43,4 +44,29 @@ class ExceptionHandlingTest : IntegrationTestCase() {
         it should fail: FAIL: error occurred
         something: FINISH
         Spek: FINISH""")
+
+    @test fun cleanupOnException() = runTest(data{
+        given("something") {
+            val closeable = CloseableTest()
+            it("should fail") {
+                closeable.autoCleanup()
+                throw RuntimeException("error occurred")
+            }
+            it("should have clean up") {
+                assertTrue(closeable.closed)
+            }
+        }
+    }, """Spek: START
+        something: START
+        it should fail: START
+        it should fail: FAIL: error occurred
+        something: FINISH
+        Spek: FINISH
+        Spek: START
+        something: START
+        it should have clean up: START
+        it should have clean up: FINISH
+        something: FINISH
+        Spek: FINISH
+        """)
 }
