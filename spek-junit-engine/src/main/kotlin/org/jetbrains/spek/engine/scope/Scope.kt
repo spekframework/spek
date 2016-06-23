@@ -40,7 +40,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
                 body.invoke(this)
             }
             catch (e: Throwable) {
-                invokeAllCleanups(e)
+                invokeAllCleanups(invokeAllAfterEach(parent.get() as Group, e))
                 throw e
             }
             return context
@@ -52,18 +52,16 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
                 try {
                     invokeAllBeforeEach(parent.get() as Group)
                 } catch (e: Throwable) {
-                    invokeAllCleanups(e)
+                    invokeAllCleanups(invokeAllAfterEach(parent.get() as Group, e))
                     throw e
                 }
             }
         }
 
         override fun after(context: SpekExecutionContext) {
-            try {
-                invokeAllAfterEach(parent.get() as Group)
-            } finally {
-                invokeAllCleanups()
-            }
+            val exception = invokeAllCleanups(invokeAllAfterEach(parent.get() as Group))
+            if (exception != null)
+                throw exception
             context.afterTest(this)
             super.after(context)
         }
@@ -78,28 +76,26 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
             scope.fixtures.beforeEach.forEach { it.invoke(this) }
         }
 
-        private fun invokeAllAfterEach(scope: Group) {
-            invokeAllCleanups()
-            scope.fixtures.afterEach.forEach { it.invoke() }
+        private fun invokeAllAfterEach(scope: Group, initialException: Throwable? = null): Throwable? {
+            val exception = invokeAll(scope.fixtures.afterEach, initialException)
             if (scope.parent.isPresent) {
                 val parent = scope.parent.get()
                 if (!parent.isRoot) {
-                    invokeAllAfterEach(parent as Group)
+                    return invokeAllAfterEach(parent as Group, exception)
                 }
             }
+            return exception
         }
 
-        private fun invokeAllCleanups(initialException: Throwable? = null) {
-            var exception: Throwable? = null
-            for (cleanup in cleanups) {
+        private fun invokeAllCleanups(initialException: Throwable? = null) = invokeAll(cleanups, initialException)
+
+        private fun invokeAll(blocks: List<() -> Unit>, initialException: Throwable?): Throwable? {
+            var exception = initialException
+            for (block in blocks) {
                 try {
-                    cleanup.invoke()
+                    block.invoke()
                 } catch (e: Throwable) {
-                    if (initialException != null) {
-// When JDK 7 is officially supported:
-//                    } else {
-//                        initialException.addSuppressed(e)
-                    } else if (exception != null) {
+                    if (exception != null) {
 // When JDK 7 is officially supported:
 //                        exception.addSuppressed(e)
                     } else {
@@ -107,8 +103,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
                     }
                 }
             }
-            if (exception != null)
-                throw exception
+            return exception
         }
 
         override fun onCleanup(block: () -> Unit) {

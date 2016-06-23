@@ -61,7 +61,7 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
         val recorder = executeTestsForClass(TestSpek::class)
 
         assertThat(recorder.testFailureCount, equalTo(2))
-        assertThat(counter, equalTo(0))
+        assertThat(counter, equalTo(2))
     }
 
     @Test
@@ -71,7 +71,6 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
         class TestSpek: Spek({
             group("group") {
                 test("test") { }
-                test("another test") { }
                 test("failing test") { assertThat(true, equalTo(false)) }
                 afterEach { counter++ }
             }
