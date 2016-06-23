@@ -39,7 +39,7 @@ fun Dsl.given(description: String, body: Dsl.() -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.it(description: String, body: () -> Unit) {
+fun Dsl.it(description: String, body: TestBody.() -> Unit) {
     test("it $description", body = body)
 }
 
@@ -49,7 +49,7 @@ fun Dsl.it(description: String, body: () -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.on(description: String, body: () -> Unit) {
+fun Dsl.on(description: String, body: TestBody.() -> Unit) {
     test("on $description", body = body)
 }
 
@@ -89,7 +89,7 @@ fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) {
+fun Dsl.xit(description: String, reason: String? = null, body: TestBody.() -> Unit = {}) {
     test("it $description", Pending.Yes(reason), body)
 }
 
@@ -99,7 +99,7 @@ fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) 
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xon(description: String, reason: String? = null, body: () -> Unit = {}) {
+fun Dsl.xon(description: String, reason: String? = null, body: TestBody.() -> Unit = {}) {
     test("on $description", Pending.Yes(reason), body)
 }
 

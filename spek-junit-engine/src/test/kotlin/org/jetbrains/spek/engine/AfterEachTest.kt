@@ -12,6 +12,8 @@ import org.junit.gen5.api.Test
 class AfterEachTest: AbstractSpekTestEngineTest() {
     @Test
     fun testAfterEach() {
+        counter = 0
+
         class TestSpek: Spek({
             group("group") {
                 test("test") { }
@@ -40,6 +42,46 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
         val recorder = executeTestsForClass(TestSpek::class)
 
         assertThat(recorder.testFailureCount, equalTo(2))
+    }
+
+    @Test
+    fun testBeforeEachFailure() {
+        counter = 0
+
+        class TestSpek: Spek({
+            group("group") {
+                beforeEach { assertThat(true, equalTo(false)) }
+                test("test") { }
+                test("another test") { }
+                afterEach { counter++ }
+            }
+
+        })
+
+        val recorder = executeTestsForClass(TestSpek::class)
+
+        assertThat(recorder.testFailureCount, equalTo(2))
+        assertThat(counter, equalTo(0))
+    }
+
+    @Test
+    fun testTestFailure() {
+        counter = 0
+
+        class TestSpek: Spek({
+            group("group") {
+                test("test") { }
+                test("another test") { }
+                test("failing test") { assertThat(true, equalTo(false)) }
+                afterEach { counter++ }
+            }
+
+        })
+
+        val recorder = executeTestsForClass(TestSpek::class)
+
+        assertThat(recorder.testFailureCount, equalTo(1))
+        assertThat(counter, equalTo(2))
     }
 
     companion object {

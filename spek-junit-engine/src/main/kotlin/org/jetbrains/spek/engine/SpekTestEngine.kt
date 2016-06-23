@@ -5,6 +5,7 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.dsl.Dsl
 import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.api.dsl.SubjectDsl
+import org.jetbrains.spek.api.dsl.TestBody
 import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.api.memoized.Subject
 import org.jetbrains.spek.engine.memoized.SubjectImpl
@@ -86,12 +87,12 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             body.invoke(Collector(group))
         }
 
-        override fun test(description: String, pending: Pending, body: () -> Unit) {
+        override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
             val test = Scope.Test(root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, body)
             root.addChild(test)
         }
 
-        override fun beforeEach(callback: () -> Unit) {
+        override fun beforeEach(callback: TestBody.() -> Unit) {
             root.fixtures.beforeEach.add(callback)
         }
 
