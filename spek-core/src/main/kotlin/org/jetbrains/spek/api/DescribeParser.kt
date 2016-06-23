@@ -3,7 +3,7 @@ package org.jetbrains.spek.api
 import java.util.*
 
 class DescribeParser() : DescribeBody {
-    val befores: LinkedList<() -> Unit> = LinkedList()
+    val befores: LinkedList<AssertionBody.() -> Unit> = LinkedList()
     val afters: LinkedList<() -> Unit> = LinkedList()
     val children = LinkedList<SpekTree>()
 
@@ -36,7 +36,7 @@ class DescribeParser() : DescribeBody {
                 listOf()))
     }
 
-    override fun xit(description: String, @Suppress("UNUSED_PARAMETER") assertions: () -> Unit) {
+    override fun xit(description: String, @Suppress("UNUSED_PARAMETER") assertions: AssertionBody.() -> Unit) {
         children.add(SpekTree(
                 "it " + description,
                 ActionType.IT,
@@ -44,7 +44,7 @@ class DescribeParser() : DescribeBody {
                 listOf()))
     }
 
-    override fun it(description: String, assertions: () -> Unit) {
+    override fun it(description: String, assertions: AssertionBody.() -> Unit) {
         children.add(SpekTree(
                 "it " + description,
                 ActionType.IT,
@@ -66,7 +66,7 @@ class DescribeParser() : DescribeBody {
         ))
     }
 
-    override fun fit(description: String, assertions: () -> Unit) {
+    override fun fit(description: String, assertions: AssertionBody.() -> Unit) {
         children.add(SpekTree(
                 "it " + description,
                 ActionType.IT,
@@ -77,7 +77,7 @@ class DescribeParser() : DescribeBody {
     }
 
 
-    override fun beforeEach(actions: () -> Unit) {
+    override fun beforeEach(actions: AssertionBody.() -> Unit) {
         befores.add(actions)
     }
 

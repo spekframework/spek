@@ -1,9 +1,11 @@
 package org.jetbrains.spek.api.integration
 
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.junit.Test as test
 
 class SampleCalculatorIntegrationTest : IntegrationTestCase() {
+
     @test fun inc() = runTest(data{
         class SampleIncUtil {
             fun incValueBy(value: Int, inc: Int) = value + inc
@@ -13,8 +15,13 @@ class SampleCalculatorIntegrationTest : IntegrationTestCase() {
             val incUtil = SampleIncUtil()
             on("calling incValueBy with 4 and given number 6") {
                 val result = incUtil.incValueBy(4, 6)
+                val closeable = CloseableTest()
                 it("should return 10") {
+                    closeable.autoCleanup()
                     assertEquals(result, 10)
+                }
+                it("should have clean up") {
+                    assertTrue(closeable.closed)
                 }
             }
         }
@@ -23,6 +30,14 @@ class SampleCalculatorIntegrationTest : IntegrationTestCase() {
         calling incValueBy with 4 and given number 6: START
         it should return 10: START
         it should return 10: FINISH
+        calling incValueBy with 4 and given number 6: FINISH
+        an inc util: FINISH
+        Spek: FINISH
+        Spek: START
+        an inc util: START
+        calling incValueBy with 4 and given number 6: START
+        it should have clean up: START
+        it should have clean up: FINISH
         calling incValueBy with 4 and given number 6: FINISH
         an inc util: FINISH
         Spek: FINISH""")
