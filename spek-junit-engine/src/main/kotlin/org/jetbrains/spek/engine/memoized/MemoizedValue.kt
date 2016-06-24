@@ -9,7 +9,7 @@ import kotlin.reflect.KProperty
 /**
  * @author Ranie Jade Ramiso
  */
-open class MemoizedHelper<T>(val mode: CachingMode, val factory: () -> T): ExecutionListener, Memoized<T> {
+open class MemoizedValue<T>(val mode: CachingMode, val factory: () -> T): ExecutionListener, Memoized<T> {
     private var instance: T? = null
 
     fun get(): T {
@@ -19,7 +19,7 @@ open class MemoizedHelper<T>(val mode: CachingMode, val factory: () -> T): Execu
         return instance!!
     }
 
-    override operator fun getValue(thisRef: Any?, property: KProperty<*>) = get()
+    override operator fun getValue(ref: Any?, property: KProperty<*>) = get()
 
     override fun beforeTest(test: Scope.Test) {
         if (mode == CachingMode.TEST) {

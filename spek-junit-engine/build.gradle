@@ -1,9 +1,8 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
-apply plugin: 'org.junit.gen5.gradle'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
-junit5 {
-    version '5.0.0-SNAPSHOT'
+junitPlatform {
     engines {
         exclude 'spek'
     }
@@ -13,11 +12,11 @@ dependencies {
     compile project(':spek-api')
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
-    compile 'org.junit:junit-engine-api'
+    compile 'org.junit.platform:junit-platform-engine'
 
-    testCompile 'org.junit:junit5-api'
+    testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile project(':junit-engine-test-support')
-    testRuntime 'org.junit:junit5-engine'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 task sourceJar(type: Jar) {

@@ -6,4 +6,4 @@ import org.jetbrains.spek.api.memoized.Subject
 /**
  * @author Ranie Jade Ramiso
  */
-class SubjectImpl<T>(mode: CachingMode, factory: () -> T): Subject<T>, MemoizedHelper<T>(mode, factory)
+class SubjectImpl<T>(mode: CachingMode, factory: () -> T): Subject<T>, MemoizedValue<T>(mode, factory)

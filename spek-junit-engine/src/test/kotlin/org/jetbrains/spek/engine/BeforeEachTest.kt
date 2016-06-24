@@ -4,7 +4,7 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
-import org.junit.gen5.api.Test
+import org.junit.jupiter.api.Test
 
 /**
  * @author Ranie Jade Ramiso

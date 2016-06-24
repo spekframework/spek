@@ -1,10 +1,10 @@
 package org.jetbrains.spek.engine.test
 
 import org.jetbrains.spek.engine.test.event.ExecutionEvent
-import org.junit.gen5.engine.EngineExecutionListener
-import org.junit.gen5.engine.TestDescriptor
-import org.junit.gen5.engine.TestExecutionResult
-import org.junit.gen5.engine.reporting.ReportEntry
+import org.junit.platform.engine.EngineExecutionListener
+import org.junit.platform.engine.TestDescriptor
+import org.junit.platform.engine.TestExecutionResult
+import org.junit.platform.engine.reporting.ReportEntry
 import java.util.*
 
 /**

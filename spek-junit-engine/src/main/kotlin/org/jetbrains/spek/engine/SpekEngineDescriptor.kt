@@ -1,8 +1,8 @@
 package org.jetbrains.spek.engine
 
-import org.junit.gen5.engine.UniqueId
-import org.junit.gen5.engine.support.descriptor.EngineDescriptor
-import org.junit.gen5.engine.support.hierarchical.Node
+import org.junit.platform.engine.UniqueId
+import org.junit.platform.engine.support.descriptor.EngineDescriptor
+import org.junit.platform.engine.support.hierarchical.Node
 
 /**
  * @author Ranie Jade Ramiso

@@ -1,7 +1,7 @@
 package org.jetbrains.spek.engine
 
 import org.jetbrains.spek.engine.scope.Scope
-import org.junit.gen5.engine.support.hierarchical.EngineExecutionContext
+import org.junit.platform.engine.support.hierarchical.EngineExecutionContext
 import java.util.*
 
 /**

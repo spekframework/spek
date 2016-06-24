@@ -11,12 +11,15 @@ dependencyManagement {
         dependency 'org.slf4j:slf4j-api:1.7.21'
         dependency 'ch.qos.logback:logback-classic:1.1.7'
 
-        dependencySet(group: 'org.junit', version: '5.0.0-SNAPSHOT') {
-            entry 'junit-engine-api'
-            entry 'junit5-api'
-            entry 'junit5-engine'
-            entry 'junit4-runner'
-            entry 'junit-launcher'
+        dependencySet(group: 'org.junit.platform', version: '1.0.0-SNAPSHOT') {
+            entry 'junit-platform-engine'
+            entry 'junit-platform-runner'
+            entry 'junit-platform-launcher'
+        }
+
+        dependencySet(group: 'org.junit.jupiter', version: '5.0.0-SNAPSHOT') {
+            entry 'junit-jupiter-api'
+            entry 'junit-jupiter-engine'
         }
 
         dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {

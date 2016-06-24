@@ -1,8 +1,8 @@
 package org.jetbrains.spek.engine.test.event
 
-import org.junit.gen5.engine.TestDescriptor
-import org.junit.gen5.engine.TestExecutionResult
-import org.junit.gen5.engine.reporting.ReportEntry
+import org.junit.platform.engine.TestDescriptor
+import org.junit.platform.engine.TestExecutionResult
+import org.junit.platform.engine.reporting.ReportEntry
 
 /**
  * @author Ranie Jade Ramiso

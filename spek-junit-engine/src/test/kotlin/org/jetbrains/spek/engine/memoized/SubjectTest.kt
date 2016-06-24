@@ -7,7 +7,7 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.engine.SpekException
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
-import org.junit.gen5.api.Test
+import org.junit.jupiter.api.Test
 
 /**
  * @author Ranie Jade Ramiso

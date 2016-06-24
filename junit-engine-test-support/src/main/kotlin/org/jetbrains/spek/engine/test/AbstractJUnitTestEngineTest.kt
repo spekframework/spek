@@ -1,12 +1,12 @@
 package org.jetbrains.spek.engine.test
 
-import org.junit.gen5.engine.ExecutionRequest
-import org.junit.gen5.engine.TestDescriptor
-import org.junit.gen5.engine.TestEngine
-import org.junit.gen5.engine.UniqueId
-import org.junit.gen5.engine.discovery.ClassSelector
-import org.junit.gen5.launcher.TestDiscoveryRequest
-import org.junit.gen5.launcher.main.TestDiscoveryRequestBuilder
+import org.junit.platform.engine.ExecutionRequest
+import org.junit.platform.engine.TestDescriptor
+import org.junit.platform.engine.TestEngine
+import org.junit.platform.engine.UniqueId
+import org.junit.platform.engine.discovery.ClassSelector
+import org.junit.platform.launcher.TestDiscoveryRequest
+import org.junit.platform.launcher.core.TestDiscoveryRequestBuilder
 import kotlin.reflect.KClass
 
 /**

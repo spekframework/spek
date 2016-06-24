@@ -4,6 +4,6 @@ apply from: "$rootDir/gradle/common/kotlin.gradle"
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
-    compile 'org.junit:junit-engine-api'
-    compile 'org.junit:junit-launcher'
+    compile 'org.junit.platform:junit-platform-engine'
+    compile 'org.junit.platform:junit-platform-launcher'
 }
