@@ -1,4 +1,4 @@
-package org.jetbrains.spek.api.annotation
+package org.jetbrains.spek.api.meta
 
 /**
  * @author Ranie Jade Ramiso
@@ -6,4 +6,4 @@ package org.jetbrains.spek.api.annotation
  */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY)
-annotation class Beta
+annotation class Experimental

@@ -1,10 +1,10 @@
 package org.jetbrains.spek.api.extension
 
-import org.jetbrains.spek.api.annotation.Beta
+import org.jetbrains.spek.api.meta.Experimental
 
 /**
  * @author Ranie Jade Ramiso
  */
-@Beta
+@Experimental
 interface Extension {
 }

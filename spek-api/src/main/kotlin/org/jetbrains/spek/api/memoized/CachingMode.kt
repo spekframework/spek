@@ -1,6 +1,6 @@
 package org.jetbrains.spek.api.memoized
 
-import org.jetbrains.spek.api.annotation.Beta
+import org.jetbrains.spek.api.meta.Experimental
 
 /**
  * Specifies how [subjects][Subject] are cached.
@@ -8,7 +8,7 @@ import org.jetbrains.spek.api.annotation.Beta
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Beta
+@Experimental
 enum class CachingMode {
     /**
      * Subjects will be shared throughout the group which it was declared.

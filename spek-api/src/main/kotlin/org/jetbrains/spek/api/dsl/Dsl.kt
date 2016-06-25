@@ -1,7 +1,7 @@
 package org.jetbrains.spek.api.dsl
 
-import org.jetbrains.spek.api.annotation.Beta
 import org.jetbrains.spek.api.extension.ExtensionRegistry
+import org.jetbrains.spek.api.meta.Experimental
 
 /**
  * @author Ranie Jade Ramiso
@@ -14,7 +14,7 @@ interface Dsl {
     fun beforeEach(callback: () -> Unit)
     fun afterEach(callback: () -> Unit)
 
-    @Beta
+    @Experimental
     val registry: ExtensionRegistry
     // fun <T: Spek> includeSpec(spec: KClass<T>)
 }
