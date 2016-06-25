@@ -1,15 +1,13 @@
 package org.jetbrains.spek.engine.memoized
 
 import org.jetbrains.spek.api.memoized.CachingMode
-import org.jetbrains.spek.api.memoized.Memoized
-import org.jetbrains.spek.engine.ExecutionListener
-import org.jetbrains.spek.engine.scope.Scope
+import org.jetbrains.spek.api.memoized.MemoizedValue
 import kotlin.reflect.KProperty
 
 /**
  * @author Ranie Jade Ramiso
  */
-open class MemoizedValue<T>(val mode: CachingMode, val factory: () -> T): ExecutionListener, Memoized<T> {
+open class MemoizedValueImpl<T>(val mode: CachingMode, val factory: () -> T): MemoizedValue<T> {
     private var instance: T? = null
 
     fun get(): T {
@@ -21,10 +19,7 @@ open class MemoizedValue<T>(val mode: CachingMode, val factory: () -> T): Execut
 
     override operator fun getValue(ref: Any?, property: KProperty<*>) = get()
 
-    override fun beforeTest(test: Scope.Test) {
-        if (mode == CachingMode.TEST) {
-            instance = null
-        }
+    fun reset() {
+        instance = null
     }
-
 }

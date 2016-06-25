@@ -1,23 +1,12 @@
 package org.jetbrains.spek.engine
 
-import org.jetbrains.spek.engine.scope.Scope
+import org.jetbrains.spek.api.extension.Extension
+import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
 import org.junit.platform.engine.support.hierarchical.EngineExecutionContext
-import java.util.*
 
 /**
  * @author Ranie Jade Ramiso
  */
-class SpekExecutionContext: EngineExecutionContext {
-    private val listeners = LinkedHashSet<ExecutionListener>()
-
-    fun addListener(listener: ExecutionListener) {
-        listeners.add(listener)
-    }
-
-    fun beforeTest(scope: Scope.Test) {
-        listeners.forEach { it.beforeTest(scope) }
-    }
-    fun afterTest(scope: Scope.Test) {
-        listeners.forEach { it.afterTest(scope) }
-    }
+class SpekExecutionContext(private val registry: ExtensionRegistryImpl): EngineExecutionContext {
+    fun extensions(): Sequence<Extension> = registry.extensions()
 }

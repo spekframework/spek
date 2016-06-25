@@ -1,8 +1,11 @@
 package org.jetbrains.spek.api.memoized
 
+import org.jetbrains.spek.api.annotation.Beta
+
 /**
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-interface Subject<T>: Memoized<T> {
+@Beta
+interface Subject<T>: MemoizedValue<T> {
 }
