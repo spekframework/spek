@@ -1,0 +1,9 @@
+= Spek
+
+== Resources
+* {userGuide}/current[User Guide]
+* {githubRepo}[Github Repository]
+* {issueTracker}[Issue Tracker]
+
+== Bleeding Edge
+* {userGuide}/snapshot[User Guide]
