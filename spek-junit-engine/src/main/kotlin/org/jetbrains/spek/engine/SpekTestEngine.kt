@@ -5,6 +5,8 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.dsl.Dsl
 import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.api.dsl.SubjectDsl
+import org.jetbrains.spek.api.extension.Extension
+import org.jetbrains.spek.api.extension.SpekExtension
 import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.api.memoized.Subject
 import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
@@ -29,11 +31,6 @@ import kotlin.reflect.primaryConstructor
  * @author Ranie Jade Ramiso
  */
 class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
-    val extensionRegistry = ExtensionRegistryImpl().apply {
-        registerExtension(FixturesAdapter())
-        registerExtension(SubjectAdapter())
-    }
-
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val engineDescriptor = SpekEngineDescriptor(uniqueId)
         resolveSpecs(discoveryRequest, engineDescriptor)
@@ -42,7 +39,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     override fun getId(): String = "spek"
 
-    override fun createExecutionContext(request: ExecutionRequest) = SpekExecutionContext(extensionRegistry)
+    override fun createExecutionContext(request: ExecutionRequest) = SpekExecutionContext(ExtensionRegistryImpl())
 
     private fun resolveSpecs(discoveryRequest: EngineDiscoveryRequest, engineDescriptor: EngineDescriptor) {
         val isSpec = java.util.function.Predicate<Class<*>> {
@@ -68,6 +65,14 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     private fun resolveSpec(engineDescriptor: EngineDescriptor, klass: Class<*>) {
+        val registry = ExtensionRegistryImpl().apply {
+            registerExtension(FixturesAdapter())
+            registerExtension(SubjectAdapter())
+        }
+
+        getSpekExtensions(klass.kotlin)
+            .forEach { registry.registerExtension(it) }
+
         val instance = klass.kotlin.primaryConstructor!!.call()
         val name = when(instance) {
             is SubjectSpek<*> -> {
@@ -75,14 +80,14 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             }
             else -> klass.name
         }
-        val root = Scope.Group(engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, name), Pending.No)
+        val root = Scope.Spec(engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, name), registry)
         engineDescriptor.addChild(root)
 
         when(instance) {
             is SubjectSpek<*> -> (instance as SubjectSpek<Any>).spec.invoke(
-                SubjectCollector<Any>(root, extensionRegistry)
+                SubjectCollector<Any>(root, root.registry)
             )
-            is Spek -> instance.spec.invoke(Collector(root, extensionRegistry))
+            is Spek -> instance.spec.invoke(Collector(root, root.registry))
         }
 
     }
@@ -101,7 +106,6 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun beforeEach(callback: () -> Unit) {
             registry.getExtension(FixturesAdapter::class)!!.registerBeforeEach(root, callback)
-
         }
 
         override fun afterEach(callback: () -> Unit) {
@@ -128,6 +132,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun <T, K : SubjectSpek<T>> includeSubjectSpec(spec: KClass<K>) {
             val instance = spec.primaryConstructor!!.call()
+            getSpekExtensions(spec)
+                .forEach { registry.registerExtension(it) }
+
             instance.spec.invoke(NestedSubjectCollector(root, registry, this as SubjectCollector<T>))
         }
     }
@@ -150,5 +157,17 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         const val SPEC_SEGMENT_TYPE = "spec";
         const val GROUP_SEGMENT_TYPE = "group";
         const val TEST_SEGMENT_TYPE = "test";
+
+
+        fun getSpekExtensions(spec: KClass<*>): List<out Extension> {
+            return spec.annotations
+                .map {
+                    it.annotationClass.annotations.find {
+                        it.annotationClass == SpekExtension::class
+                    } as SpekExtension?
+                }
+                .filter { it != null }
+                .map { it!!.extension.primaryConstructor!!.call() }
+        }
     }
 }

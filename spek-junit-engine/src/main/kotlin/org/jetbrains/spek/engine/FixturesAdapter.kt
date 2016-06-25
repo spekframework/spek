@@ -1,9 +1,8 @@
 package org.jetbrains.spek.engine
 
+import org.jetbrains.spek.api.extension.Extension
 import org.jetbrains.spek.api.extension.GroupExtensionContext
 import org.jetbrains.spek.api.extension.TestExtensionContext
-import org.jetbrains.spek.api.extension.execution.AfterExecuteTest
-import org.jetbrains.spek.api.extension.execution.BeforeExecuteTest
 import java.util.*
 
 /**
@@ -11,15 +10,15 @@ import java.util.*
  *
  * @author Ranie Jade Ramiso
  */
-class FixturesAdapter: BeforeExecuteTest, AfterExecuteTest {
+class FixturesAdapter: Extension {
     private val beforeEach: MutableMap<GroupExtensionContext, MutableList<() -> Unit>> = WeakHashMap()
     private val afterEach: MutableMap<GroupExtensionContext, MutableList<() -> Unit>> = WeakHashMap()
 
-    override fun beforeExecuteTest(test: TestExtensionContext) {
+    fun beforeExecuteTest(test: TestExtensionContext) {
         invokeAllBeforeEach(test.parent)
     }
 
-    override fun afterExecuteTest(test: TestExtensionContext) {
+    fun afterExecuteTest(test: TestExtensionContext) {
         invokeAllAfterEach(test.parent)
     }
 

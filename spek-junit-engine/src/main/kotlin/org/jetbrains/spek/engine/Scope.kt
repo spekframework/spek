@@ -4,8 +4,11 @@ import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.api.extension.ExtensionContext
 import org.jetbrains.spek.api.extension.GroupExtensionContext
 import org.jetbrains.spek.api.extension.TestExtensionContext
+import org.jetbrains.spek.api.extension.execution.AfterExecuteGroup
 import org.jetbrains.spek.api.extension.execution.AfterExecuteTest
+import org.jetbrains.spek.api.extension.execution.BeforeExecuteGroup
 import org.jetbrains.spek.api.extension.execution.BeforeExecuteTest
+import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor
 import org.junit.platform.engine.support.hierarchical.Node
@@ -15,7 +18,7 @@ import org.junit.platform.engine.support.hierarchical.Node
  */
 sealed class Scope(uniqueId: UniqueId, val pending: Pending)
     : AbstractTestDescriptor(uniqueId), Node<SpekExecutionContext>, ExtensionContext {
-    class Group(uniqueId: UniqueId, pending: Pending)
+    open class Group(uniqueId: UniqueId, pending: Pending)
         : Scope(uniqueId, pending), GroupExtensionContext {
         override val parent: GroupExtensionContext? by lazy {
             return@lazy if (getParent().isPresent) {
@@ -26,6 +29,31 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
         }
         override fun isTest() = false
         override fun isContainer() = true
+
+        override fun before(context: SpekExecutionContext): SpekExecutionContext {
+            return super.before(context).apply {
+                context.registry.extensions()
+                    .filterIsInstance(BeforeExecuteGroup::class.java)
+                    .forEach { it.beforeExecuteGroup(this@Group) }
+            }
+        }
+
+        override fun after(context: SpekExecutionContext) {
+            context.registry.extensions()
+                .filterIsInstance(AfterExecuteGroup::class.java)
+                .forEach { it.afterExecuteGroup(this@Group) }
+
+            super.after(context)
+        }
+    }
+
+    class Spec(uniqueId: UniqueId, val registry: ExtensionRegistryImpl): Group(uniqueId, Pending.No) {
+        override fun prepare(context: SpekExecutionContext): SpekExecutionContext {
+            val extendedRegistry = ExtensionRegistryImpl()
+            context.registry.extensions().forEach { extendedRegistry.registerExtension(it) }
+            registry.extensions().forEach { extendedRegistry.registerExtension(it) }
+            return SpekExecutionContext(extendedRegistry)
+        }
     }
 
     class Test(uniqueId: UniqueId, pending: Pending, val body: () -> Unit)
@@ -44,15 +72,23 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
 
         override fun before(context: SpekExecutionContext): SpekExecutionContext {
             return super.before(context).apply {
-                context.extensions()
+                context.registry.extensions()
                     .filterIsInstance(BeforeExecuteTest::class.java)
+                    .forEach { it.beforeExecuteTest(this@Test) }
+
+                context.registry.extensions()
+                    .filterIsInstance(FixturesAdapter::class.java)
                     .forEach { it.beforeExecuteTest(this@Test) }
 
             }
         }
 
         override fun after(context: SpekExecutionContext) {
-            context.extensions()
+            context.registry.extensions()
+                .filterIsInstance(FixturesAdapter::class.java)
+                .forEach { it.afterExecuteTest(this@Test) }
+
+            context.registry.extensions()
                 .filterIsInstance(AfterExecuteTest::class.java)
                 .forEach { it.afterExecuteTest(this) }
             super.after(context)

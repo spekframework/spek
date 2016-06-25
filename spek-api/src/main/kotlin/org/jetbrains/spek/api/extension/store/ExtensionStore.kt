@@ -1,4 +1,4 @@
-package org.jetbrains.spek.api.extension
+package org.jetbrains.spek.api.extension.store
 
 import org.jetbrains.spek.api.meta.Experimental
 
