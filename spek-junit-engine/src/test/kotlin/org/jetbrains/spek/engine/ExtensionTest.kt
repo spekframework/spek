@@ -15,13 +15,10 @@ import org.jetbrains.spek.api.extension.execution.BeforeExecuteGroup
 import org.jetbrains.spek.api.extension.execution.BeforeExecuteTest
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.jupiter.api.Test
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
 
 /**
  * @author Ranie Jade Ramiso
  */
-@RunWith(JUnitPlatform::class)
 class ExtensionTest: AbstractSpekTestEngineTest() {
     class SpekSimpleExtension
         : BeforeExecuteTest, AfterExecuteTest, BeforeExecuteGroup, AfterExecuteGroup {
@@ -140,8 +137,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
-    fun testSubjectSpekLifeCycleExtensionPointsWithInclude() {
-        @SimpleExtension
+    fun testSubjectSpekLifeCycleExtensionPointsInherited() {
         class AnotherSpec: SubjectSpek<List<String>>({
             group("another nested group") {
                 test("another nested test") { }
@@ -169,8 +165,10 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
         assertThat(SpekSimpleExtension.builder.trim().toString(), equalTo("""
         beforeExecuteGroup
             beforeExecuteGroup
-                beforeExecuteTest
-                afterExecuteTest
+                beforeExecuteGroup
+                    beforeExecuteTest
+                    afterExecuteTest
+                afterExecuteGroup
             afterExecuteGroup
             beforeExecuteGroup
                 beforeExecuteGroup
@@ -179,6 +177,42 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
                     beforeExecuteTest
                     afterExecuteTest
                 afterExecuteGroup
+                beforeExecuteTest
+                afterExecuteTest
+            afterExecuteGroup
+        afterExecuteGroup
+        """.trimIndent()))
+    }
+
+    @Test
+    fun testSubjectSpekLifeCycleExtensionPointsIsolation() {
+        @SimpleExtension
+        class AnotherSpec: SubjectSpek<List<String>>({
+            group("another nested group") {
+                test("another nested test") { }
+            }
+        })
+
+        class SomeSpek: SubjectSpek<List<String>>({
+            subject { emptyList() }
+            includeSubjectSpec(AnotherSpec::class)
+            group("some group") {
+                group("another group") {
+                    test("test") { }
+                    test("another test") { }
+                }
+
+                test("yet another test") { }
+            }
+        })
+
+        SpekSimpleExtension.builder = StringBuilder()
+
+        executeTestsForClass(SomeSpek::class)
+
+        assertThat(SpekSimpleExtension.builder.trim().toString(), equalTo("""
+        beforeExecuteGroup
+            beforeExecuteGroup
                 beforeExecuteTest
                 afterExecuteTest
             afterExecuteGroup

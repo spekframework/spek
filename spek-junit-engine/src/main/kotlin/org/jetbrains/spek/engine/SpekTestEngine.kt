@@ -22,7 +22,6 @@ import org.junit.platform.engine.discovery.ClasspathSelector
 import org.junit.platform.engine.discovery.PackageSelector
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
-import java.lang.reflect.ParameterizedType
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 import kotlin.reflect.primaryConstructor
@@ -74,13 +73,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             .forEach { registry.registerExtension(it) }
 
         val instance = klass.kotlin.primaryConstructor!!.call()
-        val name = when(instance) {
-            is SubjectSpek<*> -> {
-                "subject ${(klass.genericSuperclass as ParameterizedType).actualTypeArguments.first().typeName}"
-            }
-            else -> klass.name
-        }
-        val root = Scope.Spec(engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, name), registry)
+        val root = Scope.Spec(engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name), registry)
         engineDescriptor.addChild(root)
 
         when(instance) {
@@ -132,10 +125,15 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun <T, K : SubjectSpek<T>> includeSubjectSpec(spec: KClass<K>) {
             val instance = spec.primaryConstructor!!.call()
-            getSpekExtensions(spec)
-                .forEach { registry.registerExtension(it) }
+            val nestedRegistry = ExtensionRegistryImpl()
 
-            instance.spec.invoke(NestedSubjectCollector(root, registry, this as SubjectCollector<T>))
+            registry.extensions().forEach { nestedRegistry.registerExtension(it) }
+            getSpekExtensions(spec)
+                .forEach { nestedRegistry.registerExtension(it) }
+
+            val scope = Scope.Spec(root.uniqueId.append(SPEC_SEGMENT_TYPE, spec.java.name), nestedRegistry)
+            root.addChild(scope)
+            instance.spec.invoke(NestedSubjectCollector(scope, nestedRegistry, this as SubjectCollector<T>))
         }
     }
 

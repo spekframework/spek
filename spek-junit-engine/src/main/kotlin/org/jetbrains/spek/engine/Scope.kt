@@ -49,10 +49,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
 
     class Spec(uniqueId: UniqueId, val registry: ExtensionRegistryImpl): Group(uniqueId, Pending.No) {
         override fun prepare(context: SpekExecutionContext): SpekExecutionContext {
-            val extendedRegistry = ExtensionRegistryImpl()
-            context.registry.extensions().forEach { extendedRegistry.registerExtension(it) }
-            registry.extensions().forEach { extendedRegistry.registerExtension(it) }
-            return SpekExecutionContext(extendedRegistry)
+            return SpekExecutionContext(registry)
         }
     }
 
