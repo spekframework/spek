@@ -62,13 +62,10 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
         override fun isTest() = true
         override fun isContainer() = false
         override fun isLeaf() = true
-        override fun execute(context: SpekExecutionContext): SpekExecutionContext {
-            body.invoke()
-            return context
-        }
 
-        override fun before(context: SpekExecutionContext): SpekExecutionContext {
-            return super.before(context).apply {
+        override fun execute(context: SpekExecutionContext): SpekExecutionContext {
+            var throwable: Throwable? = null
+            try {
                 context.registry.extensions()
                     .filterIsInstance(BeforeExecuteTest::class.java)
                     .forEach { it.beforeExecuteTest(this@Test) }
@@ -77,18 +74,31 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
                     .filterIsInstance(FixturesAdapter::class.java)
                     .forEach { it.beforeExecuteTest(this@Test) }
 
+                body.invoke()
+            } catch (e: Throwable) {
+                throwable = e
             }
-        }
 
-        override fun after(context: SpekExecutionContext) {
-            context.registry.extensions()
-                .filterIsInstance(FixturesAdapter::class.java)
-                .forEach { it.afterExecuteTest(this@Test) }
+            try {
 
-            context.registry.extensions()
-                .filterIsInstance(AfterExecuteTest::class.java)
-                .forEach { it.afterExecuteTest(this) }
-            super.after(context)
+                context.registry.extensions()
+                    .filterIsInstance(FixturesAdapter::class.java)
+                    .forEach { it.afterExecuteTest(this@Test) }
+
+                context.registry.extensions()
+                    .filterIsInstance(AfterExecuteTest::class.java)
+                    .forEach { it.afterExecuteTest(this) }
+
+            } catch (e: Throwable) {
+                if (throwable == null) {
+                    throwable = e
+                }
+            }
+
+            if (throwable != null) {
+                throw throwable
+            }
+            return context
         }
     }
 
