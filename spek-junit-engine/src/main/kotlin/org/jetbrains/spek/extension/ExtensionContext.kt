@@ -1,4 +1,4 @@
-package org.jetbrains.spek.api.extension
+package org.jetbrains.spek.extension
 
 import org.jetbrains.spek.api.meta.Experimental
 
@@ -6,5 +6,5 @@ import org.jetbrains.spek.api.meta.Experimental
  * @author Ranie Jade Ramiso
  */
 @Experimental
-interface Extension {
+interface ExtensionContext {
 }

@@ -1,7 +1,7 @@
-package org.jetbrains.spek.api.extension.execution
+package org.jetbrains.spek.extension.execution
 
-import org.jetbrains.spek.api.extension.Extension
-import org.jetbrains.spek.api.extension.GroupExtensionContext
+import org.jetbrains.spek.extension.Extension
+import org.jetbrains.spek.extension.GroupExtensionContext
 import org.jetbrains.spek.api.meta.Experimental
 
 /**

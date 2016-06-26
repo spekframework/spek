@@ -1,7 +1,7 @@
 package org.jetbrains.spek.engine.extension
 
-import org.jetbrains.spek.api.extension.Extension
-import org.jetbrains.spek.api.extension.ExtensionRegistry
+import org.jetbrains.spek.extension.Extension
+import org.jetbrains.spek.extension.ExtensionRegistry
 import java.util.*
 import kotlin.reflect.KClass
 

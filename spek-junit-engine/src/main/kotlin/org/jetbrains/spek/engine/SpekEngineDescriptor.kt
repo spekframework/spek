@@ -1,6 +1,6 @@
 package org.jetbrains.spek.engine
 
-import org.jetbrains.spek.api.extension.GroupExtensionContext
+import org.jetbrains.spek.extension.GroupExtensionContext
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.hierarchical.Node

@@ -1,8 +1,8 @@
 package org.jetbrains.spek.engine
 
-import org.jetbrains.spek.api.extension.Extension
-import org.jetbrains.spek.api.extension.GroupExtensionContext
-import org.jetbrains.spek.api.extension.TestExtensionContext
+import org.jetbrains.spek.extension.Extension
+import org.jetbrains.spek.extension.GroupExtensionContext
+import org.jetbrains.spek.extension.TestExtensionContext
 import java.util.*
 
 /**

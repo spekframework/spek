@@ -5,8 +5,8 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.dsl.Dsl
 import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.api.dsl.SubjectDsl
-import org.jetbrains.spek.api.extension.Extension
-import org.jetbrains.spek.api.extension.SpekExtension
+import org.jetbrains.spek.extension.Extension
+import org.jetbrains.spek.extension.SpekExtension
 import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.api.memoized.Subject
 import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
@@ -85,7 +85,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     }
 
-    open class Collector(val root: Scope.Group, override val registry: ExtensionRegistryImpl): Dsl {
+    open class Collector(val root: Scope.Group, val registry: ExtensionRegistryImpl): Dsl {
         override fun group(description: String, pending: Pending, body: Dsl.() -> Unit) {
             val group = Scope.Group(root.uniqueId.append(GROUP_SEGMENT_TYPE, description), pending)
             root.addChild(group)

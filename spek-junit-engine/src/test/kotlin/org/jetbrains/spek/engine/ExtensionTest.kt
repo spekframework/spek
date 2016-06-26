@@ -6,13 +6,13 @@ import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.present
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.SubjectSpek
-import org.jetbrains.spek.api.extension.GroupExtensionContext
-import org.jetbrains.spek.api.extension.SpekExtension
-import org.jetbrains.spek.api.extension.TestExtensionContext
-import org.jetbrains.spek.api.extension.execution.AfterExecuteGroup
-import org.jetbrains.spek.api.extension.execution.AfterExecuteTest
-import org.jetbrains.spek.api.extension.execution.BeforeExecuteGroup
-import org.jetbrains.spek.api.extension.execution.BeforeExecuteTest
+import org.jetbrains.spek.extension.GroupExtensionContext
+import org.jetbrains.spek.extension.SpekExtension
+import org.jetbrains.spek.extension.TestExtensionContext
+import org.jetbrains.spek.extension.execution.AfterExecuteGroup
+import org.jetbrains.spek.extension.execution.AfterExecuteTest
+import org.jetbrains.spek.extension.execution.BeforeExecuteGroup
+import org.jetbrains.spek.extension.execution.BeforeExecuteTest
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.jupiter.api.Test
 
@@ -58,7 +58,10 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
         @SimpleExtension
         class SomeSpek: Spek({
             test("SimpleExtension should be present") {
-                assertThat(registry.getExtension(SpekSimpleExtension::class), present(anything))
+                assertThat(
+                    (this as SpekTestEngine.Collector)
+                        .registry.getExtension(SpekSimpleExtension::class), present(anything)
+                )
             }
         })
 
@@ -72,7 +75,10 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
         @SpekExtension(SpekSimpleExtension::class)
         class SomeSpek: Spek({
             test("SimpleExtension should be present") {
-                assertThat(registry.getExtension(SpekSimpleExtension::class), present(anything))
+                assertThat(
+                    (this as SpekTestEngine.Collector)
+                        .registry.getExtension(SpekSimpleExtension::class), present(anything)
+                )
             }
         })
 

@@ -1,13 +1,13 @@
 package org.jetbrains.spek.engine
 
 import org.jetbrains.spek.api.dsl.Pending
-import org.jetbrains.spek.api.extension.ExtensionContext
-import org.jetbrains.spek.api.extension.GroupExtensionContext
-import org.jetbrains.spek.api.extension.TestExtensionContext
-import org.jetbrains.spek.api.extension.execution.AfterExecuteGroup
-import org.jetbrains.spek.api.extension.execution.AfterExecuteTest
-import org.jetbrains.spek.api.extension.execution.BeforeExecuteGroup
-import org.jetbrains.spek.api.extension.execution.BeforeExecuteTest
+import org.jetbrains.spek.extension.ExtensionContext
+import org.jetbrains.spek.extension.GroupExtensionContext
+import org.jetbrains.spek.extension.TestExtensionContext
+import org.jetbrains.spek.extension.execution.AfterExecuteGroup
+import org.jetbrains.spek.extension.execution.AfterExecuteTest
+import org.jetbrains.spek.extension.execution.BeforeExecuteGroup
+import org.jetbrains.spek.extension.execution.BeforeExecuteTest
 import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor
