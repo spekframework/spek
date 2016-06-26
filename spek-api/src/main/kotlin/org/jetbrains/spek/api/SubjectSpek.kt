@@ -1,7 +1,7 @@
 package org.jetbrains.spek.api
 
 import org.jetbrains.spek.api.dsl.SubjectDsl
-import org.jetbrains.spek.api.meta.Experimental
+import org.jetbrains.spek.meta.Experimental
 
 /**
  * @author Ranie Jade Ramiso

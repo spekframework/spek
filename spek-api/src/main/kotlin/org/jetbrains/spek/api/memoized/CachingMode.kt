@@ -1,6 +1,6 @@
 package org.jetbrains.spek.api.memoized
 
-import org.jetbrains.spek.api.meta.Experimental
+import org.jetbrains.spek.meta.Experimental
 
 /**
  * Specifies how [subjects][Subject] are cached.

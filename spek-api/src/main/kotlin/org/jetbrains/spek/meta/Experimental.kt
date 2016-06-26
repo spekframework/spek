@@ -1,4 +1,4 @@
-package org.jetbrains.spek.api.meta
+package org.jetbrains.spek.meta
 
 /**
  * Any public API with this annotation is considered to be experimental. It can be subject

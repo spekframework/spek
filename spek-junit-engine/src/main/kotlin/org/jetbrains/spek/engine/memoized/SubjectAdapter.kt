@@ -1,10 +1,10 @@
 package org.jetbrains.spek.engine.memoized
 
+import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.extension.GroupExtensionContext
 import org.jetbrains.spek.extension.TestExtensionContext
 import org.jetbrains.spek.extension.execution.AfterExecuteGroup
 import org.jetbrains.spek.extension.execution.AfterExecuteTest
-import org.jetbrains.spek.api.memoized.CachingMode
 import java.util.*
 
 /**

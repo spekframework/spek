@@ -6,6 +6,7 @@ import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.present
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.SubjectSpek
+import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.jetbrains.spek.extension.GroupExtensionContext
 import org.jetbrains.spek.extension.SpekExtension
 import org.jetbrains.spek.extension.TestExtensionContext
@@ -13,7 +14,6 @@ import org.jetbrains.spek.extension.execution.AfterExecuteGroup
 import org.jetbrains.spek.extension.execution.AfterExecuteTest
 import org.jetbrains.spek.extension.execution.BeforeExecuteGroup
 import org.jetbrains.spek.extension.execution.BeforeExecuteTest
-import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.jupiter.api.Test
 
 /**

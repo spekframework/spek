@@ -5,13 +5,13 @@ import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.dsl.Dsl
 import org.jetbrains.spek.api.dsl.Pending
 import org.jetbrains.spek.api.dsl.SubjectDsl
-import org.jetbrains.spek.extension.Extension
-import org.jetbrains.spek.extension.SpekExtension
 import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.api.memoized.Subject
 import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
 import org.jetbrains.spek.engine.memoized.SubjectAdapter
 import org.jetbrains.spek.engine.memoized.SubjectImpl
+import org.jetbrains.spek.extension.Extension
+import org.jetbrains.spek.extension.SpekExtension
 import org.junit.platform.commons.util.ReflectionUtils
 import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.ExecutionRequest

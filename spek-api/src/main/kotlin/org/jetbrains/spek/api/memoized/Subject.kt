@@ -1,6 +1,6 @@
 package org.jetbrains.spek.api.memoized
 
-import org.jetbrains.spek.api.meta.Experimental
+import org.jetbrains.spek.meta.Experimental
 
 /**
  * @author Ranie Jade Ramiso

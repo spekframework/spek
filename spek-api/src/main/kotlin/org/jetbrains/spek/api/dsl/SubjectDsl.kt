@@ -3,7 +3,7 @@ package org.jetbrains.spek.api.dsl
 import org.jetbrains.spek.api.SubjectSpek
 import org.jetbrains.spek.api.memoized.CachingMode
 import org.jetbrains.spek.api.memoized.Subject
-import org.jetbrains.spek.api.meta.Experimental
+import org.jetbrains.spek.meta.Experimental
 import kotlin.reflect.KClass
 
 /**
