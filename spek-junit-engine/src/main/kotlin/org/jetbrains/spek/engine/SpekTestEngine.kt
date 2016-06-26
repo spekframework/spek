@@ -160,9 +160,14 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         fun getSpekExtensions(spec: KClass<*>): List<out Extension> {
             return spec.annotations
                 .map {
-                    it.annotationClass.annotations.find {
-                        it.annotationClass == SpekExtension::class
-                    } as SpekExtension?
+                    if (it is SpekExtension) {
+                        it
+                    } else {
+                        it.annotationClass.annotations.find {
+                            it.annotationClass == SpekExtension::class
+                        } as SpekExtension?
+                    }
+
                 }
                 .filter { it != null }
                 .map { it!!.extension.primaryConstructor!!.call() }

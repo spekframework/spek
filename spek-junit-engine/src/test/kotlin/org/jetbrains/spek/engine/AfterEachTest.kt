@@ -5,13 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.jupiter.api.Test
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
 
 /**
  * @author Ranie Jade Ramiso
  */
-@RunWith(JUnitPlatform::class)
 class AfterEachTest: AbstractSpekTestEngineTest() {
     @Test
     fun testAfterEach() {

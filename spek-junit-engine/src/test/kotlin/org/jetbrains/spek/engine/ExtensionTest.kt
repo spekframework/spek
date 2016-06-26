@@ -54,8 +54,22 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
     annotation class SimpleExtension
 
     @Test
-    fun testDiscovery() {
+    fun testDiscoveryCustomAnnotation() {
         @SimpleExtension
+        class SomeSpek: Spek({
+            test("SimpleExtension should be present") {
+                assertThat(registry.getExtension(SpekSimpleExtension::class), present(anything))
+            }
+        })
+
+        val recorder = executeTestsForClass(SomeSpek::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
+    fun testDiscovery() {
+        @SpekExtension(SpekSimpleExtension::class)
         class SomeSpek: Spek({
             test("SimpleExtension should be present") {
                 assertThat(registry.getExtension(SpekSimpleExtension::class), present(anything))
