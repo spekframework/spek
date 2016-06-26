@@ -64,40 +64,40 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
         override fun isLeaf() = true
 
         override fun execute(context: SpekExecutionContext): SpekExecutionContext {
-            var throwable: Throwable? = null
-            try {
-                context.registry.extensions()
-                    .filterIsInstance(BeforeExecuteTest::class.java)
-                    .forEach { it.beforeExecuteTest(this@Test) }
+            val collector = ThrowableCollector()
 
-                context.registry.extensions()
-                    .filterIsInstance(FixturesAdapter::class.java)
-                    .forEach { it.beforeExecuteTest(this@Test) }
+            context.registry.extensions()
+                .filterIsInstance(BeforeExecuteTest::class.java)
+                .forEach {
+                    collector.executeSafely { it.beforeExecuteTest(this@Test) }
+                }
 
-                body.invoke()
-            } catch (e: Throwable) {
-                throwable = e
-            }
-
-            try {
-
+            if (collector.isEmpty()) {
                 context.registry.extensions()
                     .filterIsInstance(FixturesAdapter::class.java)
-                    .forEach { it.afterExecuteTest(this@Test) }
+                    .forEach {
+                        collector.executeSafely { it.beforeExecuteTest(this@Test) }
+                    }
 
-                context.registry.extensions()
-                    .filterIsInstance(AfterExecuteTest::class.java)
-                    .forEach { it.afterExecuteTest(this) }
-
-            } catch (e: Throwable) {
-                if (throwable == null) {
-                    throwable = e
+                if (collector.isEmpty()) {
+                    collector.executeSafely { body.invoke() }
                 }
             }
 
-            if (throwable != null) {
-                throw throwable
-            }
+            context.registry.extensions()
+                .filterIsInstance(FixturesAdapter::class.java)
+                .forEach {
+                    collector.executeSafely { it.afterExecuteTest(this@Test) }
+                }
+
+            context.registry.extensions()
+                .filterIsInstance(AfterExecuteTest::class.java)
+                .forEach {
+                    collector.executeSafely { it.afterExecuteTest(this) }
+                }
+
+            collector.assertEmpty()
+
             return context
         }
     }
