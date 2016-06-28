@@ -9,5 +9,5 @@ asciidoctor {
     attributes  version: project.version,
                 githubRepo: githubRepo,
                 issueTracker: issueTracker,
-                userGuide: userGuide
+                kotlinVersion: kotlinVersion
 }

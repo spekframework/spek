@@ -5,3 +5,7 @@
 
 
 include::overview.adoc[]
+
+include::setting-up.adoc[]
+
+include::writing-specifications.adoc[]
