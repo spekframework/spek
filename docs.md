@@ -15,7 +15,7 @@ place we write the test code?
 
 That's what Spek does. It is a specification framework that allows you to easily define specifications in a clear, understandable, human readable way.
 
-You call them tests. We call them specifications.
+Some people call them tests. We call them specifications.
 
 ### Why Kotlin?
 
@@ -23,7 +23,7 @@ You call them tests. We call them specifications.
 and the ability to create nice DSL. It's 100% compatible with Java which means you can call Java from Kotlin and Kotlin from Java. And it's also easy to pick up.
 
 Spek is written in Kotlin and specifications you write will be written in Kotlin. However, your SUT (System under Test) can be Java or Kotlin. As such
-you can easily use Kotlin for your specifications. Yes, you call them tests. Start calling them specifications.
+you can easily use Kotlin for your specifications. 
 
 
 #### Spek and JUnit
