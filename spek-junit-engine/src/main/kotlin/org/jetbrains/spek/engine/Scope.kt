@@ -9,6 +9,7 @@ import org.jetbrains.spek.extension.execution.AfterExecuteGroup
 import org.jetbrains.spek.extension.execution.AfterExecuteTest
 import org.jetbrains.spek.extension.execution.BeforeExecuteGroup
 import org.jetbrains.spek.extension.execution.BeforeExecuteTest
+import org.junit.platform.engine.TestSource
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor
 import org.junit.platform.engine.support.hierarchical.Node
@@ -16,10 +17,17 @@ import org.junit.platform.engine.support.hierarchical.Node
 /**
  * @author Ranie Jade Ramiso
  */
-sealed class Scope(uniqueId: UniqueId, val pending: Pending)
-    : AbstractTestDescriptor(uniqueId), Node<SpekExecutionContext>, ExtensionContext {
-    open class Group(uniqueId: UniqueId, pending: Pending)
-        : Scope(uniqueId, pending), GroupExtensionContext {
+sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSource?)
+    : AbstractTestDescriptor(uniqueId, uniqueId.segments.last().value), Node<SpekExecutionContext>, ExtensionContext {
+
+    init {
+        if (source != null) {
+            setSource(source)
+        }
+    }
+
+    open class Group(uniqueId: UniqueId, pending: Pending, source: TestSource?)
+        : Scope(uniqueId, pending, source), GroupExtensionContext {
         override val parent: GroupExtensionContext? by lazy {
             return@lazy if (getParent().isPresent) {
                 getParent().get() as GroupExtensionContext
@@ -47,14 +55,15 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
         }
     }
 
-    class Spec(uniqueId: UniqueId, val registry: ExtensionRegistryImpl): Group(uniqueId, Pending.No) {
+    class Spec(uniqueId: UniqueId, source: TestSource?, val registry: ExtensionRegistryImpl)
+        : Group(uniqueId, Pending.No, source) {
         override fun prepare(context: SpekExecutionContext): SpekExecutionContext {
             return SpekExecutionContext(registry)
         }
     }
 
-    class Test(uniqueId: UniqueId, pending: Pending, val body: () -> Unit)
-        : Scope(uniqueId, pending), TestExtensionContext {
+    class Test(uniqueId: UniqueId, pending: Pending, source: TestSource?, val body: () -> Unit)
+        : Scope(uniqueId, pending, source), TestExtensionContext {
         override val parent: GroupExtensionContext by lazy {
             getParent().get() as GroupExtensionContext
         }
@@ -101,8 +110,6 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending)
             return context
         }
     }
-
-    override fun getDisplayName() = uniqueId.segments.last().value
 
     override fun shouldBeSkipped(context: SpekExecutionContext): Node.SkipResult {
         return when(pending) {

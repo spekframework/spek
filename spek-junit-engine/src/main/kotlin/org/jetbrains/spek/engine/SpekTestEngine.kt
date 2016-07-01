@@ -13,15 +13,16 @@ import org.jetbrains.spek.engine.memoized.SubjectImpl
 import org.jetbrains.spek.extension.Extension
 import org.jetbrains.spek.extension.SpekExtension
 import org.junit.platform.commons.util.ReflectionUtils
-import org.junit.platform.engine.EngineDiscoveryRequest
-import org.junit.platform.engine.ExecutionRequest
-import org.junit.platform.engine.TestDescriptor
-import org.junit.platform.engine.UniqueId
+import org.junit.platform.engine.*
 import org.junit.platform.engine.discovery.ClassSelector
 import org.junit.platform.engine.discovery.ClasspathSelector
 import org.junit.platform.engine.discovery.PackageSelector
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
+import org.junit.platform.engine.support.descriptor.FilePosition
+import org.junit.platform.engine.support.descriptor.FileSource
+import org.junit.platform.engine.support.descriptor.JavaClassSource
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
+import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 import kotlin.reflect.primaryConstructor
@@ -73,7 +74,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             .forEach { registry.registerExtension(it) }
 
         val instance = klass.kotlin.primaryConstructor!!.call()
-        val root = Scope.Spec(engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name), registry)
+        val root = Scope.Spec(
+            engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name), JavaClassSource(klass), registry
+        )
         engineDescriptor.addChild(root)
 
         when(instance) {
@@ -87,13 +90,13 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     open class Collector(val root: Scope.Group, val registry: ExtensionRegistryImpl): Dsl {
         override fun group(description: String, pending: Pending, body: Dsl.() -> Unit) {
-            val group = Scope.Group(root.uniqueId.append(GROUP_SEGMENT_TYPE, description), pending)
+            val group = Scope.Group(root.uniqueId.append(GROUP_SEGMENT_TYPE, description), pending, getSource())
             root.addChild(group)
             body.invoke(Collector(group, registry))
         }
 
         override fun test(description: String, pending: Pending, body: () -> Unit) {
-            val test = Scope.Test(root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, body)
+            val test = Scope.Test(root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, getSource(), body)
             root.addChild(test)
         }
 
@@ -131,7 +134,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             getSpekExtensions(spec)
                 .forEach { nestedRegistry.registerExtension(it) }
 
-            val scope = Scope.Spec(root.uniqueId.append(SPEC_SEGMENT_TYPE, spec.java.name), nestedRegistry)
+            val scope = Scope.Spec(
+                root.uniqueId.append(SPEC_SEGMENT_TYPE, spec.java.name), JavaClassSource(spec.java), nestedRegistry
+            )
             root.addChild(scope)
             instance.spec.invoke(NestedSubjectCollector(scope, nestedRegistry, this as SubjectCollector<T>))
         }
@@ -156,6 +161,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         const val GROUP_SEGMENT_TYPE = "group";
         const val TEST_SEGMENT_TYPE = "test";
 
+
+        // TODO: fix me
+        fun getSource(): TestSource? = null
 
         fun getSpekExtensions(spec: KClass<*>): List<out Extension> {
             return spec.annotations
