@@ -10,18 +10,28 @@ import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.jetbrains.spek.extension.GroupExtensionContext
 import org.jetbrains.spek.extension.SpekExtension
 import org.jetbrains.spek.extension.TestExtensionContext
-import org.jetbrains.spek.extension.execution.AfterExecuteGroup
-import org.jetbrains.spek.extension.execution.AfterExecuteTest
-import org.jetbrains.spek.extension.execution.BeforeExecuteGroup
-import org.jetbrains.spek.extension.execution.BeforeExecuteTest
+import org.jetbrains.spek.extension.execution.*
 import org.junit.jupiter.api.Test
+import org.junit.platform.runner.JUnitPlatform
+import org.junit.runner.RunWith
 
 /**
  * @author Ranie Jade Ramiso
  */
+@RunWith(JUnitPlatform::class)
 class ExtensionTest: AbstractSpekTestEngineTest() {
     class SpekSimpleExtension
-        : BeforeExecuteTest, AfterExecuteTest, BeforeExecuteGroup, AfterExecuteGroup {
+        : BeforeExecuteTest, AfterExecuteTest,
+          BeforeExecuteGroup, AfterExecuteGroup, BeforeExecuteSpec, AfterExecuteSpec {
+        override fun beforeExecuteSpec(spec: GroupExtensionContext) {
+            builder.appendln("${"    ".repeat(indent)}beforeExecuteSpec")
+            indent++
+        }
+
+        override fun afterExecuteSpec(spec: GroupExtensionContext) {
+            indent--
+            builder.appendln("${"    ".repeat(indent)}afterExecuteSpec")
+        }
 
         var indent = 0
 
@@ -106,7 +116,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
         executeTestsForClass(SomeSpek::class)
 
         assertThat(SpekSimpleExtension.builder.trim().toString(), equalTo("""
-        beforeExecuteGroup
+        beforeExecuteSpec
             beforeExecuteGroup
                 beforeExecuteGroup
                     beforeExecuteTest
@@ -117,7 +127,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
                 beforeExecuteTest
                 afterExecuteTest
             afterExecuteGroup
-        afterExecuteGroup
+        afterExecuteSpec
         """.trimIndent()))
     }
 
@@ -141,7 +151,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
         executeTestsForClass(SomeSpek::class)
 
         assertThat(SpekSimpleExtension.builder.trim().toString(), equalTo("""
-        beforeExecuteGroup
+        beforeExecuteSpec
             beforeExecuteGroup
                 beforeExecuteGroup
                     beforeExecuteTest
@@ -152,7 +162,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
                 beforeExecuteTest
                 afterExecuteTest
             afterExecuteGroup
-        afterExecuteGroup
+        afterExecuteSpec
         """.trimIndent()))
     }
 
@@ -183,7 +193,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
         executeTestsForClass(SomeSpek::class)
 
         assertThat(SpekSimpleExtension.builder.trim().toString(), equalTo("""
-        beforeExecuteGroup
+        beforeExecuteSpec
             beforeExecuteGroup
                 beforeExecuteGroup
                     beforeExecuteTest
@@ -200,7 +210,7 @@ class ExtensionTest: AbstractSpekTestEngineTest() {
                 beforeExecuteTest
                 afterExecuteTest
             afterExecuteGroup
-        afterExecuteGroup
+        afterExecuteSpec
         """.trimIndent()))
     }
 

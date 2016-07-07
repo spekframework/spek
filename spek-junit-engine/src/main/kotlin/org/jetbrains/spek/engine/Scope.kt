@@ -5,10 +5,7 @@ import org.jetbrains.spek.engine.extension.ExtensionRegistryImpl
 import org.jetbrains.spek.extension.ExtensionContext
 import org.jetbrains.spek.extension.GroupExtensionContext
 import org.jetbrains.spek.extension.TestExtensionContext
-import org.jetbrains.spek.extension.execution.AfterExecuteGroup
-import org.jetbrains.spek.extension.execution.AfterExecuteTest
-import org.jetbrains.spek.extension.execution.BeforeExecuteGroup
-import org.jetbrains.spek.extension.execution.BeforeExecuteTest
+import org.jetbrains.spek.extension.execution.*
 import org.junit.platform.engine.TestSource
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor
@@ -55,10 +52,31 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
         }
     }
 
-    class Spec(uniqueId: UniqueId, source: TestSource?, val registry: ExtensionRegistryImpl)
+    class Spec(uniqueId: UniqueId, source: TestSource?, val registry: ExtensionRegistryImpl, val nested: Boolean)
         : Group(uniqueId, Pending.No, source) {
         override fun prepare(context: SpekExecutionContext): SpekExecutionContext {
             return SpekExecutionContext(registry)
+        }
+
+        override fun before(context: SpekExecutionContext): SpekExecutionContext {
+            if (!nested) {
+                context.registry.extensions()
+                    .filterIsInstance(BeforeExecuteSpec::class.java)
+                    .forEach { it.beforeExecuteSpec(this@Spec) }
+            } else {
+                return super.before(context)
+            }
+            return context
+        }
+
+        override fun after(context: SpekExecutionContext) {
+            if (!nested) {
+                context.registry.extensions()
+                    .filterIsInstance(AfterExecuteSpec::class.java)
+                    .forEach { it.afterExecuteSpec(this@Spec) }
+            } else {
+                super.after(context)
+            }
         }
     }
 

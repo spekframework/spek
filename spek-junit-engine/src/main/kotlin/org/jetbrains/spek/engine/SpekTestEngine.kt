@@ -18,11 +18,8 @@ import org.junit.platform.engine.discovery.ClassSelector
 import org.junit.platform.engine.discovery.ClasspathSelector
 import org.junit.platform.engine.discovery.PackageSelector
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
-import org.junit.platform.engine.support.descriptor.FilePosition
-import org.junit.platform.engine.support.descriptor.FileSource
 import org.junit.platform.engine.support.descriptor.JavaClassSource
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
-import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 import kotlin.reflect.primaryConstructor
@@ -55,7 +52,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             ReflectionUtils.findAllClassesInPackage(it.packageName, isSpec).forEach {
                 resolveSpec(engineDescriptor, it)
             }
-        }
+    }
 
         discoveryRequest.getSelectorsByType(ClassSelector::class.java).forEach {
             if (isSpec.test(it.javaClass)) {
@@ -75,7 +72,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         val instance = klass.kotlin.primaryConstructor!!.call()
         val root = Scope.Spec(
-            engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name), JavaClassSource(klass), registry
+            engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name),
+            JavaClassSource(klass), registry, false
         )
         engineDescriptor.addChild(root)
 
@@ -135,7 +133,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
                 .forEach { nestedRegistry.registerExtension(it) }
 
             val scope = Scope.Spec(
-                root.uniqueId.append(SPEC_SEGMENT_TYPE, spec.java.name), JavaClassSource(spec.java), nestedRegistry
+                root.uniqueId.append(SPEC_SEGMENT_TYPE, spec.java.name),
+                JavaClassSource(spec.java), nestedRegistry, true
             )
             root.addChild(scope)
             instance.spec.invoke(NestedSubjectCollector(scope, nestedRegistry, this as SubjectCollector<T>))
