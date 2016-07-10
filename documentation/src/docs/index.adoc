@@ -1,0 +1,10 @@
+= Spek
+Specification Framework for the JVM
+
+== Resources
+* link:user-guide/current/index.html[User Guide]
+* {githubRepo}[Github Repository]
+* {issueTracker}[Issue Tracker]
+
+== Bleeding Edge
+* link:user-guide/snapshot/index.html[User Guide]

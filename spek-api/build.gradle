@@ -1,0 +1,7 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin.gradle"
+
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}

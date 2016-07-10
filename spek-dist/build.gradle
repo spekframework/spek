@@ -1,74 +1,91 @@
+apply plugin: 'base'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.jfrog.artifactory"
+
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+
 description = 'Spek Distribution packages'
 
-apply plugin: 'application'
-apply plugin: 'maven-publish'
-
-
-
-mainClassName = 'org.jetbrains.spek.console.ConsoleRunnerKt'
-version = rootProject.version
-applicationName = 'spek'
-
-dependencies {
-    compile project(':spek-core')
-}
-
-
-distZip {
-    archiveName = "spek-console-${rootProject.version}.zip"
-}
-
-task distJar(type: Jar) {
-    archiveName = "spek-${rootProject.version}.jar"
-    from project(':spek-core').sourceSets.main.output.classesDir
-    from project(':spek-core').configurations.include_unpacked_jars.incoming.files.collect { zipTree(it) }
-}
-
-task sourceJar(type: Jar) {
-    from project(':spek-core').sourceSets.main.allSource
-}
-
-applicationDistribution.from(sourceJar) {
-    into "sources"
-}
-
-
+evaluationDependsOn ':spek-api'
+evaluationDependsOn ':spek-junit-engine'
 
 publishing {
-   publications {
-       mavenJava(MavenPublication) {
-          groupId = "org.jetbrains.spek"
-          artifactId = "spek"
-          version = "${rootProject.version}"
+    publications {
+        api(MavenPublication) {
+            groupId = 'org.jetbrains.spek'
+            artifactId = 'spek-api'
+            version = rootProject.version
 
-          pom.withXml {
-            asNode().dependencies.dependency.each {
-              it.scope[0].value = ("compile")
+            from project(':spek-api').components.java
+            artifact project(':spek-api').tasks['sourceJar']
+
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    it.scope[0].value = ('compile')
+                }
             }
+        }
 
-          }
-          from project(':spek-core').components.java
+        engine(MavenPublication) {
+            groupId = 'org.jetbrains.spek'
+            artifactId = 'spek-junit-engine'
+            version = rootProject.version
 
+            from project(':spek-junit-engine').components.java
+            artifact project(':spek-junit-engine').tasks['sourceJar']
 
-          artifact sourceJar {
-                classifier "sources"
-          }
-       }
-   }
-
-
-   repositories {
-       maven {
-            url "http://repository.jetbrains.com/spek"
-            if (rootProject.hasProperty("deploy_username") && rootProject.hasProperty("deploy_password")) {
-               credentials {
-                 username "${rootProject.deploy_username}"
-                 password "${rootProject.deploy_password}"
-               }
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    it.scope[0].value = ('compile')
+                }
             }
-       }
-   }
+        }
+    }
+}
 
+bintray {
+    user = "${rootProject.ext.bintrayUser}"
+    key = "${rootProject.ext.bintrayApiKey}"
+    publish = false
+
+    pkg {
+        repo = 'maven'
+        desc = "Specification framework for the JVM"
+        name = 'spek'
+        licenses = ['Modified BSD']
+        labels = ['kotlin', 'testing', 'specification-framework']
+        vcsUrl = 'https://github.com/JetBrains/spek.git'
+
+        githubRepo = 'JetBrains/spek'
+
+
+        version {
+            name = project.version
+        }
+    }
+
+    publications = ['api', 'engine']
+}
+
+artifactory {
+    contextUrl = "https://oss.jfrog.org/artifactory"
+    publish {
+        repository {
+            repoKey = 'oss-snapshot-local'
+            username = "${rootProject.ext.bintrayUser}"
+            password = "${rootProject.ext.bintrayApiKey}"
+            maven = true
+
+        }
+
+        defaults {
+            publications('api', 'engine')
+        }
+    }
+    resolve {
+        repoKey = 'jcenter'
+    }
 }
 
 

@@ -30,7 +30,6 @@ out/
 .DS_Store/
 lib/kotlin-runtime.jar
 */target/*
-gradle.properties
 .idea/
 *.iml
 */*.iml

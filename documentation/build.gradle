@@ -1,0 +1,13 @@
+apply plugin: 'org.asciidoctor.convert'
+
+asciidoctor {
+    sourceDir file("src/docs")
+    sources {
+        include 'index.adoc', 'user-guide/index.adoc'
+    }
+
+    attributes  version: project.version,
+                githubRepo: githubRepo,
+                issueTracker: issueTracker,
+                kotlinVersion: kotlinVersion
+}
