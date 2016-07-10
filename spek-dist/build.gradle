@@ -1,3 +1,20 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://jetbrains.jfrog.io/jetbrains/plugins-release'
+            credentials {
+                username = "${artifactory_user}"
+                password = "${artifactory_password}"
+            }
+        }
+
+    }
+    dependencies {
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
+    }
+}
+
 apply plugin: 'base'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
@@ -69,24 +86,24 @@ bintray {
 }
 
 artifactory {
-    contextUrl = "https://oss.jfrog.org/artifactory"
+    contextUrl = "${artifactory_contextUrl}"
     publish {
         repository {
-            repoKey = 'oss-snapshot-local'
-            username = "${rootProject.ext.bintrayUser}"
-            password = "${rootProject.ext.bintrayApiKey}"
+            repoKey = 'libs-release-local'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
             maven = true
-
         }
-
         defaults {
             publications('api', 'engine')
         }
     }
     resolve {
-        repoKey = 'jcenter'
+        repository {
+            repoKey = 'libs-release'
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
     }
 }
-
-
-
