@@ -20,7 +20,7 @@ class ContextGivenOnSpec: Spek({
                 assertEquals(6, result)
             }
             it("should fail") {
-                assertEquals(7, result)
+                assertEquals(6, result)
             }
         }
 
