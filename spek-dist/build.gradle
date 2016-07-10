@@ -70,7 +70,7 @@ bintray {
         repo = 'maven'
         desc = "Specification framework for the JVM"
         name = 'spek'
-        licenses = ['Modified BSD']
+        licenses = ['BSD']
         labels = ['kotlin', 'testing', 'specification-framework']
         vcsUrl = 'https://github.com/JetBrains/spek.git'
 
@@ -89,7 +89,7 @@ artifactory {
     contextUrl = "${artifactory_contextUrl}"
     publish {
         repository {
-            repoKey = 'libs-release-local'
+            repoKey = 'libs-snapshot-local'
             username = "${artifactory_user}"
             password = "${artifactory_password}"
             maven = true
