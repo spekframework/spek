@@ -89,7 +89,7 @@ artifactory {
     contextUrl = "${artifactory_contextUrl}"
     publish {
         repository {
-            repoKey = 'public-snapshots'
+            repoKey = 'spek-snapshots'
             username = "${artifactory_user}"
             password = "${artifactory_password}"
             maven = true
