@@ -27,7 +27,7 @@ configurations.all {
 }
 
 allprojects {
-    version = '1.0.0-SNAPSHOT'
+    version = "${spekVersion}"
     group = 'org.jetbrains.spek'
     repositories {
         mavenCentral()

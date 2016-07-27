@@ -62,15 +62,16 @@ publishing {
 }
 
 bintray {
-    user = "${rootProject.ext.bintrayUser}"
-    key = "${rootProject.ext.bintrayApiKey}"
-    publish = false
+    user = "${bintrayUser}"
+    key = "${bintrayApiKey}"
+    publish = true
 
     pkg {
-        repo = 'maven'
+        repo = 'spek'
         desc = "Specification framework for the JVM"
         name = 'spek'
-        licenses = ['BSD']
+        userOrg = 'jetbrains'
+        licenses = ['BSD New']
         labels = ['kotlin', 'testing', 'specification-framework']
         vcsUrl = 'https://github.com/JetBrains/spek.git'
 
