@@ -64,7 +64,7 @@ publishing {
 bintray {
     user = "${bintrayUser}"
     key = "${bintrayApiKey}"
-    publish = true
+    publish = false
 
     pkg {
         repo = 'spek'
