@@ -1,3 +1,5 @@
+apply plugin: 'org.ajoberstar.grgit'
+apply plugin: 'org.ajoberstar.github-pages'
 apply plugin: 'org.asciidoctor.convert'
 
 asciidoctor {
@@ -10,4 +12,13 @@ asciidoctor {
                 githubRepo: githubRepo,
                 issueTracker: issueTracker,
                 kotlinVersion: kotlinVersion
+}
+
+githubPages {
+    repoUri = 'git@github.com:JetBrains/spek.git'
+    targetBranch = 'gh-pages'
+    pages {
+        from "build/asciidoc/html5/"
+        into "docs/${version}"
+    }
 }

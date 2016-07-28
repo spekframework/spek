@@ -16,6 +16,7 @@ buildscript {
 }
 
 apply plugin: 'base'
+apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: "com.jfrog.artifactory"
@@ -59,6 +60,37 @@ publishing {
             }
         }
     }
+}
+
+
+task writeNewPom << {
+    pom {
+        project {
+            name 'org.jetbrains.spek'
+            description 'A Specification Framework for the JVM'
+            url 'https://jetbrains.github.io/spek'
+            inceptionYear '2010'
+            licenses {
+                license {
+                    name 'BSD New'
+                    url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                    distribution 'spek'
+                }
+            }
+            developers {
+                developer {
+                    id 'JetBrains'
+                    name 'Spek Contributors'
+                    organization 'JetBrains'
+                }
+            }
+            scm {
+                connection 'scm:git:git://github.com/jetbrains/spek.git'
+                developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                url 'http://github.com/jetbrains/spek/tree/master'
+            }
+        }
+    }.writeTo("$buildDir/pom.xml")
 }
 
 bintray {
