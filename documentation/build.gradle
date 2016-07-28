@@ -15,7 +15,8 @@ asciidoctor {
 }
 
 githubPages {
-    repoUri = 'git@github.com:JetBrains/spek.git'
+
+    repoUri = 'https://github.com/JetBrains/spek.git'
     targetBranch = 'gh-pages'
     pages {
         from "build/asciidoc/html5/"

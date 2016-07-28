@@ -6,5 +6,5 @@ Specification Framework for the JVM
 * {githubRepo}[Github Repository]
 * {issueTracker}[Issue Tracker]
 
-== Bleeding Edge
+== Current Documentation
 * link:user-guide/snapshot/index.html[User Guide]
