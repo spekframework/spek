@@ -6,7 +6,6 @@ background and are familiar with http://rspec.info/[RSpec], you won't have any p
 https://jetbrains.github.io/spek[Spek] provides a *JUnit TestEngine*, which is currently the only means
 of executing your specifications.
 
-
 === Supported Kotlin & Java versions
 Current version is built against *Kotlin {kotlinVersion}* and requires *JDK 8* or higher
 (this is the minimum version requirement for the JUnit Platform).
@@ -14,3 +13,4 @@ Current version is built against *Kotlin {kotlinVersion}* and requires *JDK 8* o
 === Android
 Android integration tests is currently not supported and you have to use the
 http://tools.android.com/tech-docs/jackandjill[Jack toolchain] to be able to built against Java 8.
+
