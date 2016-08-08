@@ -17,9 +17,12 @@ import org.junit.platform.engine.*
 import org.junit.platform.engine.discovery.ClassSelector
 import org.junit.platform.engine.discovery.ClasspathSelector
 import org.junit.platform.engine.discovery.PackageSelector
+import org.junit.platform.engine.discovery.UniqueIdSelector
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.descriptor.JavaClassSource
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
+import java.util.*
+import java.util.function.Consumer
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 import kotlin.reflect.primaryConstructor
@@ -52,11 +55,32 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             ReflectionUtils.findAllClassesInPackage(it.packageName, isSpec).forEach {
                 resolveSpec(engineDescriptor, it)
             }
-    }
+        }
 
         discoveryRequest.getSelectorsByType(ClassSelector::class.java).forEach {
             if (isSpec.test(it.javaClass)) {
                 resolveSpec(engineDescriptor, it.javaClass as Class<Spek>)
+            }
+        }
+
+        discoveryRequest.getSelectorsByType(UniqueIdSelector::class.java).forEach {
+            engineDescriptor.findByUniqueId(it.uniqueId).ifPresent(Consumer {
+                filterOutUniqueId(it, engineDescriptor)
+            })
+        }
+    }
+
+    private fun filterOutUniqueId(target: TestDescriptor, root: TestDescriptor) {
+        if (!target.equals(root)) {
+            if (root.allDescendants.contains(target)) {
+                val descriptors = LinkedList<TestDescriptor>()
+                root.children.forEach {
+                    descriptors.add(it)
+                }
+
+                descriptors.forEach { filterOutUniqueId(target, it) }
+            } else {
+                root.removeFromHierarchy()
             }
         }
     }
