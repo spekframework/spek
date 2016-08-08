@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test
 class AfterEachTest: AbstractSpekTestEngineTest() {
     @Test
     fun testAfterEach() {
+        counter = 0
         class TestSpek: Spek({
             group("group") {
                 test("test") { }

@@ -1,9 +1,8 @@
 rootProject.name = 'spek'
 
 include 'spek-api'
-include 'spek-junit-engine'
+include 'junit-platform-engine-test-support'
+include 'spek-junit-platform-engine'
 include 'spek-dist'
 include 'documentation'
 include 'spek-samples'
-
-include 'junit-engine-test-support'
