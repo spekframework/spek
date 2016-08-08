@@ -1,10 +1,11 @@
 = Spek
 Specification Framework for the JVM
 
+== Documentation
+* link:user-guide/latest/index.html[User Guide]
+
 == Resources
-* link:user-guide/current/index.html[User Guide]
 * {githubRepo}[Github Repository]
 * {issueTracker}[Issue Tracker]
+* https://kotlinlang.org[The Kotlin Language]
 
-== Current Documentation
-* link:user-guide/snapshot/index.html[User Guide]
