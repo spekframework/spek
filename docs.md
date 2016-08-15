@@ -74,6 +74,28 @@ class TaxCalculatorSpecs: Spek() { init {
 ```
 
 
+#### Dependency
+
+Adding the dependency to Spek is needed to use Spek.
+
+For example, gradle users add the following lines to your `build.gradle`
+
+```groovy
+buildscript {
+  // ...
+  ext.spek_version = '1.0.25' //replace the value of spek_version with your Spek version
+  // ...
+}
+repositories {
+  maven {
+    url 'http://repository.jetbrains.com/all'
+  }
+}
+dependencies {
+  testCompile "org.jetbrains.spek:spek:$spek_version"
+}
+```
+
 ### Running Tests
 
 **Console Runner**
