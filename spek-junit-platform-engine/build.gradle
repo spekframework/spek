@@ -1,6 +1,7 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'org.jetbrains.dokka'
 
 junitPlatform {
     engines {
@@ -23,4 +24,9 @@ dependencies {
 task sourceJar(type: Jar) {
     from project.sourceSets.main.allSource
     classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+    classifier = 'javadoc'
 }

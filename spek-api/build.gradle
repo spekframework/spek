@@ -1,5 +1,6 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply plugin: 'org.jetbrains.dokka'
 
 task sourceJar(type: Jar) {
     from project.sourceSets.main.allSource
@@ -7,3 +8,7 @@ task sourceJar(type: Jar) {
 }
 
 
+task javadocJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+    classifier = 'javadoc'
+}
