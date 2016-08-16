@@ -49,6 +49,8 @@ task wrapper(type: Wrapper) {
     gradleVersion = 2.13
 }
 
+spekVersion = System.env.BUILD_NUMBER ? "$System.env.BUILD_NUMBER" : "1.0.0-SNAPSHOT"
+
 if (hasProperty('bintray_user')) {
     ext.bintrayUser = getProperty('bintray_user')
 } else {
