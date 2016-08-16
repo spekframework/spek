@@ -26,7 +26,7 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 description = 'Spek Distribution packages'
 
 evaluationDependsOn ':spek-api'
-evaluationDependsOn ':spek-junit-engine'
+evaluationDependsOn ':spek-junit-platform-engine'
 
 publishing {
     publications {
@@ -37,60 +37,83 @@ publishing {
 
             from project(':spek-api').components.java
             artifact project(':spek-api').tasks['sourceJar']
+            artifact project(':spek-api').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
                     it.scope[0].value = ('compile')
+                }
+
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'Spek'
+                    description 'A Specification Framework for the JVM'
+                    url 'https://jetbrains.github.io/spek'
+                    licenses {
+                        license {
+                            name 'BSD New'
+                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            distribution 'spek'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'Spek Contributors'
+                            organization 'JetBrains'
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/jetbrains/spek.git'
+                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                        url 'http://github.com/jetbrains/spek'
+                    }
                 }
             }
         }
 
         engine(MavenPublication) {
             groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-junit-engine'
+            artifactId = 'spek-junit-platform-engine'
             version = rootProject.version
 
-            from project(':spek-junit-engine').components.java
-            artifact project(':spek-junit-engine').tasks['sourceJar']
+            from project(':spek-junit-platform-engine').components.java
+            artifact project(':spek-junit-platform-engine').tasks['sourceJar']
+            artifact project(':spek-junit-platform-engine').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
                     it.scope[0].value = ('compile')
                 }
+
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+                    name 'Spek JUnit Platform Engine'
+                    description 'Spek TestEngine for the JUnit Platform'
+                    url 'https://jetbrains.github.io/spek'
+                    licenses {
+                        license {
+                            name 'BSD New'
+                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            distribution 'spek'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'Spek Contributors'
+                            organization 'JetBrains'
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/jetbrains/spek.git'
+                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                        url 'http://github.com/jetbrains/spek'
+                    }
+                }
             }
         }
     }
-}
-
-
-task writeNewPom << {
-    pom {
-        project {
-            name 'org.jetbrains.spek'
-            description 'A Specification Framework for the JVM'
-            url 'https://jetbrains.github.io/spek'
-            inceptionYear '2010'
-            licenses {
-                license {
-                    name 'BSD New'
-                    url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
-                    distribution 'spek'
-                }
-            }
-            developers {
-                developer {
-                    id 'JetBrains'
-                    name 'Spek Contributors'
-                    organization 'JetBrains'
-                }
-            }
-            scm {
-                connection 'scm:git:git://github.com/jetbrains/spek.git'
-                developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                url 'http://github.com/jetbrains/spek/tree/master'
-            }
-        }
-    }.writeTo("$buildDir/pom.xml")
 }
 
 bintray {
