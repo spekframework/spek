@@ -5,7 +5,7 @@ apply plugin: 'org.asciidoctor.convert'
 asciidoctor {
     sourceDir file("src/docs")
     sources {
-        include 'index.≠adoc', 'user-guide/latest/index.adoc'
+        include 'latest/index.adoc'
     }
 
     attributes  version: project.version,
@@ -20,6 +20,6 @@ githubPages {
     targetBranch = 'gh-pages'
     pages {
         from "build/asciidoc/html5/"
-        into "docs/${version}"
+        into "docs/"
     }
 }
