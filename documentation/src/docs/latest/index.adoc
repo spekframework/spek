@@ -4,9 +4,10 @@
 :source-highlighter: highlight.js
 {version}
 
-
 include::overview.adoc[]
-
 include::setting-up.adoc[]
-
 include::writing-specifications.adoc[]
+include::faq.adoc[]
+include::contributors.adoc[]
+
+

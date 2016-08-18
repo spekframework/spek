@@ -1,6 +1,6 @@
 /*
 
-Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
 
@@ -8,87 +8,87 @@ Original highlight.js style (c) Ivan Sagalaev <maniac@softwaremaniacs.org>
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #F0F0F0;
+  color: #333;
+  background: #f8f8f8;
 }
 
-
-/* Base color: saturation 0; */
-
-.hljs,
-.hljs-subst {
-  color: #444;
-}
-
-.hljs-comment {
-  color: #888888;
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
 }
 
 .hljs-keyword,
-.hljs-attribute,
 .hljs-selector-tag,
-.hljs-meta-keyword,
-.hljs-doctag,
-.hljs-name {
+.hljs-subst {
+  color: #333;
   font-weight: bold;
 }
 
-
-/* User color: hue: 0 */
-
-.hljs-type,
-.hljs-string,
 .hljs-number,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-quote,
-.hljs-template-tag,
-.hljs-deletion {
-  color: #880000;
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
 }
 
 .hljs-title,
-.hljs-section {
-  color: #880000;
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
   font-weight: bold;
 }
 
-.hljs-regexp,
-.hljs-symbol,
-.hljs-variable,
-.hljs-template-variable,
-.hljs-link,
-.hljs-selector-attr,
-.hljs-selector-pseudo {
-  color: #BC6060;
+.hljs-subst {
+  font-weight: normal;
 }
 
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
 
-/* Language color: hue: 90; */
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
 
-.hljs-literal {
-  color: #78A960;
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
 }
 
 .hljs-built_in,
-.hljs-bullet,
-.hljs-code,
-.hljs-addition {
-  color: #397300;
+.hljs-builtin-name {
+  color: #0086b3;
 }
-
-
-/* Meta color: hue: 200 */
 
 .hljs-meta {
-  color: #1f7199;
+  color: #999;
+  font-weight: bold;
 }
 
-.hljs-meta-string {
-  color: #4d99bf;
+.hljs-deletion {
+  background: #fdd;
 }
 
-
-/* Misc effects */
+.hljs-addition {
+  background: #dfd;
+}
 
 .hljs-emphasis {
   font-style: italic;

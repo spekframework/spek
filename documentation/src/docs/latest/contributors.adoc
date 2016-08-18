@@ -1,0 +1,11 @@
+== Main Contributors
+
+_In alphabetical order_
+
+Hadi Hariri +
+Ranie Jade Ramiso +
+Laura Kogler +
+Eugene Petrenko +
+Ilya Ryzhenkov
+
+https://github.com/JetBrains/spek/graphs/contributors[Full list]

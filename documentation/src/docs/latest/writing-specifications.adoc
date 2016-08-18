@@ -1,0 +1,63 @@
+== Writing Specifications
+
+Your specifications need to inherit from the Spek() base class. The primary reason for this is so that we leverage a lot of the functionality of JUnit.
+
+```kotlin
+class SimpleTest : Spek({
+    describe("a calculator") {
+        val calculator = SampleCalculator()
+
+        it("should return the result of adding the first number to the second number") {
+            val sum = calculator.sum(2, 4)
+            assertEquals(6, sum)
+        }
+
+        it("should return the result of subtracting the second number from the first number") {
+            val subtract = calculator.subtract(4, 2)
+            assertEquals(2, subtract)
+        }
+    }
+})
+```
+
+Spek also allows you to use given/on/it nomenclature
+
+* **given**: Only one of these should be present. Given indicates the context, the setup. Think of it as the arrange in the arrange, act, assert setup.
+* **on**: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.
+* **it**: One or more of these. Each it is a consequence of the action. The assert. Normally it's good practice to have a single assertion per it.
+
+```kotlin
+class TaxCalculatorSpecs: Spek() { init {
+
+    given("Tax rate calculator with default locale settings") {
+        val taxRateCalculator = TaxRateCalculator()
+        on("calculating the rate for an income of 200 and an average change of 10 per semester") {
+            val value = taxRateCalculator.calculateRate(200, 10)
+            it("should result in a value of 300") {
+                assertEquals(300, value)
+            }
+        }
+    }
+}}
+```
+
+
+=== Running Tests
+<outdated>
+
+**Console Runner**
+
+Spek ships with a console runner that can be used via a built-in script file on OSX/Linux (spek) or Windows (spek.bat), located in the bin folder. Execute it without
+parameters for more usage information.
+
+The runner also has the option to output HTML.
+
+**IntelliJ IDEA Test Runner**
+
+If you're using IntelliJ IDEA, you can simply run Spek from inside the IDE
+
+**TeamCity Test Runner**
+
+Since it uses JUnit under the covers, TeamCity already supports Spek. And like TeamCity, other CI servers that support JUnit should too.
+
+

@@ -5,7 +5,7 @@ apply plugin: 'org.asciidoctor.convert'
 asciidoctor {
     sourceDir file("src/docs")
     sources {
-        include 'index.adoc', 'user-guide/latest/index.adoc'
+        include 'latest/index.adoc'
     }
 
     resources {
@@ -17,7 +17,7 @@ asciidoctor {
                 githubRepo: githubRepo,
                 issueTracker: issueTracker,
                 kotlinVersion: kotlinVersion,
-                highlightjsdir: "../../lib/highlight"
+                highlightjsdir: "../lib/highlight"
 }
 
 githubPages {
@@ -26,6 +26,6 @@ githubPages {
     targetBranch = 'gh-pages'
     pages {
         from "build/asciidoc/html5/"
-        into "docs/${version}"
+        into "docs/"
     }
 }

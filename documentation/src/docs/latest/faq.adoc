@@ -1,0 +1,42 @@
+== FAQ
+
+**Q: What is Kotlin?**
+
+http://kotlin.jetbrains.org[Kotlin] is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by [JetBrains](http://www.jetbrains.com)
+It is aimed at being a concise modern language for general use. It also rocks!
+
+**Q: Is Spek a BDD or a TDD framework?**
+
+Spek in Dutch means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
+moment though, we (at least the original author) believe that there is a false distinction in frameworks around what TDD
+or BDD is. Unit tests are ultimately about defining the specifications of your system. As such, Spek is merely a specification
+framework if it can be called anything. For more information read http://hadihariri.com/2012/04/11/what-bdd-has-taught-me/[What BDD has taught me]
+
+**Q: Can I have more than one _on_ per _given_?**
+
+Yes you can. How you group your specifications is up to you
+
+**Q: Can I have more than one _it_ per _on_?**
+
+Yes you can. In real world applications, an action can lead to several reactions.
+
+**Q: Isn't it bad to have more than one assertion per test?**
+
+Traditionally, in unit testing it's been recommended that you should limit each test to one assertion with the
+idea that you test a single *unit*, and at the same time, find it easy to see where a test has failed. In Spek you can still
+comply with this guidance. You can have multiple *it* but you limit each to one assertion.
+
+**Q: Can I contribute?**
+
+http://github.com/jetbrains/spek[Please do!]
+
+**Q: Is Spek an official JetBrains project?**
+
+No. Spek was a project initiated by https://hadihariri.com[Hadi Hariri] and has many contributors both internally from JetBrains as well as externally. While it is
+hosted on the JetBrains account under GitHub, it is not a project that is officially supported.
+
+**Q: What is the licensing?**
+
+Spek is licensed under https://github.com/JetBrains/spek/blob/master/LICENSE.TXT[BSD]
+
+
