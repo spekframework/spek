@@ -3,7 +3,7 @@ This guide assumes that you have a basic knowledge of https://kotlinlang.org/[Ko
 background and are familiar with http://rspec.info/[RSpec], you won't have any problem.
 
 === JUnit Platform
-https://jetbrains.github.io/spek[Spek] provides a *JUnit TestEngine*, which is currently the only means
+https://jetbrains.github.io/spek[Spek] provides a http://junit.org/junit5/[JUnit Platform] *TestEngine*, which is currently the only means
 of executing your specifications.
 
 === Supported Kotlin & Java versions

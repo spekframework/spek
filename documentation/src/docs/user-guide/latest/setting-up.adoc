@@ -1,1 +1,33 @@
 == Setting up
+You will need to include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine`
+in your test classpath. The former is needed during compilation, while the latter during runtime only.
+
+=== Gradle
+Thankfully JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#running-tests-build[gradle plugin] that will make our life easier.
+
+[source,groovy,subs="attributes+"]
+.build.gradle
+----
+// setup the plugin
+buildscript {
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:<version>'
+}
+
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+junitPlatform {
+    engines {
+        include 'spek'
+    }
+}
+
+// setup dependencies
+dependencies {
+    testCompile 'org.jetbrains.spek:spek-api:{version}'
+    testRuntime 'org.jetbrains.spek:spek-junit-engine:{version}'
+}
+----
+
+
+=== Maven
+TODO

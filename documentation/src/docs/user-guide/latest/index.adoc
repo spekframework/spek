@@ -1,6 +1,7 @@
 = Spek User Guide
 :toc: left
 :sectnums:
+:source-highlighter: highlight.js
 {version}
 
 

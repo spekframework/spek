@@ -5,13 +5,19 @@ apply plugin: 'org.asciidoctor.convert'
 asciidoctor {
     sourceDir file("src/docs")
     sources {
-        include 'index.≠adoc', 'user-guide/latest/index.adoc'
+        include 'index.adoc', 'user-guide/latest/index.adoc'
+    }
+
+    resources {
+        from "$projectDir/src/lib"
+        into 'lib'
     }
 
     attributes  version: project.version,
                 githubRepo: githubRepo,
                 issueTracker: issueTracker,
-                kotlinVersion: kotlinVersion
+                kotlinVersion: kotlinVersion,
+                highlightjsdir: "../../lib/highlight"
 }
 
 githubPages {
