@@ -1,10 +1,11 @@
 = Spek User Guide
 :toc: left
 :sectnums:
-{version}
-
+/{version}
 
 include::overview.adoc[]
 include::writing-specifications.adoc[]
 include::faq.adoc[]
-include::faq.contributors[]
+include::contributors.adoc[]
+
+

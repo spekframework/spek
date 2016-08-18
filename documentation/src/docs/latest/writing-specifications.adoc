@@ -42,7 +42,7 @@ class TaxCalculatorSpecs: Spek() { init {
 ```
 
 
-### Running Tests
+=== Running Tests
 
 **Console Runner**
 
@@ -58,3 +58,5 @@ If you're using IntelliJ IDEA, you can simply run Spek from inside the IDE
 **TeamCity Test Runner**
 
 Since it uses JUnit under the covers, TeamCity already supports Spek. And like TeamCity, other CI servers that support JUnit should too.
+
+

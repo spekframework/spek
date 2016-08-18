@@ -2,7 +2,7 @@
 This guide assumes that you have a basic knowledge of https://kotlinlang.org/[Kotlin]. If you have a _Ruby_
 background and are familiar with http://rspec.info/[RSpec], you won't have any problem.
 
-==== Why a Specification Framework?
+=== Why a Specification Framework?
 
 Tests are not only to check the code you've written executes and works, but also that it works as it should, that is, that as a developer
 what's been implemented matches the requirements.
@@ -15,7 +15,7 @@ That's what Spek does. It is a specification framework that allows you to easily
 
 You call them tests. We call them specifications.
 
-==== Why Kotlin?
+=== Why Kotlin?
 
 http://kotlinlang.org[Kotlin] is statically typed OSS language developed (primarily) and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
 and the ability to create nice DSL. It's 100% compatible with Java which means you can call Java from Kotlin and Kotlin from Java. And it's also easy to pick up.
@@ -23,15 +23,15 @@ and the ability to create nice DSL. It's 100% compatible with Java which means y
 Spek is written in Kotlin and specifications you write will be written in Kotlin. However, your SUT (System under Test) can be Java or Kotlin. As such
 you can easily use Kotlin for your specifications. Yes, you call them tests. Start calling them specifications.
 
-==== JUnit Platform
+=== JUnit Platform
 https://jetbrains.github.io/spek[Spek] provides a *JUnit TestEngine*, which is currently the only means
 of executing your specifications.
 
-==== Supported Kotlin & Java versions
+=== Supported Kotlin & Java versions
 Current version is built against *Kotlin {kotlinVersion}* and requires *JDK 8* or higher
 (this is the minimum version requirement for JUnit 5).
 
-==== Android
+=== Android
 Android integration tests is currently not supported and you have to use the
 http://tools.android.com/tech-docs/jackandjill[Jack toolchain] to be able to build against Java 8.
 
