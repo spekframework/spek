@@ -35,3 +35,5 @@ Current version is built against *Kotlin {kotlinVersion}* and requires *JDK 8* o
 Android integration tests is currently not supported and you have to use the
 http://tools.android.com/tech-docs/jackandjill[Jack toolchain] to be able to build against Java 8.
 
+=== IDE Support
+Currently, Spek only provides an IntelliJ IDEA https://plugins.jetbrains.com/plugin/8564[plugin].
