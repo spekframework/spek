@@ -1,9 +1,21 @@
 == Writing Specifications
 
-Your specifications need to inherit from the Spek() base class. The primary reason for this is so that we leverage a lot of the functionality of JUnit.
+=== Assertion Framework
+Spek doesn't have any built-in assertions, luckily there are several libraries in the wild that do. Below are several suggestions:
 
-```kotlin
-class SimpleTest : Spek({
+- `org.jetbrains.kotlin:kotlin-test`
+- https://github.com/npryce/hamkrest[HamKrest]
+- https://github.com/winterbe/expekt[Expekt]
+- https://github.com/MarkusAmshove/Kluent[Kluent]
+
+=== Basic Structure
+
+Your specifications need to inherit from the `org.jetbrains.spek.api.Spek` base class.
+
+[source,kotlin]
+.SimpleSpec.kt
+----
+class SimpleSpec: Spek({
     describe("a calculator") {
         val calculator = SampleCalculator()
 
@@ -18,46 +30,98 @@ class SimpleTest : Spek({
         }
     }
 })
-```
+----
 
-Spek also allows you to use given/on/it nomenclature
+The `it` method creates a `test` scope, which is equivalent to a test method in JUnit. While the `describe` method creates
+a `group` scope, which can contain nested `test` and/or `group` scopes. Spek supports arbitrary number of nested scopes for
+better grouping of your tests.
 
-* **given**: Only one of these should be present. Given indicates the context, the setup. Think of it as the arrange in the arrange, act, assert setup.
-* **on**: One or more of these. Each on is an action. The act. More than one on indicates that they share the same context.
-* **it**: One or more of these. Each it is a consequence of the action. The assert. Normally it's good practice to have a single assertion per it.
+Aside from `describe`, Spek also provides `given`, `on` and `context` to create `group` scopes.
 
-```kotlin
-class TaxCalculatorSpecs: Spek() { init {
+IMPORTANT: Due to how Spek is structured, `group` scopes are eagerly evaluated during the discovery phase. Any logic that
+needs to be evaluated before and/or after `test` scopes should be done using fixtures, which will be discussed in the next section.
 
-    given("Tax rate calculator with default locale settings") {
-        val taxRateCalculator = TaxRateCalculator()
-        on("calculating the rate for an income of 200 and an average change of 10 per semester") {
-            val value = taxRateCalculator.calculateRate(200, 10)
-            it("should result in a value of 300") {
-                assertEquals(300, value)
+=== Fixtures
+
+Spek provides `beforeEach` and `afterEach` fixtures, which allows running arbitrary code before and after a `test`, respectively. Every
+`group` scope can declare an arbitrary number of fixtures, the order they are executed is based on the order they are declared.
+
+[source,kotlin]
+.FixtureSpec.kt
+----
+class FixtureSpec: Spek({
+    describe("a group") {
+        beforeEach {
+            ...
+        }
+
+        context("a nested group") {
+
+            beforeEach {
+                ...
             }
+
+            beforeEach {
+                ...
+            }
+
+            it ("should work") { ... }
+        }
+
+        it("do something") { ... }
+
+        afterEach {
+            ...
         }
     }
-}}
-```
+})
+----
 
+=== Ignoring tests
+Each scope method have a variant prefixed with `x` (e.g. `xdescribe`, `xit`, etc...), which will Spek ignore when executing the spec.
 
-=== Running Tests
-<outdated>
+=== Subjects
+NOTE: This feature is currently experimental.
 
-**Console Runner**
+Normally you will only have a single class as the https://en.wikipedia.org/wiki/System_under_test[SUT]. Spek provides an idiomatic way
+of writing this types of tests and removing a lot of boilerplate code.
 
-Spek ships with a console runner that can be used via a built-in script file on OSX/Linux (spek) or Windows (spek.bat), located in the bin folder. Execute it without
-parameters for more usage information.
+[source,kotlin]
+.SimpleCalculatorSpec.kt
+----
+class SimpleCalculatorSpec: SubjectSpek<Calculator>({
+    subject { Calculator() } <1>
 
-The runner also has the option to output HTML.
+    it("should return the result of adding the first number to the second number") {
+        assertEquals(6, subject.sum(2, 4)) <2>
+    }
 
-**IntelliJ IDEA Test Runner**
+    it("should return the result of subtracting the second number from the first number") {
+        assertEquals(2, subject.subtract(4, 2)) <2>
+    }
+})
+----
+<1> Tell Spek how to instantiate the subject, in this case a `Calculator`. This will be invoked for every `test` scope, which means each `test` scope will have a unique instance.
+<2> Use `subject` to access the instance of the subject.
 
-If you're using IntelliJ IDEA, you can simply run Spek from inside the IDE
+==== Shared Subjects
+This feature is useful when testing subclasses, removing the need of duplicating test code.
 
-**TeamCity Test Runner**
+Given `AdvancedCalculator` which is a subclass of `Calculator`, a typical test will look like the following:
+[source,kotlin]
+.AdvancedCalculatorSpec.kt
+----
+class AdvancedCalculatorSpec: SubjectSpek<AdvancedCalculator>({
+    subject { AdvancedCalculator() }
 
-Since it uses JUnit under the covers, TeamCity already supports Spek. And like TeamCity, other CI servers that support JUnit should too.
+    itBehavesLike(SimpleCalculatorSpec::class)
 
+    describe("pow") {
+        it("should return the power of base raise to exponent") {
+            assertEquals(subject.pow(2, 2), 4)
+        }
+    }
+})
+----
 
+This will include all scopes declared in `SimpleCalculatorSpec`.
