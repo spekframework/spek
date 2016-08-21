@@ -34,13 +34,13 @@ fun Dsl.given(description: String, body: Dsl.() -> Unit) {
 }
 
 /**
- * Creates a [test][Dsl.test].
+ * Creates a [group][Dsl.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.it(description: String, body: () -> Unit) {
-    test("it $description", body = body)
+fun Dsl.on(description: String, body: Dsl.() -> Unit) {
+    group("on $description", body = body)
 }
 
 /**
@@ -49,8 +49,8 @@ fun Dsl.it(description: String, body: () -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.on(description: String, body: () -> Unit) {
-    test("on $description", body = body)
+fun Dsl.it(description: String, body: () -> Unit) {
+    test("it $description", body = body)
 }
 
 /**
@@ -84,13 +84,13 @@ fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit
 }
 
 /**
- * Creates a pending [test][Dsl.test].
+ * Creates a pending [group][Dsl.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) {
-    test("it $description", Pending.Yes(reason), body)
+fun Dsl.xon(description: String, reason: String? = null, body: Dsl.() -> Unit = {}) {
+    group("on $description", Pending.Yes(reason), body)
 }
 
 /**
@@ -99,8 +99,8 @@ fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) 
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xon(description: String, reason: String? = null, body: () -> Unit = {}) {
-    test("on $description", Pending.Yes(reason), body)
+fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) {
+    test("it $description", Pending.Yes(reason), body)
 }
 
 /**
