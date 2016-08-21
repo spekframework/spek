@@ -1,6 +1,6 @@
 == Overview
 This guide assumes that you have a basic knowledge of https://kotlinlang.org/[Kotlin]. If you have a _Ruby_
-background and are familiar with http://rspec.info/[RSpec], you won't have any problem.
+background and is familiar with http://rspec.info/[RSpec], you won't have any problem.
 
 === Why a Specification Framework?
 
