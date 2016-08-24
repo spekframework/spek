@@ -42,7 +42,7 @@ To use it in Maven insert the following in your pom.xml file:
 
  <repositories>
     <repository>
-      <id>jebrains-all</id>
+      <id>jetbrains-all</id>
       <url>http://repository.jetbrains.com/all</url>
     </repository>
   </repositories>
@@ -80,7 +80,7 @@ dependencies {
 
  <repositories>
     <repository>
-      <id>jebrains-all</id>
+      <id>jetbrains-all</id>
       <url>http://repository.jetbrains.com/all</url>
     </repository>
   </repositories>
