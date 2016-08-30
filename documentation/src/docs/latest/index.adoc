@@ -2,7 +2,7 @@
 :toc: left
 :sectnums:
 :source-highlighter: highlight.js
-{version}
+link:https://jetbrains.github.io/spek[Spek Web Site]
 
 include::overview.adoc[]
 
@@ -13,3 +13,5 @@ include::writing-specifications.adoc[]
 include::faq.adoc[]
 
 include::contributors.adoc[]
+
+include::other.adoc[]

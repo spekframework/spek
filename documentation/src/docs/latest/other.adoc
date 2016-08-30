@@ -1,10 +1,5 @@
-= Spek
-Specification Framework for the JVM
-
-== Documentation
-* link:user-guide/latest/index.html[User Guide]
-
 == Resources
+* https://jetbrains.github.io/spek[Spek Home]
 * {githubRepo}[Github Repository]
 * {issueTracker}[Issue Tracker]
 * https://kotlinlang.org[The Kotlin Language]
