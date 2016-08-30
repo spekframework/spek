@@ -1,0 +1,6 @@
+latest:
+  version: 1.0
+  build: 1.0
+  kotlinVersion: 1.0.3
+  notes: /notes/1.0
+list:
