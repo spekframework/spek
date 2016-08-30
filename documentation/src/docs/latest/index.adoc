@@ -2,7 +2,6 @@
 :toc: left
 :sectnums:
 :source-highlighter: highlight.js
-link:https://jetbrains.github.io/spek[Spek Web Site]
 
 include::overview.adoc[]
 
