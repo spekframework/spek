@@ -3,4 +3,6 @@ latest:
   build: 1.0
   kotlinVersion: 1.0.3
   notes: /notes/1.0
+  date: 1st September 2016
+
 list:
