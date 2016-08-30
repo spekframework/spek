@@ -13,9 +13,7 @@ Build: {{ site.data.releases.latest.build }}
 
 Date: {{ site.data.releases.latest.date }}
 
-Kotlin version: {{ site.data.release.latest.kotlinVersion }}
-
-The current stable release of Spek. 
+Kotlin version: {{ site.data.releases.latest.kotlinVersion }}
 
 **Prior releases**
 
