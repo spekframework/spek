@@ -1,8 +1,7 @@
 latest:
   version: 1.0
-  build: 1.0
+  build: 1.0.78
   kotlinVersion: 1.0.3
-  notes: /notes/1-0
   date: 1st September 2016
 
 list:
