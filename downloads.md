@@ -7,7 +7,7 @@ title: Spek - Releases
 
 **Current release**: 
 
-Version: <a href="{{ site.baseurl }}/{{ site.data.releases.latest.notes }}/{{ site.data.releases.latest.version }}">{{ site.data.releases.latest.version }}</a>
+Version: <a href="{{ site.baseurl }}/notes/{{ site.data.releases.latest.version }}.html">{{ site.data.releases.latest.version }}</a>
 
 Build: {{ site.data.releases.latest.build }}
 
