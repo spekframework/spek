@@ -2,6 +2,8 @@
 :toc: left
 :sectnums:
 :source-highlighter: highlight.js
+{version}
+:revremark: pass:m[https://jetbrains.github.io/spek[Spek Home]]
 
 include::overview.adoc[]
 
