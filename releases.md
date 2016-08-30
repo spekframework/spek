@@ -7,9 +7,12 @@ title: Spek - Releases
 
 **Current release**: 
 
-Version: <a href="{{ site.data.releases.latest.notes }}">{{ site.data.releases.latest.version }}</a>
+Version: <a href="{{ site.baseurl }}{{ site.data.releases.latest.notes }}">{{ site.data.releases.latest.version }}</a>
+
 Build: {{ site.data.releases.latest.build }}
+
 Date: {{ site.data.releases.latest.date }}
+
 Kotlin version: {{ site.data.release.latest.kotlinVersion }}
 
 The current stable release of Spek. 
@@ -18,7 +21,7 @@ The current stable release of Spek.
 
 <ul>
 {% for entry in site.data.releases.list %}
-<li>{{ entry.date }} - <a href="{{ entry.notes }}">{{ entry.version }}</a> Build: {{ entry.build }}. Kotlin: {{ entry.kotlinVersion }}</li>
+<li>{{ entry.date }} - <a href="{{ site.baseurl}}{{ entry.notes }}">{{ entry.version }}</a> Build: {{ entry.build }}. Kotlin: {{ entry.kotlinVersion }}</li>
 {% endfor %}
 </ul>
 
