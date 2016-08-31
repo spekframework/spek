@@ -431,7 +431,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_why_a_specification_framework">1.1. Why a Specification Framework?</a></li>
 <li><a href="#_why_kotlin">1.2. Why Kotlin?</a></li>
 <li><a href="#_junit_platform">1.3. JUnit Platform</a></li>
-<li><a href="#_supported_kotlin_java_versions">1.4. Supported Kotlin &amp; Java versions</a></li>
+<li><a href="#_supported_java_versions">1.4. Supported Java Versions</a></li>
 <li><a href="#_android">1.5. Android</a></li>
 <li><a href="#_ide_support">1.6. IDE Support</a></li>
 </ul>
@@ -486,7 +486,7 @@ place we write the test code?</p>
 <div class="sect2">
 <h3 id="_why_kotlin">1.2. Why Kotlin?</h3>
 <div class="paragraph">
-<p><a href="http://kotlinlang.org">Kotlin</a> is statically typed OSS language developed (primarily) and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
+<p><a href="http://kotlinlang.org">Kotlin</a> is statically typed OSS language developed and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
 and the ability to create nice DSL. It&#8217;s 100% compatible with Java which means you can call Java from Kotlin and Kotlin from Java. And it&#8217;s also easy to pick up.</p>
 </div>
 <div class="paragraph">
@@ -502,10 +502,9 @@ of executing your specifications.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_supported_kotlin_java_versions">1.4. Supported Kotlin &amp; Java versions</h3>
+<h3 id="_supported_java_versions">1.4. Supported Java Versions</h3>
 <div class="paragraph">
-<p>Current version is built against <strong>Kotlin 1.0.2</strong> and requires <strong>JDK 8</strong> or higher
-(this is the minimum version requirement for JUnit 5).</p>
+<p>Current version requires JDK 8 (as a requirement for JUnit 5)</p>
 </div>
 </div>
 <div class="sect2">
@@ -518,7 +517,7 @@ of executing your specifications.</p>
 <div class="sect2">
 <h3 id="_ide_support">1.6. IDE Support</h3>
 <div class="paragraph">
-<p>Currently, Spek only provides an IntelliJ IDEA <a href="https://plugins.jetbrains.com/plugin/8564">plugin</a>.</p>
+<p>Spek provides an <a href="https://plugins.jetbrains.com/plugin/8564">IntelliJ IDEA and Android Studio plugin</a>.</p>
 </div>
 </div>
 </div>
@@ -554,7 +553,7 @@ junitPlatform {
 // setup dependencies
 dependencies {
     testCompile 'org.jetbrains.spek:spek-api:1.0.0-SNAPSHOT'
-    testRuntime 'org.jetbrains.spek:spek-junit-engine:1.0.0-SNAPSHOT'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.0-SNAPSHOT'
 }</code></pre>
 </div>
 </div>
@@ -860,7 +859,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-08-31 05:53:34 +00:00
+Last updated 2016-08-31 21:21:34 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="../lib/highlight/styles/github.min.css">
