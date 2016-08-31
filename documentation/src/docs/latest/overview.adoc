@@ -17,7 +17,7 @@ You call them tests. We call them specifications.
 
 === Why Kotlin?
 
-http://kotlinlang.org[Kotlin] is statically typed OSS language developed (primarily) and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
+http://kotlinlang.org[Kotlin] is statically typed OSS language developed and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
 and the ability to create nice DSL. It's 100% compatible with Java which means you can call Java from Kotlin and Kotlin from Java. And it's also easy to pick up.
 
 Spek is written in Kotlin and specifications you write will be written in Kotlin. However, your SUT (System under Test) can be Java or Kotlin. As such
