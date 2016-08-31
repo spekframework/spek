@@ -27,13 +27,12 @@ you can easily use Kotlin for your specifications. Yes, you call them tests. Sta
 https://jetbrains.github.io/spek[Spek] provides a *JUnit TestEngine*, which is currently the only means
 of executing your specifications.
 
-=== Supported Kotlin & Java versions
-Current version is built against *Kotlin {kotlinVersion}* and requires *JDK 8* or higher
-(this is the minimum version requirement for JUnit 5).
+=== Supported Java Versions
+Current version requires JDK 8 (as a requirement for JUnit 5)
 
 === Android
 Android integration tests is currently not supported and you have to use the
 http://tools.android.com/tech-docs/jackandjill[Jack toolchain] to be able to build against Java 8.
 
 === IDE Support
-Currently, Spek only provides an IntelliJ IDEA https://plugins.jetbrains.com/plugin/8564[plugin].
+Spek provides an https://plugins.jetbrains.com/plugin/8564[IntelliJ IDEA and Android Studio plugin].
