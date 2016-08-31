@@ -1,4 +1,7 @@
+![Spek Logo](spek-logo.png)
+
 ## A Specification Framework for the JVM
+
 
 
 Visit the [web site](https://jetbrains.github.io/spek) for more documentation and information
