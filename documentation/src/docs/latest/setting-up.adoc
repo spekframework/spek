@@ -24,7 +24,7 @@ junitPlatform {
 // setup dependencies
 dependencies {
     testCompile 'org.jetbrains.spek:spek-api:{version}'
-    testRuntime 'org.jetbrains.spek:spek-junit-engine:{version}'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:{version}'
 }
 ----
 
