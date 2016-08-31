@@ -1,6 +1,6 @@
 latest:
   version: 1.0
-  build: 1.0.79 (RC)
+  build: 1.0.81 (RC)
   kotlinVersion: 1.0.3
   date: TBD
 
