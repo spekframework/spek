@@ -7,12 +7,8 @@ title: Spek - Releases
 
 **Current release**: 
 
-Version: <a href="{{ site.baseurl }}/notes/{{ site.data.releases.latest.version }}.html">{{ site.data.releases.latest.version }}</a>
-
-Build: {{ site.data.releases.latest.build }}
-
-Date: {{ site.data.releases.latest.date }}
-
+Version: <a href="{{ site.baseurl }}/notes/{{ site.data.releases.latest.version }}.html">{{ site.data.releases.latest.version }} (Build {{ site.data.releases.latest.build }})</a><br/>
+Date: {{ site.data.releases.latest.date }}<br/>
 Kotlin version: {{ site.data.releases.latest.kotlinVersion }}
 
 **Prior releases**
