@@ -23,8 +23,8 @@ junitPlatform {
 
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:{version}'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:{version}'
+    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
 }
 ----
 
@@ -40,7 +40,7 @@ JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#runn
 <dependency>
   <groupId>org.jetbrains.spek</groupId>
   <artifactId>spek-api</artifactId>
-  <version>{version}</version>
+  <version>1.0.89</version>
   <type>pom</type>
 </dependency>
 ----
