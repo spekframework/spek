@@ -1,6 +1,6 @@
 latest:
   version: 1.0
-  build: 1.0.88
+  build: 1.0.89
   kotlinVersion: 1.0.3
   date: 1st September 2016
 
