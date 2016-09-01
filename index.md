@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Spek - A Specification Framework
+title: Spek - A Kotlin Specification Framework
 ---
 
 
