@@ -30,5 +30,19 @@ dependencies {
 
 
 === Maven
-TODO
+
+JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven[Maven].
+
+[source,xml]
+.pom.xml
+----
+...
+<dependency>
+  <groupId>org.jetbrains.spek</groupId>
+  <artifactId>spek-api</artifactId>
+  <version>{version}</version>
+  <type>pom</type>
+</dependency>
+----
+
 
