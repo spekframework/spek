@@ -436,7 +436,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_ide_support">1.6. IDE Support</a></li>
 </ul>
 </li>
-<li><a href="#_setting_up">2. Setting up</a>
+<li><a href="#setting-up">2. Setting up</a>
 <ul class="sectlevel2">
 <li><a href="#_gradle">2.1. Gradle</a></li>
 <li><a href="#_maven">2.2. Maven</a></li>
@@ -497,8 +497,39 @@ you can easily use Kotlin for your specifications. Yes, you call them tests. Sta
 <div class="sect2">
 <h3 id="_junit_platform">1.3. JUnit Platform</h3>
 <div class="paragraph">
-<p><a href="https://jetbrains.github.io/spek">Spek</a> provides a <strong>JUnit TestEngine</strong>, which is currently the only means
+<p>Spek provides a <a href="http://junit.org/junit5/">JUnit Platform</a> <em>TestEngine</em>, which is currently the only means
 of executing your specifications.</p>
+</div>
+<div class="sect3">
+<h4 id="_junit_4">1.3.1. JUnit 4</h4>
+<div class="paragraph">
+<p>The old <strong>JUnit 4</strong> runner is still supported through the <strong>JUnit Platform</strong>, just annotate your spec with <code>@RunWith(JUnitPlatform::class)</code>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+Make sure you have <code>org.junit.platform:junit-platform-runner</code> in your test classpath.
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">CalculatorSpec.kt</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">@RunWith(JUnitPlatform::class)
+class CalculatorSpec: Spek({
+    ...
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Support for <strong>JUnit 4</strong> is very limited and it also may be dropped in future releases. Upgrading can be as simple as dropping
+the <code>@RunWith(&#8230;&#8203;)</code> annotation and applying the appropriate build tool plugin (refer to <a href="#setting-up">Setting up</a>).</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -519,11 +550,23 @@ of executing your specifications.</p>
 <div class="paragraph">
 <p>Spek provides an <a href="https://plugins.jetbrains.com/plugin/8564">IntelliJ IDEA and Android Studio plugin</a>.</p>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+If you&#8217;re using the <strong>JUnit 4</strong> runner, the plugin won&#8217;t work as expected due to the bundled JUnit plugin taking over.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_setting_up">2. Setting up</h2>
+<h2 id="setting-up">2. Setting up</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>You will need to include <code>org.jetbrains.spek:spek-api</code> and <code>org.jetbrains.spek:spek-junit-platform-engine</code>
@@ -877,7 +920,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-04 05:10:34 +00:00
+Last updated 2016-09-05 14:14:30 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="../lib/highlight/styles/github.min.css">
