@@ -24,8 +24,27 @@ Spek is written in Kotlin and specifications you write will be written in Kotlin
 you can easily use Kotlin for your specifications. Yes, you call them tests. Start calling them specifications.
 
 === JUnit Platform
-https://jetbrains.github.io/spek[Spek] provides a *JUnit TestEngine*, which is currently the only means
+Spek provides a http://junit.org/junit5/[JUnit Platform] __TestEngine__, which is currently the only means
 of executing your specifications.
+
+==== JUnit 4
+The old *JUnit 4* runner is still supported through the **JUnit Platform**, just annotate your spec with `@RunWith(JUnitPlatform::class)`.
+
+IMPORTANT: Make sure you have `org.junit.platform:junit-platform-runner` in your test classpath.
+
+[source,kotlin]
+.CalculatorSpec.kt
+----
+@RunWith(JUnitPlatform::class)
+class CalculatorSpec: Spek({
+    ...
+})
+----
+
+Support for *JUnit 4* is very limited and it also may be dropped in future releases. Upgrading can be as simple as dropping
+the `@RunWith(...)` annotation and applying the appropriate build tool plugin (refer to <<setting-up>>).
+
+
 
 === Supported Java Versions
 Current version requires JDK 8 (as a requirement for JUnit 5)
@@ -36,3 +55,5 @@ http://tools.android.com/tech-docs/jackandjill[Jack toolchain] to be able to bui
 
 === IDE Support
 Spek provides an https://plugins.jetbrains.com/plugin/8564[IntelliJ IDEA and Android Studio plugin].
+
+IMPORTANT: If you're using the *JUnit 4* runner, the plugin won't work as expected due to the bundled JUnit plugin taking over.

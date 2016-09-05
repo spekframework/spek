@@ -1,3 +1,4 @@
+[[setting-up]]
 == Setting up
 You will need to include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine`
 in your test classpath. The former is needed during compilation, while the latter during runtime only.
