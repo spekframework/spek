@@ -41,7 +41,7 @@ import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 // setup the plugin
 buildscript {
     dependencies {
-        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-M2")
+        classpath("org.junit.platform:junit-platform-gradle-plugin:<version>")
     }
 }
 
