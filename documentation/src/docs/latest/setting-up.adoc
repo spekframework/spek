@@ -29,6 +29,46 @@ dependencies {
 }
 ----
 
+=== Gradle Kotlin Script
+[source,kotlin,subs="attributes+"]
+.build.gradle.kts
+----
+import org.gradle.api.plugins.ExtensionAware
+
+import org.junit.platform.gradle.plugin.EnginesExtension
+import org.junit.platform.gradle.plugin.JUnitPlatformExtension
+
+// setup the plugin
+buildscript {
+    dependencies {
+        classpath("org.junit.platform:junit-platform-gradle-plugin:<version>")
+    }
+}
+
+apply {
+    plugin("org.junit.platform.gradle.plugin")
+}
+
+configure<JUnitPlatformExtension> {
+    engines {
+        include("spek")
+    }
+}
+
+// setup dependencies
+dependencies {
+    testCompile("org.jetbrains.spek:spek-api:1.0.89")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.0.89")
+}
+
+// extension for configuration
+fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -> Unit) {
+    when (this) {
+        is ExtensionAware -> extensions.getByType(EnginesExtension::class.java).setup()
+        else -> throw Exception("${this::class} must be an insance of ExtensionAware")
+    }
+}
+----
 
 === Maven
 
