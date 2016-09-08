@@ -439,7 +439,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#setting-up">2. Setting up</a>
 <ul class="sectlevel2">
 <li><a href="#_gradle">2.1. Gradle</a></li>
-<li><a href="#_maven">2.2. Maven</a></li>
+<li><a href="#_gradle_kotlin_script">2.2. Gradle Kotlin Script</a></li>
+<li><a href="#_maven">2.3. Maven</a></li>
 </ul>
 </li>
 <li><a href="#_writing_specifications">3. Writing Specifications</a>
@@ -602,7 +603,50 @@ dependencies {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_maven">2.2. Maven</h3>
+<h3 id="_gradle_kotlin_script">2.2. Gradle Kotlin Script</h3>
+<div class="listingblock">
+<div class="title">build.gradle.kts</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">import org.gradle.api.plugins.ExtensionAware
+
+import org.junit.platform.gradle.plugin.EnginesExtension
+import org.junit.platform.gradle.plugin.JUnitPlatformExtension
+
+// setup the plugin
+buildscript {
+    dependencies {
+        classpath("org.junit.platform:junit-platform-gradle-plugin:&lt;version&gt;")
+    }
+}
+
+apply {
+    plugin("org.junit.platform.gradle.plugin")
+}
+
+configure&lt;JUnitPlatformExtension&gt; {
+    engines {
+        include("spek")
+    }
+}
+
+// setup dependencies
+dependencies {
+    testCompile("org.jetbrains.spek:spek-api:1.0.89")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.0.89")
+}
+
+// extension for configuration
+fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -&gt; Unit) {
+    when (this) {
+        is ExtensionAware -&gt; extensions.getByType(EnginesExtension::class.java).setup()
+        else -&gt; throw Exception("${this::class} must be an insance of ExtensionAware")
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_maven">2.3. Maven</h3>
 <div class="paragraph">
 <p>JUnit provides support for <a href="http://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven">Maven</a>.</p>
 </div>
@@ -920,7 +964,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-05 14:14:30 +00:00
+Last updated 2016-09-08 04:37:06 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="../lib/highlight/styles/github.min.css">
