@@ -12,5 +12,5 @@ Visit the [web site](https://jetbrains.github.io/spek) for more documentation an
 
 Copyright (c) 2012-2016 Hadi Hariri and Contributors
 
-Licensed under [Modified BSD](https://github.com/jetbrains/spek/master/blob/LICENSE.TXT)
+Licensed under [Modified BSD](https://github.com/JetBrains/spek/blob/master/LICENSE.TXT)
 
