@@ -1,5 +1,7 @@
 [[setting-up]]
 == Setting up
+NOTE: For Android projects check <<setting-up-android>> section.
+
 You will need to include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine`
 in your test classpath. The former is needed during compilation, while the latter during runtime only.
 
@@ -85,5 +87,34 @@ JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#runn
   <type>pom</type>
 </dependency>
 ----
+
+[[setting-up-android]]
+== Setting up for Android
+The JUnit Platform gradle plugin currently doesn't support Android projects (see https://github.com/junit-team/junit5/issues/204), but thankfully
+a JUnit 4 based runner is provided.
+
+First, add the required dependencies.
+[source,groovy,subs="attributes+"]
+.build.gradle
+----
+// setup dependencies
+dependencies {
+    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
+    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M2'
+}
+----
+
+Finally make sure your specs are annotated with `@RunWith(JUnitPlatform::class)`.
+
+[source,kotlin]
+.CalculatorSpec.kt
+----
+@RunWith(JUnitPlatform::class)
+class CalculatorSpec: Spek({
+    ...
+})
+----
+
+As mentioned in the <<ide-support>> section, the IDEA plugin won't work if you're using the JUnit 4 runner.
 
 

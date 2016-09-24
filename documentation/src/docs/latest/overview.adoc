@@ -53,6 +53,7 @@ Current version requires JDK 8 (as a requirement for JUnit 5)
 Android integration tests is currently not supported and you have to use the
 http://tools.android.com/tech-docs/jackandjill[Jack toolchain] to be able to build against Java 8.
 
+[[ide-support]]
 === IDE Support
 Spek provides an https://plugins.jetbrains.com/plugin/8564[IntelliJ IDEA and Android Studio plugin].
 
