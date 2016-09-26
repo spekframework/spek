@@ -1,7 +1,12 @@
 package org.jetbrains.spek.samples
 
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.*
+import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.xcontext
+import org.jetbrains.spek.api.dsl.xdescribe
+import org.jetbrains.spek.api.dsl.xgiven
+import org.jetbrains.spek.api.dsl.xit
+import org.jetbrains.spek.api.dsl.xon
 import kotlin.test.assertEquals
 
 class SkipSampleSpec : Spek({

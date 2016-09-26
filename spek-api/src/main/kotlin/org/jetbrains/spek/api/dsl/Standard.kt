@@ -1,114 +1,101 @@
 package org.jetbrains.spek.api.dsl
 
-import org.jetbrains.spek.api.SubjectSpek
-import kotlin.reflect.KClass
-
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.describe(description: String, body: Dsl.() -> Unit) {
+fun SpecBody.describe(description: String, body: SpecBody.() -> Unit) {
     group("describe $description", body = body)
 }
 
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.context(description: String, body: Dsl.() -> Unit) {
+fun SpecBody.context(description: String, body: SpecBody.() -> Unit) {
     group("context $description", body = body)
 }
 
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.given(description: String, body: Dsl.() -> Unit) {
+fun SpecBody.given(description: String, body: SpecBody.() -> Unit) {
     group("given $description", body = body)
 }
 
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.on(description: String, body: Dsl.() -> Unit) {
-    group("on $description", lazy = true, body = body)
+fun SpecBody.on(description: String, body: ActionBody.() -> Unit) {
+    action("on $description", body = body)
 }
 
 /**
- * Creates a [test][Dsl.test].
+ * Creates a [test][SpecBody.test].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.it(description: String, body: () -> Unit) {
+fun TestContainer.it(description: String, body: TestBody.() -> Unit) {
     test("it $description", body = body)
 }
 
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xdescribe(description: String, reason: String? = null, body: Dsl.() -> Unit) {
+fun SpecBody.xdescribe(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
     group("describe $description", Pending.Yes(reason), body = body)
 }
 
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xcontext(description: String, reason: String? = null, body: Dsl.() -> Unit) {
+fun SpecBody.xcontext(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
     group("context $description", Pending.Yes(reason), body = body)
 }
 
 /**
- * Creates a [group][Dsl.group].
+ * Creates a [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit) {
+fun SpecBody.xgiven(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
     group("given $description", Pending.Yes(reason), body = body)
 }
 
 /**
- * Creates a pending [group][Dsl.group].
+ * Creates a pending [group][SpecBody.group].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xon(description: String, reason: String? = null, body: Dsl.() -> Unit = {}) {
-    group("on $description", Pending.Yes(reason), lazy = true, body = body)
+fun SpecBody.xon(description: String, reason: String? = null, body: ActionBody.() -> Unit = {}) {
+    action("on $description", Pending.Yes(reason), body = body)
 }
 
 /**
- * Creates a pending [test][Dsl.test].
+ * Creates a pending [test][SpecBody.test].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-fun Dsl.xit(description: String, reason: String? = null, body: () -> Unit = {}) {
+fun TestContainer.xit(description: String, reason: String? = null, body: TestBody.() -> Unit = {}) {
     test("it $description", Pending.Yes(reason), body)
-}
-
-/**
- * Alias for [SubjectDsl.includeSubjectSpec].
- *
- * @author Ranie Jade Ramiso
- * @since 1.0
- */
-fun <T, K: SubjectSpek<T>> SubjectDsl<*>.itBehavesLike(spec: KClass<K>) {
-    includeSubjectSpec(spec)
 }

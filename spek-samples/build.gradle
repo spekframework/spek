@@ -16,6 +16,8 @@ description = 'Spek Samples'
 
 dependencies {
     compile project(':spek-api')
+    compile project(':spek-subject-extension')
+
     compile "org.jetbrains.kotlin:kotlin-test"
     testCompile "org.junit.platform:junit-platform-runner"
     testRuntime project(':spek-junit-platform-engine')

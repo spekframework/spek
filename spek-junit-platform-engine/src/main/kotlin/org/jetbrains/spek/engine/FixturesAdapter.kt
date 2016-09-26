@@ -1,51 +1,58 @@
 package org.jetbrains.spek.engine
 
-import org.jetbrains.spek.extension.Extension
-import org.jetbrains.spek.extension.GroupExtensionContext
-import org.jetbrains.spek.extension.TestExtensionContext
-import java.util.*
+import org.jetbrains.spek.api.lifecycle.ActionScope
+import org.jetbrains.spek.api.lifecycle.GroupScope
+import org.jetbrains.spek.api.lifecycle.LifecycleListener
+import org.jetbrains.spek.api.lifecycle.TestScope
+import java.util.LinkedList
+import java.util.WeakHashMap
 
 /**
- * Adapter for fixtures as a pseudo-extension.
  *
  * @author Ranie Jade Ramiso
  */
-class FixturesAdapter: Extension {
-    private val beforeEach: MutableMap<GroupExtensionContext, MutableList<() -> Unit>> = WeakHashMap()
-    private val afterEach: MutableMap<GroupExtensionContext, MutableList<() -> Unit>> = WeakHashMap()
+class FixturesAdapter: LifecycleListener {
+    private val beforeEach: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
 
-    fun beforeExecuteTest(test: TestExtensionContext) {
-        invokeAllBeforeEach(test.parent)
+    private val afterEach: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
+
+    override fun beforeExecuteTest(test: TestScope) {
+        if (test.parent !is ActionScope) {
+            invokeAllBeforeEach(test.parent)
+        }
     }
 
-    fun afterExecuteTest(test: TestExtensionContext) {
-        invokeAllAfterEach(test.parent)
+    override fun afterExecuteTest(test: TestScope) {
+        if (test.parent !is ActionScope) {
+            invokeAllAfterEach(test.parent)
+        }
     }
 
-    fun beforeExecuteGroup(test: GroupExtensionContext) {
-        invokeAllBeforeEach(test)
+    override fun beforeExecuteAction(action: ActionScope) {
+        invokeAllBeforeEach(action)
     }
 
-    fun afterExecuteGroup(test: GroupExtensionContext) {
-        invokeAllAfterEach(test)
+    override fun afterExecuteAction(action: ActionScope) {
+        invokeAllAfterEach(action)
     }
 
-    fun registerBeforeEach(group: GroupExtensionContext, callback: () -> Unit) {
+
+    fun registerBeforeEach(group: GroupScope, callback: () -> Unit) {
         beforeEach.getOrPut(group, { LinkedList() }).add(callback)
     }
 
-    fun registerAfterEach(group: GroupExtensionContext, callback: () -> Unit) {
+    fun registerAfterEach(group: GroupScope, callback: () -> Unit) {
         afterEach.getOrPut(group, { LinkedList() }).add(callback)
     }
 
-    private fun invokeAllBeforeEach(group: GroupExtensionContext) {
+    private fun invokeAllBeforeEach(group: GroupScope) {
         if (group.parent != null) {
             invokeAllBeforeEach(group.parent!!)
         }
         beforeEach[group]?.forEach { it.invoke() }
     }
 
-    private fun invokeAllAfterEach(group: GroupExtensionContext) {
+    private fun invokeAllAfterEach(group: GroupScope) {
         afterEach[group]?.forEach { it.invoke() }
         if (group.parent != null) {
             invokeAllAfterEach(group.parent!!)

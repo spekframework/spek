@@ -12,6 +12,8 @@ include::writing-specifications.adoc[]
 
 include::faq.adoc[]
 
+include::changes.adoc[]
+
 include::contributors.adoc[]
 
 include::other.adoc[]

@@ -27,11 +27,11 @@ class BeforeEachTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
-    fun testBeforeEachLazyGroup() {
+    fun testBeforeEachLazyAction() {
         counter = 0
         class TestSpek: Spek({
             beforeEachTest { counter++ }
-            group("group", lazy = true) {
+            action("group") {
                 test("test") { }
                 test("another test") { }
             }

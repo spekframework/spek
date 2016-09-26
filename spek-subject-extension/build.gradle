@@ -14,14 +14,12 @@ junitPlatform {
 
 dependencies {
     compile project(':spek-api')
-    compile project(':spek-subject-extension')
-
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
-    compile 'org.junit.platform:junit-platform-engine'
 
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile project(':junit-platform-engine-test-support')
+
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }
 

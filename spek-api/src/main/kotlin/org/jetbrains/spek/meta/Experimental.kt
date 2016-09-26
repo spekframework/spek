@@ -8,5 +8,8 @@ package org.jetbrains.spek.meta
  * @since 1.0
  */
 @Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY)
+@Target(
+    AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS,
+    AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY
+)
 annotation class Experimental
