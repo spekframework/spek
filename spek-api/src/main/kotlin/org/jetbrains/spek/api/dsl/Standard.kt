@@ -90,7 +90,7 @@ fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit
  * @since 1.0
  */
 fun Dsl.xon(description: String, reason: String? = null, body: Dsl.() -> Unit = {}) {
-    group("on $description", Pending.Yes(reason), body = body)
+    group("on $description", Pending.Yes(reason), lazy = true, body = body)
 }
 
 /**
