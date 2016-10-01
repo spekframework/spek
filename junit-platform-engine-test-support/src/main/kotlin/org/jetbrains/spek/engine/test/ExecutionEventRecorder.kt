@@ -27,6 +27,10 @@ class ExecutionEventRecorder: EngineExecutionListener {
         get() = getTestFinishedEventsByStatus(TestExecutionResult.Status.SUCCESSFUL).count()
     val testFailureCount: Int
         get() = getTestFinishedEventsByStatus(TestExecutionResult.Status.FAILED).count()
+
+    val containerFailureCount: Int
+        get()= getContainerFinishedEventsByStatus(TestExecutionResult.Status.FAILED).count()
+
     val reportingEntryPublishedCount: Int
         get() = countTestEventsByType<ExecutionEvent.ReportingEntryPublished>()
     val dynamicTestRegisteredCount: Int
@@ -58,6 +62,11 @@ class ExecutionEventRecorder: EngineExecutionListener {
 
     private inline fun getTestFinishedEventsByStatus(type: TestExecutionResult.Status): Sequence<ExecutionEvent.Finished> {
         return getTestEventsByType<ExecutionEvent.Finished>()
+            .filter { it.result.status == type }
+    }
+
+    private inline fun getContainerFinishedEventsByStatus(type: TestExecutionResult.Status): Sequence<ExecutionEvent.Finished> {
+        return getContainerEventsByType<ExecutionEvent.Finished>()
             .filter { it.result.status == type }
     }
 

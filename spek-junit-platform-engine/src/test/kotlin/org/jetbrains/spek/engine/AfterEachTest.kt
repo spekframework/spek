@@ -17,9 +17,9 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
             group("group") {
                 test("test") { }
                 test("another test") { }
-                afterEach { counter++ }
+                afterEachTest { counter++ }
             }
-            afterEach { counter++ }
+            afterEachTest { counter++ }
 
         })
 
@@ -28,12 +28,28 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
+    fun testAfterEachLazyGroup() {
+        counter = 0
+        class TestSpek: Spek({
+            group("group", lazy = true) {
+                test("test") { }
+                test("another test") { }
+            }
+            afterEachTest { counter++ }
+
+        })
+
+        executeTestsForClass(TestSpek::class)
+        assertThat(counter, equalTo(1))
+    }
+
+    @Test
     fun testAfterEachFailure() {
         class TestSpek: Spek({
             group("group") {
                 test("test") { }
                 test("another test") { }
-                afterEach { assertThat(true, equalTo(false)) }
+                afterEachTest { assertThat(true, equalTo(false)) }
             }
 
         })
@@ -52,7 +68,7 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
                     assertThat(true, equalTo(false))
                 }
 
-                afterEach { counter++ }
+                afterEachTest { counter++ }
             }
         })
 
@@ -67,12 +83,12 @@ class AfterEachTest: AbstractSpekTestEngineTest() {
         counter = 0
         class TestSpek: Spek({
             group("another group") {
-                beforeEach {
+                beforeEachTest {
                     assertThat(true, equalTo(false))
                 }
                 test("test") { }
 
-                afterEach { counter++ }
+                afterEachTest { counter++ }
             }
         })
 

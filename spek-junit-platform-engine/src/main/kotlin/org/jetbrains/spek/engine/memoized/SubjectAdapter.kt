@@ -24,7 +24,9 @@ class SubjectAdapter: AfterExecuteGroup, AfterExecuteTest {
     }
 
     override fun afterExecuteTest(test: TestExtensionContext) {
-        resetSubjects(test.parent)
+        if (!test.parent.lazy) {
+            resetSubjects(test.parent)
+        }
     }
 
     fun <T> registerSubject(mode: CachingMode, group: GroupExtensionContext, factory: () -> T): SubjectImpl<T> {

@@ -43,7 +43,7 @@ needs to be evaluated before and/or after `test` scopes should be done using fix
 
 === Fixtures
 
-Spek provides `beforeEach` and `afterEach` fixtures, which allows running arbitrary code before and after a `test`, respectively. Every
+Spek provides `beforeEachTest` and `afterEachTest` fixtures, which allows running arbitrary code before and after a `test`, respectively. Every
 `group` scope can declare an arbitrary number of fixtures, the order they are executed is based on the order they are declared.
 
 [source,kotlin]
@@ -51,17 +51,17 @@ Spek provides `beforeEach` and `afterEach` fixtures, which allows running arbitr
 ----
 class FixtureSpec: Spek({
     describe("a group") {
-        beforeEach {
+        beforeEachTest {
             ...
         }
 
         context("a nested group") {
 
-            beforeEach {
+            beforeEachTest {
                 ...
             }
 
-            beforeEach {
+            beforeEachTest {
                 ...
             }
 
@@ -70,7 +70,7 @@ class FixtureSpec: Spek({
 
         it("do something") { ... }
 
-        afterEach {
+        afterEachTest {
             ...
         }
     }
