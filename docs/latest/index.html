@@ -790,7 +790,7 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 <div class="sect2">
 <h3 id="_fixtures">4.3. Fixtures</h3>
 <div class="paragraph">
-<p>Spek provides <code>beforeEachTest</code> and <code>afterEachTest</code> fixtures, which allows running arbitrary code before and after a <code>test</code>, respectively. Every
+<p>Spek provides <code>beforeEach</code> and <code>afterEach</code> fixtures, which allows running arbitrary code before and after a <code>test</code>, respectively. Every
 <code>group</code> scope can declare an arbitrary number of fixtures, the order they are executed is based on the order they are declared.</p>
 </div>
 <div class="listingblock">
@@ -798,17 +798,17 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">class FixtureSpec: Spek({
     describe("a group") {
-        beforeEachTest {
+        beforeEach {
             ...
         }
 
         context("a nested group") {
 
-            beforeEachTest {
+            beforeEach {
                 ...
             }
 
-            beforeEachTest {
+            beforeEach {
                 ...
             }
 
@@ -817,7 +817,7 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 
         it("do something") { ... }
 
-        afterEachTest {
+        afterEach {
             ...
         }
     }
@@ -1014,7 +1014,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-10-01 11:43:06 +00:00
+Last updated 2016-10-01 18:21:12 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="../lib/highlight/styles/github.min.css">
