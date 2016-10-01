@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        jcenter()
         maven {
             url 'https://jetbrains.jfrog.io/jetbrains/plugins-release'
             credentials {
