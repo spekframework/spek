@@ -433,7 +433,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_junit_platform">1.3. JUnit Platform</a></li>
 <li><a href="#_supported_java_versions">1.4. Supported Java Versions</a></li>
 <li><a href="#_android">1.5. Android</a></li>
-<li><a href="#_ide_support">1.6. IDE Support</a></li>
+<li><a href="#ide-support">1.6. IDE Support</a></li>
 </ul>
 </li>
 <li><a href="#setting-up">2. Setting up</a>
@@ -443,18 +443,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_maven">2.3. Maven</a></li>
 </ul>
 </li>
-<li><a href="#_writing_specifications">3. Writing Specifications</a>
+<li><a href="#setting-up-android">3. Setting up for Android</a></li>
+<li><a href="#_writing_specifications">4. Writing Specifications</a>
 <ul class="sectlevel2">
-<li><a href="#_assertion_framework">3.1. Assertion Framework</a></li>
-<li><a href="#_basic_structure">3.2. Basic Structure</a></li>
-<li><a href="#_fixtures">3.3. Fixtures</a></li>
-<li><a href="#_ignoring_tests">3.4. Ignoring tests</a></li>
-<li><a href="#_subjects">3.5. Subjects</a></li>
+<li><a href="#_assertion_framework">4.1. Assertion Framework</a></li>
+<li><a href="#_basic_structure">4.2. Basic Structure</a></li>
+<li><a href="#_fixtures">4.3. Fixtures</a></li>
+<li><a href="#_ignoring_tests">4.4. Ignoring tests</a></li>
+<li><a href="#_subjects">4.5. Subjects</a></li>
 </ul>
 </li>
-<li><a href="#_faq">4. FAQ</a></li>
-<li><a href="#_main_contributors">5. Main Contributors</a></li>
-<li><a href="#_resources">6. Resources</a></li>
+<li><a href="#_faq">5. FAQ</a></li>
+<li><a href="#_main_contributors">6. Main Contributors</a></li>
+<li><a href="#_resources">7. Resources</a></li>
 </ul>
 </div>
 </div>
@@ -547,7 +548,7 @@ the <code>@RunWith(&#8230;&#8203;)</code> annotation and applying the appropriat
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ide_support">1.6. IDE Support</h3>
+<h3 id="ide-support">1.6. IDE Support</h3>
 <div class="paragraph">
 <p>Spek provides an <a href="https://plugins.jetbrains.com/plugin/8564">IntelliJ IDEA and Android Studio plugin</a>.</p>
 </div>
@@ -569,6 +570,18 @@ If you&#8217;re using the <strong>JUnit 4</strong> runner, the plugin won&#8217;
 <div class="sect1">
 <h2 id="setting-up">2. Setting up</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+For Android projects check <a href="#setting-up-android">Setting up for Android</a> section.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>You will need to include <code>org.jetbrains.spek:spek-api</code> and <code>org.jetbrains.spek:spek-junit-platform-engine</code>
 in your test classpath. The former is needed during compilation, while the latter during runtime only.</p>
@@ -666,10 +679,47 @@ fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -&gt; Unit) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_writing_specifications">3. Writing Specifications</h2>
+<h2 id="setting-up-android">3. Setting up for Android</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The JUnit Platform gradle plugin currently doesn&#8217;t support Android projects (see <a href="https://github.com/junit-team/junit5/issues/204" class="bare">https://github.com/junit-team/junit5/issues/204</a>), but thankfully
+a JUnit 4 based runner is provided.</p>
+</div>
+<div class="paragraph">
+<p>First, add the required dependencies.</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">// setup dependencies
+dependencies {
+    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
+    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M2'
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally make sure your specs are annotated with <code>@RunWith(JUnitPlatform::class)</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">CalculatorSpec.kt</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">@RunWith(JUnitPlatform::class)
+class CalculatorSpec: Spek({
+    ...
+})</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As mentioned in the <a href="#ide-support">IDE Support</a> section, the IDEA plugin won&#8217;t work if you&#8217;re using the JUnit 4 runner.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_writing_specifications">4. Writing Specifications</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_assertion_framework">3.1. Assertion Framework</h3>
+<h3 id="_assertion_framework">4.1. Assertion Framework</h3>
 <div class="paragraph">
 <p>Spek doesn&#8217;t have any built-in assertions, luckily there are several libraries in the wild that do. Below are several suggestions:</p>
 </div>
@@ -691,7 +741,7 @@ fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -&gt; Unit) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_basic_structure">3.2. Basic Structure</h3>
+<h3 id="_basic_structure">4.2. Basic Structure</h3>
 <div class="paragraph">
 <p>Your specifications need to inherit from the <code>org.jetbrains.spek.api.Spek</code> base class.</p>
 </div>
@@ -738,9 +788,9 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fixtures">3.3. Fixtures</h3>
+<h3 id="_fixtures">4.3. Fixtures</h3>
 <div class="paragraph">
-<p>Spek provides <code>beforeEach</code> and <code>afterEach</code> fixtures, which allows running arbitrary code before and after a <code>test</code>, respectively. Every
+<p>Spek provides <code>beforeEachTest</code> and <code>afterEachTest</code> fixtures, which allows running arbitrary code before and after a <code>test</code>, respectively. Every
 <code>group</code> scope can declare an arbitrary number of fixtures, the order they are executed is based on the order they are declared.</p>
 </div>
 <div class="listingblock">
@@ -748,17 +798,17 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">class FixtureSpec: Spek({
     describe("a group") {
-        beforeEach {
+        beforeEachTest {
             ...
         }
 
         context("a nested group") {
 
-            beforeEach {
+            beforeEachTest {
                 ...
             }
 
-            beforeEach {
+            beforeEachTest {
                 ...
             }
 
@@ -767,7 +817,7 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 
         it("do something") { ... }
 
-        afterEach {
+        afterEachTest {
             ...
         }
     }
@@ -776,13 +826,13 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ignoring_tests">3.4. Ignoring tests</h3>
+<h3 id="_ignoring_tests">4.4. Ignoring tests</h3>
 <div class="paragraph">
 <p>Each scope method have a variant prefixed with <code>x</code> (e.g. <code>xdescribe</code>, <code>xit</code>, etc&#8230;&#8203;), which will Spek ignore when executing the spec.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_subjects">3.5. Subjects</h3>
+<h3 id="_subjects">4.5. Subjects</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -826,7 +876,7 @@ of writing this types of tests and removing a lot of boilerplate code.</p>
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_shared_subjects">3.5.1. Shared Subjects</h4>
+<h4 id="_shared_subjects">4.5.1. Shared Subjects</h4>
 <div class="paragraph">
 <p>This feature is useful when testing subclasses, removing the need of duplicating test code.</p>
 </div>
@@ -857,7 +907,7 @@ of writing this types of tests and removing a lot of boilerplate code.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_faq">4. FAQ</h2>
+<h2 id="_faq">5. FAQ</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Q: What is Kotlin?</strong></p>
@@ -923,7 +973,7 @@ hosted on the JetBrains account under GitHub, it is not a project that is offici
 </div>
 </div>
 <div class="sect1">
-<h2 id="_main_contributors">5. Main Contributors</h2>
+<h2 id="_main_contributors">6. Main Contributors</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>In alphabetical order</em></p>
@@ -941,7 +991,7 @@ Ilya Ryzhenkov</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_resources">6. Resources</h2>
+<h2 id="_resources">7. Resources</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -964,7 +1014,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-09-09 11:31:40 +00:00
+Last updated 2016-10-01 11:43:06 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="../lib/highlight/styles/github.min.css">
