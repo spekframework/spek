@@ -22,14 +22,17 @@ buildscript {
     }
 }
 
-
+plugins {
+    id "com.zoltu.git-versioning" version "2.0.28"
+}
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
+println "##teamcity[buildNumber \'${version}\']"
+
 allprojects {
-    version = "${spekVersion}"
     group = 'org.jetbrains.spek'
     repositories {
         mavenCentral()
@@ -46,10 +49,9 @@ allprojects {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = 2.13
+    gradleVersion = 2.4
 }
 
-spekVersion = System.env.SpekVersion ? "$System.env.SpekVersion" : "1.0.0-SNAPSHOT"
 
 if (hasProperty('bintray_user')) {
     ext.bintrayUser = getProperty('bintray_user')
