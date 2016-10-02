@@ -1,4 +1,5 @@
 package org.jetbrains.spek.samples
+
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.given
@@ -6,7 +7,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import kotlin.test.assertEquals
 
-class ContextGivenOnSpec: Spek({
+class ContextGivenOnSpec : Spek({
     given("a calculator") {
         val calculator = Calculator()
         var result = 0

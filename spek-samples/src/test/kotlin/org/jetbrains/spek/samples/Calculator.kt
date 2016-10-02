@@ -11,6 +11,6 @@ open class Calculator {
     }
 }
 
-class AdvancedCalculator: Calculator() {
+class AdvancedCalculator : Calculator() {
     fun pow(base: Int, exponent: Int) = Math.pow(base.toDouble(), exponent.toDouble()).toInt()
 }

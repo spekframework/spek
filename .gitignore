@@ -31,5 +31,4 @@ out/
 lib/kotlin-runtime.jar
 */target/*
 .idea/
-*.iml
 */*.iml
