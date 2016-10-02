@@ -143,6 +143,9 @@ bintray {
 }
 
 artifactory {
+    if ([artifactory_contextUrl, artifactory_user, artifactory_password].contains("nothing")) {
+        return
+    }
     contextUrl = "${artifactory_contextUrl}"
     publish {
         repository {
