@@ -4,7 +4,7 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.*
 import kotlin.test.assertEquals
 
-class SkipSampleSpec: Spek({
+class SkipSampleSpec : Spek({
     val result = 10
 
     it("should return 10") {

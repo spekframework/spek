@@ -9,7 +9,7 @@ import kotlin.test.assertEquals
 /**
  * @author Ranie Jade Ramiso
  */
-class AdvancedCalculatorSpec: SubjectSpek<AdvancedCalculator>({
+class AdvancedCalculatorSpec : SubjectSpek<AdvancedCalculator>({
     subject { AdvancedCalculator() }
 
     itBehavesLike(CalculatorSpec::class)

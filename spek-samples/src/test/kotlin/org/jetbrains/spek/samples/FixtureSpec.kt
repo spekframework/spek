@@ -9,7 +9,7 @@ import org.jetbrains.spek.api.dsl.it
 /**
  * @author Ranie Jade Ramiso
  */
-class FixtureSpec: Spek({
+class FixtureSpec : Spek({
     var counter = 0
     beforeEach {
         counter++

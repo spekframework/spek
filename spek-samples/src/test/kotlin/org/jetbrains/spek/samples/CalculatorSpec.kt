@@ -8,7 +8,7 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import kotlin.test.assertEquals
 
-class CalculatorSpec: SubjectSpek<Calculator>({
+class CalculatorSpec : SubjectSpek<Calculator>({
     subject { Calculator() }
 
     describe("addition") {
