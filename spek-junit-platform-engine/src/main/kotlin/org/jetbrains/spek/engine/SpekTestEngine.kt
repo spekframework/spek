@@ -71,7 +71,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     private fun filterOutUniqueId(target: TestDescriptor, root: TestDescriptor) {
-        if (!target.equals(root)) {
+        if (target != root) {
             if (root.allDescendants.contains(target)) {
                 val descriptors = LinkedList<TestDescriptor>()
                 root.children.forEach {
@@ -184,11 +184,10 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         const val GROUP_SEGMENT_TYPE = "group";
         const val TEST_SEGMENT_TYPE = "test";
 
-
         // TODO: fix me
         fun getSource(): TestSource? = null
 
-        fun getSpekExtensions(spec: KClass<*>): List<out Extension> {
+        fun getSpekExtensions(spec: KClass<*>): List<Extension> {
             return spec.annotations
                 .map {
                     if (it is SpekExtension) {
