@@ -135,7 +135,7 @@ bintray {
 
 
         version {
-            name = project.version
+            name = rootProject.version
         }
     }
 
