@@ -46,7 +46,7 @@ publishing {
                 }
 
                 asNode().children().last() + {
-                    resolveStrategy = Closure.DELEGATE_FIRST
+                    resolveStrategy = DELEGATE_FIRST
                     name 'Spek'
                     description 'A Specification Framework for the JVM'
                     url 'https://jetbrains.github.io/spek'
@@ -88,7 +88,7 @@ publishing {
                 }
 
                 asNode().children().last() + {
-                    resolveStrategy = Closure.DELEGATE_FIRST
+                    resolveStrategy = DELEGATE_FIRST
                     name 'Spek JUnit Platform Engine'
                     description 'Spek TestEngine for the JUnit Platform'
                     url 'https://jetbrains.github.io/spek'
