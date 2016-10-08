@@ -12,10 +12,11 @@ import org.junit.jupiter.api.Test
 class BeforeEachTest: AbstractSpekTestEngineTest() {
     @Test
     fun testBeforeEach() {
+        counter = 0
         class TestSpek: Spek({
-            beforeEach { counter++ }
+            beforeEachTest { counter++ }
             group("group") {
-                beforeEach { counter++ }
+                beforeEachTest { counter++ }
                 test("test") { }
                 test("another test") { }
             }
@@ -26,10 +27,25 @@ class BeforeEachTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
+    fun testBeforeEachLazyGroup() {
+        counter = 0
+        class TestSpek: Spek({
+            beforeEachTest { counter++ }
+            group("group", lazy = true) {
+                test("test") { }
+                test("another test") { }
+            }
+        })
+
+        executeTestsForClass(TestSpek::class)
+        assertThat(counter, equalTo(1))
+    }
+
+    @Test
     fun testBeforeEachFailure() {
         class TestSpek: Spek({
             group("group") {
-                beforeEach { assertThat(true, equalTo(false)) }
+                beforeEachTest { assertThat(true, equalTo(false)) }
                 test("test") { }
                 test("another test") { }
             }

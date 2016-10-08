@@ -8,4 +8,5 @@ import org.jetbrains.spek.meta.Experimental
 @Experimental
 interface GroupExtensionContext: ExtensionContext {
     val parent: GroupExtensionContext?
+    val lazy: Boolean
 }

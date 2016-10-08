@@ -11,12 +11,12 @@ import org.jetbrains.spek.api.dsl.it
  */
 class FixtureSpec : Spek({
     var counter = 0
-    beforeEach {
+    beforeEachTest {
         counter++
     }
 
     describe("a number") {
-        beforeEach {
+        beforeEachTest {
             counter++
         }
 
@@ -28,12 +28,12 @@ class FixtureSpec : Spek({
             assertThat(counter, equalTo(2))
         }
 
-        afterEach {
+        afterEachTest {
             counter--
         }
     }
 
-    afterEach {
+    afterEachTest {
         counter--
     }
 })

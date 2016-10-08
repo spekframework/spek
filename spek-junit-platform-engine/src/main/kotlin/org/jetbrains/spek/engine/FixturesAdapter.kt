@@ -22,6 +22,14 @@ class FixturesAdapter: Extension {
         invokeAllAfterEach(test.parent)
     }
 
+    fun beforeExecuteGroup(test: GroupExtensionContext) {
+        invokeAllBeforeEach(test)
+    }
+
+    fun afterExecuteGroup(test: GroupExtensionContext) {
+        invokeAllAfterEach(test)
+    }
+
     fun registerBeforeEach(group: GroupExtensionContext, callback: () -> Unit) {
         beforeEach.getOrPut(group, { LinkedList() }).add(callback)
     }

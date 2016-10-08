@@ -40,7 +40,7 @@ fun Dsl.given(description: String, body: Dsl.() -> Unit) {
  * @since 1.0
  */
 fun Dsl.on(description: String, body: Dsl.() -> Unit) {
-    group("on $description", body = body)
+    group("on $description", lazy = true, body = body)
 }
 
 /**
@@ -60,7 +60,7 @@ fun Dsl.it(description: String, body: () -> Unit) {
  * @since 1.0
  */
 fun Dsl.xdescribe(description: String, reason: String? = null, body: Dsl.() -> Unit) {
-    group("describe $description", Pending.Yes(reason), body)
+    group("describe $description", Pending.Yes(reason), body = body)
 }
 
 /**
@@ -70,7 +70,7 @@ fun Dsl.xdescribe(description: String, reason: String? = null, body: Dsl.() -> U
  * @since 1.0
  */
 fun Dsl.xcontext(description: String, reason: String? = null, body: Dsl.() -> Unit) {
-    group("context $description", Pending.Yes(reason), body)
+    group("context $description", Pending.Yes(reason), body = body)
 }
 
 /**
@@ -80,7 +80,7 @@ fun Dsl.xcontext(description: String, reason: String? = null, body: Dsl.() -> Un
  * @since 1.0
  */
 fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit) {
-    group("given $description", Pending.Yes(reason), body)
+    group("given $description", Pending.Yes(reason), body = body)
 }
 
 /**
@@ -90,7 +90,7 @@ fun Dsl.xgiven(description: String, reason: String? = null, body: Dsl.() -> Unit
  * @since 1.0
  */
 fun Dsl.xon(description: String, reason: String? = null, body: Dsl.() -> Unit = {}) {
-    group("on $description", Pending.Yes(reason), body)
+    group("on $description", Pending.Yes(reason), lazy = true, body = body)
 }
 
 /**

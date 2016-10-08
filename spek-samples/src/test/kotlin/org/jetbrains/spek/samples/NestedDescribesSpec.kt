@@ -11,7 +11,7 @@ class NestedDescribesSpec : Spek({
         var result = 0
 
         describe("addition") {
-            beforeEach {
+            beforeEachTest {
                 result = calculator.add(2, 4);
             }
 
@@ -24,7 +24,7 @@ class NestedDescribesSpec : Spek({
         }
 
         describe("subtraction") {
-            beforeEach {
+            beforeEachTest {
                 result = calculator.subtract(4, 2)
             }
 
