@@ -32,8 +32,11 @@ configurations.all {
 
 println "##teamcity[buildNumber \'${version}\']"
 
+def v = version
+
 allprojects {
     group = 'org.jetbrains.spek'
+    version = v
     repositories {
         mavenCentral()
         mavenCentral()
