@@ -51,6 +51,25 @@ class SubjectTest: AbstractSpekTestEngineTest() {
         }
     }
 
+    class Foo3Spec: SubjectSpek<Foo>({
+        subject { Foo() }
+
+        group("lazy", lazy = true) {
+            test("test #1") {
+                subject1 = subject
+            }
+
+            test("test #2") {
+                subject2 = subject
+            }
+        }
+    }) {
+        companion object {
+            lateinit var subject1: Foo
+            lateinit var subject2: Foo
+        }
+    }
+
     @Test
     fun testDifferentInstancePerTest() {
         executeTestsForClass(FooSpec::class)
@@ -61,6 +80,12 @@ class SubjectTest: AbstractSpekTestEngineTest() {
     fun testSameInstancePerTest() {
         executeTestsForClass(Foo2Spec::class)
         assertThat(Foo2Spec.subject1, sameInstance(Foo2Spec.subject2))
+    }
+
+    @Test
+    fun testSubjectOnLazyGroups() {
+        executeTestsForClass(Foo3Spec::class)
+        assertThat(Foo3Spec.subject1, sameInstance(Foo3Spec.subject2))
     }
 
     @Test
