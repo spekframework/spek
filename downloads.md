@@ -23,6 +23,7 @@ Kotlin version: {{ site.data.releases.latest.kotlinVersion }}
 
 ## Fire hose
 
+Latest published EAP
 [![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/_latestVersion)
 
 <a href="http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests">
@@ -44,7 +45,7 @@ Download the latest artifacts from the [Build Server](https://teamcity.jetbrains
 
 Spek Releases are available on [Bintray](https://bintray.com/jetbrains/spek/spek) and [Maven Central](http://search.maven.org/).
 
-Spek EAP's are only available on [Bintray](https://bintray.com/jetbrains/spek/spek). Please make sure you add the Bintray Repository if using EAP's. 
+Spek EAP's (i.e. Firehose) are only available on [Bintray](https://bintray.com/jetbrains/spek/spek). Please make sure you add the Bintray Repository if using EAP's. 
 
 For more information on how to set up your project using Maven or Gradle, please see [Setting up](http://jetbrains.github.io/spek/docs/latest/#_setting_up) in the documentation.
 
