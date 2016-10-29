@@ -7,7 +7,7 @@ title: Spek - Releases
 
 **Current release**: 
 
-[![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/_latestVersion)
+[![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/{site.data.releases.latest.version})
 
 Version: <a href="{{ site.baseurl }}/notes/{{ site.data.releases.latest.version }}.html">{{ site.data.releases.latest.version }} (Build {{ site.data.releases.latest.build }})</a><br/>
 Date: {{ site.data.releases.latest.date }}<br/>
@@ -22,6 +22,8 @@ Kotlin version: {{ site.data.releases.latest.kotlinVersion }}
 </ul>
 
 ## Fire hose
+
+[![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/_latestVersion)
 
 <a href="http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests">
 <img src="http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Spek_BuildAndTests)/statusIcon"/>
@@ -40,7 +42,9 @@ Download the latest artifacts from the [Build Server](https://teamcity.jetbrains
 
 ### Maven and Gradle
 
-Spek is available on [Bintray](https://bintray.com/jetbrains/spek/spek) and [Maven Central](http://search.maven.org/).
+Spek Releases are available on [Bintray](https://bintray.com/jetbrains/spek/spek) and [Maven Central](http://search.maven.org/).
+
+Spek EAP's are only available on [Bintray](https://bintray.com/jetbrains/spek/spek). Please make sure you add the Bintray Repository if using EAP's. 
 
 For more information on how to set up your project using Maven or Gradle, please see [Setting up](http://jetbrains.github.io/spek/docs/latest/#_setting_up) in the documentation.
 
