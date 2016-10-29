@@ -7,7 +7,7 @@ title: Spek - Releases
 
 **Current release**: 
 
-[![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/{site.data.releases.latest.version})
+[![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/{{ site.data.releases.latest.build }})
 
 Version: <a href="{{ site.baseurl }}/notes/{{ site.data.releases.latest.version }}.html">{{ site.data.releases.latest.version }} (Build {{ site.data.releases.latest.build }})</a><br/>
 Date: {{ site.data.releases.latest.date }}<br/>
