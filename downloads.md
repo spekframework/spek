@@ -24,6 +24,7 @@ Kotlin version: {{ site.data.releases.latest.kotlinVersion }}
 ## Fire hose
 
 Latest published EAP
+
 [![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/_latestVersion)
 
 <a href="http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests">
