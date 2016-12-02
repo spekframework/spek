@@ -3,9 +3,11 @@ apply from: "$rootDir/gradle/common/kotlin.gradle"
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 junitPlatform {
-    platformVersion '1.0.0-M2'
-    engines {
-        include 'spek'
+    platformVersion '1.0.0-M3'
+    filters {
+        engines {
+            include 'spek'
+        }
     }
 }
 

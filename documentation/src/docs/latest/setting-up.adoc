@@ -101,7 +101,7 @@ First, add the required dependencies.
 dependencies {
     testCompile 'org.jetbrains.spek:spek-api:1.0.89'
     testCompile 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
-    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M2'
+    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M3'
 }
 ----
 

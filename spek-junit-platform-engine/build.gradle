@@ -4,9 +4,11 @@ apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'org.jetbrains.dokka'
 
 junitPlatform {
-    platformVersion '1.0.0-M2'
-    engines {
-        exclude 'spek'
+    platformVersion '1.0.0-M3'
+    filters {
+        engines {
+            exclude 'spek'
+        }
     }
 }
 

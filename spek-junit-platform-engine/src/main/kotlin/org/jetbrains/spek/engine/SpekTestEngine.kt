@@ -15,12 +15,13 @@ import org.jetbrains.spek.extension.SpekExtension
 import org.junit.platform.commons.util.ReflectionUtils
 import org.junit.platform.engine.*
 import org.junit.platform.engine.discovery.ClassSelector
-import org.junit.platform.engine.discovery.ClasspathSelector
+import org.junit.platform.engine.discovery.ClasspathRootSelector
 import org.junit.platform.engine.discovery.PackageSelector
 import org.junit.platform.engine.discovery.UniqueIdSelector
+import org.junit.platform.engine.support.descriptor.ClassSource
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
-import org.junit.platform.engine.support.descriptor.JavaClassSource
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
+import java.nio.file.Paths
 import java.util.*
 import java.util.function.Consumer
 import kotlin.reflect.KClass
@@ -46,14 +47,17 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         val isSpec = java.util.function.Predicate<Class<*>> {
             Spek::class.java.isAssignableFrom(it) || SubjectSpek::class.java.isAssignableFrom(it)
         }
-        discoveryRequest.getSelectorsByType(ClasspathSelector::class.java).forEach {
-            ReflectionUtils.findAllClassesInClasspathRoot(it.classpathRoot, isSpec).forEach {
+        val isSpecClass = java.util.function.Predicate<String> { className ->
+            className.isNotEmpty()
+        }
+        discoveryRequest.getSelectorsByType(ClasspathRootSelector::class.java).forEach {
+            ReflectionUtils.findAllClassesInClasspathRoot(Paths.get(it.classpathRoot), isSpec, isSpecClass).forEach {
                 resolveSpec(engineDescriptor, it)
             }
         }
 
         discoveryRequest.getSelectorsByType(PackageSelector::class.java).forEach {
-            ReflectionUtils.findAllClassesInPackage(it.packageName, isSpec).forEach {
+            ReflectionUtils.findAllClassesInPackage(it.packageName, isSpec, isSpecClass).forEach {
                 resolveSpec(engineDescriptor, it)
             }
         }
@@ -73,7 +77,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     private fun filterOutUniqueId(target: TestDescriptor, root: TestDescriptor) {
         if (target != root) {
-            if (root.allDescendants.contains(target)) {
+            if (root.descendants.contains(target)) {
                 val descriptors = LinkedList<TestDescriptor>()
                 root.children.forEach {
                     descriptors.add(it)
@@ -98,7 +102,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         val instance = klass.kotlin.primaryConstructor!!.call()
         val root = Scope.Spec(
             engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name),
-            JavaClassSource(klass), registry, false
+            ClassSource(klass), registry, false
         )
         engineDescriptor.addChild(root)
 
@@ -198,7 +202,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
             val scope = Scope.Spec(
                 root.uniqueId.append(SPEC_SEGMENT_TYPE, spec.java.name),
-                JavaClassSource(spec.java), nestedRegistry, true
+                ClassSource(spec.java), nestedRegistry, true
             )
             root.addChild(scope)
             instance.spec.invoke(NestedSubjectCollector(scope, nestedRegistry, this as SubjectCollector<T>))
