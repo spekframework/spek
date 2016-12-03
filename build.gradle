@@ -53,7 +53,9 @@ ZoltuGitVersioning {
     }
 }
 
-println "##teamcity[buildNumber \'${version}\']"
+afterEvaluate {
+    println "##teamcity[buildNumber \'${version}\']"
+}
 
 def v = version
 
