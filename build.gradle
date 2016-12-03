@@ -23,11 +23,34 @@ buildscript {
 }
 
 plugins {
-    id "com.zoltu.git-versioning" version "2.0.28"
+    id "com.zoltu.git-versioning" version "3.0.2"
 }
 
 configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+ZoltuGitVersioning {
+    customDescribeProcessor { describeResults ->
+        def matcher = (describeResults =~ /v(?<major>[0-9]+?)\.(?<minor>[0-9]+?)\.(?<patch>[0-9]+?)(?:\-(?<tags>[0-9A-Za-z\.\-]+))?\-(?<commitCount>[0-9]+?)\-g(?<sha>[a-zA-Z0-9]+)/)
+        matcher.matches()
+        [
+            major: matcher.group('major'),
+            minor: matcher.group('minor'),
+            commitCount: matcher.group('commitCount'),
+            sha: matcher.group('sha'),
+            tags: matcher.group('tags'),
+            patch: matcher.group('patch')
+        ]
+    }
+
+    customVersionToString { versionInfo ->
+        if (versionInfo.tags != null) {
+            "${versionInfo.major}.${versionInfo.minor}.${versionInfo.patch}-${versionInfo.tags}"
+        } else {
+            "${versionInfo.major}.${versionInfo.minor}.${versionInfo.patch}"
+        }
+    }
 }
 
 println "##teamcity[buildNumber \'${version}\']"
