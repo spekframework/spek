@@ -55,13 +55,15 @@ ZoltuGitVersioning {
 
 afterEvaluate {
     println "##teamcity[buildNumber \'${version}\']"
+    def v = version
+    allprojects {
+        version = v
+    }
 }
 
-def v = version
 
 allprojects {
     group = 'org.jetbrains.spek'
-    version = v
     repositories {
         mavenCentral()
         mavenCentral()
