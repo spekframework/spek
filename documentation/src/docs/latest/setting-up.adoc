@@ -67,7 +67,7 @@ dependencies {
 fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -> Unit) {
     when (this) {
         is ExtensionAware -> extensions.getByType(EnginesExtension::class.java).setup()
-        else -> throw Exception("${this::class} must be an insance of ExtensionAware")
+        else -> throw Exception("${this::class} must be an instance of ExtensionAware")
     }
 }
 ----
