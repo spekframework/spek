@@ -8,7 +8,7 @@ import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.jetbrains.spek.api.lifecycle.LifecycleAware
 import org.jetbrains.spek.api.lifecycle.LifecycleListener
 
-class SpekSpecs : TableDrivenSpek, Spek({
+class SpekSpecs : Spek(tableDriven({
     describe("Spek table driven extension") {
         given("a spec container") {
             val countingTestContainer: CountingTestContainer = CountingTestContainer()
@@ -63,7 +63,7 @@ class SpekSpecs : TableDrivenSpek, Spek({
             }
         }
     }
-})
+}))
 
 
 private class CountingTestContainer : TestContainer, Spec {

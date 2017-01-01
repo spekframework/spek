@@ -4,13 +4,11 @@ import org.jetbrains.samples.Calculator
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.table.TableDrivenSpek
-import org.jetbrains.spek.table.testCase
-import org.jetbrains.spek.table.unroll
+import org.jetbrains.spek.table.propertyBased
+import org.jetbrains.spek.table.tableDriven
 import kotlin.test.assertEquals
 
-object CalculatorTableSpec : TableDrivenSpek, Spek({
-
+object CalculatorTableSpec : Spek(propertyBased(tableDriven({
     describe("subtract") {
         unroll(
                 testCase(4, 2),
@@ -23,5 +21,5 @@ object CalculatorTableSpec : TableDrivenSpek, Spek({
         }
     }
 
-})
+})))
 
