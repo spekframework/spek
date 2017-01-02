@@ -2,7 +2,7 @@
 
 **Q: What is Kotlin?**
 
-http://kotlin.jetbrains.org[Kotlin] is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by [JetBrains](http://www.jetbrains.com)
+http://kotlin.jetbrains.org[Kotlin] is an Apache 2 OSS Language targetted at the JVM and JavaScript and is developed by http://www.jetbrains.com[JetBrains]
 It is aimed at being a concise modern language for general use. It also rocks!
 
 **Q: Is Spek a BDD or a TDD framework?**
