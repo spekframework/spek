@@ -1,49 +1,52 @@
 [[setting-up]]
 == Setting up
-NOTE: For Android projects check <<setting-up-android>> section.
-
 You will need to include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine`
 in your test classpath. The former is needed during compilation, while the latter during runtime only.
 
-=== Gradle
-Thankfully JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#running-tests-build[gradle plugin] that will make our life easier.
+NOTE: For Android projects check <<setting-up-android>> section.
 
-[source,groovy,subs="attributes+"]
+=== Gradle
+JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#running-tests-build[gradle plugin].
+
+[source,groovy,subs="attributes"]
 .build.gradle
 ----
 // setup the plugin
 buildscript {
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:<version>'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:{junitPlatformVersion}'
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 junitPlatform {
-    engines {
-        include 'spek'
+    filters {
+        engines {
+            include 'spek'
+        }
     }
 }
 
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
+    testCompile 'org.jetbrains.spek:spek-api:{version}'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:{version}'
 }
 ----
 
 === Gradle Kotlin Script
-[source,kotlin,subs="attributes+"]
+[source,kotlin,subs="attributes"]
 .build.gradle.kts
 ----
 import org.gradle.api.plugins.ExtensionAware
 
+import org.junit.platform.gradle.plugin.FiltersExtension
 import org.junit.platform.gradle.plugin.EnginesExtension
 import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 
 // setup the plugin
 buildscript {
     dependencies {
-        classpath("org.junit.platform:junit-platform-gradle-plugin:<version>")
+        classpath("org.junit.platform:junit-platform-gradle-plugin:{junitPlatformVersion}")
     }
 }
 
@@ -52,19 +55,27 @@ apply {
 }
 
 configure<JUnitPlatformExtension> {
-    engines {
-        include("spek")
+    filters {
+        engines {
+            include("spek")
+        }
     }
 }
 
 // setup dependencies
 dependencies {
-    testCompile("org.jetbrains.spek:spek-api:1.0.89")
-    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.0.89")
+    testCompile("org.jetbrains.spek:spek-api:{version}")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:{version}")
 }
 
 // extension for configuration
-fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -> Unit) {
+fun JUnitPlatformExtension.filters(setup: FiltersExtension.() -> Unit) {
+    when (this) {
+        is ExtensionAware -> extensions.getByType(FiltersExtension::class.java).setup()
+        else -> throw Exception("${this::class} must be an instance of ExtensionAware")
+    }
+}
+fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
     when (this) {
         is ExtensionAware -> extensions.getByType(EnginesExtension::class.java).setup()
         else -> throw Exception("${this::class} must be an instance of ExtensionAware")
@@ -76,14 +87,14 @@ fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -> Unit) {
 
 JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven[Maven].
 
-[source,xml]
+[source,xml,subs="attributes+"]
 .pom.xml
 ----
 ...
 <dependency>
   <groupId>org.jetbrains.spek</groupId>
   <artifactId>spek-api</artifactId>
-  <version>1.0.89</version>
+  <version>{version}</version>
   <type>pom</type>
 </dependency>
 ----
@@ -91,21 +102,21 @@ JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#runn
 [[setting-up-android]]
 == Setting up for Android
 The JUnit Platform gradle plugin currently doesn't support Android projects (see https://github.com/junit-team/junit5/issues/204), but thankfully
-a JUnit 4 based runner is provided.
+a JUnit 4 based runner is available.
 
 First, add the required dependencies.
-[source,groovy,subs="attributes+"]
+[source,groovy,subs="attributes"]
 .build.gradle
 ----
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
-    testCompile 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
-    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M3'
+    testCompile 'org.jetbrains.spek:spek-api:{version}'
+    testCompile 'org.jetbrains.spek:spek-junit-platform-engine:{version}'
+    testCompile 'org.junit.platform:junit-platform-runner:{junitPlatformVersion}'
 }
 ----
 
-Finally make sure your specs are annotated with `@RunWith(JUnitPlatform::class)`.
+Finally, make sure your specs are annotated with `@RunWith(JUnitPlatform::class)`.
 
 [source,kotlin]
 .CalculatorSpec.kt

@@ -14,6 +14,7 @@ asciidoctor {
     }
 
     attributes  version: project.version,
+                junitPlatformVersion: junitPlatformVersion,
                 githubRepo: githubRepo,
                 issueTracker: issueTracker,
                 kotlinVersion: kotlinVersion,

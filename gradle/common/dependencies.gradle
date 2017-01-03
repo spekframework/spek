@@ -11,7 +11,7 @@ dependencyManagement {
         dependency 'org.slf4j:slf4j-api:1.7.21'
         dependency 'ch.qos.logback:logback-classic:1.1.7'
 
-        dependencySet(group: 'org.junit.platform', version: '1.0.0-M3') {
+        dependencySet(group: 'org.junit.platform', version: junitPlatformVersion) {
             entry 'junit-platform-engine'
             entry 'junit-platform-runner'
             entry 'junit-platform-launcher'

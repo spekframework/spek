@@ -6,6 +6,7 @@ Releases::
         * Added support for extensions.
         * Reworked subjects as an extension.
         * Support specs defined as objects.
+        * Added `beforeGroup` and `afterGroup` fixtures.
 
     1.0.0:::
         * Initial release of Spek.
