@@ -12,9 +12,11 @@ import java.util.WeakHashMap
  * @author Ranie Jade Ramiso
  */
 class FixturesAdapter: LifecycleListener {
-    private val beforeEach: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
+    private val beforeEachTest: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
+    private val afterEachTest: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
 
-    private val afterEach: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
+    private val beforeGroup: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
+    private val afterGroup: MutableMap<GroupScope, MutableList<() -> Unit>> = WeakHashMap()
 
     override fun beforeExecuteTest(test: TestScope) {
         if (test.parent !is ActionScope) {
@@ -36,24 +38,39 @@ class FixturesAdapter: LifecycleListener {
         invokeAllAfterEach(action)
     }
 
-
-    fun registerBeforeEach(group: GroupScope, callback: () -> Unit) {
-        beforeEach.getOrPut(group, { LinkedList() }).add(callback)
+    override fun beforeExecuteGroup(group: GroupScope) {
+        beforeGroup[group]?.forEach { it() }
     }
 
-    fun registerAfterEach(group: GroupScope, callback: () -> Unit) {
-        afterEach.getOrPut(group, { LinkedList() }).add(callback)
+    override fun afterExecuteGroup(group: GroupScope) {
+        afterGroup[group]?.forEach { it() }
+    }
+
+    fun registerBeforeEachTest(group: GroupScope, callback: () -> Unit) {
+        beforeEachTest.getOrPut(group, { LinkedList() }).add(callback)
+    }
+
+    fun registerAfterEachTest(group: GroupScope, callback: () -> Unit) {
+        afterEachTest.getOrPut(group, { LinkedList() }).add(callback)
+    }
+
+    fun registerBeforeGroup(group: GroupScope, callback: () -> Unit) {
+        beforeGroup.getOrPut(group, { LinkedList() }).add(callback)
+    }
+
+    fun registerAfterGroup(group: GroupScope, callback: () -> Unit) {
+        afterGroup.getOrPut(group, { LinkedList() }).add(callback)
     }
 
     private fun invokeAllBeforeEach(group: GroupScope) {
         if (group.parent != null) {
             invokeAllBeforeEach(group.parent!!)
         }
-        beforeEach[group]?.forEach { it.invoke() }
+        beforeEachTest[group]?.forEach { it.invoke() }
     }
 
     private fun invokeAllAfterEach(group: GroupScope) {
-        afterEach[group]?.forEach { it.invoke() }
+        afterEachTest[group]?.forEach { it.invoke() }
         if (group.parent != null) {
             invokeAllAfterEach(group.parent!!)
         }

@@ -169,11 +169,19 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         }
 
         override fun beforeEachTest(callback: () -> Unit) {
-            fixtures.registerBeforeEach(root, callback)
+            fixtures.registerBeforeEachTest(root, callback)
         }
 
         override fun afterEachTest(callback: () -> Unit) {
-            fixtures.registerAfterEach(root, callback)
+            fixtures.registerAfterEachTest(root, callback)
+        }
+
+        override fun beforeGroup(callback: () -> Unit) {
+            fixtures.registerBeforeGroup(root, callback)
+        }
+
+        override fun afterGroup(callback: () -> Unit) {
+            fixtures.registerAfterGroup(root, callback)
         }
     }
 

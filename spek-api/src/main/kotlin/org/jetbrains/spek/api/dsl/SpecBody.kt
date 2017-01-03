@@ -16,4 +16,7 @@ interface SpecBody: TestContainer {
 
     fun beforeEachTest(callback: () -> Unit)
     fun afterEachTest(callback: () -> Unit)
+
+    fun beforeGroup(callback: () -> Unit)
+    fun afterGroup(callback: () -> Unit)
 }
