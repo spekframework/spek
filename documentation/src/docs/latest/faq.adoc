@@ -10,11 +10,11 @@ It is aimed at being a concise modern language for general use. It also rocks!
 Spek in Dutch means Bacon, so you could think of it as a Bacon Driven Development framework. Being serious for a
 moment though, we (at least the original author) believe that there is a false distinction in frameworks around what TDD
 or BDD is. Unit tests are ultimately about defining the specifications of your system. As such, Spek is merely a specification
-framework if it can be called anything. For more information read http://hadihariri.com/2012/04/11/what-bdd-has-taught-me/[What BDD has taught me]
+framework if it can be called anything. For more information read http://hadihariri.com/2012/04/11/what-bdd-has-taught-me/[What BDD has taught me].
 
 **Q: Can I have more than one _on_ per _given_?**
 
-Yes you can. How you group your specifications is up to you
+Yes you can. How you group your specifications is up to you.
 
 **Q: Can I have more than one _it_ per _on_?**
 
@@ -41,6 +41,6 @@ Spek is just one of many options available to write tests, however any testing f
 
 **Q: What is the licensing?**
 
-Spek is licensed under https://github.com/JetBrains/spek/blob/master/LICENSE.TXT[BSD]
+Spek is licensed under https://github.com/JetBrains/spek/blob/master/LICENSE.TXT[BSD].
 
 
