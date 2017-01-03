@@ -47,7 +47,7 @@ the `@RunWith(...)` annotation and applying the appropriate build tool plugin (r
 
 
 === Supported Java Versions
-Current version requires JDK 8 (as a requirement for JUnit 5)
+Current version requires JDK 8 (as a requirement for JUnit 5).
 
 === Android
 Android integration tests is currently not supported and you have to use the
