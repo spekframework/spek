@@ -571,6 +571,10 @@ If you&#8217;re using the <strong>JUnit 4</strong> runner, the plugin won&#8217;
 <div class="sect1">
 <h2 id="setting-up">2. Setting up</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>You will need to include <code>org.jetbrains.spek:spek-api</code> and <code>org.jetbrains.spek:spek-junit-platform-engine</code>
+in your test classpath. The former is needed during compilation, while the latter during runtime only.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -583,35 +587,33 @@ For Android projects check <a href="#setting-up-android">Setting up for Android<
 </tr>
 </table>
 </div>
-<div class="paragraph">
-<p>You will need to include <code>org.jetbrains.spek:spek-api</code> and <code>org.jetbrains.spek:spek-junit-platform-engine</code>
-in your test classpath. The former is needed during compilation, while the latter during runtime only.</p>
-</div>
 <div class="sect2">
 <h3 id="_gradle">2.1. Gradle</h3>
 <div class="paragraph">
-<p>Thankfully JUnit Platform provides a <a href="http://junit.org/junit5/docs/current/user-guide/#running-tests-build">gradle plugin</a> that will make our life easier.</p>
+<p>JUnit Platform provides a <a href="http://junit.org/junit5/docs/current/user-guide/#running-tests-build">gradle plugin</a>.</p>
 </div>
 <div class="listingblock">
 <div class="title">build.gradle</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">// setup the plugin
 buildscript {
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:&lt;version&gt;'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3'
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 junitPlatform {
-    engines {
-        include 'spek'
+    filters {
+        engines {
+            include 'spek'
+        }
     }
 }
 
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
+    testCompile 'org.jetbrains.spek:spek-api:1.1.0-beta3'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3'
 }</code></pre>
 </div>
 </div>
@@ -623,13 +625,14 @@ dependencies {
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">import org.gradle.api.plugins.ExtensionAware
 
+import org.junit.platform.gradle.plugin.FiltersExtension
 import org.junit.platform.gradle.plugin.EnginesExtension
 import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 
 // setup the plugin
 buildscript {
     dependencies {
-        classpath("org.junit.platform:junit-platform-gradle-plugin:&lt;version&gt;")
+        classpath("org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3")
     }
 }
 
@@ -637,23 +640,31 @@ apply {
     plugin("org.junit.platform.gradle.plugin")
 }
 
-configure&lt;JUnitPlatformExtension&gt; {
-    engines {
-        include("spek")
+configure<JUnitPlatformExtension> {
+    filters {
+        engines {
+            include("spek")
+        }
     }
 }
 
 // setup dependencies
 dependencies {
-    testCompile("org.jetbrains.spek:spek-api:1.0.89")
-    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.0.89")
+    testCompile("org.jetbrains.spek:spek-api:1.1.0-beta3")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3")
 }
 
 // extension for configuration
-fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -&gt; Unit) {
+fun JUnitPlatformExtension.filters(setup: FiltersExtension.() -> Unit) {
     when (this) {
-        is ExtensionAware -&gt; extensions.getByType(EnginesExtension::class.java).setup()
-        else -&gt; throw Exception("${this::class} must be an instance of ExtensionAware")
+        is ExtensionAware -> extensions.getByType(FiltersExtension::class.java).setup()
+        else -> throw Exception("${this::class} must be an instance of ExtensionAware")
+    }
+}
+fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
+    when (this) {
+        is ExtensionAware -> extensions.getByType(EnginesExtension::class.java).setup()
+        else -> throw Exception("${this::class} must be an instance of ExtensionAware")
     }
 }</code></pre>
 </div>
@@ -671,7 +682,7 @@ fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -&gt; Unit) {
 &lt;dependency&gt;
   &lt;groupId&gt;org.jetbrains.spek&lt;/groupId&gt;
   &lt;artifactId&gt;spek-api&lt;/artifactId&gt;
-  &lt;version&gt;1.0.89&lt;/version&gt;
+  &lt;version&gt;1.1.0-beta3&lt;/version&gt;
   &lt;type&gt;pom&lt;/type&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -684,7 +695,7 @@ fun JUnitPlatformExtension.engines(setup: EnginesExtension.() -&gt; Unit) {
 <div class="sectionbody">
 <div class="paragraph">
 <p>The JUnit Platform gradle plugin currently doesn&#8217;t support Android projects (see <a href="https://github.com/junit-team/junit5/issues/204" class="bare">https://github.com/junit-team/junit5/issues/204</a>), but thankfully
-a JUnit 4 based runner is provided.</p>
+a JUnit 4 based runner is available.</p>
 </div>
 <div class="paragraph">
 <p>First, add the required dependencies.</p>
@@ -694,14 +705,14 @@ a JUnit 4 based runner is provided.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">// setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.0.89'
-    testCompile 'org.jetbrains.spek:spek-junit-platform-engine:1.0.89'
+    testCompile 'org.jetbrains.spek:spek-api:1.1.0-beta3'
+    testCompile 'org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3'
     testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M3'
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally make sure your specs are annotated with <code>@RunWith(JUnitPlatform::class)</code>.</p>
+<p>Finally, make sure your specs are annotated with <code>@RunWith(JUnitPlatform::class)</code>.</p>
 </div>
 <div class="listingblock">
 <div class="title">CalculatorSpec.kt</div>
@@ -999,6 +1010,9 @@ hosted on the JetBrains account under GitHub, it is not a project that is offici
 <li>
 <p>Support specs defined as objects.</p>
 </li>
+<li>
+<p>Added <code>beforeGroup</code> and <code>afterGroup</code> fixtures.</p>
+</li>
 </ul>
 </div>
 </dd>
@@ -1061,7 +1075,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-03 13:23:09 +00:00
+Last updated 2017-01-03 13:50:16 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="../lib/highlight/styles/github.min.css">
