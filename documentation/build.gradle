@@ -3,9 +3,9 @@ apply plugin: 'org.ajoberstar.github-pages'
 apply plugin: 'org.asciidoctor.convert'
 
 asciidoctor {
-    sourceDir file("src/docs")
+    sourceDir file("src/asciidoc")
     sources {
-        include 'latest/index.adoc'
+        include 'index.adoc'
     }
 
     resources {
@@ -18,7 +18,7 @@ asciidoctor {
                 githubRepo: githubRepo,
                 issueTracker: issueTracker,
                 kotlinVersion: kotlinVersion,
-                highlightjsdir: "../lib/highlight"
+                highlightjsdir: "lib/highlight"
 }
 
 githubPages {
@@ -27,6 +27,6 @@ githubPages {
     targetBranch = 'gh-pages'
     pages {
         from "build/asciidoc/html5/"
-        into "docs/"
+        into "docs/latest"
     }
 }
