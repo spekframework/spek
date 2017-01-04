@@ -426,49 +426,50 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_overview">1. Overview</a>
+<li><a href="#_overview">Overview</a>
 <ul class="sectlevel2">
-<li><a href="#_what_is_spek">1.1. What is Spek?</a></li>
-<li><a href="#_why_kotlin">1.2. Why Kotlin?</a></li>
-<li><a href="#_supported_java_versions">1.3. Supported Java Versions</a></li>
-<li><a href="#_android">1.4. Android</a></li>
-<li><a href="#ide-support">1.5. IDE Support</a></li>
+<li><a href="#_what_is_spek">What is Spek?</a></li>
+<li><a href="#_why_kotlin">Why Kotlin?</a></li>
+<li><a href="#_supported_java_versions">Supported Java Versions</a></li>
+<li><a href="#_android">Android</a></li>
+<li><a href="#ide-support">IDE Support</a></li>
 </ul>
 </li>
-<li><a href="#setting-up">2. Setting up</a>
+<li><a href="#setting-up">Setting up</a>
 <ul class="sectlevel2">
-<li><a href="#_gradle">2.1. Gradle</a></li>
-<li><a href="#_gradle_kotlin_script">2.2. Gradle Kotlin Script</a></li>
-<li><a href="#_maven">2.3. Maven</a></li>
+<li><a href="#_gradle">Gradle</a></li>
+<li><a href="#_gradle_kotlin_script">Gradle Kotlin Script</a></li>
+<li><a href="#_maven">Maven</a></li>
 </ul>
 </li>
-<li><a href="#setting-up-legacy">3. Using Spek with JUnit 4</a></li>
-<li><a href="#_writing_specifications">4. Writing Specifications</a>
+<li><a href="#setting-up-legacy">Using Spek with JUnit 4</a></li>
+<li><a href="#_writing_specifications">Writing Specifications</a>
 <ul class="sectlevel2">
-<li><a href="#_assertion_framework">4.1. Assertion Framework</a></li>
-<li><a href="#_basic_structure">4.2. Basic Structure</a></li>
-<li><a href="#_fixtures">4.3. Fixtures</a></li>
-<li><a href="#_ignoring_tests">4.4. Ignoring tests</a></li>
-<li><a href="#_subjects">4.5. Subjects</a></li>
+<li><a href="#_assertion_framework">Assertion Framework</a></li>
+<li><a href="#_scopes">Scopes</a></li>
+<li><a href="#_basic_structure">Basic Structure</a></li>
+<li><a href="#_fixtures">Fixtures</a></li>
+<li><a href="#_ignoring_tests">Ignoring tests</a></li>
+<li><a href="#_subjects">Subjects</a></li>
 </ul>
 </li>
-<li><a href="#_faq">5. FAQ</a></li>
-<li><a href="#_changelog">6. Changelog</a></li>
-<li><a href="#_main_contributors">7. Main Contributors</a></li>
-<li><a href="#_resources">8. Resources</a></li>
+<li><a href="#_faq">FAQ</a></li>
+<li><a href="#_changelog">Changelog</a></li>
+<li><a href="#_main_contributors">Main Contributors</a></li>
+<li><a href="#_resources">Resources</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_overview">1. Overview</h2>
+<h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This guide assumes that you have a basic knowledge of <a href="https://kotlinlang.org/">Kotlin</a>. If you have a <em>Ruby</em>
 background and are familiar with <a href="http://rspec.info/">RSpec</a>, you won&#8217;t have any issues to get up and running.</p>
 </div>
 <div class="sect2">
-<h3 id="_what_is_spek">1.1. What is Spek?</h3>
+<h3 id="_what_is_spek">What is Spek?</h3>
 <div class="paragraph">
 <p>Tests are not only to check the code you&#8217;ve written executes and works, but also that it works as it should, that is, that as a developer
 what&#8217;s been implemented matches the requirements.</p>
@@ -486,7 +487,7 @@ place we write the test code?</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_why_kotlin">1.2. Why Kotlin?</h3>
+<h3 id="_why_kotlin">Why Kotlin?</h3>
 <div class="paragraph">
 <p><a href="http://kotlinlang.org">Kotlin</a> is statically typed OSS language developed and sponsored by JetBrains. It offers many advantages over Java such as its conciseness, expressiveness
 and the ability to create nice DSL. It&#8217;s 100% compatible with Java which means you can call Java from Kotlin and Kotlin from Java. And it&#8217;s also easy to pick up.</p>
@@ -497,20 +498,20 @@ you can easily use Kotlin for your specifications. Yes, you call them tests. Sta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_supported_java_versions">1.3. Supported Java Versions</h3>
+<h3 id="_supported_java_versions">Supported Java Versions</h3>
 <div class="paragraph">
 <p>Current version requires JDK 8 (as a requirement for JUnit 5).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_android">1.4. Android</h3>
+<h3 id="_android">Android</h3>
 <div class="paragraph">
 <p>Android integration tests is currently not supported and you have to use the
 <a href="http://tools.android.com/tech-docs/jackandjill">Jack toolchain</a> to be able to build against Java 8.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ide-support">1.5. IDE Support</h3>
+<h3 id="ide-support">IDE Support</h3>
 <div class="paragraph">
 <p>Spek provides an <a href="https://plugins.jetbrains.com/plugin/8564">IntelliJ IDEA and Android Studio plugin</a>.</p>
 </div>
@@ -530,7 +531,7 @@ If you&#8217;re using the <strong>JUnit 4</strong> runner, the plugin won&#8217;
 </div>
 </div>
 <div class="sect1">
-<h2 id="setting-up">2. Setting up</h2>
+<h2 id="setting-up">Setting up</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Currently, Spek is implemented as a <a href="http://junit.org/junit5/">JUnit Platform</a> <strong>TestEngine</strong>.</p>
@@ -552,7 +553,7 @@ For Android projects check <a href="#setting-up-legacy">Using Spek with JUnit 4<
 </table>
 </div>
 <div class="sect2">
-<h3 id="_gradle">2.1. Gradle</h3>
+<h3 id="_gradle">Gradle</h3>
 <div class="paragraph">
 <p>JUnit Platform provides a <a href="http://junit.org/junit5/docs/current/user-guide/#running-tests-build">gradle plugin</a>.</p>
 </div>
@@ -583,7 +584,7 @@ dependencies {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_gradle_kotlin_script">2.2. Gradle Kotlin Script</h3>
+<h3 id="_gradle_kotlin_script">Gradle Kotlin Script</h3>
 <div class="listingblock">
 <div class="title">build.gradle.kts</div>
 <div class="content">
@@ -635,7 +636,7 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 </div>
 </div>
 <div class="sect2">
-<h3 id="_maven">2.3. Maven</h3>
+<h3 id="_maven">Maven</h3>
 <div class="paragraph">
 <p>JUnit provides support for <a href="http://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven">Maven</a>.</p>
 </div>
@@ -655,7 +656,7 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="setting-up-legacy">3. Using Spek with JUnit 4</h2>
+<h2 id="setting-up-legacy">Using Spek with JUnit 4</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>JUnit 4 based runner is still supported via <a href="http://junit.org/junit5/">JUnit Platform</a>. You will need the following dependencies on the test classpath:</p>
@@ -700,10 +701,10 @@ As mentioned in the <a href="#ide-support">IDE Support</a> section, the IDEA plu
 </div>
 </div>
 <div class="sect1">
-<h2 id="_writing_specifications">4. Writing Specifications</h2>
+<h2 id="_writing_specifications">Writing Specifications</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_assertion_framework">4.1. Assertion Framework</h3>
+<h3 id="_assertion_framework">Assertion Framework</h3>
 <div class="paragraph">
 <p>Spek doesn&#8217;t have any built-in assertions, luckily there are several libraries in the wild that do. Below are several suggestions:</p>
 </div>
@@ -725,37 +726,63 @@ As mentioned in the <a href="#ide-support">IDE Support</a> section, the IDEA plu
 </div>
 </div>
 <div class="sect2">
-<h3 id="_basic_structure">4.2. Basic Structure</h3>
+<h3 id="_scopes">Scopes</h3>
+<div class="paragraph">
+<p>Spek provides 3 types of scopes, which are used to define your spec.</p>
+</div>
+<div class="sect3">
+<h4 id="_test">Test</h4>
+<div class="paragraph">
+<p>Equivalent to test methods in JUnit, normally all assertions are done in this scope. Use <code>it</code> to define a test scope.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_group">Group</h4>
+<div class="paragraph">
+<p>May contain an arbitrary number of nested scopes for better grouping of your tests.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_action">Action</h4>
+<div class="paragraph">
+<p>Represents an action that will be performed and may contain any number of test scopes. You can think of each <code>test</code> as an assertion to
+validate the expected behaviour of the action performed.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_basic_structure">Basic Structure</h3>
 <div class="paragraph">
 <p>Your specifications need to inherit from the <code>org.jetbrains.spek.api.Spek</code> base class.</p>
 </div>
 <div class="listingblock">
 <div class="title">SimpleSpec.kt</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">class SimpleSpec: Spek({
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">object SimpleSpec: Spek({
     describe("a calculator") {
         val calculator = SampleCalculator()
 
-        it("should return the result of adding the first number to the second number") {
+        on("addition") {
             val sum = calculator.sum(2, 4)
-            assertEquals(6, sum)
+
+            it("should return the result of adding the first number to the second number") {
+                assertEquals(6, sum)
+            }
         }
 
-        it("should return the result of subtracting the second number from the first number") {
+        on("subtraction") {
             val subtract = calculator.subtract(4, 2)
-            assertEquals(2, subtract)
+
+            it("should return the result of subtracting the second number from the first number") {
+                assertEquals(2, subtract)
+            }
         }
     }
 })</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>it</code> method creates a <code>test</code> scope, which is equivalent to a test method in JUnit. While the <code>describe</code> method creates
-a <code>group</code> scope, which can contain nested <code>test</code> and/or <code>group</code> scopes. Spek supports arbitrary number of nested scopes for
-better grouping of your tests.</p>
-</div>
-<div class="paragraph">
-<p>Aside from <code>describe</code>, Spek also provides <code>given</code>, <code>on</code> and <code>context</code> to create <code>group</code> scopes.</p>
+<p>Aside from <code>describe</code>, Spek also provides <code>given</code> and <code>context</code> to create <code>group</code> scopes.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -772,16 +799,31 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
 </div>
 </div>
 <div class="sect2">
-<h3 id="_fixtures">4.3. Fixtures</h3>
+<h3 id="_fixtures">Fixtures</h3>
 <div class="paragraph">
-<p>Spek provides <code>beforeEachTest</code> and <code>afterEachTest</code> fixtures, which allows running arbitrary code before and after a <code>test</code>, respectively. Every
-<code>group</code> scope can declare an arbitrary number of fixtures, the order they are executed is based on the order they are declared.</p>
+<p>Spek allows running arbitrary code before and after a <code>group</code> and <code>test</code> is executed.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You can&#8217;t declare fixtures within <code>action</code> scopes.
+</td>
+</tr>
+</table>
 </div>
 <div class="listingblock">
 <div class="title">FixtureSpec.kt</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">class FixtureSpec: Spek({
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">object FixtureSpec: Spek({
     describe("a group") {
+        beforeGroup {
+            ...
+        }
+
         beforeEachTest {
             ...
         }
@@ -804,19 +846,23 @@ needs to be evaluated before and/or after <code>test</code> scopes should be don
         afterEachTest {
             ...
         }
+
+        afterGroup {
+            ...
+        }
     }
 })</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ignoring_tests">4.4. Ignoring tests</h3>
+<h3 id="_ignoring_tests">Ignoring tests</h3>
 <div class="paragraph">
 <p>Each scope method have a variant prefixed with <code>x</code> (e.g. <code>xdescribe</code>, <code>xit</code>, etc&#8230;&#8203;), which will Spek ignore when executing the spec.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_subjects">4.5. Subjects</h3>
+<h3 id="_subjects">Subjects</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -836,7 +882,7 @@ of writing this types of tests and removing a lot of boilerplate code.</p>
 <div class="listingblock">
 <div class="title">SimpleCalculatorSpec.kt</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">class SimpleCalculatorSpec: SubjectSpek&lt;Calculator&gt;({
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">object SimpleCalculatorSpec: SubjectSpek&lt;Calculator&gt;({
     subject { Calculator() } <b class="conum">(1)</b>
 
     it("should return the result of adding the first number to the second number") {
@@ -860,7 +906,7 @@ of writing this types of tests and removing a lot of boilerplate code.</p>
 </ol>
 </div>
 <div class="sect3">
-<h4 id="_shared_subjects">4.5.1. Shared Subjects</h4>
+<h4 id="_shared_subjects">Shared Subjects</h4>
 <div class="paragraph">
 <p>This feature is useful when testing subclasses, removing the need of duplicating test code.</p>
 </div>
@@ -870,10 +916,10 @@ of writing this types of tests and removing a lot of boilerplate code.</p>
 <div class="listingblock">
 <div class="title">AdvancedCalculatorSpec.kt</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">class AdvancedCalculatorSpec: SubjectSpek&lt;AdvancedCalculator&gt;({
+<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">object AdvancedCalculatorSpec: SubjectSpek&lt;AdvancedCalculator&gt;({
     subject { AdvancedCalculator() }
 
-    itBehavesLike(SimpleCalculatorSpec::class)
+    itBehavesLike(SimpleCalculatorSpec)
 
     describe("pow") {
         it("should return the power of base raise to exponent") {
@@ -891,7 +937,7 @@ of writing this types of tests and removing a lot of boilerplate code.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_faq">5. FAQ</h2>
+<h2 id="_faq">FAQ</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><strong>Q: What is Kotlin?</strong></p>
@@ -957,7 +1003,7 @@ hosted on the JetBrains account under GitHub, it is not a project that is offici
 </div>
 </div>
 <div class="sect1">
-<h2 id="_changelog">6. Changelog</h2>
+<h2 id="_changelog">Changelog</h2>
 <div class="sectionbody">
 <div class="dlist">
 <dl>
@@ -1005,7 +1051,7 @@ hosted on the JetBrains account under GitHub, it is not a project that is offici
 </div>
 </div>
 <div class="sect1">
-<h2 id="_main_contributors">7. Main Contributors</h2>
+<h2 id="_main_contributors">Main Contributors</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>In alphabetical order</em></p>
@@ -1023,7 +1069,7 @@ Ilya Ryzhenkov</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_resources">8. Resources</h2>
+<h2 id="_resources">Resources</h2>
 <div class="sectionbody">
 <div class="ulist">
 <ul>
@@ -1046,7 +1092,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 13:25:33 +00:00
+Last updated 2017-01-04 14:04:11 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="lib/highlight/styles/github.min.css">
