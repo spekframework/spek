@@ -32,7 +32,7 @@ class SpekSpecs : Spek({
                     unroll(
                             testCase("1" as Any)
                     ) {
-                        it("should be a visible $it") {}
+                        it("should be visible with $it") {}
                     }
                 }
                 unroll.spec.invoke(countingTestContainer)
@@ -43,7 +43,7 @@ class SpekSpecs : Spek({
                     unroll(
                             testCase(1, 2)
                     ) { a, b ->
-                        it("should be a visible $a $b") {}
+                        it("should be visible with $a $b") {}
                     }
                 }
                 unroll.spec.invoke(countingTestContainer)
@@ -67,6 +67,14 @@ class SpekSpecs : Spek({
 
 
 private class CountingTestContainer : TestContainer, Spec {
+    override fun beforeGroup(callback: () -> Unit) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun afterGroup(callback: () -> Unit) {
+        throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun group(description: String, pending: Pending, body: SpecBody.() -> Unit) {
         throw UnsupportedOperationException("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
