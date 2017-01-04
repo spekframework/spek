@@ -428,12 +428,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel1">
 <li><a href="#_overview">1. Overview</a>
 <ul class="sectlevel2">
-<li><a href="#_why_a_specification_framework">1.1. Why a Specification Framework?</a></li>
+<li><a href="#_what_is_spek">1.1. What is Spek?</a></li>
 <li><a href="#_why_kotlin">1.2. Why Kotlin?</a></li>
-<li><a href="#_junit_platform">1.3. JUnit Platform</a></li>
-<li><a href="#_supported_java_versions">1.4. Supported Java Versions</a></li>
-<li><a href="#_android">1.5. Android</a></li>
-<li><a href="#ide-support">1.6. IDE Support</a></li>
+<li><a href="#_supported_java_versions">1.3. Supported Java Versions</a></li>
+<li><a href="#_android">1.4. Android</a></li>
+<li><a href="#ide-support">1.5. IDE Support</a></li>
 </ul>
 </li>
 <li><a href="#setting-up">2. Setting up</a>
@@ -443,7 +442,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_maven">2.3. Maven</a></li>
 </ul>
 </li>
-<li><a href="#setting-up-android">3. Setting up for Android</a></li>
+<li><a href="#setting-up-legacy">3. Using Spek with JUnit 4</a></li>
 <li><a href="#_writing_specifications">4. Writing Specifications</a>
 <ul class="sectlevel2">
 <li><a href="#_assertion_framework">4.1. Assertion Framework</a></li>
@@ -469,7 +468,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 background and are familiar with <a href="http://rspec.info/">RSpec</a>, you won&#8217;t have any issues to get up and running.</p>
 </div>
 <div class="sect2">
-<h3 id="_why_a_specification_framework">1.1. Why a Specification Framework?</h3>
+<h3 id="_what_is_spek">1.1. What is Spek?</h3>
 <div class="paragraph">
 <p>Tests are not only to check the code you&#8217;ve written executes and works, but also that it works as it should, that is, that as a developer
 what&#8217;s been implemented matches the requirements.</p>
@@ -483,7 +482,7 @@ place we write the test code?</p>
 <p>That&#8217;s what Spek does. It is a specification framework that allows you to easily define specifications in a clear, understandable, human readable way.</p>
 </div>
 <div class="paragraph">
-<p>You call them tests. We call them specifications.</p>
+<p>You call them tests, we call them specifications.</p>
 </div>
 </div>
 <div class="sect2">
@@ -498,58 +497,20 @@ you can easily use Kotlin for your specifications. Yes, you call them tests. Sta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_junit_platform">1.3. JUnit Platform</h3>
-<div class="paragraph">
-<p>Spek provides a <a href="http://junit.org/junit5/">JUnit Platform</a> <em>TestEngine</em>, which is currently the only means
-of executing your specifications.</p>
-</div>
-<div class="sect3">
-<h4 id="_junit_4">1.3.1. JUnit 4</h4>
-<div class="paragraph">
-<p>The old <strong>JUnit 4</strong> runner is still supported through the <strong>JUnit Platform</strong>, just annotate your spec with <code>@RunWith(JUnitPlatform::class)</code>.</p>
-</div>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<div class="title">Important</div>
-</td>
-<td class="content">
-Make sure you have <code>org.junit.platform:junit-platform-runner</code> in your test classpath.
-</td>
-</tr>
-</table>
-</div>
-<div class="listingblock">
-<div class="title">CalculatorSpec.kt</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-kotlin" data-lang="kotlin">@RunWith(JUnitPlatform::class)
-class CalculatorSpec: Spek({
-    ...
-})</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Support for <strong>JUnit 4</strong> is very limited and it also may be dropped in future releases. Upgrading can be as simple as dropping
-the <code>@RunWith(&#8230;&#8203;)</code> annotation and applying the appropriate build tool plugin (refer to <a href="#setting-up">Setting up</a>).</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_supported_java_versions">1.4. Supported Java Versions</h3>
+<h3 id="_supported_java_versions">1.3. Supported Java Versions</h3>
 <div class="paragraph">
 <p>Current version requires JDK 8 (as a requirement for JUnit 5).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_android">1.5. Android</h3>
+<h3 id="_android">1.4. Android</h3>
 <div class="paragraph">
 <p>Android integration tests is currently not supported and you have to use the
 <a href="http://tools.android.com/tech-docs/jackandjill">Jack toolchain</a> to be able to build against Java 8.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="ide-support">1.6. IDE Support</h3>
+<h3 id="ide-support">1.5. IDE Support</h3>
 <div class="paragraph">
 <p>Spek provides an <a href="https://plugins.jetbrains.com/plugin/8564">IntelliJ IDEA and Android Studio plugin</a>.</p>
 </div>
@@ -572,6 +533,9 @@ If you&#8217;re using the <strong>JUnit 4</strong> runner, the plugin won&#8217;
 <h2 id="setting-up">2. Setting up</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>Currently, Spek is implemented as a <a href="http://junit.org/junit5/">JUnit Platform</a> <strong>TestEngine</strong>.</p>
+</div>
+<div class="paragraph">
 <p>You will need to include <code>org.jetbrains.spek:spek-api</code> and <code>org.jetbrains.spek:spek-junit-platform-engine</code>
 in your test classpath. The former is needed during compilation, while the latter during runtime only.</p>
 </div>
@@ -582,7 +546,7 @@ in your test classpath. The former is needed during compilation, while the latte
 <div class="title">Note</div>
 </td>
 <td class="content">
-For Android projects check <a href="#setting-up-android">Setting up for Android</a> section.
+For Android projects check <a href="#setting-up-legacy">Using Spek with JUnit 4</a> section.
 </td>
 </tr>
 </table>
@@ -691,28 +655,26 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 </div>
 </div>
 <div class="sect1">
-<h2 id="setting-up-android">3. Setting up for Android</h2>
+<h2 id="setting-up-legacy">3. Using Spek with JUnit 4</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The JUnit Platform gradle plugin currently doesn&#8217;t support Android projects (see <a href="https://github.com/junit-team/junit5/issues/204" class="bare">https://github.com/junit-team/junit5/issues/204</a>), but thankfully
-a JUnit 4 based runner is available.</p>
+<p>JUnit 4 based runner is still supported via <a href="http://junit.org/junit5/">JUnit Platform</a>. You will need the following dependencies on the test classpath:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>org.jetbrains.spek:spek-api:1.1.0-beta3</code></p>
+</li>
+<li>
+<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3</code></p>
+</li>
+<li>
+<p><code>org.junit.platform:junit-platform-runner:1.0.0-M3</code></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>First, add the required dependencies.</p>
-</div>
-<div class="listingblock">
-<div class="title">build.gradle</div>
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">// setup dependencies
-dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.1.0-beta3'
-    testCompile 'org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3'
-    testCompile 'org.junit.platform:junit-platform-runner:1.0.0-M3'
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Finally, make sure your specs are annotated with <code>@RunWith(JUnitPlatform::class)</code>.</p>
+<p>The finally, annotate your specs with <code>@RunWith(JUnitPlatform::class)</code>.</p>
 </div>
 <div class="listingblock">
 <div class="title">CalculatorSpec.kt</div>
@@ -723,8 +685,17 @@ class CalculatorSpec: Spek({
 })</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>As mentioned in the <a href="#ide-support">IDE Support</a> section, the IDEA plugin won&#8217;t work if you&#8217;re using the JUnit 4 runner.</p>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+As mentioned in the <a href="#ide-support">IDE Support</a> section, the IDEA plugin won&#8217;t work if you&#8217;re using the JUnit 4 runner.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -1075,7 +1046,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-04 12:49:20 +00:00
+Last updated 2017-01-04 13:25:33 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="lib/highlight/styles/github.min.css">
