@@ -61,6 +61,17 @@ class SpekSpecs : Spek({
                 unroll.spec.invoke(countingTestContainer)
                 typeKept shouldMatch equalTo(true)
             }
+            it("accepts table data of length 3") {
+                val unroll: Spek = wrap {
+                    unroll(
+                            testCase(1, 2, 3)
+                    ) { a, b, c ->
+                        it("should be visible with $a $b $c") {}
+                    }
+                }
+                unroll.spec.invoke(countingTestContainer)
+                countingTestContainer.testNumber shouldMatch equalTo(1)
+            }
         }
     }
 })
