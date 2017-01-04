@@ -8,6 +8,19 @@ Spek doesn't have any built-in assertions, luckily there are several libraries i
 - https://github.com/winterbe/expekt[Expekt]
 - https://github.com/MarkusAmshove/Kluent[Kluent]
 
+=== Scopes
+Spek provides 3 types of scopes, which are used to define your spec.
+
+==== Test
+Equivalent to test methods in JUnit, normally all assertions are done in this scope. Use `it` to define a test scope.
+
+==== Group
+May contain an arbitrary number of nested scopes for better grouping of your tests.
+
+==== Action
+Represents an action that will be performed and may contain any number of test scopes. You can think of each `test` as an assertion to
+validate the expected behaviour of the action performed.
+
 === Basic Structure
 
 Your specifications need to inherit from the `org.jetbrains.spek.api.Spek` base class.
@@ -15,42 +28,48 @@ Your specifications need to inherit from the `org.jetbrains.spek.api.Spek` base 
 [source,kotlin]
 .SimpleSpec.kt
 ----
-class SimpleSpec: Spek({
+object SimpleSpec: Spek({
     describe("a calculator") {
         val calculator = SampleCalculator()
 
-        it("should return the result of adding the first number to the second number") {
+        on("addition") {
             val sum = calculator.sum(2, 4)
-            assertEquals(6, sum)
+
+            it("should return the result of adding the first number to the second number") {
+                assertEquals(6, sum)
+            }
         }
 
-        it("should return the result of subtracting the second number from the first number") {
+        on("subtraction") {
             val subtract = calculator.subtract(4, 2)
-            assertEquals(2, subtract)
+
+            it("should return the result of subtracting the second number from the first number") {
+                assertEquals(2, subtract)
+            }
         }
     }
 })
 ----
 
-The `it` method creates a `test` scope, which is equivalent to a test method in JUnit. While the `describe` method creates
-a `group` scope, which can contain nested `test` and/or `group` scopes. Spek supports arbitrary number of nested scopes for
-better grouping of your tests.
-
-Aside from `describe`, Spek also provides `given`, `on` and `context` to create `group` scopes.
+Aside from `describe`, Spek also provides `given` and `context` to create `group` scopes.
 
 IMPORTANT: Due to how Spek is structured, `group` scopes are eagerly evaluated during the discovery phase. Any logic that
 needs to be evaluated before and/or after `test` scopes should be done using fixtures, which will be discussed in the next section.
 
 === Fixtures
+Spek allows running arbitrary code before and after a `group` and `test` is executed.
 
-Spek provides `beforeEachTest` and `afterEachTest` fixtures, which allows running arbitrary code before and after a `test`, respectively. Every
-`group` scope can declare an arbitrary number of fixtures, the order they are executed is based on the order they are declared.
+NOTE: You can't declare fixtures within `action` scopes.
 
 [source,kotlin]
 .FixtureSpec.kt
 ----
-class FixtureSpec: Spek({
+object FixtureSpec: Spek({
     describe("a group") {
+        beforeGroup {
+            ...
+        }
+
         beforeEachTest {
             ...
         }
@@ -73,6 +92,10 @@ class FixtureSpec: Spek({
         afterEachTest {
             ...
         }
+
+        afterGroup {
+            ...
+        }
     }
 })
 ----
@@ -89,7 +112,7 @@ of writing this types of tests and removing a lot of boilerplate code.
 [source,kotlin]
 .SimpleCalculatorSpec.kt
 ----
-class SimpleCalculatorSpec: SubjectSpek<Calculator>({
+object SimpleCalculatorSpec: SubjectSpek<Calculator>({
     subject { Calculator() } <1>
 
     it("should return the result of adding the first number to the second number") {
@@ -111,10 +134,10 @@ Given `AdvancedCalculator` which is a subclass of `Calculator`, a typical test w
 [source,kotlin]
 .AdvancedCalculatorSpec.kt
 ----
-class AdvancedCalculatorSpec: SubjectSpek<AdvancedCalculator>({
+object AdvancedCalculatorSpec: SubjectSpek<AdvancedCalculator>({
     subject { AdvancedCalculator() }
 
-    itBehavesLike(SimpleCalculatorSpec::class)
+    itBehavesLike(SimpleCalculatorSpec)
 
     describe("pow") {
         it("should return the power of base raise to exponent") {

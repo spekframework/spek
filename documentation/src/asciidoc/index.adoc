@@ -1,6 +1,5 @@
 = Spek User Guide
 :toc: left
-:sectnums:
 :source-highlighter: highlight.js
 :revremark: pass:m[https://jetbrains.github.io/spek[Spek Home]]
 
