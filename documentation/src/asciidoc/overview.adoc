@@ -2,7 +2,7 @@
 This guide assumes that you have a basic knowledge of https://kotlinlang.org/[Kotlin]. If you have a _Ruby_
 background and are familiar with http://rspec.info/[RSpec], you won't have any issues to get up and running.
 
-=== Why a Specification Framework?
+=== What is Spek?
 
 Tests are not only to check the code you've written executes and works, but also that it works as it should, that is, that as a developer
 what's been implemented matches the requirements.
@@ -13,7 +13,7 @@ place we write the test code?
 
 That's what Spek does. It is a specification framework that allows you to easily define specifications in a clear, understandable, human readable way.
 
-You call them tests. We call them specifications.
+You call them tests, we call them specifications.
 
 === Why Kotlin?
 
@@ -22,28 +22,6 @@ and the ability to create nice DSL. It's 100% compatible with Java which means y
 
 Spek is written in Kotlin and specifications you write will be written in Kotlin. However, your SUT (System under Test) can be Java or Kotlin. As such
 you can easily use Kotlin for your specifications. Yes, you call them tests. Start calling them specifications.
-
-=== JUnit Platform
-Spek provides a http://junit.org/junit5/[JUnit Platform] __TestEngine__, which is currently the only means
-of executing your specifications.
-
-==== JUnit 4
-The old *JUnit 4* runner is still supported through the **JUnit Platform**, just annotate your spec with `@RunWith(JUnitPlatform::class)`.
-
-IMPORTANT: Make sure you have `org.junit.platform:junit-platform-runner` in your test classpath.
-
-[source,kotlin]
-.CalculatorSpec.kt
-----
-@RunWith(JUnitPlatform::class)
-class CalculatorSpec: Spek({
-    ...
-})
-----
-
-Support for *JUnit 4* is very limited and it also may be dropped in future releases. Upgrading can be as simple as dropping
-the `@RunWith(...)` annotation and applying the appropriate build tool plugin (refer to <<setting-up>>).
-
 
 
 === Supported Java Versions

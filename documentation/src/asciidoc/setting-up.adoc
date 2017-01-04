@@ -1,9 +1,11 @@
 [[setting-up]]
 == Setting up
+Currently, Spek is implemented as a http://junit.org/junit5/[JUnit Platform] *TestEngine*.
+
 You will need to include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine`
 in your test classpath. The former is needed during compilation, while the latter during runtime only.
 
-NOTE: For Android projects check <<setting-up-android>> section.
+NOTE: For Android projects check <<setting-up-legacy>> section.
 
 === Gradle
 JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#running-tests-build[gradle plugin].
@@ -99,24 +101,15 @@ JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#runn
 </dependency>
 ----
 
-[[setting-up-android]]
-== Setting up for Android
-The JUnit Platform gradle plugin currently doesn't support Android projects (see https://github.com/junit-team/junit5/issues/204), but thankfully
-a JUnit 4 based runner is available.
+[[setting-up-legacy]]
+== Using Spek with JUnit 4
+JUnit 4 based runner is still supported via http://junit.org/junit5/[JUnit Platform]. You will need the following dependencies on the test classpath:
 
-First, add the required dependencies.
-[source,groovy,subs="attributes"]
-.build.gradle
-----
-// setup dependencies
-dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:{version}'
-    testCompile 'org.jetbrains.spek:spek-junit-platform-engine:{version}'
-    testCompile 'org.junit.platform:junit-platform-runner:{junitPlatformVersion}'
-}
-----
+- `org.jetbrains.spek:spek-api:{version}`
+- `org.jetbrains.spek:spek-junit-platform-engine:{version}`
+- `org.junit.platform:junit-platform-runner:{junitPlatformVersion}`
 
-Finally, make sure your specs are annotated with `@RunWith(JUnitPlatform::class)`.
+The finally, annotate your specs with `@RunWith(JUnitPlatform::class)`.
 
 [source,kotlin]
 .CalculatorSpec.kt
@@ -127,6 +120,6 @@ class CalculatorSpec: Spek({
 })
 ----
 
-As mentioned in the <<ide-support>> section, the IDEA plugin won't work if you're using the JUnit 4 runner.
+IMPORTANT: As mentioned in the <<ide-support>> section, the IDEA plugin won't work if you're using the JUnit 4 runner.
 
 
