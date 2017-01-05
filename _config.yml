@@ -1,6 +1,6 @@
 timezone:    Europe/Madrid
 github:      https://github.com/jetbrains/spek
-baseurl:     /spek
+baseurl:     ""
 markdown: kramdown
 kramdown:
   input: GFM
