@@ -73,6 +73,48 @@ publishing {
             }
         }
 
+        subjectExtension(MavenPublication) {
+            groupId = 'org.jetbrains.spek'
+            artifactId = 'spek-subject-extension'
+            version = rootProject.version
+
+            from project(':spek-subject-extension').components.java
+            artifact project(':spek-subject-extension').tasks['sourceJar']
+            artifact project(':spek-subject-extension').tasks['javadocJar']
+
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    it.scope[0].value = ('compile')
+                }
+
+                asNode().children().last() + {
+                    resolveStrategy = DELEGATE_FIRST
+                    name 'Spek'
+                    description 'A Specification Framework for the JVM'
+                    url 'https://jetbrains.github.io/spek'
+                    licenses {
+                        license {
+                            name 'BSD New'
+                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            distribution 'spek'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'Spek Contributors'
+                            organization 'JetBrains'
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/jetbrains/spek.git'
+                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                        url 'http://github.com/jetbrains/spek'
+                    }
+                }
+            }
+        }
+
         engine(MavenPublication) {
             groupId = 'org.jetbrains.spek'
             artifactId = 'spek-junit-platform-engine'
@@ -139,7 +181,7 @@ bintray {
         }
     }
 
-    publications = ['api', 'engine']
+    publications = ['api', 'engine', 'subjectExtension']
 }
 
 artifactory {
@@ -155,7 +197,7 @@ artifactory {
             maven = true
         }
         defaults {
-            publications('api', 'engine')
+            publications('api', 'engine', 'subjectExtension')
         }
     }
     resolve {
