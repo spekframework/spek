@@ -15,7 +15,9 @@ JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#runni
 ----
 // setup the plugin
 buildscript {
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:{junitPlatformVersion}'
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:{junitPlatformVersion}'
+    }
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
