@@ -562,7 +562,9 @@ For Android projects check <a href="#setting-up-legacy">Using Spek with JUnit 4<
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">// setup the plugin
 buildscript {
-    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3'
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3'
+    }
 }
 
 apply plugin: 'org.junit.platform.gradle.plugin'
@@ -573,6 +575,10 @@ junitPlatform {
             include 'spek'
         }
     }
+}
+
+repositories {
+    maven { url "http://dl.bintray.com/jetbrains/spek" }
 }
 
 // setup dependencies
@@ -1092,7 +1098,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-06 01:09:31 +00:00
+Last updated 2017-01-07 11:39:52 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="lib/highlight/styles/github.min.css">
