@@ -11,8 +11,8 @@ import kotlin.test.assertEquals
 object CalculatorTableSpec : Spek({
     describe("subtract") {
         with(
-                example(4, 2),
-                example(5, 3)
+            example(4, 2),
+            example(5, 3)
         ) { a, b ->
             it("should return the result of subtracting $b from $a") {
                 val subtract = Calculator().subtract(a, b)
