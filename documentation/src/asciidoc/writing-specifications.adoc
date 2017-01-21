@@ -148,3 +148,50 @@ object AdvancedCalculatorSpec: SubjectSpek<AdvancedCalculator>({
 ----
 
 This will include all scopes declared in `SimpleCalculatorSpec`.
+
+=== Example based tests aka table based tests aka parametrized tests
+
+NOTE: This feature is currently experimental.
+
+Sometimes you have tests that looks a lot alike. They differ just by some variables.
+Imagine you have tests like :
+
+[source,kotlin]
+.ExampleBasedSpec.kt
+----
+object ExampleBasedSpec: Spek({
+    describe("a calculator's addition") {
+        val calculator = Calculator()
+        it("should return the result of adding 2 to 4") {
+            assertEquals(6, calculator.add(2, 4))
+        }
+        it("should return the result of adding 3 to 3") {
+            assertEquals(6, calculator.add(3, 3))
+        }
+    }
+})
+----
+
+You can see that you have that looks a lot alike except for the inputs. With examples based tests, you can then write
+ it that way :
+
+[source,kotlin]
+.ExampleBasedSpec.kt
+----
+object ExampleBasedSpec: Spek({
+    describe("a calculator") {
+        val calculator = Calculator()
+        with(
+            example(2, 4),
+            example(3, 3)
+        ) { a, b ->
+            it("should return the result of adding two numbers together") {
+                assertEquals(6, calculator.add(a, b))
+            }
+        }
+    }
+})
+----
+
+You can then easily add new examples ! The best part of all : the test can have a name much closer to the real
+business !
