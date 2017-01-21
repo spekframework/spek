@@ -26,6 +26,7 @@ import org.junit.platform.engine.discovery.UniqueIdSelector
 import org.junit.platform.engine.support.descriptor.ClassSource
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
+import java.lang.reflect.Modifier
 import java.nio.file.Paths
 import java.util.LinkedList
 import java.util.function.Consumer
@@ -55,24 +56,26 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         = SpekExecutionContext(request)
 
     private fun resolveSpecs(discoveryRequest: EngineDiscoveryRequest, engineDescriptor: EngineDescriptor) {
-        val isSpec = java.util.function.Predicate<Class<*>> {
-            Spek::class.java.isAssignableFrom(it)
+        val isValidSpec = java.util.function.Predicate<Class<*>> {
+            Spek::class.java.isAssignableFrom(it) && !Modifier.isAbstract(it.modifiers)
         }
+
         val isSpecClass = java.util.function.Predicate<String>(String::isNotEmpty)
         discoveryRequest.getSelectorsByType(ClasspathRootSelector::class.java).forEach {
-            ReflectionUtils.findAllClassesInClasspathRoot(Paths.get(it.classpathRoot), isSpec, isSpecClass).forEach {
-                resolveSpec(engineDescriptor, it)
-            }
+            ReflectionUtils.findAllClassesInClasspathRoot(Paths.get(it.classpathRoot), isValidSpec, isSpecClass)
+                .forEach {
+                    resolveSpec(engineDescriptor, it)
+                }
         }
 
         discoveryRequest.getSelectorsByType(PackageSelector::class.java).forEach {
-            ReflectionUtils.findAllClassesInPackage(it.packageName, isSpec, isSpecClass).forEach {
+            ReflectionUtils.findAllClassesInPackage(it.packageName, isValidSpec, isSpecClass).forEach {
                 resolveSpec(engineDescriptor, it)
             }
         }
 
         discoveryRequest.getSelectorsByType(ClassSelector::class.java).forEach {
-            if (isSpec.test(it.javaClass)) {
+            if (isValidSpec.test(it.javaClass)) {
                 resolveSpec(engineDescriptor, it.javaClass as Class<Spek>)
             }
         }

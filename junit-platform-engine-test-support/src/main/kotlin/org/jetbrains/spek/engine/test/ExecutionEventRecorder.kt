@@ -5,6 +5,7 @@ import org.junit.platform.engine.EngineExecutionListener
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestExecutionResult
 import org.junit.platform.engine.reporting.ReportEntry
+import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import java.util.LinkedList
 
 /**

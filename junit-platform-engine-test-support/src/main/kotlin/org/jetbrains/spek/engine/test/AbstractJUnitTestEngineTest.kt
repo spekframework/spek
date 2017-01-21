@@ -19,6 +19,14 @@ abstract class AbstractJUnitTestEngineTest<T: TestEngine>(private val engine: T)
         return executeTests(request.selectors(DiscoverySelectors.selectClass(testClass.java)).build())
     }
 
+    protected fun executeForPackage(`package`: String): ExecutionEventRecorder {
+        val request = LauncherDiscoveryRequestBuilder.request()
+        return executeTests(
+            request.selectors(DiscoverySelectors.selectPackage(`package`))
+                .build()
+        )
+    }
+
     protected fun executeTests(request: LauncherDiscoveryRequest): ExecutionEventRecorder {
         val descriptor = discoverTests(request)
         val eventRecorder = ExecutionEventRecorder()
