@@ -103,7 +103,10 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     private fun resolveSpec(engineDescriptor: EngineDescriptor, klass: Class<*>) {
-        val lifecycleManager = LifecycleManager()
+        val fixtures = FixturesAdapter()
+        val lifecycleManager = LifecycleManager().apply {
+            addListener(fixtures)
+        }
 
         val kotlinClass = klass.kotlin
         val instance = instanceFactoryFor(kotlinClass).create(kotlinClass as KClass<Spek>)
@@ -114,7 +117,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         )
         engineDescriptor.addChild(root)
 
-        instance.spec.invoke(Collector(root, lifecycleManager))
+        instance.spec.invoke(Collector(root, lifecycleManager, fixtures))
 
     }
 
@@ -127,10 +130,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     open class Collector(val root: Scope.Group,
-                         val lifecycleManager: LifecycleManager): Spec {
-        val fixtures = FixturesAdapter().apply {
-            lifecycleManager.addListener(this)
-        }
+                         val lifecycleManager: LifecycleManager,
+                         val fixtures: FixturesAdapter): Spec {
 
         override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
             return LifecycleAwareAdapter(mode, factory).apply {
@@ -148,7 +149,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
                 pending, getSource(), lifecycleManager
             )
             root.addChild(group)
-            body.invoke(Collector(group, lifecycleManager))
+            body.invoke(Collector(group, lifecycleManager, fixtures))
 
         }
 

@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 /**
  * @author Ranie Jade Ramiso
  */
-abstract class AbstractJUnitTestEngineTest<T: TestEngine>(private val engine: T) {
+abstract class AbstractJUnitTestEngineTest<out T: TestEngine>(protected val engine: T) {
 
     protected fun executeTestsForClass(testClass: KClass<*>): ExecutionEventRecorder {
         val request = LauncherDiscoveryRequestBuilder.request()
