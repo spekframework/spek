@@ -12,7 +12,7 @@ data class Example1<out P1> internal constructor(val p1: P1)
 fun <P1> example(p1: P1): Example1<P1> = Example1(p1)
 
 @Experimental
-fun <P1> Spec.with(vararg examples: Example1<P1>, testContent: TestContainer. (P1) -> Unit) {
+fun <P1> TestContainer.with(vararg examples: Example1<P1>, testContent: TestContainer. (P1) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -30,7 +30,7 @@ data class Example2<out P1, out P2> internal constructor(val p1: P1, val p2: P2)
 fun <P1, P2> example(p1: P1, p2: P2): Example2<P1, P2> = Example2(p1, p2)
 
 @Experimental
-fun <P1, P2> Spec.with(vararg examples: Example2<P1, P2>, testContent: TestContainer. (P1, P2) -> Unit) {
+fun <P1, P2> TestContainer.with(vararg examples: Example2<P1, P2>, testContent: TestContainer. (P1, P2) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -48,7 +48,7 @@ data class Example3<out P1, out P2, out P3> internal constructor(val p1: P1, val
 fun <P1, P2, P3> example(p1: P1, p2: P2, p3: P3): Example3<P1, P2, P3> = Example3(p1, p2, p3)
 
 @Experimental
-fun <P1, P2, P3> Spec.with(vararg examples: Example3<P1, P2, P3>, testContent: TestContainer. (P1, P2, P3) -> Unit) {
+fun <P1, P2, P3> TestContainer.with(vararg examples: Example3<P1, P2, P3>, testContent: TestContainer. (P1, P2, P3) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -66,7 +66,7 @@ data class Example4<out P1, out P2, out P3, out P4> internal constructor(val p1:
 fun <P1, P2, P3, P4> example(p1: P1, p2: P2, p3: P3, p4: P4): Example4<P1, P2, P3, P4> = Example4(p1, p2, p3, p4)
 
 @Experimental
-fun <P1, P2, P3, P4> Spec.with(vararg examples: Example4<P1, P2, P3, P4>, testContent: TestContainer. (P1, P2, P3, P4) -> Unit) {
+fun <P1, P2, P3, P4> TestContainer.with(vararg examples: Example4<P1, P2, P3, P4>, testContent: TestContainer. (P1, P2, P3, P4) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -84,7 +84,7 @@ data class Example5<out P1, out P2, out P3, out P4, out P5> internal constructor
 fun <P1, P2, P3, P4, P5> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5): Example5<P1, P2, P3, P4, P5> = Example5(p1, p2, p3, p4, p5)
 
 @Experimental
-fun <P1, P2, P3, P4, P5> Spec.with(vararg examples: Example5<P1, P2, P3, P4, P5>, testContent: TestContainer. (P1, P2, P3, P4, P5) -> Unit) {
+fun <P1, P2, P3, P4, P5> TestContainer.with(vararg examples: Example5<P1, P2, P3, P4, P5>, testContent: TestContainer. (P1, P2, P3, P4, P5) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -102,7 +102,7 @@ data class Example6<out P1, out P2, out P3, out P4, out P5, out P6> internal con
 fun <P1, P2, P3, P4, P5, P6> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6): Example6<P1, P2, P3, P4, P5, P6> = Example6(p1, p2, p3, p4, p5, p6)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6> Spec.with(vararg examples: Example6<P1, P2, P3, P4, P5, P6>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6> TestContainer.with(vararg examples: Example6<P1, P2, P3, P4, P5, P6>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -120,7 +120,7 @@ data class Example7<out P1, out P2, out P3, out P4, out P5, out P6, out P7> inte
 fun <P1, P2, P3, P4, P5, P6, P7> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7): Example7<P1, P2, P3, P4, P5, P6, P7> = Example7(p1, p2, p3, p4, p5, p6, p7)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7> Spec.with(vararg examples: Example7<P1, P2, P3, P4, P5, P6, P7>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7> TestContainer.with(vararg examples: Example7<P1, P2, P3, P4, P5, P6, P7>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -138,7 +138,7 @@ data class Example8<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out 
 fun <P1, P2, P3, P4, P5, P6, P7, P8> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8): Example8<P1, P2, P3, P4, P5, P6, P7, P8> = Example8(p1, p2, p3, p4, p5, p6, p7, p8)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8> Spec.with(vararg examples: Example8<P1, P2, P3, P4, P5, P6, P7, P8>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8> TestContainer.with(vararg examples: Example8<P1, P2, P3, P4, P5, P6, P7, P8>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -156,7 +156,7 @@ data class Example9<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out 
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9): Example9<P1, P2, P3, P4, P5, P6, P7, P8, P9> = Example9(p1, p2, p3, p4, p5, p6, p7, p8, p9)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9> Spec.with(vararg examples: Example9<P1, P2, P3, P4, P5, P6, P7, P8, P9>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9> TestContainer.with(vararg examples: Example9<P1, P2, P3, P4, P5, P6, P7, P8, P9>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -174,7 +174,7 @@ data class Example10<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10): Example10<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> = Example10(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> Spec.with(vararg examples: Example10<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> TestContainer.with(vararg examples: Example10<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -192,7 +192,7 @@ data class Example11<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11): Example11<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11> = Example11(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11> Spec.with(vararg examples: Example11<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11> TestContainer.with(vararg examples: Example11<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -210,7 +210,7 @@ data class Example12<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12): Example12<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12> = Example12(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12> Spec.with(vararg examples: Example12<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12> TestContainer.with(vararg examples: Example12<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -228,7 +228,7 @@ data class Example13<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13): Example13<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13> = Example13(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13> Spec.with(vararg examples: Example13<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13> TestContainer.with(vararg examples: Example13<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -246,7 +246,7 @@ data class Example14<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14): Example14<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14> = Example14(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14> Spec.with(vararg examples: Example14<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14> TestContainer.with(vararg examples: Example14<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -264,7 +264,7 @@ data class Example15<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15): Example15<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15> = Example15(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15> Spec.with(vararg examples: Example15<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15> TestContainer.with(vararg examples: Example15<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -282,7 +282,7 @@ data class Example16<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15, p16: P16): Example16<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16> = Example16(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16> Spec.with(vararg examples: Example16<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16> TestContainer.with(vararg examples: Example16<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -300,7 +300,7 @@ data class Example17<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15, p16: P16, p17: P17): Example17<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17> = Example17(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17> Spec.with(vararg examples: Example17<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17> TestContainer.with(vararg examples: Example17<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -318,7 +318,7 @@ data class Example18<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15, p16: P16, p17: P17, p18: P18): Example18<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18> = Example18(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18> Spec.with(vararg examples: Example18<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18> TestContainer.with(vararg examples: Example18<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -336,7 +336,7 @@ data class Example19<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15, p16: P16, p17: P17, p18: P18, p19: P19): Example19<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19> = Example19(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19> Spec.with(vararg examples: Example19<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19> TestContainer.with(vararg examples: Example19<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -354,7 +354,7 @@ data class Example20<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15, p16: P16, p17: P17, p18: P18, p19: P19, p20: P20): Example20<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20> = Example20(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20> Spec.with(vararg examples: Example20<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20> TestContainer.with(vararg examples: Example20<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
@@ -372,7 +372,7 @@ data class Example21<out P1, out P2, out P3, out P4, out P5, out P6, out P7, out
 fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21> example(p1: P1, p2: P2, p3: P3, p4: P4, p5: P5, p6: P6, p7: P7, p8: P8, p9: P9, p10: P10, p11: P11, p12: P12, p13: P13, p14: P14, p15: P15, p16: P16, p17: P17, p18: P18, p19: P19, p20: P20, p21: P21): Example21<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21> = Example21(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21)
 
 @Experimental
-fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21> Spec.with(vararg examples: Example21<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21) -> Unit) {
+fun <P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21> TestContainer.with(vararg examples: Example21<P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21>, testContent: TestContainer. (P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, P11, P12, P13, P14, P15, P16, P17, P18, P19, P20, P21) -> Unit) {
     examples.forEach {
         val proxyContainer = object : TestContainer by this@with {
             override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
