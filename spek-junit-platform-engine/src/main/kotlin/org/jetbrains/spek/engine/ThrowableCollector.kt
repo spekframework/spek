@@ -25,10 +25,10 @@ class ThrowableCollector {
 
     fun isEmpty() = throwable == null
 
-
     fun assertEmpty() {
-        if (throwable != null) {
-            throw throwable!!
+        throwable?.let {
+            if (it !is AssertionError) it.printStackTrace()
+            throw it
         }
     }
 }
