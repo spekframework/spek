@@ -28,6 +28,18 @@ class InstanceFactoryTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
+    fun testDefaultUsingSecondaryConstructors() {
+        class SomeSpec(number: Int): Spek({
+            it("should be $number") { }
+        }) {
+            constructor(): this(10)
+        }
+
+        val recorder = executeTestsForClass(SomeSpec::class)
+        assertThat(recorder.testSuccessfulCount, equalTo(1))
+    }
+
+    @Test
     fun testUsingObject() {
         @CreateWith(SimpleFactoryAsAnObject::class)
         class SomeSpec: Spek({

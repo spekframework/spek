@@ -40,7 +40,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     val defaultInstanceFactory = object: InstanceFactory {
         override fun <T: Spek> create(spek: KClass<T>): T {
-            return spek.objectInstance ?: spek.primaryConstructor!!.call()
+            return spek.objectInstance ?: spek.constructors.first { it.parameters.isEmpty() }
+                .call()
         }
     }
 
