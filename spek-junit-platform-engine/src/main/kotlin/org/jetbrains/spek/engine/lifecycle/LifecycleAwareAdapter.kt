@@ -14,7 +14,7 @@ import kotlin.reflect.KProperty
 class LifecycleAwareAdapter<T>(val mode: CachingMode, val factory: () -> T): LifecycleAware<T>, LifecycleListener {
     var cached: T? = null
 
-    override fun getValue(thisRef: LifecycleAware<T>, property: KProperty<*>) = invoke()
+    override fun getValue(thisRef: Any?, property: KProperty<*>) = invoke()
 
     override fun invoke(): T {
         if (cached == null) {

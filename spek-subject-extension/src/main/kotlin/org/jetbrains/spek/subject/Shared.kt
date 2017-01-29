@@ -15,7 +15,7 @@ infix fun <T, K: T> SubjectDsl<K>.itBehavesLike(spec: SubjectSpek<T>) {
     include(Spek.wrap {
         val value: SubjectProviderDsl<T> = object: SubjectProviderDsl<T>, Spec by this {
             val adapter = object: LifecycleAware<T> {
-                override fun getValue(thisRef: LifecycleAware<T>, property: KProperty<*>): T {
+                override fun getValue(thisRef: Any?, property: KProperty<*>): T {
                     return this()
                 }
 
