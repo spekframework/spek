@@ -8,6 +8,6 @@ import kotlin.properties.ReadOnlyProperty
  * @since 1.1
  */
 @Experimental
-interface LifecycleAware<T>: ReadOnlyProperty<LifecycleAware<T>, T> {
+interface LifecycleAware<out T>: ReadOnlyProperty<Any?, T> {
     operator fun invoke(): T
 }
