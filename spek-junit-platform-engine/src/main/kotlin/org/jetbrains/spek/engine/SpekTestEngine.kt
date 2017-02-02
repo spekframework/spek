@@ -149,8 +149,16 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
                 root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
                 pending, getSource(), lifecycleManager
             )
-            root.addChild(group)
-            body.invoke(Collector(group, lifecycleManager, fixtures))
+            try {
+                body.invoke(Collector(group, lifecycleManager, fixtures))
+                root.addChild(group)
+            } catch(t: Throwable) {
+                group(description: String, pending, body = {
+                    it("unexpected exception occurred during set up!!!") {
+                        throw t
+                    }
+                })
+            }
 
         }
 
