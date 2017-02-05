@@ -6,12 +6,12 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.table.example
-import org.jetbrains.spek.table.with
+import org.jetbrains.spek.table.forEvery
 import kotlin.test.assertEquals
 
 object CalculatorTableSpec : Spek({
     describe("subtract") {
-        with(
+        forEvery(
             example(4, 2),
             example(5, 3)
         ) { a, b ->
@@ -24,7 +24,7 @@ object CalculatorTableSpec : Spek({
     describe("a calculator") {
         val calculator = Calculator()
         on("addition") {
-            with(
+            forEvery(
                 example(2, 4),
                 example(3, 3)
             ) { a, b ->
