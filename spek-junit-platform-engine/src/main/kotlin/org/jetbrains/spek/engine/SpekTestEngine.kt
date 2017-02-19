@@ -150,7 +150,16 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
                 pending, getSource(), lifecycleManager
             )
             root.addChild(group)
-            body.invoke(Collector(group, lifecycleManager, fixtures))
+            val collector = Collector(group, lifecycleManager, fixtures)
+            try {
+                body.invoke(collector)
+            } catch (e: Throwable) {
+                collector.beforeGroup { throw e }
+                group.addChild(Scope.Test(
+                    root.uniqueId.append(TEST_SEGMENT_TYPE, "Group failure"),
+                    pending, getSource(), lifecycleManager, {}
+                ))
+            }
 
         }
 
