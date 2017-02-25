@@ -13,9 +13,12 @@ class LifecycleManager {
     private val listeners = ArrayList<LifecycleListener>()
 
     fun addListener(listener: LifecycleListener) {
-        if (!listeners.contains(listener)) {
-            listeners.add(0, listener)
+        if (listeners.contains(listener)) {
+            throw IllegalArgumentException("You can only register a listener once.")
+
         }
+
+        listeners.add(0, listener)
     }
 
     fun removeListener(listener: LifecycleListener) {
