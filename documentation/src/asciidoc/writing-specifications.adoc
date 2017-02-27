@@ -3,7 +3,7 @@
 === Assertion Framework
 Spek doesn't have any built-in assertions, luckily there are several libraries in the wild that do. Below are several suggestions:
 
-- `org.jetbrains.kotlin:kotlin-test`
+- `org.jetbrains.kotlin:kotlin-test` (make sure to use the `-ea` VM option in your Spek run configuration when using this one or Kotlin's built in assertions)
 - https://github.com/npryce/hamkrest[HamKrest]
 - https://github.com/winterbe/expekt[Expekt]
 - https://github.com/MarkusAmshove/Kluent[Kluent]
