@@ -17,6 +17,7 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
 
+    testCompile project(':spek-junit-platform-engine')
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile project(':junit-platform-engine-test-support')
 

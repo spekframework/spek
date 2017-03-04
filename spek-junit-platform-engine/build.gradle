@@ -14,7 +14,6 @@ junitPlatform {
 
 dependencies {
     compile project(':spek-api')
-    compile project(':spek-subject-extension')
 
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
