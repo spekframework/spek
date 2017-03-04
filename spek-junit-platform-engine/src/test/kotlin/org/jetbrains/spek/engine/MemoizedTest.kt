@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test
  */
 class MemoizedTest: AbstractSpekTestEngineTest() {
     @Test
-    fun testMemoizedTestCaching() {
+    fun memoizedTestCaching() {
         class MemoizedSpec: Spek({
             val foo = memoized {
                 listOf(1)
@@ -41,7 +41,7 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
-    fun testMemoizedGroupCaching() {
+    fun memoizedGroupCaching() {
         class MemoizedSpec: Spek({
             val foo = memoized(CachingMode.GROUP) {
                 listOf(1)
@@ -50,13 +50,86 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
             var memoized1: List<Int>? = null
             var memoized2: List<Int>? = null
 
-            test("first pass") {
-                memoized1 = foo()
+            group("group") {
+                test("first pass") {
+                    memoized1 = foo()
+                }
             }
 
-            test("second pass") {
-                memoized2 = foo()
+            group("another group") {
+                test("second pass") {
+                    memoized2 = foo()
+                }
+
             }
+
+
+            test("check") {
+                assertThat(memoized1, !sameInstance(memoized2))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
+    fun memoizedNestedGroupCaching() {
+        class MemoizedSpec: Spek({
+            val foo = memoized(CachingMode.GROUP) {
+                listOf(1)
+            }
+
+            var memoized1: List<Int>? = null
+            var memoized2: List<Int>? = null
+
+            group("group") {
+                test("first pass") {
+                    memoized1 = foo()
+                }
+
+                group("another group") {
+                    test("second pass") {
+                        memoized2 = foo()
+                    }
+
+                }
+            }
+
+            test("check") {
+                assertThat(memoized1, !sameInstance(memoized2))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
+    fun memoizedScopeCaching() {
+        class MemoizedSpec: Spek({
+            val foo = memoized(CachingMode.SCOPE) {
+                listOf(1)
+            }
+
+            var memoized1: List<Int>? = null
+            var memoized2: List<Int>? = null
+
+            group("group") {
+                test("first pass") {
+                    memoized1 = foo()
+                }
+            }
+
+            group("another group") {
+                test("second pass") {
+                    memoized2 = foo()
+                }
+
+            }
+
 
             test("check") {
                 assertThat(memoized1, sameInstance(memoized2))
@@ -69,7 +142,41 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
-    fun testMemoizedActionCaching() {
+    fun memoizedScopeCachingWithNestedGroups() {
+        class MemoizedSpec: Spek({
+            val foo = memoized(CachingMode.SCOPE) {
+                listOf(1)
+            }
+
+            var memoized1: List<Int>? = null
+            var memoized2: List<Int>? = null
+
+            group("group") {
+                test("first pass") {
+                    memoized1 = foo()
+                }
+
+                group("another group") {
+                    test("second pass") {
+                        memoized2 = foo()
+                    }
+
+                }
+            }
+
+            test("check") {
+                assertThat(memoized1, sameInstance(memoized2))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+
+    @Test
+    fun memoizedActionCaching() {
         class MemoizedSpec: Spek({
             val foo = memoized {
                 listOf(1)

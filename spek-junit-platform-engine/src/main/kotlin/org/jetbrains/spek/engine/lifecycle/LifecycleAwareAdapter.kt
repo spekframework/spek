@@ -1,7 +1,6 @@
 package org.jetbrains.spek.engine.lifecycle
 
 import org.jetbrains.spek.api.lifecycle.ActionScope
-import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.jetbrains.spek.api.lifecycle.GroupScope
 import org.jetbrains.spek.api.lifecycle.LifecycleAware
 import org.jetbrains.spek.api.lifecycle.LifecycleListener
@@ -11,7 +10,8 @@ import kotlin.reflect.KProperty
 /**
  * @author Ranie Jade Ramiso
  */
-class LifecycleAwareAdapter<T>(val mode: CachingMode, val factory: () -> T): LifecycleAware<T>, LifecycleListener {
+sealed class LifecycleAwareAdapter<T>(val factory: () -> T)
+    : LifecycleAware<T>, LifecycleListener {
     var cached: T? = null
 
     override fun getValue(thisRef: Any?, property: KProperty<*>) = invoke()
@@ -23,21 +23,38 @@ class LifecycleAwareAdapter<T>(val mode: CachingMode, val factory: () -> T): Lif
         return cached!!
     }
 
-    override fun afterExecuteTest(test: TestScope) {
-        if (test.parent !is ActionScope) {
-            if (mode == CachingMode.TEST) {
+    class GroupCachingModeAdapter<T>(factory: () -> T): LifecycleAwareAdapter<T>(factory) {
+        val stack = mutableListOf<T?>()
+
+        override fun beforeExecuteGroup(group: GroupScope) {
+            stack.add(0, cached)
+            cached = null
+        }
+
+        override fun afterExecuteGroup(group: GroupScope) {
+            if (stack.isNotEmpty()) {
+                cached = stack.removeAt(0)
+            }
+        }
+    }
+
+    class ScopeCachingModeAdapter<T>(val group: GroupScope, factory: () -> T): LifecycleAwareAdapter<T>(factory) {
+        override fun afterExecuteGroup(group: GroupScope) {
+            if (this.group == group) {
                 cached = null
             }
         }
     }
 
-    override fun afterExecuteGroup(group: GroupScope) {
-        if (mode == CachingMode.GROUP) {
+    class TestCachingModeAdapter<T>(factory: () -> T): LifecycleAwareAdapter<T>(factory) {
+        override fun afterExecuteTest(test: TestScope) {
+            if (test.parent !is ActionScope) {
+                cached = null
+            }
+        }
+
+        override fun afterExecuteAction(action: ActionScope) {
             cached = null
         }
-    }
-
-    override fun afterExecuteAction(action: ActionScope) {
-        cached = null
     }
 }
