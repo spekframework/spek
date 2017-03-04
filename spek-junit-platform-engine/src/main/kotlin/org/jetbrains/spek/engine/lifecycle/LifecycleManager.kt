@@ -4,16 +4,21 @@ import org.jetbrains.spek.api.lifecycle.ActionScope
 import org.jetbrains.spek.api.lifecycle.GroupScope
 import org.jetbrains.spek.api.lifecycle.LifecycleListener
 import org.jetbrains.spek.api.lifecycle.TestScope
-import java.util.HashSet
+import java.util.ArrayList
 
 /**
  * @author Ranie Jade Ramiso
  */
 class LifecycleManager {
-    private val listeners = HashSet<LifecycleListener>()
+    private val listeners = ArrayList<LifecycleListener>()
 
     fun addListener(listener: LifecycleListener) {
-        listeners.add(listener)
+        if (listeners.contains(listener)) {
+            throw IllegalArgumentException("You can only register a listener once.")
+
+        }
+
+        listeners.add(0, listener)
     }
 
     fun removeListener(listener: LifecycleListener) {
