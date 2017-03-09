@@ -135,7 +135,12 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
                          val fixtures: FixturesAdapter): Spec {
 
         override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
-            return LifecycleAwareAdapter(mode, factory).apply {
+            val adapter = when (mode) {
+                CachingMode.GROUP -> LifecycleAwareAdapter.GroupCachingModeAdapter(factory)
+                CachingMode.TEST -> LifecycleAwareAdapter.TestCachingModeAdapter(factory)
+                CachingMode.SCOPE -> LifecycleAwareAdapter.ScopeCachingModeAdapter(root, factory)
+            }
+            return adapter.apply {
                 registerListener(this)
             }
         }
