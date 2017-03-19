@@ -439,6 +439,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_gradle">Gradle</a></li>
 <li><a href="#_gradle_kotlin_script">Gradle Kotlin Script</a></li>
+<li><a href="#_using_later_versions_of_kotlin">Using later versions of Kotlin</a></li>
 <li><a href="#_maven">Maven</a></li>
 </ul>
 </li>
@@ -583,8 +584,8 @@ repositories {
 
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.1.0-beta3'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3'
+    testCompile 'org.jetbrains.spek:spek-api:1.1.0-beta4'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta4'
 }</code></pre>
 </div>
 </div>
@@ -621,8 +622,8 @@ configure<JUnitPlatformExtension> {
 
 // setup dependencies
 dependencies {
-    testCompile("org.jetbrains.spek:spek-api:1.1.0-beta3")
-    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3")
+    testCompile("org.jetbrains.spek:spek-api:1.1.0-beta4")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta4")
 }
 
 // extension for configuration
@@ -642,6 +643,32 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 </div>
 </div>
 <div class="sect2">
+<h3 id="_using_later_versions_of_kotlin">Using later versions of Kotlin</h3>
+<div class="paragraph">
+<p>If you are using a version of Kotlin that is different than the one used by Spek, you will want to exclude
+the group in your dependency definition.</p>
+</div>
+<div class="listingblock">
+<div class="title">build.gradle</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-groovy" data-lang="groovy">dependencies {
+
+    // your application's newer version of Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testCompile ('org.jetbrains.spek:spek-api:1.1.0-beta4') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta4') {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_maven">Maven</h3>
 <div class="paragraph">
 <p>JUnit provides support for <a href="http://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven">Maven</a>.</p>
@@ -653,7 +680,7 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 &lt;dependency&gt;
   &lt;groupId&gt;org.jetbrains.spek&lt;/groupId&gt;
   &lt;artifactId&gt;spek-api&lt;/artifactId&gt;
-  &lt;version&gt;1.1.0-beta3&lt;/version&gt;
+  &lt;version&gt;1.1.0-beta4&lt;/version&gt;
   &lt;type&gt;pom&lt;/type&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -670,10 +697,10 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 <div class="ulist">
 <ul>
 <li>
-<p><code>org.jetbrains.spek:spek-api:1.1.0-beta3</code></p>
+<p><code>org.jetbrains.spek:spek-api:1.1.0-beta4</code></p>
 </li>
 <li>
-<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta3</code></p>
+<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.0-beta4</code></p>
 </li>
 <li>
 <p><code>org.junit.platform:junit-platform-runner:1.0.0-M3</code></p>
@@ -1101,7 +1128,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-09 14:17:51 +00:00
+Last updated 2017-03-19 13:23:06 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="lib/highlight/styles/github.min.css">
