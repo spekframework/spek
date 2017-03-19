@@ -2,14 +2,14 @@ package org.jetbrains.spek.samples.subject
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.throws
+import org.jetbrains.samples.Calculator
 import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.samples.Calculator
 import org.jetbrains.spek.subject.SubjectSpek
 import kotlin.test.assertEquals
 
-object CalculatorSpec: SubjectSpek<Calculator>({
+object CalculatorSpec : SubjectSpek<Calculator>({
     subject { Calculator() }
 
     describe("addition") {
