@@ -5,7 +5,7 @@ latest:
   date: 27th March 2017
 
 list:
-  version: 1.0
-  build: 1.0.89
-  kotlinVersion: 1.0.3
-  date: 1st September 2016
+  - version: 1.0
+    build: 1.0.89
+    kotlinVersion: 1.0.3
+    date: 1st September 2016
