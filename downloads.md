@@ -17,7 +17,7 @@ Kotlin version: {{ site.data.releases.latest.kotlinVersion }}
 
 <ul>
 {% for entry in site.data.releases.list %}
-<li>{{ entry.date }} - <a href="{{ site.baseurl}}/{{ entry.notes }}/{{ entry.version }}">{{ entry.version }}</a> Build: {{ entry.build }}. Kotlin: {{ entry.kotlinVersion }}</li>
+<li>{{ entry.date }} - <a href="{{ site.baseurl}}/notes/{{ entry.version }}">{{ entry.version }}</a> Build: {{ entry.build }}. Kotlin: {{ entry.kotlinVersion }}</li>
 {% endfor %}
 </ul>
 
