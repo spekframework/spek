@@ -6,6 +6,8 @@ import org.jetbrains.spek.api.lifecycle.ActionScope
 import org.jetbrains.spek.api.lifecycle.GroupScope
 import org.jetbrains.spek.api.lifecycle.TestScope
 import org.jetbrains.spek.engine.lifecycle.LifecycleManager
+import org.junit.platform.engine.TestDescriptor.Type.CONTAINER
+import org.junit.platform.engine.TestDescriptor.Type.TEST
 import org.junit.platform.engine.TestSource
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.AbstractTestDescriptor
@@ -38,8 +40,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
                  lifecycleManager: LifecycleManager,
                  private val body: Action.(SpekExecutionContext) -> Unit)
         : Scope(uniqueId, pending, source, lifecycleManager), ActionScope {
-        override fun isTest() = false
-        override fun isContainer() = true
+        override fun getType() = CONTAINER
         override fun hasTests() = true
 
         override fun before(context: SpekExecutionContext): SpekExecutionContext {
@@ -67,9 +68,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
                      source: TestSource?,
                      lifecycleManager: LifecycleManager)
         : Scope(uniqueId, pending, source, lifecycleManager), GroupScope {
-
-        override fun isTest() = false
-        override fun isContainer() = true
+        override fun getType() = CONTAINER
 
         override fun before(context: SpekExecutionContext): SpekExecutionContext {
             lifecycleManager.beforeExecuteGroup(this@Group)
@@ -87,8 +86,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
             getParent().get() as GroupScope
         }
 
-        override fun isTest() = true
-        override fun isContainer() = false
+        override fun getType() = TEST
         override fun isLeaf() = true
 
         override fun before(context: SpekExecutionContext): SpekExecutionContext {
