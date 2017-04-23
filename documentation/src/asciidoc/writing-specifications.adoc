@@ -1,5 +1,90 @@
 == Writing Specifications
 
+
+=== Styles
+
+It is important to know that Spek allows to styles of tests:
+
+* given, on, it
+* describe it
+
+==== given, on, it
+
+This is the classic Spek style and what the first version of Spek was based on. The idea is quite straightforward:
+
+A test consists of four components:
+
+* name: which is the class name, indicating what exactly it is we're testing
+* given: which defines the context, that is, the conditions under which I'm testing. Can be repeated any number of times for each `name`
+* on: which defines the action, that is, what is executing for the test to later verify. Can be repeated any number of times for each `given`.
+* it: which defines the actual tests, that is, what to be verified once the action is executed. Can be repeated any number of times for each `on`.
+
+In the case of a calculator, this would be:
+
+[source,kotlin]
+.SimpleSpec.kt
+----
+object CalculatorSpec: Spek({
+    given("a calculator") {
+        val calculator = SampleCalculator()
+        on("addition") {
+            val sum = calculator.sum(2, 4)
+            it("should return the result of adding the first number to the second number") {
+                assertEquals(6, sum)
+            }
+        }
+        on("subtraction") {
+            val subtract = calculator.subtract(4, 2)
+            it("should return the result of subtracting the second number from the first number") {
+                assertEquals(2, subtract)
+            }
+        }
+    }
+})
+----
+
+Notice that both in this style, as the one below, the entire test is described inside of the Spek constructor. Each specification needs to inherit from the class `Spek` defined
+in the `org.jetbrains.api` package.
+
+==== describe, it
+
+The style follows the *Jasmine* and *Mocha* style frameworks, where things are defined in `describe` blocks.
+
+A test consists of a minimum of three parts:
+
+* name: which is the class name, indicating what exactly it is we're testing
+* describe: which defines the context of what we're testing. We can nest as many `describes` as we want. Each one should provide more context
+* it: which defines the actual tests, that is, what to be verified once the action is executed. Can be repeated any number of times for each `describe`
+
+[source,kotlin]
+.SimpleSpec.kt
+----
+object SimpleSpec: Spek({
+    describe("a calculator") {
+        val calculator = SampleCalculator()
+
+        on("addition") {
+            val sum = calculator.sum(2, 4)
+
+            it("should return the result of adding the first number to the second number") {
+                assertEquals(6, sum)
+            }
+        }
+
+        on("subtraction") {
+            val subtract = calculator.subtract(4, 2)
+
+            it("should return the result of subtracting the second number from the first number") {
+                assertEquals(2, subtract)
+            }
+        }
+    }
+})
+----
+
+Notice that both in this style, as the one above, the entire test is described inside of the Spek constructor. Each specification needs to inherit from the class `Spek` defined
+in the `org.jetbrains.api` package.
+
 === Assertion Framework
 Spek doesn't have any built-in assertions, luckily there are several libraries in the wild that do. Below are several suggestions:
 

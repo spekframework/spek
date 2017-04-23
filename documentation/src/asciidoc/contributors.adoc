@@ -1,8 +1,8 @@
 == Core Team
 
-Hadi Hariri
-Ranie Jade Ramiso
-Artem Zinnatullin
+Hadi Hariri +
+Ranie Jade Ramiso +
+Artem Zinnatullin +
 
 == Main Contributors
 
