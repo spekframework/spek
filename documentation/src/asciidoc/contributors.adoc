@@ -1,3 +1,9 @@
+== Core Team
+
+Hadi Hariri
+Ranie Jade Ramiso
+Artem Zinnatullin
+
 == Main Contributors
 
 _In alphabetical order_
