@@ -10,5 +10,9 @@ import org.jetbrains.spek.subject.dsl.SubjectProviderDsl
  */
 @Experimental
 abstract class SubjectSpek<T>(val subjectSpec: SubjectProviderDsl<T>.() -> Unit): Spek({
-    subjectSpec.invoke(SubjectProviderDslImpl(this))
+    if (this is IncludedSubjectSpek<*>) {
+        subjectSpec.invoke(this as IncludedSubjectSpek<T>)
+    } else {
+        subjectSpec.invoke(SubjectProviderDslImpl(this))
+    }
 })
