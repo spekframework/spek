@@ -3,7 +3,7 @@
 
 === Styles
 
-It is important to know that Spek allows to styles of tests:
+It is important to know that Spek allows two styles of tests:
 
 * given, on, it
 * describe it
