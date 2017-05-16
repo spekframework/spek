@@ -10,7 +10,7 @@ import org.jetbrains.spek.subject.dsl.SubjectDsl
 import org.jetbrains.spek.subject.dsl.SubjectProviderDsl
 import kotlin.reflect.KProperty
 
-class IncludedSubjectSpek<T>(val adapter: LifecycleAware<T>, spec: Spec): SubjectProviderDsl<T>, Spec by spec {
+internal class IncludedSubjectSpek<T>(val adapter: LifecycleAware<T>, spec: Spec): SubjectProviderDsl<T>, Spec by spec {
     override fun subject() = adapter
     override fun subject(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
         return adapter
