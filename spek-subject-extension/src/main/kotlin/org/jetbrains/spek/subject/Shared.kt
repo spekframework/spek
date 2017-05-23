@@ -10,27 +10,29 @@ import org.jetbrains.spek.subject.dsl.SubjectDsl
 import org.jetbrains.spek.subject.dsl.SubjectProviderDsl
 import kotlin.reflect.KProperty
 
+internal class IncludedSubjectSpek<T>(val adapter: LifecycleAware<T>, spec: Spec): SubjectProviderDsl<T>, Spec by spec {
+    override fun subject() = adapter
+    override fun subject(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
+        return adapter
+    }
+    override val subject: T
+        get() = adapter()
+}
+
 @Experimental
 infix fun <T, K: T> SubjectDsl<K>.itBehavesLike(spec: SubjectSpek<T>) {
     include(Spek.wrap {
-        val value: SubjectProviderDsl<T> = object: SubjectProviderDsl<T>, Spec by this {
-            val adapter = object: LifecycleAware<T> {
-                override fun getValue(thisRef: Any?, property: KProperty<*>): T {
-                    return this()
-                }
-
-                override fun invoke(): T {
-                    return this@itBehavesLike.subject().invoke()
-                }
-
+        val adapter = object: LifecycleAware<T> {
+            override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+                return this()
             }
 
-            override fun subject() = adapter
-            override fun subject(mode: CachingMode, factory: () -> T) = adapter
-            override val subject: T
-                get() = adapter()
+            override fun invoke(): T {
+                return this@itBehavesLike.subject().invoke()
+            }
 
         }
-        spec.spec(value)
+        spec.spec.invoke(IncludedSubjectSpek(adapter, this))
     })
+
 }
