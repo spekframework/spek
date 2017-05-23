@@ -586,8 +586,8 @@ repositories {
 
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.1.1'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.1'
+    testCompile 'org.jetbrains.spek:spek-api:1.1.2'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.2'
 }</code></pre>
 </div>
 </div>
@@ -624,8 +624,8 @@ configure<JUnitPlatformExtension> {
 
 // setup dependencies
 dependencies {
-    testCompile("org.jetbrains.spek:spek-api:1.1.1")
-    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.1")
+    testCompile("org.jetbrains.spek:spek-api:1.1.2")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.2")
 }
 
 // extension for configuration
@@ -659,10 +659,10 @@ the group in your dependency definition.</p>
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testCompile ('org.jetbrains.spek:spek-api:1.1.1') {
+    testCompile ('org.jetbrains.spek:spek-api:1.1.2') {
         exclude group: 'org.jetbrains.kotlin'
     }
-    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:1.1.1') {
+    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:1.1.2') {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
@@ -682,7 +682,7 @@ the group in your dependency definition.</p>
 &lt;dependency&gt;
   &lt;groupId&gt;org.jetbrains.spek&lt;/groupId&gt;
   &lt;artifactId&gt;spek-api&lt;/artifactId&gt;
-  &lt;version&gt;1.1.1&lt;/version&gt;
+  &lt;version&gt;1.1.2&lt;/version&gt;
   &lt;type&gt;pom&lt;/type&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -699,10 +699,10 @@ the group in your dependency definition.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>org.jetbrains.spek:spek-api:1.1.1</code></p>
+<p><code>org.jetbrains.spek:spek-api:1.1.2</code></p>
 </li>
 <li>
-<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.1</code></p>
+<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.2</code></p>
 </li>
 <li>
 <p><code>org.junit.platform:junit-platform-runner:1.0.0-M4</code></p>
@@ -741,7 +741,7 @@ As mentioned in the <a href="#ide-support">IDE Support</a> section, the IDEA plu
 <div class="sect2">
 <h3 id="_styles">Styles</h3>
 <div class="paragraph">
-<p>It is important to know that Spek allows to styles of tests:</p>
+<p>It is important to know that Spek allows two styles of tests:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1262,7 +1262,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-05-16 17:06:36 +00:00
+Last updated 2017-05-23 05:25:01 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="lib/highlight/styles/github.min.css">
