@@ -72,12 +72,12 @@ class LifecycleListenerOrderTest: AbstractSpekTestEngineTest() {
         executeTestsForClass(TestSpek::class)
         // afterXXX fixtures are executed from bottom to top
         val expected = """
-        1
         3
         2
         1
         3
         2
+        1
         """.trimIndent()
 
         assertThat(buffer.toString().trimIndent(), equalTo(expected))
@@ -138,10 +138,10 @@ class LifecycleListenerOrderTest: AbstractSpekTestEngineTest() {
 
         executeTestsForClass(TestSpek::class)
         val expected = """
-        1
         3
         1
         2
+        1
         """.trimIndent()
 
         assertThat(buffer.toString().trimIndent(), equalTo(expected))

@@ -30,7 +30,7 @@ class LifecycleManager {
     }
 
     fun afterExecuteTest(test: TestScope) {
-        listeners.forEach { it.afterExecuteTest(test) }
+        listeners.reversed().forEach { it.afterExecuteTest(test) }
     }
 
     fun beforeExecuteGroup(group: GroupScope) {
@@ -38,7 +38,7 @@ class LifecycleManager {
     }
 
     fun afterExecuteGroup(group: GroupScope) {
-        listeners.forEach { it.afterExecuteGroup(group) }
+        listeners.reversed().forEach { it.afterExecuteGroup(group) }
     }
 
     fun beforeExecuteAction(action: ActionScope) {
@@ -46,6 +46,6 @@ class LifecycleManager {
     }
 
     fun afterExecuteAction(action: ActionScope) {
-        listeners.forEach { it.afterExecuteAction(action) }
+        listeners.reversed().forEach { it.afterExecuteAction(action) }
     }
 }
