@@ -11,10 +11,10 @@ import org.junit.jupiter.api.Test
 /**
  * @author Ranie Jade Ramiso
  */
-class MemoizedTest: AbstractSpekTestEngineTest() {
+class MemoizedTest : AbstractSpekTestEngineTest() {
     @Test
     fun memoizedTestCaching() {
-        class MemoizedSpec: Spek({
+        class MemoizedSpec : Spek({
             val foo = memoized {
                 listOf(1)
             }
@@ -41,8 +41,35 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
     }
 
     @Test
+    fun memoizedTestBeforeAndAfterEachTest() {
+        class MemoizedSpec : Spek({
+
+            var counter = -1
+
+            val foo = memoized {
+                ++counter
+            }
+
+            beforeEachTest {
+                assertThat(foo(), equalTo(0))
+            }
+
+            test("check") {
+                assertThat(foo(), equalTo(0))
+            }
+
+            afterEachTest {
+                assertThat(foo(), equalTo(0))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
     fun memoizedGroupCaching() {
-        class MemoizedSpec: Spek({
+        class MemoizedSpec : Spek({
             val foo = memoized(CachingMode.GROUP) {
                 listOf(1)
             }
@@ -76,7 +103,7 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
 
     @Test
     fun memoizedNestedGroupCaching() {
-        class MemoizedSpec: Spek({
+        class MemoizedSpec : Spek({
             val foo = memoized(CachingMode.GROUP) {
                 listOf(1)
             }
@@ -109,7 +136,7 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
 
     @Test
     fun memoizedScopeCaching() {
-        class MemoizedSpec: Spek({
+        class MemoizedSpec : Spek({
             val foo = memoized(CachingMode.SCOPE) {
                 listOf(1)
             }
@@ -143,7 +170,7 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
 
     @Test
     fun memoizedScopeCachingWithNestedGroups() {
-        class MemoizedSpec: Spek({
+        class MemoizedSpec : Spek({
             val foo = memoized(CachingMode.SCOPE) {
                 listOf(1)
             }
@@ -177,7 +204,7 @@ class MemoizedTest: AbstractSpekTestEngineTest() {
 
     @Test
     fun memoizedActionCaching() {
-        class MemoizedSpec: Spek({
+        class MemoizedSpec : Spek({
             val foo = memoized {
                 listOf(1)
             }
