@@ -10,3 +10,4 @@ include 'spek-samples'
 include 'spek-data-driven-extension'
 
 include 'spek-runtime'
+include 'spek-jvm-runtime'

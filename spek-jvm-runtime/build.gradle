@@ -1,5 +1,3 @@
-// TODO: this should be pure kotlin module (target platform agnostic)
-
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
 apply plugin: 'org.jetbrains.dokka'
@@ -17,5 +15,5 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 
 dependencies {
-    compile project(':spek-api')
+    compile project(':spek-runtime')
 }
