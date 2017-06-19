@@ -8,3 +8,5 @@ include 'spek-dist'
 include 'documentation'
 include 'spek-samples'
 include 'spek-data-driven-extension'
+
+include 'spek-runtime'
