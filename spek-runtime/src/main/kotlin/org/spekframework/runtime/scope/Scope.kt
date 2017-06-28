@@ -3,8 +3,8 @@ package org.spekframework.runtime.scope
 import org.jetbrains.spek.api.dsl.ActionBody
 import org.jetbrains.spek.api.dsl.TestBody
 
-sealed class Scope {
-    abstract class Parent<T: Scope>: Scope() {
+sealed class Scope(val path: Path) {
+    abstract class Parent<T: Scope>(path: Path): Scope(path) {
         private val children = mutableListOf<T>()
 
         fun addChild(child: T) {
@@ -13,8 +13,8 @@ sealed class Scope {
 
         fun getChildren() = children.toList()
     }
-
-    class Group: Parent<Scope>()
-    class Action(val body: ActionBody.() -> Unit): Parent<Test>()
-    class Test(val body: TestBody.() -> Unit): Scope()
 }
+
+class Group(path: Path): Scope.Parent<Scope>(path)
+class Action(path: Path, val body: ActionBody.() -> Unit): Scope.Parent<Test>(path)
+class Test(path: Path, val body: TestBody.() -> Unit): Scope(path)
