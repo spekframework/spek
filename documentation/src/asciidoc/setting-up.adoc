@@ -42,7 +42,7 @@ dependencies {
 ----
 
 === Gradle Kotlin Script
-[source,kotlin,subs="attributes"]
+[source,kotlin,subs="attributes+"]
 .build.gradle.kts
 ----
 import org.gradle.api.plugins.ExtensionAware
