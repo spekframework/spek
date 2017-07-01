@@ -13,6 +13,9 @@ sealed class ExecutionResult {
 }
 
 interface ExecutionListener {
+    fun executionStarted()
+    fun executionFinished()
+
     fun testExecutionStart(test: Test)
     fun testExecutionFinish(test: Test, result: ExecutionResult)
     fun testIgnored(test: Test, reason: String?)
