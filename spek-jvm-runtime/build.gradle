@@ -1,6 +1,11 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+junitPlatform {
+    platformVersion '1.0.0-M4'
+}
 
 task sourceJar(type: Jar) {
     from project.sourceSets.main.allSource
@@ -16,4 +21,9 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 dependencies {
     compile project(':spek-runtime')
+    compile 'org.reflections:reflections'
+
+    testCompile project(':spek-runtime-test')
+    testCompile 'org.junit.jupiter:junit-jupiter-api'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }

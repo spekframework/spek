@@ -1,38 +1,20 @@
 package org.spekframework.runtime.scope
 
-data class Path(val name: String, val parent: Path?) {
-    private val serialized by lazy {
-        serialize(this)
-    }
-
-    fun resolve(name: String) = Path(name, this)
-
-    fun asString(): String {
-        return serialized
-    }
-
-    companion object {
-        private val FAKE_ROOT = Path("fake-root", null)
-        private val PATH_SEPARATOR = "||"
-
-        fun from(path: String): Path {
-            return path.split(PATH_SEPARATOR).fold(FAKE_ROOT) { initial, name ->
-                val parent = if (initial === FAKE_ROOT) {
-                    null
-                } else {
-                    initial
-                }
-
-                Path(name, parent)
-            }
-        }
-
-        private fun serialize(path: Path): String {
-            return if (path.parent == null) {
-                path.name
-            } else {
-                "${serialize(path.parent)}$PATH_SEPARATOR${path.name}"
-            }
-        }
-    }
+interface Path {
+    val parent: Path?
+    val name: String
+    fun resolve(name: String): Path
+    fun serialize(): String
+    fun isParentOf(path: Path): Boolean
 }
+
+val Path.isRoot: Boolean
+    get() {
+        return name.isEmpty() && parent == null
+    }
+
+// handles two cases
+//    classToPath        -> discoveryRequest.path
+// 1: my.package/MyClass -> my.package/MyClass/description
+// 2: my.package/MyClass/description -> my.package/MyClass
+fun Path.isRelated(path: Path) = this.isParentOf(path) || path.isParentOf(this)

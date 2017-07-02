@@ -5,11 +5,6 @@ apply plugin: 'org.jetbrains.dokka'
 
 junitPlatform {
     platformVersion '1.0.0-M4'
-    filters {
-        engines {
-            exclude 'spek'
-        }
-    }
 }
 
 dependencies {
@@ -17,10 +12,10 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
 
-    testCompile project(':spek-junit-platform-engine')
-    testCompile 'org.junit.jupiter:junit-jupiter-api'
-    testCompile project(':junit-platform-engine-test-support')
+    testCompile project(':spek-jvm-runtime')
+    testCompile project(':spek-runtime-test')
 
+    testCompile 'org.junit.jupiter:junit-jupiter-api'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }
 
