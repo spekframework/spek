@@ -10,14 +10,14 @@ import kotlin.test.assertEquals
  */
 object WhereSpec : Spek({
     describe("analyze names") {
-        on("%s ", { name, expectedLen, expectPalindrome ->
+        on("%s ", { name:String, expectedLen:Int, expectPalindrome:Boolean ->
             it("has a length $expectedLen") {
                 assertEquals(expectedLen, name.length)
             }
             it("${expectPalindrome.isIsNot()} a palindrome") {
                 assertEquals(expectPalindrome, name.isPalindrome())
             }
-        }, where<String,Int,Boolean> {
+        }, where {
             //@formatter:off
             "Name"  II "expectedLen" I "expectPalindrome"
             "Niels" II 5             I false
