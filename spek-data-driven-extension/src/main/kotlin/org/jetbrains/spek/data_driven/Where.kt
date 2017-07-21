@@ -3,24 +3,32 @@ package org.jetbrains.spek.data_driven
 /**
  * @author Niels Falk
  */
-class Where<I1, I2, Expected>(function: Where<I1, I2, Expected>.() -> Unit) {
-    val data2 = mutableListOf<Data2<I1, I2, Expected>>()
+class Where<I1, I2, I3>(function: Where<I1, I2, I3>.() -> Unit) {
+    val data1 = mutableListOf<Data1<I1, I2>>()
+    val data2 = mutableListOf<Data2<I1, I2, I3>>()
 
-    operator fun <I1> I1.not() = Row(this).apply {
 
-    }
+    infix fun I1.I(i: I2): Data1<I1, I2> = separateCell(i)
 
-    data class Row<I1>(val i1: I1) {
-        operator fun <I2> div(i2: I2) = Data1(i1, i2)
-    }
+    infix fun I1.II(i: I2): Data1<I1, I2> = separateCell(i)
 
-    operator fun Data1<I1, I2>.div(newExpected: Expected) =
-            Data2(input1, expected, newExpected)
-                    .apply { data2.add(this) }
+    private fun I1.separateCell(i: I2) =
+            Data1(this, i)
+                    .apply { data1.add(this) }
+
+
+    infix fun Data1<I1, I2>.I(i3: I3) =
+            separateCell(i3)
+
+    infix fun Data1<I1, I2>.II(i3: I3) = separateCell(i3)
+
+    private fun Data1<I1, I2>.separateCell(i3: I3) = Data2(input1, expected, i3)
+            .apply { data2.add(this) }
 }
 
-fun <I1, I2, Expected> where(function: Where<I1, I2, Expected>.() -> Unit): List<Data2<I1, I2, Expected>> {
-    return Where(function)
-            .apply { function() }
-            .data2.toList()
+fun <I1, I2, I3> where(function: Where<I1, I2, I3>.() -> Unit): List<Data2<I1, I2, I3>> {
+    val result = Where(function).apply {
+        function()
+    }.data2
+    return result.toList()
 }
