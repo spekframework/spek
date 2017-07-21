@@ -23,6 +23,15 @@ inline fun <reified I1, reified I2, reified Expected> SpecBody.on(description: S
     }
 }
 
+inline fun <reified I1, reified I2, reified Expected> SpecBody.on(description: String, crossinline body: ActionBody.(i1: I1, i2: I2, e: Expected) -> Unit, with: List<Data2<I1, I2, Expected>>) {
+    with.forEach {
+        val (input1, input2, expected) = it
+        defaultOn(description = description.format(input1, input2, expected)) {
+            body(this, input1, input2, expected)
+        }
+    }
+}
+
 inline fun <reified I1, reified I2, reified I3, reified Expected> SpecBody.on(description: String, vararg with: Data3<I1, I2, I3, Expected>, crossinline body: ActionBody.(i1: I1, i2: I2, i3: I3, e: Expected) -> Unit) {
     with.forEach {
         val (input1, input2, input3, expected) = it
