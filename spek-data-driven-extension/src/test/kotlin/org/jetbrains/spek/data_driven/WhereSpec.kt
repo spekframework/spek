@@ -19,10 +19,10 @@ object WhereSpec : Spek({
             }
         }, where<String,Int,Boolean> {
             //@formatter:off
-            //"Name"  II "expectedLen" I "expectPalindrome"
-              "Niels" II 5             I false
-              "Max"   II 3             I false
-              "Anna"  II 4             I true
+            "Name"  II "expectedLen" I "expectPalindrome"
+            "Niels" II 5             I false
+            "Max"   II 3             I false
+            "Anna"  II 4             I true
             //@formatter:on
         })
     }

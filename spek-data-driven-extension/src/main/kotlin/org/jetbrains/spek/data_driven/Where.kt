@@ -6,7 +6,11 @@ package org.jetbrains.spek.data_driven
 class Where<I1, I2, I3>(function: Where<I1, I2, I3>.() -> Unit) {
     val data1 = mutableListOf<Data1<I1, I2>>()
     val data2 = mutableListOf<Data2<I1, I2, I3>>()
+    private val headerCell = ""
 
+    infix fun String.I(i: String) = headerCell
+
+    infix fun String.II(i: String) = headerCell
 
     infix fun I1.I(i: I2): Data1<I1, I2> = separateCell(i)
 
