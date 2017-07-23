@@ -1,6 +1,7 @@
 package org.spekframework.jvm
 
 import org.jetbrains.spek.api.CreateWith
+import org.jetbrains.spek.api.IgnoreSpek
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.lifecycle.InstanceFactory
 import org.reflections.Reflections
@@ -13,10 +14,11 @@ import org.spekframework.runtime.execution.DiscoveryResult
 import org.spekframework.runtime.scope.Path
 import org.spekframework.runtime.scope.isRelated
 import kotlin.reflect.KClass
+import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
 
 fun classToPath(spek: KClass<out Spek>): Path {
-    val packagePath = JvmPath.create(spek.java.`package`.name)
+    val packagePath = JvmPath.create(spek.java.`package`.name, JvmPath.ROOT)
     val classPath = JvmPath.create(spek.java.simpleName!!, packagePath)
     return classPath
 }
@@ -39,6 +41,7 @@ class SpekJvmRuntime: SpekRuntime() {
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = reflections.getSubTypesOf(Spek::class.java)
             .map(Class<out Spek>::kotlin)
+            .filter { it.findAnnotation<IgnoreSpek>() == null }
             .filter { !it.isAbstract }
             .filter { discoveryRequest.path.isRelated(classToPath(it)) }
             .map { resolveSpec(it, classToPath(it)) }

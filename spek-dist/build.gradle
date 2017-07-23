@@ -198,6 +198,133 @@ publishing {
                 }
             }
         }
+
+
+        runtime(MavenPublication) {
+            groupId = 'org.jetbrains.spek'
+            artifactId = 'spek-runtime'
+            version = rootProject.version
+
+            from project(':spek-runtime').components.java
+            artifact project(':spek-runtime').tasks['sourceJar']
+            artifact project(':spek-runtime').tasks['javadocJar']
+
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    it.scope[0].value = ('compile')
+                }
+
+                asNode().children().last() + {
+                    resolveStrategy = DELEGATE_FIRST
+                    name 'Spek'
+                    description 'A Specification Framework for the JVM'
+                    url 'https://jetbrains.github.io/spek'
+                    licenses {
+                        license {
+                            name 'BSD New'
+                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            distribution 'spek'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'Spek Contributors'
+                            organization 'JetBrains'
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/jetbrains/spek.git'
+                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                        url 'http://github.com/jetbrains/spek'
+                    }
+                }
+            }
+        }
+
+        jvmRuntime(MavenPublication) {
+            groupId = 'org.jetbrains.spek'
+            artifactId = 'spek-jvm-runtime'
+            version = rootProject.version
+
+            from project(':spek-jvm-runtime').components.java
+            artifact project(':spek-jvm-runtime').tasks['sourceJar']
+            artifact project(':spek-jvm-runtime').tasks['javadocJar']
+
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    it.scope[0].value = ('compile')
+                }
+
+                asNode().children().last() + {
+                    resolveStrategy = DELEGATE_FIRST
+                    name 'Spek'
+                    description 'A Specification Framework for the JVM'
+                    url 'https://jetbrains.github.io/spek'
+                    licenses {
+                        license {
+                            name 'BSD New'
+                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            distribution 'spek'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'Spek Contributors'
+                            organization 'JetBrains'
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/jetbrains/spek.git'
+                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                        url 'http://github.com/jetbrains/spek'
+                    }
+                }
+            }
+        }
+
+        gradlePlugin(MavenPublication) {
+            groupId = 'org.jetbrains.spek'
+            artifactId = 'spek-gradle-plugin'
+            version = rootProject.version
+
+            from project(':spek-gradle-plugin').components.java
+            artifact project(':spek-gradle-plugin').tasks['sourceJar']
+            artifact project(':spek-gradle-plugin').tasks['javadocJar']
+
+            pom.withXml {
+                asNode().dependencies.dependency.each {
+                    it.scope[0].value = ('compile')
+                }
+
+                asNode().children().last() + {
+                    resolveStrategy = DELEGATE_FIRST
+                    name 'Spek'
+                    description 'A Specification Framework for the JVM'
+                    url 'https://jetbrains.github.io/spek'
+                    licenses {
+                        license {
+                            name 'BSD New'
+                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            distribution 'spek'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'JetBrains'
+                            name 'Spek Contributors'
+                            organization 'JetBrains'
+                        }
+                    }
+                    scm {
+                        connection 'scm:git:git://github.com/jetbrains/spek.git'
+                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
+                        url 'http://github.com/jetbrains/spek'
+                    }
+                }
+            }
+        }
     }
 }
 

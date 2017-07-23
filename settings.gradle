@@ -12,3 +12,5 @@ include 'spek-data-driven-extension'
 include 'spek-runtime'
 include 'spek-runtime-test'
 include 'spek-jvm-runtime'
+
+include 'spek-gradle-plugin'

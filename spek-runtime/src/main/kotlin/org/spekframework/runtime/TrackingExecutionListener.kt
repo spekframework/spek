@@ -2,58 +2,76 @@ package org.spekframework.runtime
 
 import org.spekframework.runtime.execution.ExecutionListener
 import org.spekframework.runtime.execution.ExecutionResult
-import org.spekframework.runtime.execution.RuntimeExecutionListener
 import org.spekframework.runtime.scope.ActionScopeImpl
 import org.spekframework.runtime.scope.GroupScopeImpl
 import org.spekframework.runtime.scope.TestScopeImpl
 
-/**
- * TODO: compute stats
- */
-class ExecutionRecorder(
-    val listeners: List<ExecutionListener>
-): RuntimeExecutionListener() {
-    override fun executionStart() {
-        listeners.forEach { it.executionStart() }
-    }
+abstract class TrackingExecutionListener: ExecutionListener {
+    protected var groupsExecuted = 0
+    protected var actionsExecuted = 0
+    protected var testsExecuted = 0
 
-    override fun executionFinish() {
-        listeners.forEach { it.executionFinish() }
+    protected var groupsIgnored = 0
+    protected var actionsIgnored = 0
+    protected var testsIgnored = 0
+
+    protected var groupsFailed = 0
+    protected var actionsFailed = 0
+    protected var testsFailed = 0
+
+    override fun executionStart() {
+        groupsExecuted = 0
+        groupsFailed = 0
+        groupsIgnored = 0
+
+        testsExecuted = 0
+        testsFailed = 0
+        testsIgnored = 0
+
+        actionsExecuted = 0
+        actionsFailed = 0
+        actionsIgnored = 0
     }
 
     override fun testExecutionStart(test: TestScopeImpl) {
-        listeners.forEach { it.testExecutionStart(test) }
+        testsExecuted++
     }
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
-        listeners.forEach { it.testExecutionFinish(test, result) }
+        if (result is ExecutionResult.Failure) {
+            testsFailed++
+        }
     }
 
     override fun testIgnored(test: TestScopeImpl, reason: String?) {
-        listeners.forEach { it.testIgnored(test, reason) }
+        testsIgnored++
     }
 
     override fun groupExecutionStart(group: GroupScopeImpl) {
-        listeners.forEach { it.groupExecutionStart(group) }
+        groupsExecuted++
     }
 
     override fun groupExecutionFinish(group: GroupScopeImpl, result: ExecutionResult) {
-        listeners.forEach { it.groupExecutionFinish(group, result) }
+        if (result is ExecutionResult.Failure) {
+            groupsFailed++
+        }
     }
 
     override fun groupIgnored(group: GroupScopeImpl, reason: String?) {
-        listeners.forEach { it.groupIgnored(group, reason) }
+        groupsIgnored++
     }
 
     override fun actionExecutionStart(action: ActionScopeImpl) {
-        listeners.forEach { it.actionExecutionStart(action) }
+        actionsExecuted++
     }
 
     override fun actionExecutionFinish(action: ActionScopeImpl, result: ExecutionResult) {
-        listeners.forEach { it.actionExecutionFinish(action, result) }
+        if (result is ExecutionResult.Failure) {
+            actionsFailed++
+        }
     }
 
     override fun actionIgnored(action: ActionScopeImpl, reason: String?) {
-        listeners.forEach { it.actionIgnored(action, reason) }
+        actionsIgnored++
     }
 }

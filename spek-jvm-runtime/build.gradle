@@ -7,6 +7,10 @@ junitPlatform {
     platformVersion '1.0.0-M4'
 }
 
+repositories {
+    jcenter()
+}
+
 task sourceJar(type: Jar) {
     from project.sourceSets.main.allSource
     classifier "sources"
@@ -22,6 +26,7 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 dependencies {
     compile project(':spek-runtime')
     compile 'org.reflections:reflections'
+    compile 'com.xenomachina:kotlin-argparser'
 
     testCompile project(':spek-runtime-test')
     testCompile 'org.junit.jupiter:junit-jupiter-api'

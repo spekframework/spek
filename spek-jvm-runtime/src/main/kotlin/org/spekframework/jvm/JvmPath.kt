@@ -27,7 +27,7 @@ data class JvmPath private constructor(override val name: String, override val p
     }
 
     companion object {
-        private val FAKE_ROOT = JvmPath("", null)
+        val ROOT = JvmPath("", null)
         private val PATH_SEPARATOR = "/"
         private val PATH_SEPARATOR_REGEX = Regex("(?<=[^\\\\])/")
 
@@ -39,8 +39,12 @@ data class JvmPath private constructor(override val name: String, override val p
          * Assumes path is properly encoded, otherwise use [create]
          */
         fun from(path: String): JvmPath {
-            return path.split(PATH_SEPARATOR_REGEX).fold(FAKE_ROOT) { parent, name ->
-                JvmPath(name, parent)
+            return if (path.isEmpty()) {
+                ROOT
+            } else {
+                path.split(PATH_SEPARATOR_REGEX).fold(ROOT) { parent, name ->
+                    JvmPath(name, parent)
+                }
             }
         }
 
@@ -48,7 +52,7 @@ data class JvmPath private constructor(override val name: String, override val p
             return if (path.parent == null) {
                 path.name
             } else {
-                "${serialize(path.parent)}$PATH_SEPARATOR${path.name}"
+                "${serialize(path.parent)}$PATH_SEPARATOR${path.name}".trimStart(*PATH_SEPARATOR.toCharArray())
             }
         }
     }
