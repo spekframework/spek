@@ -28,7 +28,7 @@ interface ExecutionListener {
 }
 
 abstract class RuntimeExecutionListener: ExecutionListener {
-    fun dynamicTestRegistered(test: TestScopeImpl, context: ExecutionContext) {
+    open fun dynamicTestRegistered(test: TestScopeImpl, context: ExecutionContext) {
         testExecutionStart(test)
         try {
             test.execute(context)

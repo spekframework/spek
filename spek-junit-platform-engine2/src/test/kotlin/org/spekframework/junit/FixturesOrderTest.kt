@@ -1,34 +1,25 @@
-package org.spekframework.jvm
+package org.spekframework.junit
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.lifecycle.GroupScope
-import org.jetbrains.spek.api.lifecycle.LifecycleListener
-import org.jetbrains.spek.api.lifecycle.TestScope
 import org.junit.jupiter.api.Test
-import org.spekframework.jvm.support.AbstractSpekJvmRuntimeTest
 
 /**
  * @author Ranie Jade Ramiso
  */
-class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
-
+class FixturesOrderTest: AbstractSpekTestEngineTest() {
     @Test
-    fun testBeforeExecuteTest() {
+    fun testBeforeEachTestOrder() {
         buffer.setLength(0)
 
         class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
-                override fun beforeExecuteTest(test: TestScope) {
-                    buffer.appendln("1")
-                }
-            })
-
+            beforeEachTest { buffer.appendln("1") }
             beforeEachTest { buffer.appendln("2") }
 
             group("some group") {
                 beforeEachTest { buffer.appendln("3") }
+                beforeEachTest { buffer.appendln("4") }
 
                 test("do something") { }
                 test("do another thing") { }
@@ -40,29 +31,27 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
         1
         2
         3
+        4
         1
         2
         3
+        4
         """.trimIndent()
 
         assertThat(buffer.toString().trimIndent(), equalTo(expected))
     }
 
     @Test
-    fun testAfterExecuteTest() {
+    fun testAfterEachTestOrder() {
         buffer.setLength(0)
 
         class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
-                override fun afterExecuteTest(test: TestScope) {
-                    buffer.appendln("1")
-                }
-            })
-
+            afterEachTest { buffer.appendln("1") }
             afterEachTest { buffer.appendln("2") }
 
             group("some group") {
                 afterEachTest { buffer.appendln("3") }
+                afterEachTest { buffer.appendln("4") }
 
                 test("do something") { }
                 test("do another thing") { }
@@ -70,11 +59,12 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
         })
 
         executeTestsForClass(TestSpek::class)
-        // afterXXX fixtures are executed from bottom to top
         val expected = """
+        4
         3
         2
         1
+        4
         3
         2
         1
@@ -84,20 +74,16 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
     }
 
     @Test
-    fun testBeforeExecuteGroup() {
+    fun testBeforeGroupOrder() {
         buffer.setLength(0)
 
         class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
-                override fun beforeExecuteGroup(group: GroupScope) {
-                    buffer.appendln("1")
-                }
-            })
-
+            beforeGroup { buffer.appendln("1") }
             beforeGroup { buffer.appendln("2") }
 
             group("some group") {
                 beforeGroup { buffer.appendln("3") }
+                beforeGroup { buffer.appendln("4") }
 
                 test("do something") { }
                 test("do another thing") { }
@@ -107,30 +93,25 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
         executeTestsForClass(TestSpek::class)
         val expected = """
         1
-        1
         2
-        1
         3
+        4
         """.trimIndent()
 
         assertThat(buffer.toString().trimIndent(), equalTo(expected))
     }
 
     @Test
-    fun testAfterExecuteGroup() {
+    fun testAfterGroupOrder() {
         buffer.setLength(0)
 
         class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
-                override fun afterExecuteGroup(group: GroupScope) {
-                    buffer.appendln("1")
-                }
-            })
-
+            afterGroup { buffer.appendln("1") }
             afterGroup { buffer.appendln("2") }
 
             group("some group") {
                 afterGroup { buffer.appendln("3") }
+                afterGroup { buffer.appendln("4") }
 
                 test("do something") { }
                 test("do another thing") { }
@@ -139,10 +120,9 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
 
         executeTestsForClass(TestSpek::class)
         val expected = """
+        4
         3
-        1
         2
-        1
         1
         """.trimIndent()
 

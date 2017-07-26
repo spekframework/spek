@@ -11,17 +11,10 @@ import org.reflections.util.ConfigurationBuilder
 import org.spekframework.runtime.SpekRuntime
 import org.spekframework.runtime.execution.DiscoveryRequest
 import org.spekframework.runtime.execution.DiscoveryResult
-import org.spekframework.runtime.scope.Path
 import org.spekframework.runtime.scope.isRelated
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
-
-fun classToPath(spek: KClass<out Spek>): Path {
-    val packagePath = JvmPath.create(spek.java.`package`.name, JvmPath.ROOT)
-    val classPath = JvmPath.create(spek.java.simpleName!!, packagePath)
-    return classPath
-}
 
 // instantiate only once, it's very expensive
 val reflections = Reflections(

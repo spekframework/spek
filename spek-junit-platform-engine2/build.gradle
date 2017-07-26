@@ -1,0 +1,35 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'org.jetbrains.dokka'
+
+junitPlatform {
+    platformVersion '1.0.0-M4'
+    filters {
+        engines {
+            exclude 'spek'
+        }
+    }
+}
+
+dependencies {
+    compile project(':spek-jvm-runtime')
+
+    compile 'org.jetbrains.kotlin:kotlin-stdlib'
+    compile 'org.jetbrains.kotlin:kotlin-reflect'
+    compileOnly 'org.junit.platform:junit-platform-engine'
+
+    testCompile 'org.junit.jupiter:junit-jupiter-api'
+    testCompile project(':junit-platform-engine-test-support')
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+    classifier = 'javadoc'
+}

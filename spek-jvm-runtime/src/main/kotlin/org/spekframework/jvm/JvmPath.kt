@@ -1,6 +1,8 @@
 package org.spekframework.jvm
 
+import org.jetbrains.spek.api.Spek
 import org.spekframework.runtime.scope.Path
+import kotlin.reflect.KClass
 
 data class JvmPath private constructor(override val name: String, override val parent: JvmPath?): Path {
     private val serialized by lazy {
@@ -56,4 +58,10 @@ data class JvmPath private constructor(override val name: String, override val p
             }
         }
     }
+}
+
+fun classToPath(spek: KClass<out Spek>): Path {
+    val packagePath = JvmPath.create(spek.java.`package`.name, JvmPath.ROOT)
+    val classPath = JvmPath.create(spek.java.simpleName!!, packagePath)
+    return classPath
 }

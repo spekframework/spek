@@ -23,12 +23,13 @@ abstract class SpekRuntime {
         }
 
         val packageScope = path.parent?.let { GroupScopeImpl(it, null, Pending.No, lifecycleManager) }
-        val root = GroupScopeImpl(path, packageScope, Pending.No, lifecycleManager)
+        val classScope = GroupScopeImpl(path, packageScope, Pending.No, lifecycleManager)
+        packageScope?.addChild(classScope)
         val instanceFactory = instanceFactoryFor(spek)
         val instance = instanceFactory.create(spek)
-        instance.spec.invoke(Collector(root, lifecycleManager, fixtures))
+        instance.spec.invoke(Collector(classScope, lifecycleManager, fixtures))
 
-        return root
+        return packageScope ?: classScope
     }
 
     protected abstract fun instanceFactoryFor(spek: KClass<*>): InstanceFactory
