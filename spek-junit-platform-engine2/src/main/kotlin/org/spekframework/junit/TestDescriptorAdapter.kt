@@ -9,7 +9,8 @@ import org.spekframework.runtime.scope.GroupScopeImpl
 import org.spekframework.runtime.scope.ScopeImpl
 import java.util.Optional
 
-class TestDescriptorAdapter private constructor(val scope: ScopeImpl): TestDescriptor {
+class TestDescriptorAdapter internal constructor(val scope: ScopeImpl,
+                                                 val factory: TestDescriptorAdapterFactory): TestDescriptor {
 
     private val _uniqueId by lazy {
         toUniqueId(scope)
@@ -44,7 +45,7 @@ class TestDescriptorAdapter private constructor(val scope: ScopeImpl): TestDescr
         } as ScopeImpl?
 
         return if (parent != null) {
-            Optional.of(asDescriptor(parent))
+            Optional.of(factory.create(parent))
         } else {
             // root scope, setParent(...) is called.
             Optional.of(rootEngineDescriptor!!)
@@ -81,24 +82,5 @@ class TestDescriptorAdapter private constructor(val scope: ScopeImpl): TestDescr
 
     override fun getTags(): MutableSet<TestTag> {
         return mutableSetOf()
-    }
-
-
-    companion object {
-        private val cache = mutableMapOf<ScopeImpl, TestDescriptor>()
-
-        private fun toDescriptor(scope: ScopeImpl) = cache.computeIfAbsent(scope) {
-            TestDescriptorAdapter(scope)
-        }
-
-        fun asDescriptor(scope: ScopeImpl): TestDescriptor {
-            return toDescriptor(scope).apply {
-                if (scope is GroupScopeImpl) {
-                    scope.getChildren().forEach { child ->
-                        this.addChild(asDescriptor(child))
-                    }
-                }
-            }
-        }
     }
 }

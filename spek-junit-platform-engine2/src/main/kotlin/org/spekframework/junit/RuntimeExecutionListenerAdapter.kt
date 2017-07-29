@@ -10,8 +10,9 @@ import org.spekframework.runtime.scope.GroupScopeImpl
 import org.spekframework.runtime.scope.ScopeImpl
 import org.spekframework.runtime.scope.TestScopeImpl
 
-class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener): RuntimeExecutionListener() {
-    fun ScopeImpl.asDescriptor() = TestDescriptorAdapter.asDescriptor(this)
+class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener,
+                                      val factory: TestDescriptorAdapterFactory): RuntimeExecutionListener() {
+    fun ScopeImpl.asDescriptor() = factory.create(this)
     fun ExecutionResult.toJunitResult() = when (this) {
         is ExecutionResult.Success -> TestExecutionResult.successful()
         is ExecutionResult.Failure -> TestExecutionResult.failed(this.cause)

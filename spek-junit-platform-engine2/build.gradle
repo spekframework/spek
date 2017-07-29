@@ -19,6 +19,7 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-reflect'
     compileOnly 'org.junit.platform:junit-platform-engine'
 
+    testCompile "com.nhaarman:mockito-kotlin"
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile project(':junit-platform-engine-test-support')
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'

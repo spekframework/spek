@@ -12,6 +12,7 @@ import org.spekframework.runtime.scope.ScopeImpl
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
 
 class SpekTestEngine: TestEngine {
+    val factory = TestDescriptorAdapterFactory()
     val runtime by lazy { SpekJvmRuntime() }
 
     override fun getId() = "spek"
@@ -37,13 +38,13 @@ class SpekTestEngine: TestEngine {
             .map(TestDescriptorAdapter::scope)
 
         val runtimeExecutionRequest = ExecutionRequest(
-            roots, RuntimeExecutionListenerAdapter(request.engineExecutionListener)
+            roots, RuntimeExecutionListenerAdapter(request.engineExecutionListener, factory)
         )
 
         runtime.execute(runtimeExecutionRequest)
     }
 
     private fun toTestDescriptor(root: ScopeImpl): TestDescriptor {
-        return TestDescriptorAdapter.asDescriptor(root)
+        return factory.create(root)
     }
 }
