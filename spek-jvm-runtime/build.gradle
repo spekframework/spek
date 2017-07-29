@@ -1,11 +1,7 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'org.junit.platform.gradle.plugin'
-
-junitPlatform {
-    platformVersion '1.0.0-M4'
-}
 
 repositories {
     jcenter()
@@ -29,6 +25,4 @@ dependencies {
     compile 'com.xenomachina:kotlin-argparser'
 
     testCompile project(':spek-runtime-test')
-    testCompile 'org.junit.jupiter:junit-jupiter-api'
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }
