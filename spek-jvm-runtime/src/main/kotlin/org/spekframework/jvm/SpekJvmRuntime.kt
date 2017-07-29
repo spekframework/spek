@@ -1,7 +1,7 @@
 package org.spekframework.jvm
 
 import org.jetbrains.spek.api.CreateWith
-import org.jetbrains.spek.api.IgnoreSpek
+import org.jetbrains.spek.api.Ignore
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.lifecycle.InstanceFactory
 import org.reflections.Reflections
@@ -34,7 +34,7 @@ class SpekJvmRuntime: SpekRuntime() {
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = reflections.getSubTypesOf(Spek::class.java)
             .map(Class<out Spek>::kotlin)
-            .filter { it.findAnnotation<IgnoreSpek>() == null }
+            .filter { it.findAnnotation<Ignore>() == null }
             .filter { !it.isAbstract }
             .filter { discoveryRequest.path.isRelated(classToPath(it)) }
             .map { resolveSpec(it, classToPath(it)) }

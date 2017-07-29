@@ -8,6 +8,6 @@ import org.jetbrains.spek.api.dsl.Spec
  */
 abstract class Spek(val spec: Spec.() -> Unit) {
     companion object {
-        fun wrap(spec: Spec.() -> Unit) = @IgnoreSpek object: Spek(spec) {}
+        fun wrap(spec: Spec.() -> Unit) = @Ignore object: Spek(spec) {}
     }
 }
