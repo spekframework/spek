@@ -14,5 +14,3 @@ include 'spek-runtime-test'
 include 'spek-jvm-runtime'
 
 include 'spek-junit-platform-engine2'
-
-include 'spek-gradle-plugin'
