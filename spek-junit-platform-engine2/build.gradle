@@ -20,8 +20,8 @@ dependencies {
     compileOnly 'org.junit.platform:junit-platform-engine'
 
     testCompile "com.nhaarman:mockito-kotlin"
+    testCompile 'org.junit.platform:junit-platform-engine'
     testCompile 'org.junit.jupiter:junit-jupiter-api'
-    testCompile project(':junit-platform-engine-test-support')
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }
 
