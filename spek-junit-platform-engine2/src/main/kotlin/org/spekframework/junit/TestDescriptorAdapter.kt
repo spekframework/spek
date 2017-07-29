@@ -12,8 +12,10 @@ import java.util.Optional
 class TestDescriptorAdapter private constructor(val scope: ScopeImpl): TestDescriptor {
 
     private val _uniqueId by lazy {
-        toUniqueId(scope.path)
+        toUniqueId(scope)
     }
+
+    private var rootEngineDescriptor: SpekEngineDescriptor? = null
 
     private val _children = mutableSetOf<TestDescriptor>()
 
@@ -25,8 +27,12 @@ class TestDescriptorAdapter private constructor(val scope: ScopeImpl): TestDescr
         throw UnsupportedOperationException()
     }
 
-    override fun setParent(parent: TestDescriptor) {
-        // ignore
+    override fun setParent(parent: TestDescriptor?) {
+        // this only set when adding as a child of the engine's descriptor
+        // will only be null if it's not the root scope
+        if (parent != null && parent is SpekEngineDescriptor) {
+            rootEngineDescriptor = parent
+        }
     }
 
     override fun getParent(): Optional<TestDescriptor> {
@@ -40,7 +46,8 @@ class TestDescriptorAdapter private constructor(val scope: ScopeImpl): TestDescr
         return if (parent != null) {
             Optional.of(asDescriptor(parent))
         } else {
-            Optional.empty()
+            // root scope, setParent(...) is called.
+            Optional.of(rootEngineDescriptor!!)
         }
     }
 

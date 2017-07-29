@@ -1,15 +1,15 @@
 package org.spekframework.junit
 
 import org.junit.platform.engine.UniqueId
-import org.spekframework.runtime.scope.Path
-import org.spekframework.runtime.scope.isRoot
+import org.spekframework.runtime.scope.ScopeImpl
 
 val SPEK_ENGINE_UID = UniqueId.forEngine("spek")
 
-fun toUniqueId(path: Path): UniqueId {
-    return if (path.isRoot) {
+fun toUniqueId(scope: ScopeImpl?): UniqueId {
+    return if (scope == null) {
         SPEK_ENGINE_UID
     } else {
-        toUniqueId(path.parent!!).append("scope", path.name)
+        toUniqueId(scope.parent as ScopeImpl?).append(scope.id.type, scope.id.name)
+
     }
 }

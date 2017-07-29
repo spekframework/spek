@@ -13,11 +13,13 @@ import org.spekframework.runtime.lifecycle.LifecycleAwareAdapter
 import org.spekframework.runtime.lifecycle.LifecycleManager
 import org.spekframework.runtime.scope.ActionScopeImpl
 import org.spekframework.runtime.scope.GroupScopeImpl
+import org.spekframework.runtime.scope.ScopeId
 import org.spekframework.runtime.scope.TestScopeImpl
 
 open class Collector(val root: GroupScopeImpl,
                      val lifecycleManager: LifecycleManager,
                      val fixtures: FixturesAdapter): Spec {
+    val ids = mutableMapOf<String, Int>()
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
         val adapter = when (mode) {
@@ -36,6 +38,7 @@ open class Collector(val root: GroupScopeImpl,
 
     override fun group(description: String, pending: Pending, body: SpecBody.() -> Unit) {
         val group = GroupScopeImpl(
+            idFor(description),
             root.path.resolve(description),
             root,
             pending,
@@ -48,6 +51,7 @@ open class Collector(val root: GroupScopeImpl,
         } catch (e: Throwable) {
             collector.beforeGroup { throw e }
             group.addChild(TestScopeImpl(
+                idFor("Group Failure"),
                 root.path.resolve("Group Failure"),
                 root,
                 {},
@@ -60,10 +64,11 @@ open class Collector(val root: GroupScopeImpl,
 
     override fun action(description: String, pending: Pending, body: ActionBody.() -> Unit) {
         val action = ActionScopeImpl(
+            idFor(description),
             root.path.resolve(description),
             root,
             {
-                body.invoke(ActionCollector(this, lifecycleManager, it))
+                body.invoke(ActionCollector(this, lifecycleManager, it, this@Collector::idFor))
             },
             pending,
             lifecycleManager
@@ -74,6 +79,7 @@ open class Collector(val root: GroupScopeImpl,
 
     override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
+            idFor(description),
             root.path.resolve(description),
             root,
             body,
@@ -98,12 +104,24 @@ open class Collector(val root: GroupScopeImpl,
     override fun afterGroup(callback: () -> Unit) {
         fixtures.registerAfterGroup(root, callback)
     }
+
+    protected fun idFor(description: String): ScopeId {
+        val current = ids.computeIfAbsent(description) { 0 } + 1
+        ids.put(description, current)
+
+        return if (current > 1) {
+            ScopeId("scope", "$description [$current]")
+        } else {
+            ScopeId("scope", description)
+        }
+    }
 }
 
-class ActionCollector(val root: ActionScopeImpl, val lifecycleManager: LifecycleManager, val context: ExecutionContext): ActionBody {
+class ActionCollector(val root: ActionScopeImpl, val lifecycleManager: LifecycleManager, val context: ExecutionContext, val idFor: (String) -> ScopeId): ActionBody {
 
     override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
+            idFor(description),
             root.path.resolve(description),
             root,
             body,

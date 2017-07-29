@@ -107,7 +107,6 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
         executeTestsForClass(TestSpek::class)
         val expected = """
         1
-        1
         2
         1
         3
@@ -142,7 +141,6 @@ class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
         3
         1
         2
-        1
         1
         """.trimIndent()
 

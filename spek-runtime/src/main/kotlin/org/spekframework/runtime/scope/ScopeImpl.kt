@@ -9,7 +9,8 @@ import org.jetbrains.spek.api.lifecycle.TestScope
 import org.spekframework.runtime.execution.ExecutionContext
 import org.spekframework.runtime.lifecycle.LifecycleManager
 
-sealed class ScopeImpl(val path: Path,
+sealed class ScopeImpl(val id: ScopeId,
+                       val path: Path,
                        val pending: Pending,
                        val lifecycleManager: LifecycleManager): Scope {
     abstract fun before(context: ExecutionContext)
@@ -17,9 +18,12 @@ sealed class ScopeImpl(val path: Path,
     abstract fun after(context: ExecutionContext)
 }
 
-open class GroupScopeImpl(path: Path, override val parent: GroupScope?,
+open class GroupScopeImpl(id: ScopeId,
+                          path: Path,
+                          override val parent: GroupScope?,
                           pending: Pending,
-                          lifecycleManager: LifecycleManager): ScopeImpl(path, pending, lifecycleManager), GroupScope {
+                          lifecycleManager: LifecycleManager)
+    : ScopeImpl(id, path, pending, lifecycleManager), GroupScope {
     private val children = mutableListOf<ScopeImpl>()
 
     fun addChild(child: ScopeImpl) {
@@ -46,11 +50,13 @@ open class GroupScopeImpl(path: Path, override val parent: GroupScope?,
         lifecycleManager.afterExecuteGroup(this)
     }
 }
-class ActionScopeImpl(path: Path,
+class ActionScopeImpl(id: ScopeId,
+                      path: Path,
                       parent: GroupScope?,
                       val body: ActionScopeImpl.(ExecutionContext) -> Unit,
                       pending: Pending,
-                      lifecycleManager: LifecycleManager): GroupScopeImpl(path, parent, pending, lifecycleManager), ActionScope {
+                      lifecycleManager: LifecycleManager)
+    : GroupScopeImpl(id, path, parent, pending, lifecycleManager), ActionScope {
     override fun before(context: ExecutionContext) {
         lifecycleManager.beforeExecuteAction(this)
     }
@@ -62,11 +68,13 @@ class ActionScopeImpl(path: Path,
     }
 }
 
-class TestScopeImpl(path: Path,
+class TestScopeImpl(id: ScopeId,
+                    path: Path,
                     override val parent: GroupScope,
                     val body: TestBody.() -> Unit,
                     pending: Pending,
-                    lifecycleManager: LifecycleManager): ScopeImpl(path, pending, lifecycleManager), TestScope {
+                    lifecycleManager: LifecycleManager)
+    : ScopeImpl(id, path, pending, lifecycleManager), TestScope {
     override fun before(context: ExecutionContext) {
         lifecycleManager.beforeExecuteTest(this)
     }

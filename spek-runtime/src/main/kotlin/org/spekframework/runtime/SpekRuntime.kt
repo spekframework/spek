@@ -10,6 +10,7 @@ import org.spekframework.runtime.execution.ExecutionRequest
 import org.spekframework.runtime.lifecycle.LifecycleManager
 import org.spekframework.runtime.scope.GroupScopeImpl
 import org.spekframework.runtime.scope.Path
+import org.spekframework.runtime.scope.ScopeId
 import kotlin.reflect.KClass
 
 abstract class SpekRuntime {
@@ -22,14 +23,13 @@ abstract class SpekRuntime {
             addListener(fixtures)
         }
 
-        val packageScope = path.parent?.let { GroupScopeImpl(it, null, Pending.No, lifecycleManager) }
-        val classScope = GroupScopeImpl(path, packageScope, Pending.No, lifecycleManager)
-        packageScope?.addChild(classScope)
+        val qualifiedName = (path.parent?.name ?: "") + ".${path.name}"
+        val classScope = GroupScopeImpl(ScopeId("class", qualifiedName), path, null, Pending.No, lifecycleManager)
         val instanceFactory = instanceFactoryFor(spek)
         val instance = instanceFactory.create(spek)
         instance.spec.invoke(Collector(classScope, lifecycleManager, fixtures))
 
-        return packageScope ?: classScope
+        return classScope
     }
 
     protected abstract fun instanceFactoryFor(spek: KClass<*>): InstanceFactory
