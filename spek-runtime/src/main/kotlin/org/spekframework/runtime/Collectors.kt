@@ -14,6 +14,7 @@ import org.spekframework.runtime.lifecycle.LifecycleManager
 import org.spekframework.runtime.scope.ActionScopeImpl
 import org.spekframework.runtime.scope.GroupScopeImpl
 import org.spekframework.runtime.scope.ScopeId
+import org.spekframework.runtime.scope.ScopeType
 import org.spekframework.runtime.scope.TestScopeImpl
 
 open class Collector(val root: GroupScopeImpl,
@@ -110,9 +111,9 @@ open class Collector(val root: GroupScopeImpl,
         ids.put(description, current)
 
         return if (current > 1) {
-            ScopeId("scope", "$description [$current]")
+            ScopeId(ScopeType.SCOPE, "$description [$current]")
         } else {
-            ScopeId("scope", description)
+            ScopeId(ScopeType.SCOPE, description)
         }
     }
 }

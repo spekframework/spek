@@ -9,7 +9,7 @@ fun toUniqueId(scope: ScopeImpl?): UniqueId {
     return if (scope == null) {
         SPEK_ENGINE_UID
     } else {
-        toUniqueId(scope.parent as ScopeImpl?).append(scope.id.type, scope.id.name)
+        toUniqueId(scope.parent as ScopeImpl?).append("${scope.id.type}", scope.id.name)
 
     }
 }

@@ -1,3 +1,10 @@
 package org.spekframework.runtime.scope
 
-data class ScopeId(val type: String, val name: String)
+enum class ScopeType {
+    CLASS,
+    SCOPE;
+
+    override fun toString() = name.toLowerCase()
+}
+
+data class ScopeId(val type: ScopeType, val name: String)

@@ -10,6 +10,7 @@ import org.spekframework.jvm.JvmPath
 import org.spekframework.runtime.lifecycle.LifecycleManager
 import org.spekframework.runtime.scope.GroupScopeImpl
 import org.spekframework.runtime.scope.ScopeId
+import org.spekframework.runtime.scope.ScopeType
 import kotlin.properties.Delegates
 
 class TestDescriptorAdapterFactoryTest {
@@ -27,7 +28,7 @@ class TestDescriptorAdapterFactoryTest {
     @Test
     fun caching() {
         val scope = GroupScopeImpl(
-            ScopeId("class", "SomeClass"),
+            ScopeId(ScopeType.CLASS, "SomeClass"),
             JvmPath.from(("SomeClass")),
             null,
             Pending.No,
