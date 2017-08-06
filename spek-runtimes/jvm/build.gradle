@@ -20,9 +20,9 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 
 dependencies {
-    compile project(':spek-runtime')
+    compile project(':spek-runtimes:common')
     compile 'org.reflections:reflections'
     compile 'com.xenomachina:kotlin-argparser'
 
-    testCompile project(':spek-runtime-test')
+    testCompile project(':spek-runtimes:test-support')
 }

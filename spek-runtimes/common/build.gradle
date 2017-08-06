@@ -17,5 +17,5 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 
 dependencies {
-    compile project(':spek-api')
+    compile project(':spek-dsl')
 }
