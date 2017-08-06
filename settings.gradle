@@ -11,4 +11,4 @@ include 'spek-runtime'
 include 'spek-runtime-test'
 include 'spek-jvm-runtime'
 
-include 'spek-junit-platform-engine2'
+include 'spek-junit-platform-engine'
