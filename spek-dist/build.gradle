@@ -27,7 +27,7 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 description = 'Spek Distribution packages'
 
 evaluationDependsOn ':spek-api'
-evaluationDependsOn ':spek-junit-platform-engine'
+evaluationDependsOn ':spek-junit-platform-engine2'
 
 publishing {
     publications {
@@ -159,12 +159,12 @@ publishing {
 
         engine(MavenPublication) {
             groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-junit-platform-engine'
+            artifactId = 'spek-junit-platform-engine2'
             version = rootProject.version
 
-            from project(':spek-junit-platform-engine').components.java
-            artifact project(':spek-junit-platform-engine').tasks['sourceJar']
-            artifact project(':spek-junit-platform-engine').tasks['javadocJar']
+            from project(':spek-junit-platform-engine2').components.java
+            artifact project(':spek-junit-platform-engine2').tasks['sourceJar']
+            artifact project(':spek-junit-platform-engine2').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {

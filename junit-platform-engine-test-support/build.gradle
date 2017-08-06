@@ -1,9 +1,0 @@
-apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin.gradle"
-
-dependencies {
-    compile 'org.jetbrains.kotlin:kotlin-stdlib'
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
-    compile 'org.junit.platform:junit-platform-engine'
-    compile 'org.junit.platform:junit-platform-launcher'
-}
