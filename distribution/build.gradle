@@ -26,14 +26,11 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 description = 'Spek Distribution packages'
 
-evaluationDependsOn ':spek-dsl'
-evaluationDependsOn ':spek-runners:junit5'
-
 publishing {
     publications {
-        api(MavenPublication) {
-            groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-api'
+        dsl(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
+            artifactId = 'spek-dsl'
             version = rootProject.version
 
             from project(':spek-dsl').components.java
@@ -73,9 +70,9 @@ publishing {
             }
         }
 
-        subjectExtension(MavenPublication) {
-            groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-subject-extension'
+        extensionSubject(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
+            artifactId = 'spek-extension-subject'
             version = rootProject.version
 
             from project(':spek-extensions:subject').components.java
@@ -115,9 +112,9 @@ publishing {
             }
         }
 
-        dataDrivenExtension(MavenPublication) {
-            groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-data-driven-extension'
+        extensionDataDriven(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
+            artifactId = 'spek-extension-data-driven'
             version = rootProject.version
 
             from project(':spek-extensions:data-driven').components.java
@@ -157,9 +154,9 @@ publishing {
             }
         }
 
-        engine(MavenPublication) {
-            groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-junit-platform-engine'
+        runnerJunit5(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
+            artifactId = 'spek-runner-junit5'
             version = rootProject.version
 
             from project(':spek-runners:junit5').components.java
@@ -200,8 +197,8 @@ publishing {
         }
 
 
-        runtime(MavenPublication) {
-            groupId = 'org.jetbrains.spek'
+        runtimeCommon(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-runtime-common'
             version = rootProject.version
 
@@ -242,8 +239,8 @@ publishing {
             }
         }
 
-        jvmRuntime(MavenPublication) {
-            groupId = 'org.jetbrains.spek'
+        runtimeJvm(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-runtime-jvm'
             version = rootProject.version
 
@@ -286,6 +283,8 @@ publishing {
     }
 }
 
+def artifacts = ['dsl', 'runtimeCommon', 'runtimeJvm', 'runnerJunit5', 'extensionSubject', 'extensionDataDriven']
+
 bintray {
     user = "${bintrayUser}"
     key = "${bintrayApiKey}"
@@ -308,7 +307,7 @@ bintray {
         }
     }
 
-    publications = ['api', 'engine', 'subjectExtension', 'dataDrivenExtension']
+    publications = artifacts
 }
 
 artifactory {
@@ -324,7 +323,7 @@ artifactory {
             maven = true
         }
         defaults {
-            publications('api', 'engine', 'subjectExtension', 'dataDrivenExtension')
+            publications(artifacts)
         }
     }
     resolve {
