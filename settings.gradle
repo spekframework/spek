@@ -1,14 +1,16 @@
 rootProject.name = 'spek'
 
-include 'spek-api'
-include 'spek-subject-extension'
-include 'spek-dist'
+include 'spek-dsl'
+
+include 'spek-runtimes:common'
+include 'spek-runtimes:test-support'
+include 'spek-runtimes:jvm'
+
+include 'spek-runners:junit5'
+
+include 'spek-extensions:subject'
+include 'spek-extensions:data-driven'
+
+include 'distribution'
 include 'documentation'
-include 'spek-samples'
-include 'spek-data-driven-extension'
-
-include 'spek-runtime'
-include 'spek-runtime-test'
-include 'spek-jvm-runtime'
-
-include 'spek-junit-platform-engine'
+include 'samples'
