@@ -26,8 +26,8 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 description = 'Spek Distribution packages'
 
-evaluationDependsOn ':spek-api'
-evaluationDependsOn ':spek-junit-platform-engine'
+evaluationDependsOn ':spek-dsl'
+evaluationDependsOn ':spek-runners:junit5'
 
 publishing {
     publications {
@@ -36,9 +36,9 @@ publishing {
             artifactId = 'spek-api'
             version = rootProject.version
 
-            from project(':spek-api').components.java
-            artifact project(':spek-api').tasks['sourceJar']
-            artifact project(':spek-api').tasks['javadocJar']
+            from project(':spek-dsl').components.java
+            artifact project(':spek-dsl').tasks['sourceJar']
+            artifact project(':spek-dsl').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
@@ -78,9 +78,9 @@ publishing {
             artifactId = 'spek-subject-extension'
             version = rootProject.version
 
-            from project(':spek-subject-extension').components.java
-            artifact project(':spek-subject-extension').tasks['sourceJar']
-            artifact project(':spek-subject-extension').tasks['javadocJar']
+            from project(':spek-extensions:subject').components.java
+            artifact project(':spek-extensions:subject').tasks['sourceJar']
+            artifact project(':spek-extensions:subject').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
@@ -120,9 +120,9 @@ publishing {
             artifactId = 'spek-data-driven-extension'
             version = rootProject.version
 
-            from project(':spek-data-driven-extension').components.java
-            artifact project(':spek-data-driven-extension').tasks['sourceJar']
-            artifact project(':spek-data-driven-extension').tasks['javadocJar']
+            from project(':spek-extensions:data-driven').components.java
+            artifact project(':spek-extensions:data-driven').tasks['sourceJar']
+            artifact project(':spek-extensions:data-driven').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
@@ -162,9 +162,9 @@ publishing {
             artifactId = 'spek-junit-platform-engine'
             version = rootProject.version
 
-            from project(':spek-junit-platform-engine').components.java
-            artifact project(':spek-junit-platform-engine').tasks['sourceJar']
-            artifact project(':spek-junit-platform-engine').tasks['javadocJar']
+            from project(':spek-runners:junit5').components.java
+            artifact project(':spek-runners:junit5').tasks['sourceJar']
+            artifact project(':spek-runners:junit5').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
@@ -202,12 +202,12 @@ publishing {
 
         runtime(MavenPublication) {
             groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-runtime'
+            artifactId = 'spek-runtime-common'
             version = rootProject.version
 
-            from project(':spek-runtime').components.java
-            artifact project(':spek-runtime').tasks['sourceJar']
-            artifact project(':spek-runtime').tasks['javadocJar']
+            from project(':spek-runtimes:common').components.java
+            artifact project(':spek-runtimes:common').tasks['sourceJar']
+            artifact project(':spek-runtimes:common').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
@@ -244,12 +244,12 @@ publishing {
 
         jvmRuntime(MavenPublication) {
             groupId = 'org.jetbrains.spek'
-            artifactId = 'spek-jvm-runtime'
+            artifactId = 'spek-runtime-jvm'
             version = rootProject.version
 
-            from project(':spek-jvm-runtime').components.java
-            artifact project(':spek-jvm-runtime').tasks['sourceJar']
-            artifact project(':spek-jvm-runtime').tasks['javadocJar']
+            from project(':spek-runtimes:jvm').components.java
+            artifact project(':spek-runtimes:jvm').tasks['sourceJar']
+            artifact project(':spek-runtimes:jvm').tasks['javadocJar']
 
             pom.withXml {
                 asNode().dependencies.dependency.each {
