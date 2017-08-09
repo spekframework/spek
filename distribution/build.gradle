@@ -26,13 +26,12 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 description = 'Spek Distribution packages'
 
-group = "org.spekframework.spek2"
-version = rootProject.version
-
 publishing {
     publications {
         dsl(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-dsl'
+            version = rootProject.version
 
             from project(':spek-dsl').components.java
             artifact project(':spek-dsl').tasks['sourceJar']
@@ -72,7 +71,9 @@ publishing {
         }
 
         extensionSubject(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-extension-subject'
+            version = rootProject.version
 
             from project(':spek-extensions:subject').components.java
             artifact project(':spek-extensions:subject').tasks['sourceJar']
@@ -112,7 +113,9 @@ publishing {
         }
 
         extensionDataDriven(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-extension-data-driven'
+            version = rootProject.version
 
             from project(':spek-extensions:data-driven').components.java
             artifact project(':spek-extensions:data-driven').tasks['sourceJar']
@@ -152,7 +155,9 @@ publishing {
         }
 
         runnerJunit5(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-runner-junit5'
+            version = rootProject.version
 
             from project(':spek-runners:junit5').components.java
             artifact project(':spek-runners:junit5').tasks['sourceJar']
@@ -193,7 +198,9 @@ publishing {
 
 
         runtimeCommon(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-runtime-common'
+            version = rootProject.version
 
             from project(':spek-runtimes:common').components.java
             artifact project(':spek-runtimes:common').tasks['sourceJar']
@@ -233,7 +240,9 @@ publishing {
         }
 
         runtimeJvm(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
             artifactId = 'spek-runtime-jvm'
+            version = rootProject.version
 
             from project(':spek-runtimes:jvm').components.java
             artifact project(':spek-runtimes:jvm').tasks['sourceJar']
