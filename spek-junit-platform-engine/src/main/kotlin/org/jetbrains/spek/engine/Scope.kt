@@ -18,14 +18,8 @@ import org.junit.platform.engine.support.hierarchical.Node
  */
 sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSource?,
                    val lifecycleManager: LifecycleManager)
-    : AbstractTestDescriptor(uniqueId, uniqueId.segments.last().value), Node<SpekExecutionContext>,
+    : AbstractTestDescriptor(uniqueId, uniqueId.segments.last().value, source), Node<SpekExecutionContext>,
       org.jetbrains.spek.api.lifecycle.Scope {
-
-    init {
-        if (source != null) {
-            setSource(source)
-        }
-    }
 
     override val parent: GroupScope? by lazy {
         return@lazy if (getParent().isPresent) {
@@ -41,14 +35,13 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
                  private val body: Action.(SpekExecutionContext) -> Unit)
         : Scope(uniqueId, pending, source, lifecycleManager), ActionScope {
         override fun getType() = CONTAINER
-        override fun hasTests() = true
 
         override fun before(context: SpekExecutionContext): SpekExecutionContext {
             lifecycleManager.beforeExecuteAction(this)
             return context
         }
 
-        override fun execute(context: SpekExecutionContext): SpekExecutionContext {
+        override fun execute(context: SpekExecutionContext, dynamicTestExecutor: Node.DynamicTestExecutor?): SpekExecutionContext {
             val collector = ThrowableCollector()
 
             if (collector.isEmpty()) {
@@ -87,7 +80,6 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
         }
 
         override fun getType() = TEST
-        override fun isLeaf() = true
 
         override fun before(context: SpekExecutionContext): SpekExecutionContext {
             lifecycleManager.beforeExecuteTest(this)
@@ -98,7 +90,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
             lifecycleManager.afterExecuteTest(this)
         }
 
-        override fun execute(context: SpekExecutionContext): SpekExecutionContext {
+        override fun execute(context: SpekExecutionContext, dynamicTestExecutor: Node.DynamicTestExecutor?): SpekExecutionContext {
             val collector = ThrowableCollector()
             if (collector.isEmpty()) {
 

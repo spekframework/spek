@@ -63,7 +63,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         val isSpecClass = java.util.function.Predicate<String>(String::isNotEmpty)
         discoveryRequest.getSelectorsByType(ClasspathRootSelector::class.java).forEach {
-            ReflectionUtils.findAllClassesInClasspathRoot(Paths.get(it.classpathRoot), isValidSpec, isSpecClass)
+            ReflectionUtils.findAllClassesInClasspathRoot(it.classpathRoot, isValidSpec, isSpecClass)
                 .forEach {
                     resolveSpec(engineDescriptor, it)
                 }
