@@ -1,0 +1,25 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
+apply plugin: 'org.jetbrains.dokka'
+
+dependencies {
+    compile project(':spek-jvm-runtime')
+
+    compile 'org.jetbrains.kotlin:kotlin-stdlib'
+    compile 'org.jetbrains.kotlin:kotlin-reflect'
+    compileOnly 'org.junit.platform:junit-platform-engine'
+
+    testCompile "com.nhaarman:mockito-kotlin"
+    testCompile 'org.junit.platform:junit-platform-engine'
+}
+
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+    classifier = 'javadoc'
+}

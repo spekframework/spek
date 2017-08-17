@@ -1,0 +1,21 @@
+// TODO: this should be pure kotlin module (target platform agnostic)
+
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply plugin: 'org.jetbrains.dokka'
+
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}
+
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+    classifier = 'javadoc'
+}
+
+
+dependencies {
+    compile project(':spek-api')
+}
