@@ -55,6 +55,10 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
         override fun after(context: SpekExecutionContext) {
             lifecycleManager.afterExecuteAction(this)
         }
+
+        override fun mayRegisterTests(): Boolean {
+            return true
+        }
     }
 
     open class Group(uniqueId: UniqueId, pending: Pending,
