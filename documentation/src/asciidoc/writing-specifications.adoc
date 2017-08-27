@@ -186,7 +186,7 @@ object FixtureSpec: Spek({
 ----
 
 === Ignoring tests
-Each scope method have a variant prefixed with `x` (e.g. `xdescribe`, `xit`, etc...), which will Spek ignore when executing the spec.
+Each scope method have a variant prefixed with `x` (e.g. `xdescribe`, `xit`, etc...), which Spek will ignore when executing the spec.
 
 === Subjects
 NOTE: This feature is currently experimental.
