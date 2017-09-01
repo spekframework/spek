@@ -14,7 +14,7 @@ enum class SynonymType {
  *
  *
  * @property type type of scope.
- * @property prefix prefix appended to the description, if applicable.
+ * @property prefix prefix appended to the description (if applicable), this will appear in the test report.
  * @property excluded whether the synonym represents an ignored scope.
  */
 @Target(AnnotationTarget.FUNCTION)
