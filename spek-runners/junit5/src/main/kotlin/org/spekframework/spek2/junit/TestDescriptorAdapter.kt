@@ -66,6 +66,10 @@ class TestDescriptorAdapter internal constructor(val scope: ScopeImpl,
         }
     }
 
+    override fun mayRegisterTests(): Boolean {
+        return scope is ActionScopeImpl
+    }
+
     override fun getUniqueId() = _uniqueId
 
     override fun removeChild(descriptor: TestDescriptor) {

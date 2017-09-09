@@ -25,7 +25,7 @@ class LifecycleManagerTest {
 
         try {
             lifecycleManager.addListener(listener)
-            Assertions.fail("it should throw IllegalArgumentException")
+            Assertions.fail<Unit>("it should throw IllegalArgumentException")
         } catch (e: IllegalArgumentException) {
             // pass
         }
