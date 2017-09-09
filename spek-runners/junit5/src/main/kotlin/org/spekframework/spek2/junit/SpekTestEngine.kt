@@ -4,7 +4,7 @@ import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
-import org.spekframework.spek2.jvm.JvmPath
+import org.spekframework.spek2.jvm.JvmPathBuilder
 import org.spekframework.spek2.jvm.SpekJvmRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -21,7 +21,7 @@ class SpekTestEngine: TestEngine {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
 
         val pathSelector = discoveryRequest.getSelectorsByType(PathSelector::class.java)
-            .firstOrNull() ?: PathSelector(JvmPath.ROOT)
+            .firstOrNull() ?: PathSelector(JvmPathBuilder.ROOT)
 
         val discoveryResult = runtime.discover(DiscoveryRequest(pathSelector.path))
 

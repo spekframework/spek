@@ -2,14 +2,20 @@ package org.spekframework.spek2.jvm
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.scope.Path
+import org.spekframework.spek2.runtime.scope.PathBuilder
+import java.util.Base64
 import kotlin.reflect.KClass
 
-data class JvmPath private constructor(override val name: String, override val parent: JvmPath?): Path {
+private data class JvmPath constructor(override val name: String, override val parent: JvmPath?): Path {
     private val serialized by lazy {
         serialize(this)
     }
 
-    override fun resolve(name: String) = create(name, this)
+    private val encoded by lazy {
+        encode(name)
+    }
+
+    override fun resolve(name: String) = JvmPath(name, this)
 
     override fun isParentOf(path: Path): Boolean {
         var current: Path? = path
@@ -29,39 +35,60 @@ data class JvmPath private constructor(override val name: String, override val p
     }
 
     companion object {
-        val ROOT = JvmPath("", null)
-        private val PATH_SEPARATOR = "/"
-        private val PATH_SEPARATOR_REGEX = Regex("(?<=[^\\\\])/")
-
-        fun create(name: String, parent: JvmPath? = null): JvmPath {
-            return JvmPath(name.replace(PATH_SEPARATOR, "\\/"), parent)
-        }
-
-        /**
-         * Assumes path is properly encoded, otherwise use [create]
-         */
-        fun from(path: String): JvmPath {
-            return if (path.isEmpty()) {
-                ROOT
-            } else {
-                path.split(PATH_SEPARATOR_REGEX).fold(ROOT) { parent, name ->
-                    JvmPath(name, parent)
-                }
-            }
-        }
+        const val PATH_SEPARATOR = "/"
 
         private fun serialize(path: JvmPath): String {
             return if (path.parent == null) {
+                // this will be an empty string
                 path.name
             } else {
-                "${serialize(path.parent)}${PATH_SEPARATOR}${path.name}".trimStart(*PATH_SEPARATOR.toCharArray())
+                "${serialize(path.parent)}$PATH_SEPARATOR${path.encoded}".trimStart(*PATH_SEPARATOR.toCharArray())
             }
+        }
+
+        fun encode(name: String): String {
+            return Base64.getEncoder()
+                .encodeToString(name.toByteArray())
+        }
+
+        fun decode(name: String): String {
+            return String(
+                Base64.getDecoder()
+                    .decode(name)
+            )
         }
     }
 }
 
-fun classToPath(spek: KClass<out Spek>): Path {
-    val packagePath = JvmPath.create(spek.java.`package`.name, JvmPath.ROOT)
-    val classPath = JvmPath.create(spek.java.simpleName!!, packagePath)
-    return classPath
+class JvmPathBuilder private constructor(val parent: JvmPath): PathBuilder {
+    constructor(): this(ROOT as JvmPath)
+
+    override fun append(name: String): PathBuilder {
+        return JvmPathBuilder(JvmPath(name, parent))
+    }
+
+    override fun build(): Path {
+        return parent
+    }
+
+    companion object {
+        val ROOT: Path = JvmPath("", null)
+
+        fun from(clz: KClass<out Spek>): PathBuilder {
+            return JvmPathBuilder()
+                .append(clz.java.`package`.name)
+                .append(clz.java.simpleName)
+        }
+
+        fun parse(path: String): PathBuilder {
+            var builder: PathBuilder = JvmPathBuilder()
+
+            path.split(JvmPath.PATH_SEPARATOR)
+                .filter { it.isNotBlank() }
+                .forEach { builder = builder.append(JvmPath.decode(it)) }
+
+            return builder
+
+        }
+    }
 }

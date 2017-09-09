@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.describe
 import org.spekframework.spek2.dsl.on
+import org.spekframework.spek2.jvm.JvmPathBuilder
 import org.spekframework.spek2.jvm.SpekJvmRuntime
-import org.spekframework.spek2.jvm.classToPath
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 import java.util.ArrayDeque
@@ -46,6 +46,7 @@ class IncludeSubjectTest: AbstractSpekRuntimeTest<SpekJvmRuntime>(SpekJvmRuntime
 
     // FIXME: duplicate
     override fun toPath(spek: KClass<out Spek>): Path {
-        return classToPath(spek)
+        return JvmPathBuilder.from(spek)
+            .build()
     }
 }

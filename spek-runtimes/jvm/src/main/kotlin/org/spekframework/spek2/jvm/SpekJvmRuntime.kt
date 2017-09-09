@@ -36,8 +36,18 @@ class SpekJvmRuntime: SpekRuntime() {
             .map(Class<out Spek>::kotlin)
             .filter { it.findAnnotation<Ignore>() == null }
             .filter { !it.isAbstract }
-            .filter { discoveryRequest.path.isRelated(classToPath(it)) }
-            .map { resolveSpec(it, classToPath(it)) }
+            .filter {
+                val path = JvmPathBuilder.from(it)
+                    .build()
+
+                discoveryRequest.path.isRelated(path)
+            }
+            .map {
+                val path = JvmPathBuilder.from(it)
+                    .build()
+
+                resolveSpec(it, path)
+            }
             // TODO: should we move final filtering to SpekRuntime?
             .map { it.apply { filterBy(discoveryRequest.path) } }
             .filter { !it.isEmpty() }
