@@ -60,7 +60,7 @@ private data class JvmPath constructor(override val name: String, override val p
     }
 }
 
-class JvmPathBuilder private constructor(val parent: JvmPath): PathBuilder {
+class JvmPathBuilder private constructor(private val parent: JvmPath): PathBuilder {
     constructor(): this(ROOT as JvmPath)
 
     override fun append(name: String): PathBuilder {
