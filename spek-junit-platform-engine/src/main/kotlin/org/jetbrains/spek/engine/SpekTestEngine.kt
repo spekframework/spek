@@ -41,7 +41,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     val defaultInstanceFactory = object: InstanceFactory {
         override fun <T: Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.constructors.first { it.parameters.isEmpty() }
-                    .call()
+                .call()
         }
     }
 
@@ -54,7 +54,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     override fun getId(): String = "spek"
 
     override fun createExecutionContext(request: ExecutionRequest)
-            = SpekExecutionContext(request)
+        = SpekExecutionContext(request)
 
     private fun resolveSpecs(discoveryRequest: EngineDiscoveryRequest, engineDescriptor: EngineDescriptor) {
         val isValidSpec = java.util.function.Predicate<Class<*>> {
@@ -64,9 +64,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         val isSpecClass = java.util.function.Predicate<String>(String::isNotEmpty)
         discoveryRequest.getSelectorsByType(ClasspathRootSelector::class.java).forEach {
             ReflectionUtils.findAllClassesInClasspathRoot(it.classpathRoot, isValidSpec, isSpecClass)
-                    .forEach {
-                        resolveSpec(engineDescriptor, it)
-                    }
+                .forEach {
+                    resolveSpec(engineDescriptor, it)
+                }
         }
 
         discoveryRequest.getSelectorsByType(PackageSelector::class.java).forEach {
@@ -112,9 +112,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         val kotlinClass = klass.kotlin
         val instance = instanceFactoryFor(kotlinClass).create(kotlinClass as KClass<Spek>)
         val root = Scope.Group(
-                engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name),
-                Pending.No,
-                ClassSource.from(klass), lifecycleManager
+            engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name),
+            Pending.No,
+            ClassSource.from(klass), lifecycleManager
         )
         engineDescriptor.addChild(root)
 
@@ -124,9 +124,9 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     private fun instanceFactoryFor(spek: KClass<*>): InstanceFactory {
         val factory = spek.annotations.filterIsInstance<CreateWith>()
-                .map { it.factory }
-                .map { it.objectInstance ?: it.primaryConstructor!!.call() }
-                .firstOrNull() ?: defaultInstanceFactory
+            .map { it.factory }
+            .map { it.objectInstance ?: it.primaryConstructor!!.call() }
+            .firstOrNull() ?: defaultInstanceFactory
         return factory
     }
 
@@ -151,8 +151,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun group(description: String, pending: Pending, body: SpecBody.() -> Unit) {
             val group = Scope.Group(
-                    root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
-                    pending, getSource(), lifecycleManager
+                root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
+                pending, getSource(), lifecycleManager
             )
             root.addChild(group)
             val collector = Collector(group, lifecycleManager, fixtures)
@@ -161,8 +161,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             } catch (e: Throwable) {
                 collector.beforeGroup { throw e }
                 group.addChild(Scope.Test(
-                        root.uniqueId.append(TEST_SEGMENT_TYPE, "Group failure"),
-                        pending, getSource(), lifecycleManager, {}
+                    root.uniqueId.append(TEST_SEGMENT_TYPE, "Group failure"),
+                    pending, getSource(), lifecycleManager, {}
                 ))
             }
 
@@ -170,8 +170,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun action(description: String, pending: Pending, body: ActionBody.() -> Unit) {
             val action = Scope.Action(
-                    root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
-                    pending, getSource(), lifecycleManager, {
+                root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
+                pending, getSource(), lifecycleManager, {
                 body.invoke(ActionCollector(this, lifecycleManager, it))
             }
             )
@@ -181,8 +181,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
             val test = Scope.Test(
-                    root.uniqueId.append(TEST_SEGMENT_TYPE, description),
-                    pending, getSource(), lifecycleManager, body
+                root.uniqueId.append(TEST_SEGMENT_TYPE, description),
+                pending, getSource(), lifecycleManager, body
             )
             root.addChild(test)
         }
@@ -209,7 +209,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
         override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
             val test = Scope.Test(
-                    root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, getSource(), lifecycleManager, body
+                root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, getSource(), lifecycleManager, body
             )
             root.addChild(test)
             context.engineExecutionListener.dynamicTestRegistered(test)
