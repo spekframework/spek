@@ -172,8 +172,8 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
             val action = Scope.Action(
                 root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
                 pending, getSource(), lifecycleManager, {
-                body.invoke(ActionCollector(this, lifecycleManager, it))
-            }
+                    body.invoke(ActionCollector(this, lifecycleManager, it))
+                }
             )
 
             root.addChild(action)
