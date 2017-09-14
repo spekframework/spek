@@ -114,7 +114,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         val root = Scope.Group(
             engineDescriptor.uniqueId.append(SPEC_SEGMENT_TYPE, klass.name),
             Pending.No,
-            ClassSource(klass), lifecycleManager
+            ClassSource.from(klass), lifecycleManager
         )
         engineDescriptor.addChild(root)
 
