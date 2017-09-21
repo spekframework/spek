@@ -18,3 +18,9 @@ val Path.isRoot: Boolean
 // 1: my.package/MyClass -> my.package/MyClass/description
 // 2: my.package/MyClass/description -> my.package/MyClass
 fun Path.isRelated(path: Path) = this.isParentOf(path) || path.isParentOf(this)
+
+
+interface PathBuilder {
+    fun append(name: String): PathBuilder
+    fun build(): Path
+}
