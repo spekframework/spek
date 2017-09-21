@@ -586,8 +586,8 @@ repositories {
 
 // setup dependencies
 dependencies {
-    testCompile 'org.jetbrains.spek:spek-api:1.1.4'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.4'
+    testCompile 'org.jetbrains.spek:spek-api:1.1.5'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
 }</code></pre>
 </div>
 </div>
@@ -624,8 +624,8 @@ configure<JUnitPlatformExtension> {
 
 // setup dependencies
 dependencies {
-    testCompile("org.jetbrains.spek:spek-api:1.1.4")
-    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.4")
+    testCompile("org.jetbrains.spek:spek-api:1.1.5")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
 }
 
 // extension for configuration
@@ -659,10 +659,10 @@ the group in your dependency definition.</p>
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testCompile ('org.jetbrains.spek:spek-api:1.1.4') {
+    testCompile ('org.jetbrains.spek:spek-api:1.1.5') {
         exclude group: 'org.jetbrains.kotlin'
     }
-    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:1.1.4') {
+    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:1.1.5') {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
@@ -682,7 +682,7 @@ the group in your dependency definition.</p>
 &lt;dependency&gt;
   &lt;groupId&gt;org.jetbrains.spek&lt;/groupId&gt;
   &lt;artifactId&gt;spek-api&lt;/artifactId&gt;
-  &lt;version&gt;1.1.4&lt;/version&gt;
+  &lt;version&gt;1.1.5&lt;/version&gt;
   &lt;type&gt;pom&lt;/type&gt;
 &lt;/dependency&gt;</code></pre>
 </div>
@@ -699,10 +699,10 @@ the group in your dependency definition.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>org.jetbrains.spek:spek-api:1.1.4</code></p>
+<p><code>org.jetbrains.spek:spek-api:1.1.5</code></p>
 </li>
 <li>
-<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.4</code></p>
+<p><code>org.jetbrains.spek:spek-junit-platform-engine:1.1.5</code></p>
 </li>
 <li>
 <p><code>org.junit.platform:junit-platform-runner:1.0.0</code></p>
@@ -1015,7 +1015,7 @@ You can&#8217;t declare fixtures within <code>action</code> scopes.
 <div class="sect2">
 <h3 id="_ignoring_tests">Ignoring tests</h3>
 <div class="paragraph">
-<p>Each scope method have a variant prefixed with <code>x</code> (e.g. <code>xdescribe</code>, <code>xit</code>, etc&#8230;&#8203;), which will Spek ignore when executing the spec.</p>
+<p>Each scope method have a variant prefixed with <code>x</code> (e.g. <code>xdescribe</code>, <code>xit</code>, etc&#8230;&#8203;), which Spek will ignore when executing the spec.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1262,7 +1262,7 @@ Ilya Ryzhenkov</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-14 07:50:20 +00:00
+Last updated 2017-09-21 14:59:05 +00:00
 </div>
 </div>
 <link rel="stylesheet" href="lib/highlight/styles/github.min.css">
