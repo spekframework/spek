@@ -37,7 +37,7 @@ fun SpecBody.given(description: String, body: SpecBody.() -> Unit) {
 }
 
 /**
- * Creates a [group][SpecBody.group].
+ * Creates an [action][SpecBody.action].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0
@@ -92,7 +92,7 @@ fun SpecBody.xgiven(description: String, reason: String? = null, body: SpecBody.
 }
 
 /**
- * Creates a pending [group][SpecBody.group].
+ * Creates a pending [action][SpecBody.action].
  *
  * @author Ranie Jade Ramiso
  * @since 1.0

@@ -3,6 +3,15 @@ apply from: "$rootDir/gradle/common/kotlin.gradle"
 apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
 apply plugin: 'org.jetbrains.dokka'
 
+junitPlatform {
+    platformVersion '1.0.0-RC2'
+    filters {
+        engines {
+            exclude 'spek'
+        }
+    }
+}
+
 dependencies {
     compile project(':spek-runtimes:jvm')
 

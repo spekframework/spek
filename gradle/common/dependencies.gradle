@@ -10,7 +10,7 @@ dependencyManagement {
             entry 'junit-platform-launcher'
         }
 
-        dependencySet(group: 'org.junit.jupiter', version: '5.0.0-RC3') {
+        dependencySet(group: 'org.junit.jupiter', version: '5.0.0') {
             entry 'junit-jupiter-api'
             entry 'junit-jupiter-engine'
         }
