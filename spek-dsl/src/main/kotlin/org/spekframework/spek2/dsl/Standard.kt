@@ -9,7 +9,7 @@ import org.spekframework.spek2.meta.SynonymType
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Group, prefix = "describe ")
+@Synonym(type = SynonymType.Group, prefix = "describe")
 fun SpecBody.describe(description: String, body: SpecBody.() -> Unit) {
     group("describe $description", body = body)
 }
@@ -20,7 +20,7 @@ fun SpecBody.describe(description: String, body: SpecBody.() -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Group, prefix = "context ")
+@Synonym(type = SynonymType.Group, prefix = "context")
 fun SpecBody.context(description: String, body: SpecBody.() -> Unit) {
     group("context $description", body = body)
 }
@@ -31,7 +31,7 @@ fun SpecBody.context(description: String, body: SpecBody.() -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Group, prefix = "given ")
+@Synonym(type = SynonymType.Group, prefix = "given")
 fun SpecBody.given(description: String, body: SpecBody.() -> Unit) {
     group("given $description", body = body)
 }
@@ -42,7 +42,7 @@ fun SpecBody.given(description: String, body: SpecBody.() -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Action, prefix = "on ")
+@Synonym(type = SynonymType.Action, prefix = "on")
 fun SpecBody.on(description: String, body: ActionBody.() -> Unit) {
     action("on $description", body = body)
 }
@@ -53,7 +53,7 @@ fun SpecBody.on(description: String, body: ActionBody.() -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Test, prefix = "it ")
+@Synonym(type = SynonymType.Test, prefix = "it")
 fun TestContainer.it(description: String, body: TestBody.() -> Unit) {
     test("it $description", body = body)
 }
@@ -64,7 +64,7 @@ fun TestContainer.it(description: String, body: TestBody.() -> Unit) {
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Group, prefix = "describe ", excluded = true)
+@Synonym(type = SynonymType.Group, prefix = "describe", excluded = true)
 fun SpecBody.xdescribe(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
     group("describe $description", Pending.Yes(reason), body = body)
 }
@@ -75,7 +75,7 @@ fun SpecBody.xdescribe(description: String, reason: String? = null, body: SpecBo
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Group, prefix = "context ", excluded = true)
+@Synonym(type = SynonymType.Group, prefix = "context", excluded = true)
 fun SpecBody.xcontext(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
     group("context $description", Pending.Yes(reason), body = body)
 }
@@ -86,7 +86,7 @@ fun SpecBody.xcontext(description: String, reason: String? = null, body: SpecBod
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Group, prefix = "given ", excluded = true)
+@Synonym(type = SynonymType.Group, prefix = "given", excluded = true)
 fun SpecBody.xgiven(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
     group("given $description", Pending.Yes(reason), body = body)
 }
@@ -97,7 +97,7 @@ fun SpecBody.xgiven(description: String, reason: String? = null, body: SpecBody.
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Action, prefix = "on ", excluded = true)
+@Synonym(type = SynonymType.Action, prefix = "on", excluded = true)
 fun SpecBody.xon(description: String, reason: String? = null, body: ActionBody.() -> Unit = {}) {
     action("on $description", Pending.Yes(reason), body = body)
 }
@@ -108,7 +108,7 @@ fun SpecBody.xon(description: String, reason: String? = null, body: ActionBody.(
  * @author Ranie Jade Ramiso
  * @since 1.0
  */
-@Synonym(type = SynonymType.Test, prefix = "it ", excluded = true)
+@Synonym(type = SynonymType.Test, prefix = "it", excluded = true)
 fun TestContainer.xit(description: String, reason: String? = null, body: TestBody.() -> Unit = {}) {
     test("it $description", Pending.Yes(reason), body)
 }
