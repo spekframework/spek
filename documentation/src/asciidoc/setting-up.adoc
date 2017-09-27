@@ -152,3 +152,76 @@ class CalculatorSpec: Spek({
 IMPORTANT: As mentioned in the <<ide-support>> section, the IDEA plugin won't work if you're using the JUnit 4 runner.
 
 
+
+[[setting-up-android]]
+== Setting up Android
+JUnit Platform does not support android projects out of the box, we need to use https://github.com/mannodermaus/android-junit5.
+
+[source,groovy,subs="attributes"]
+.build.gradle
+----
+buildscript {
+    ...
+
+    dependencies {
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:${junitPlatformVersion}"
+    }
+}
+----
+
+
+[source,groovy,subs="attributes"]
+.app/build.gradle
+----
+...
+
+apply plugin: "de.mannodermaus.android-junit5"
+
+android {
+    ...
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
+    }
+}
+
+dependencies {
+    ...
+
+    testImplementation 'org.jetbrains.spek:spek-api:${version}'
+    testImplementation 'org.jetbrains.spek:spek-junit-platform-engine:${version}'
+
+    // @RunWith(...)
+    testImplementation "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
+
+    // For AS 3.0 and Gradle 4+
+    afterEvaluate {
+        compileDebugUnitTestKotlin {
+            finalizedBy copyKotlinDebugUnitTestClasses
+        }
+
+        compileDebugKotlin {
+            finalizedBy copyKotlinDebugClasses
+        }
+    }
+
+    task copyKotlinDebugUnitTestClasses(type: Copy) {
+        from "build/tmp/kotlin-classes/debugUnitTest"
+        into "build/intermediates/classes/test/debug"
+    }
+
+    task copyKotlinDebugClasses(type: Copy) {
+        from "build/tmp/kotlin-classes/debug"
+        into "build/intermediates/classes/debug"
+    }
+}
+----
