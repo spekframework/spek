@@ -163,6 +163,7 @@ JUnit Platform does not support android projects out of the box, we need to use 
 buildscript {
     ...
 
+    // 1. Add the android-junit5 Gradle plugin as a classpath dependency
     dependencies {
         classpath "de.mannodermaus.gradle.plugins:android-junit5:${junitPlatformVersion}"
     }
@@ -174,18 +175,19 @@ buildscript {
 .app/build.gradle
 ----
 ...
-
+// 2. Apply the android-junit5 plugin alongside your app's plugins
 apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     ...
-
+    // 3. Extend the Java source set with the Kotlin folders
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
 }
 
+// 4. Configure spek's TestEngine to be detected by JUnit 5
 junitPlatform {
     filters {
         engines {
@@ -196,32 +198,36 @@ junitPlatform {
 
 dependencies {
     ...
+    // 5. Add the dependencies on spek & its required co-dependencies to the test scope
+    testImplementation("org.jetbrains.spek:spek-api:${version}") {
+        exclude group: "org.jetbrains.kotlin"
+    }
+    testImplementation("org.jetbrains.spek:spek-junit-platform-engine:${version}") {
+        exclude group: "org.junit.platform"
+        exclude group: "org.jetbrains.kotlin"
+    }
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    testImplementation 'org.jetbrains.spek:spek-api:${version}'
-    testImplementation 'org.jetbrains.spek:spek-junit-platform-engine:${version}'
-
-    // @RunWith(...)
+    // 6. If you want to use @RunWith(...) a.k.a JUnit 4
     testImplementation "org.junit.platform:junit-platform-runner:${junitPlatformVersion}"
+}
 
-    // For AS 3.0 and Gradle 4+
-    afterEvaluate {
-        compileDebugUnitTestKotlin {
-            finalizedBy copyKotlinDebugUnitTestClasses
+// 7. Finally, configure AS to copy over Kotlin classes for each build type to where the IDE can pick them up
+afterEvaluate {
+    android.buildTypes.each {
+        def name = it.name
+
+        def copyTestTask = project.task(type: Copy, "copyKotlin${name.capitalize()}UnitTestClasses") {
+            from "build/tmp/kotlin-classes/${name}UnitTest"
+            into "build/intermediates/classes/test/$name"
         }
+        project.tasks.getByName("compile${name.capitalize()}UnitTestKotlin").finalizedBy copyTestTask
 
-        compileDebugKotlin {
-            finalizedBy copyKotlinDebugClasses
+        def copyMainTask = project.task(type: Copy, "copyKotlin${name.capitalize()}Classes") {
+            from "build/tmp/kotlin-classes/${name}"
+            into "build/intermediates/classes/$name"
         }
-    }
-
-    task copyKotlinDebugUnitTestClasses(type: Copy) {
-        from "build/tmp/kotlin-classes/debugUnitTest"
-        into "build/intermediates/classes/test/debug"
-    }
-
-    task copyKotlinDebugClasses(type: Copy) {
-        from "build/tmp/kotlin-classes/debug"
-        into "build/intermediates/classes/debug"
+        project.tasks.getByName("compile${name.capitalize()}Kotlin").finalizedBy copyMainTask
     }
 }
 ----
