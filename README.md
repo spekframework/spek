@@ -5,12 +5,9 @@
 
 ## A Specification Framework for the JVM
 
-
-
-Visit the [web site](https://jetbrains.github.io/spek) for more documentation and information
-
+Visit the [web site](https://spekframework.github.io/spek) for more documentation and information
 
 Copyright (c) 2012-2016 Hadi Hariri and Contributors
 
-Licensed under [Modified BSD](https://github.com/JetBrains/spek/blob/master/LICENSE.TXT)
+Licensed under [Modified BSD](https://github.com/spekframework/spek/blob/master/LICENSE.TXT)
 

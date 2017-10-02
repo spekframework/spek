@@ -14,4 +14,4 @@ Laura Kogler +
 Eugene Petrenko +
 Ilya Ryzhenkov
 
-https://github.com/JetBrains/spek/graphs/contributors[Full list]
+https://github.com/spekframework/spek/graphs/contributors[Full list]
