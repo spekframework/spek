@@ -1,5 +1,5 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
 apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'org.jetbrains.dokka'
 
@@ -13,7 +13,7 @@ junitPlatform {
 }
 
 dependencies {
-    compile project(':spek-dsl')
+    compile project(':spek-dsl:jvm')
 
     compile "org.jetbrains.kotlin:kotlin-test"
     testCompile "org.junit.platform:junit-platform-runner"

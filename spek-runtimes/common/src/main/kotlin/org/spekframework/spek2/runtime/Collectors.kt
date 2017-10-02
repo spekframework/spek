@@ -107,7 +107,7 @@ open class Collector(val root: GroupScopeImpl,
     }
 
     protected fun idFor(description: String): ScopeId {
-        val current = ids.computeIfAbsent(description) { 0 } + 1
+        val current = ids.getOrPut(description) { 0 } + 1
         ids.put(description, current)
 
         return if (current > 1) {

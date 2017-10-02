@@ -2,17 +2,14 @@ buildscript {
     repositories {
         mavenCentral()
         maven {
-            url 'https://dl.bintray.com/kotlin/kotlin-eap'
-        }
-        maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
+            url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
         }
         jcenter()
     }
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.13'
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.15'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.0'
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC2'
@@ -26,9 +23,9 @@ plugins {
     id "com.zoltu.git-versioning" version "3.0.2"
 }
 
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
+//configurations.all {
+//    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+//}
 
 ZoltuGitVersioning {
     customDescribeProcessor { describeResults ->
@@ -62,26 +59,17 @@ afterEvaluate {
 }
 
 
-allprojects {
-    group = 'org.spekframework.spek2'
+subprojects {
+//    group = 'org.spekframework.spek2'
     repositories {
-        mavenCentral()
         mavenCentral()
         jcenter()
         maven {
-            url 'http://repository.jetbrains.com/all'
-        }
-        maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
+            url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
         }
     }
-    apply plugin: 'idea'
+//    apply plugin: 'idea'
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = 3.1
-}
-
 
 if (hasProperty('bintray_user')) {
     ext.bintrayUser = getProperty('bintray_user')

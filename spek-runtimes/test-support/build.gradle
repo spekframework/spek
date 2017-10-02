@@ -1,8 +1,0 @@
-apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin.gradle"
-
-dependencies {
-    compile project(':spek-runtimes:common')
-    compile 'org.jetbrains.kotlin:kotlin-stdlib'
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
-}

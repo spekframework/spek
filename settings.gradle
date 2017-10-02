@@ -1,9 +1,9 @@
 rootProject.name = 'spek'
 
-include 'spek-dsl'
+include 'spek-dsl:common'
+include 'spek-dsl:jvm'
 
 include 'spek-runtimes:common'
-include 'spek-runtimes:test-support'
 include 'spek-runtimes:jvm'
 
 include 'spek-runners:junit5'
@@ -11,6 +11,6 @@ include 'spek-runners:junit5'
 include 'spek-extensions:subject'
 include 'spek-extensions:data-driven'
 
-include 'distribution'
+//include 'distribution'
 include 'documentation'
 include 'samples'

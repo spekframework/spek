@@ -1,5 +1,5 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply from: "$rootDir/gradle/common/kotlin-common.gradle"
 apply plugin: 'org.jetbrains.dokka'
 
 task sourceJar(type: Jar) {

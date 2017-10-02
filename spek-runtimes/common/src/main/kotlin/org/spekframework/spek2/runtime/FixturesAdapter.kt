@@ -4,19 +4,17 @@ import org.spekframework.spek2.lifecycle.ActionScope
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
-import java.util.LinkedHashMap
-import java.util.LinkedList
 
 /**
  *
  * @author Ranie Jade Ramiso
  */
 class FixturesAdapter: LifecycleListener {
-    private val beforeEachTest: LinkedHashMap<GroupScope, LinkedList<() -> Unit>> = LinkedHashMap()
-    private val afterEachTest: LinkedHashMap<GroupScope, LinkedList<() -> Unit>> = LinkedHashMap()
+    private val beforeEachTest: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
+    private val afterEachTest: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
 
-    private val beforeGroup: LinkedHashMap<GroupScope, LinkedList<() -> Unit>> = LinkedHashMap()
-    private val afterGroup: LinkedHashMap<GroupScope, LinkedList<() -> Unit>> = LinkedHashMap()
+    private val beforeGroup: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
+    private val afterGroup: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
 
     override fun beforeExecuteTest(test: TestScope) {
         if (test.parent !is ActionScope) {
@@ -47,19 +45,19 @@ class FixturesAdapter: LifecycleListener {
     }
 
     fun registerBeforeEachTest(group: GroupScope, callback: () -> Unit) {
-        beforeEachTest.getOrPut(group, { LinkedList() }).add(callback)
+        beforeEachTest.getOrPut(group, { mutableListOf() }).add(callback)
     }
 
     fun registerAfterEachTest(group: GroupScope, callback: () -> Unit) {
-        afterEachTest.getOrPut(group, { LinkedList() }).add(callback)
+        afterEachTest.getOrPut(group, { mutableListOf() }).add(callback)
     }
 
     fun registerBeforeGroup(group: GroupScope, callback: () -> Unit) {
-        beforeGroup.getOrPut(group, { LinkedList() }).add(callback)
+        beforeGroup.getOrPut(group, { mutableListOf() }).add(callback)
     }
 
     fun registerAfterGroup(group: GroupScope, callback: () -> Unit) {
-        afterGroup.getOrPut(group, { LinkedList() }).add(callback)
+        afterGroup.getOrPut(group, { mutableListOf() }).add(callback)
     }
 
     private fun invokeAllBeforeEachTest(group: GroupScope) {

@@ -1,7 +1,5 @@
-// TODO: this should be pure kotlin module (target platform agnostic)
-
 apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin.gradle"
+apply from: "$rootDir/gradle/common/kotlin-common.gradle"
 apply plugin: 'org.jetbrains.dokka'
 
 task sourceJar(type: Jar) {
@@ -15,7 +13,6 @@ task javadocJar(type: Jar, dependsOn: dokka) {
     classifier = 'javadoc'
 }
 
-
 dependencies {
-    compile project(':spek-dsl')
+    compile project(':spek-dsl:common')
 }
