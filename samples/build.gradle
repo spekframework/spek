@@ -11,7 +11,6 @@ junitPlatform {
     }
 }
 
-
 description = 'Spek Samples'
 
 dependencies {

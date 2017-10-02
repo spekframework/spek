@@ -1,14 +1,14 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
         maven {
             url 'https://dl.bintray.com/kotlin/kotlin-eap'
         }
         maven {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
-        jcenter()
     }
+
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
@@ -18,7 +18,6 @@ buildscript {
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC2'
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
         classpath 'org.ajoberstar:gradle-git:1.5.1'
-
     }
 }
 
@@ -61,12 +60,9 @@ afterEvaluate {
     }
 }
 
-
 allprojects {
     group = 'org.spekframework.spek2'
     repositories {
-        mavenCentral()
-        mavenCentral()
         jcenter()
         maven {
             url 'http://repository.jetbrains.com/all'
@@ -75,13 +71,9 @@ allprojects {
             url 'http://oss.sonatype.org/content/repositories/snapshots'
         }
     }
+
     apply plugin: 'idea'
 }
-
-task wrapper(type: Wrapper) {
-    gradleVersion = 3.1
-}
-
 
 if (hasProperty('bintray_user')) {
     ext.bintrayUser = getProperty('bintray_user')

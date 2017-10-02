@@ -12,12 +12,10 @@ task sourceJar(type: Jar) {
     classifier "sources"
 }
 
-
 task javadocJar(type: Jar, dependsOn: dokka) {
     from dokka.outputDirectory
     classifier = 'javadoc'
 }
-
 
 dependencies {
     compile project(':spek-runtimes:common')
