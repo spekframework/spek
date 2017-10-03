@@ -14,6 +14,7 @@ junitPlatform {
 
 dependencies {
     compile project(':spek-dsl')
+
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
 

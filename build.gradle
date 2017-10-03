@@ -1,12 +1,6 @@
 buildscript {
     repositories {
         jcenter()
-        maven {
-            url 'https://dl.bintray.com/kotlin/kotlin-eap'
-        }
-        maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
-        }
     }
 
     dependencies {
@@ -64,12 +58,6 @@ allprojects {
     group = 'org.spekframework.spek2'
     repositories {
         jcenter()
-        maven {
-            url 'http://repository.jetbrains.com/all'
-        }
-        maven {
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
-        }
     }
 
     apply plugin: 'idea'
