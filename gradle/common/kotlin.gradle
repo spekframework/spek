@@ -4,7 +4,6 @@ apply plugin: "idea"
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
     testCompile 'com.natpryce:hamkrest'
 }
 
