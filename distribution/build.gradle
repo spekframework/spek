@@ -47,25 +47,25 @@ publishing {
                     resolveStrategy = DELEGATE_FIRST
                     name 'Spek'
                     description 'A Specification Framework for the JVM'
-                    url 'https://jetbrains.github.io/spek'
+                    url 'https://spekframework.github.io/spek'
                     licenses {
                         license {
                             name 'BSD New'
-                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
                             distribution 'spek'
                         }
                     }
                     developers {
                         developer {
-                            id 'JetBrains'
+                            id 'Spek Framework'
                             name 'Spek Contributors'
-                            organization 'JetBrains'
+                            organization 'Spek Framework'
                         }
                     }
                     scm {
-                        connection 'scm:git:git://github.com/jetbrains/spek.git'
-                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                        url 'http://github.com/jetbrains/spek'
+                        connection 'scm:git:git://github.com/spekframework/spek.git'
+                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                        url 'http://github.com/spekframework/spek'
                     }
                 }
             }
@@ -87,25 +87,25 @@ publishing {
                     resolveStrategy = DELEGATE_FIRST
                     name 'Spek'
                     description 'A Specification Framework for the JVM'
-                    url 'https://jetbrains.github.io/spek'
+                    url 'https://spekframework.github.io/spek'
                     licenses {
                         license {
                             name 'BSD New'
-                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
                             distribution 'spek'
                         }
                     }
                     developers {
                         developer {
-                            id 'JetBrains'
+                            id 'Spek Framework'
                             name 'Spek Contributors'
-                            organization 'JetBrains'
+                            organization 'Spek Framework'
                         }
                     }
                     scm {
-                        connection 'scm:git:git://github.com/jetbrains/spek.git'
-                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                        url 'http://github.com/jetbrains/spek'
+                        connection 'scm:git:git://github.com/spekframework/spek.git'
+                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                        url 'http://github.com/spekframework/spek'
                     }
                 }
             }
@@ -127,25 +127,25 @@ publishing {
                     resolveStrategy = DELEGATE_FIRST
                     name 'Spek'
                     description 'A Specification Framework for the JVM'
-                    url 'https://jetbrains.github.io/spek'
+                    url 'https://spekframework.github.io/spek'
                     licenses {
                         license {
                             name 'BSD New'
-                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
                             distribution 'spek'
                         }
                     }
                     developers {
                         developer {
-                            id 'JetBrains'
+                            id 'Spek Framework'
                             name 'Spek Contributors'
-                            organization 'JetBrains'
+                            organization 'Spek Framework'
                         }
                     }
                     scm {
-                        connection 'scm:git:git://github.com/jetbrains/spek.git'
-                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                        url 'http://github.com/jetbrains/spek'
+                        connection 'scm:git:git://github.com/spekframework/spek.git'
+                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                        url 'http://github.com/spekframework/spek'
                     }
                 }
             }
@@ -167,25 +167,25 @@ publishing {
                     resolveStrategy = DELEGATE_FIRST
                     name 'Spek JUnit Platform Engine'
                     description 'Spek TestEngine for the JUnit Platform'
-                    url 'https://jetbrains.github.io/spek'
+                    url 'https://spekframework.github.io/spek'
                     licenses {
                         license {
                             name 'BSD New'
-                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
                             distribution 'spek'
                         }
                     }
                     developers {
                         developer {
-                            id 'JetBrains'
+                            id 'Spek Framework'
                             name 'Spek Contributors'
-                            organization 'JetBrains'
+                            organization 'Spek Framework'
                         }
                     }
                     scm {
-                        connection 'scm:git:git://github.com/jetbrains/spek.git'
-                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                        url 'http://github.com/jetbrains/spek'
+                        connection 'scm:git:git://github.com/spekframework/spek.git'
+                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                        url 'http://github.com/spekframework/spek'
                     }
                 }
             }
@@ -208,25 +208,25 @@ publishing {
                     resolveStrategy = DELEGATE_FIRST
                     name 'Spek'
                     description 'A Specification Framework for the JVM'
-                    url 'https://jetbrains.github.io/spek'
+                    url 'https://spekframework.github.io/spek'
                     licenses {
                         license {
                             name 'BSD New'
-                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
                             distribution 'spek'
                         }
                     }
                     developers {
                         developer {
-                            id 'JetBrains'
+                            id 'Spek Framework'
                             name 'Spek Contributors'
-                            organization 'JetBrains'
+                            organization 'Spek Framework'
                         }
                     }
                     scm {
-                        connection 'scm:git:git://github.com/jetbrains/spek.git'
-                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                        url 'http://github.com/jetbrains/spek'
+                        connection 'scm:git:git://github.com/spekframework/spek.git'
+                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                        url 'http://github.com/spekframework/spek'
                     }
                 }
             }
@@ -248,25 +248,25 @@ publishing {
                     resolveStrategy = DELEGATE_FIRST
                     name 'Spek'
                     description 'A Specification Framework for the JVM'
-                    url 'https://jetbrains.github.io/spek'
+                    url 'https://spekframework.github.io/spek'
                     licenses {
                         license {
                             name 'BSD New'
-                            url 'https://github.com/JetBrains/spek/blob/master/LICENSE.TXT'
+                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
                             distribution 'spek'
                         }
                     }
                     developers {
                         developer {
-                            id 'JetBrains'
+                            id 'Spek Framework'
                             name 'Spek Contributors'
-                            organization 'JetBrains'
+                            organization 'Spek Framework'
                         }
                     }
                     scm {
-                        connection 'scm:git:git://github.com/jetbrains/spek.git'
-                        developerConnection 'scm:git:https://github.com/jetbrains/spek.git'
-                        url 'http://github.com/jetbrains/spek'
+                        connection 'scm:git:git://github.com/spekframework/spek.git'
+                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                        url 'http://github.com/spekframework/spek'
                     }
                 }
             }
@@ -285,12 +285,12 @@ bintray {
         repo = 'spek'
         desc = "Specification framework for the JVM"
         name = 'spek'
-        userOrg = 'jetbrains'
+        userOrg = 'spekframework'
         licenses = ['BSD New']
         labels = ['kotlin', 'testing', 'specification-framework']
-        vcsUrl = 'https://github.com/JetBrains/spek.git'
+        vcsUrl = 'https://github.com/spekframework/spek.git'
 
-        githubRepo = 'JetBrains/spek'
+        githubRepo = 'spekframework/spek'
 
 
         version {
