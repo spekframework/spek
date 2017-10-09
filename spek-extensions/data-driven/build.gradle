@@ -16,6 +16,7 @@ dependencies {
     compile project(':spek-dsl')
 
     compile "org.jetbrains.kotlin:kotlin-test"
+
     testCompile "org.junit.platform:junit-platform-runner"
     testRuntime project(':spek-runners:junit5')
 }

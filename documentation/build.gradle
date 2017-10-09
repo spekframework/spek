@@ -22,7 +22,6 @@ asciidoctor {
 }
 
 githubPages {
-
     repoUri = 'https://github.com/spekframework/spek.git'
     targetBranch = 'gh-pages'
     pages {
