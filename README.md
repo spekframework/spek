@@ -7,7 +7,7 @@
 
 
 
-Visit the [web site](https://jetbrains.github.io/spek) for more documentation and information
+Visit the [web site](http://spekframework.org/) for more documentation and information
 
 
 Copyright (c) 2012-2017, Spek Core Team and Contributors
