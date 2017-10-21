@@ -8,8 +8,11 @@ include 'spek-runtimes:jvm'
 
 include 'spek-runners:junit5'
 
-include 'spek-extensions:subject'
-include 'spek-extensions:data-driven'
+include 'spek-extensions:subject:common'
+include 'spek-extensions:subject:jvm'
+
+include 'spek-extensions:data-driven:common'
+include 'spek-extensions:data-driven:jvm'
 
 //include 'distribution'
 include 'documentation'

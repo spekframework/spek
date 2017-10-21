@@ -15,7 +15,8 @@ description = 'Spek Samples'
 
 dependencies {
     testCompile project(':spek-dsl:jvm')
-    testCompile project(':spek-extensions:subject')
+    testCompile project(':spek-extensions:subject:jvm')
+    testCompile project(':spek-extensions:data-driven:jvm')
 
     testCompile "org.jetbrains.kotlin:kotlin-test"
 

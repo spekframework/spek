@@ -4,6 +4,7 @@ import org.spekframework.spek2.dsl.ActionBody
 import org.spekframework.spek2.dsl.SpecBody
 import org.spekframework.spek2.dsl.on as defaultOn
 
+expect fun String.format(vararg args: Any?): String
 
 inline fun <reified I1, reified Expected> SpecBody.on(description: String, vararg with: Data1<I1, Expected>, crossinline body: ActionBody.(i1: I1, e: Expected) -> Unit) {
     with.forEach {
