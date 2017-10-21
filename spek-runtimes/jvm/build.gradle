@@ -15,7 +15,7 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 dependencies {
     expectedBy project(':spek-runtimes:common')
-//    compile project(':spek-dsl:jvm')
+    compile project(':spek-dsl:jvm')
     compile 'org.jetbrains.kotlin:kotlin-reflect'
 
     compile 'org.reflections:reflections'

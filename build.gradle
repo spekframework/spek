@@ -22,9 +22,9 @@ plugins {
     id "com.zoltu.git-versioning" version "3.0.2"
 }
 
-//configurations.all {
-//    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-//}
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
 
 ZoltuGitVersioning {
     customDescribeProcessor { describeResults ->
@@ -59,7 +59,7 @@ afterEvaluate {
 
 
 allprojects {
-    group = 'org.spekframework.spek2'
+//    group = 'org.spekframework.spek2'
     repositories {
         maven {
             url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
