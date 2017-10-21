@@ -14,5 +14,5 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 }
 
 dependencies {
-    implement project(':spek-dsl:common')
+    expectedBy project(':spek-dsl:common')
 }

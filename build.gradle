@@ -1,21 +1,20 @@
 buildscript {
     repositories {
-        mavenCentral()
         maven {
             url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
         }
         jcenter()
     }
+
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.15'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.0'
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC2'
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
         classpath 'org.ajoberstar:gradle-git:1.5.1'
-
     }
 }
 
@@ -59,16 +58,16 @@ afterEvaluate {
 }
 
 
-subprojects {
-//    group = 'org.spekframework.spek2'
+allprojects {
+    group = 'org.spekframework.spek2'
     repositories {
-        mavenCentral()
-        jcenter()
         maven {
             url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
         }
+        jcenter()
     }
-//    apply plugin: 'idea'
+
+    apply plugin: 'idea'
 }
 
 if (hasProperty('bintray_user')) {

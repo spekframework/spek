@@ -3,6 +3,7 @@ apply plugin: 'kotlin-platform-jvm'
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk7'
     compile 'org.jetbrains.kotlin:kotlin-reflect'
+
     testCompile 'com.natpryce:hamkrest'
 }
 
