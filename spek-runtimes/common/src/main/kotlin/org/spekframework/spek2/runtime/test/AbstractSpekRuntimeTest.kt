@@ -5,14 +5,18 @@ import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.Path
+import org.spekframework.spek2.runtime.scope.PathBuilder
 import kotlin.reflect.KClass
 
 /**
  * @author Ranie Jade Ramiso
  */
-abstract class AbstractSpekRuntimeTest<out T: SpekRuntime>(protected val runtime: T) {
+abstract class AbstractSpekRuntimeTest {
+    private val runtime = SpekRuntime()
 
-    protected abstract fun toPath(spek: KClass<out Spek>): Path
+    private fun toPath(spek: KClass<out Spek>): Path = PathBuilder.from(spek)
+        .build()
+
     protected fun executeTestsForClass(spek: KClass<out Spek>) = executeTestsforPath(toPath(spek))
 
     protected fun executeTestsforPath(path: Path): ExecutionEventRecorder {

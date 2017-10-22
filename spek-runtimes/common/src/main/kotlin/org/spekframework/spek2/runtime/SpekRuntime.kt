@@ -14,8 +14,7 @@ import org.spekframework.spek2.runtime.scope.ScopeId
 import org.spekframework.spek2.runtime.scope.ScopeType
 import kotlin.reflect.KClass
 
-abstract class SpekRuntime {
-
+abstract class AbstractRuntime {
     abstract fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult
 
     protected fun resolveSpec(spek: KClass<out Spek>, path: Path): GroupScopeImpl {
@@ -39,3 +38,5 @@ abstract class SpekRuntime {
         Executor().execute(ExecutionContext(request))
     }
 }
+
+expect class SpekRuntime(): AbstractRuntime

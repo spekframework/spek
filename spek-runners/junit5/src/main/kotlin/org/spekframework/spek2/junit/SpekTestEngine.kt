@@ -4,16 +4,16 @@ import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
-import org.spekframework.spek2.jvm.JvmPathBuilder
-import org.spekframework.spek2.jvm.SpekJvmRuntime
+import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
+import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
 
 class SpekTestEngine: TestEngine {
     val factory = TestDescriptorAdapterFactory()
-    val runtime by lazy { SpekJvmRuntime() }
+    val runtime by lazy { SpekRuntime() }
 
     override fun getId() = "spek"
 
@@ -21,7 +21,7 @@ class SpekTestEngine: TestEngine {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
 
         val pathSelector = discoveryRequest.getSelectorsByType(PathSelector::class.java)
-            .firstOrNull() ?: PathSelector(JvmPathBuilder.ROOT)
+            .firstOrNull() ?: PathSelector(PathBuilder.ROOT)
 
         val discoveryResult = runtime.discover(DiscoveryRequest(pathSelector.path))
 

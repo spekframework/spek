@@ -4,12 +4,13 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.runtime.scope.PathBuilder
 
 class JvmPathSpec {
 
     @Test
     fun create() {
-        val path = JvmPathBuilder()
+        val path = PathBuilder()
             .append("com.example.com")
             .append("SomeClass")
             .build()
@@ -20,7 +21,7 @@ class JvmPathSpec {
 
     @Test
     fun root() {
-        val path = JvmPathBuilder()
+        val path = PathBuilder()
             .append("com.example.com")
             .append("SomeClass")
             .build()
@@ -30,7 +31,7 @@ class JvmPathSpec {
 
     @Test
     fun createFromClass() {
-        val path = JvmPathBuilder.from(Spek::class)
+        val path = PathBuilder.from(Spek::class)
             .build()
 
         assertThat(path.name, equalTo(Spek::class.simpleName))
@@ -39,12 +40,12 @@ class JvmPathSpec {
 
     @Test
     fun parse() {
-        val path = JvmPathBuilder()
+        val path = PathBuilder()
             .append("com.example.com")
             .append("SomeClass")
             .build()
 
-        val result = JvmPathBuilder.parse(path.serialize())
+        val result = PathBuilder.parse(path.serialize())
             .build()
 
         assertThat(path, equalTo(result))

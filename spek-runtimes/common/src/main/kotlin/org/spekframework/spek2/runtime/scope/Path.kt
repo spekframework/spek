@@ -1,6 +1,9 @@
 package org.spekframework.spek2.runtime.scope
 
-interface Path {
+import org.spekframework.spek2.Spek
+import kotlin.reflect.KClass
+
+expect class Path {
     val parent: Path?
     val name: String
     fun resolve(name: String): Path
@@ -20,7 +23,12 @@ val Path.isRoot: Boolean
 fun Path.isRelated(path: Path) = this.isParentOf(path) || path.isParentOf(this)
 
 
-interface PathBuilder {
+expect class PathBuilder {
     fun append(name: String): PathBuilder
     fun build(): Path
+
+    companion object {
+        fun from(clz: KClass<out Spek>): PathBuilder
+        fun parse(path: String): PathBuilder
+    }
 }

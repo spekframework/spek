@@ -1,4 +1,4 @@
-package org.spekframework.spek2.jvm
+package org.spekframework.spek2.runtime
 
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
@@ -8,9 +8,9 @@ import org.spekframework.spek2.CreateWith
 import org.spekframework.spek2.Ignore
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.InstanceFactory
-import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
+import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRelated
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
@@ -23,8 +23,8 @@ val reflections = Reflections(
         .setScanners(SubTypesScanner())
 )
 
-class SpekJvmRuntime: SpekRuntime() {
-    val defaultInstanceFactory = object: InstanceFactory {
+actual class SpekRuntime: AbstractRuntime() {
+    private val defaultInstanceFactory = object: InstanceFactory {
         override fun <T: Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.constructors.first { it.parameters.isEmpty() }
                 .call()
@@ -37,13 +37,13 @@ class SpekJvmRuntime: SpekRuntime() {
             .filter { it.findAnnotation<Ignore>() == null }
             .filter { !it.isAbstract }
             .filter {
-                val path = JvmPathBuilder.from(it)
+                val path = PathBuilder.from(it)
                     .build()
 
                 discoveryRequest.path.isRelated(path)
             }
             .map {
-                val path = JvmPathBuilder.from(it)
+                val path = PathBuilder.from(it)
                     .build()
 
                 resolveSpec(it, path)
