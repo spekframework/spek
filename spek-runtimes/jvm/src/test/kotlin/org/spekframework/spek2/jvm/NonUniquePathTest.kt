@@ -5,9 +5,9 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.it
-import org.spekframework.spek2.jvm.support.AbstractSpekJvmRuntimeTest
+import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
-class NonUniquePathTest: AbstractSpekJvmRuntimeTest() {
+class NonUniquePathTest: AbstractSpekRuntimeTest() {
     @Test
     fun nonUnique() {
         class NonUniqueSpek: Spek({

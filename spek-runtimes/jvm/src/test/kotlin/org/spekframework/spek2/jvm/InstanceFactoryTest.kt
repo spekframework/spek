@@ -7,14 +7,14 @@ import org.spekframework.spek2.CreateWith
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.it
 import org.spekframework.spek2.lifecycle.InstanceFactory
-import org.spekframework.spek2.jvm.support.AbstractSpekJvmRuntimeTest
+import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
 /**
  * @author Ranie Jade Ramiso
  */
-class InstanceFactoryTest: AbstractSpekJvmRuntimeTest() {
+class InstanceFactoryTest: AbstractSpekRuntimeTest() {
     object SimpleFactoryAsAnObject: InstanceFactory {
         override fun <T: Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.primaryConstructor!!.call()
