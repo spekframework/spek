@@ -16,10 +16,10 @@ dependencyManagement {
         }
 
         dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {
-            entry 'kotlin-stdlib'
+            entry 'kotlin-stdlib-common'
+            entry 'kotlin-stdlib-jre8'
             entry 'kotlin-reflect'
             entry 'kotlin-test'
-            entry 'kotlin-compiler'
         }
 
         dependency 'org.reflections:reflections:0.9.11'

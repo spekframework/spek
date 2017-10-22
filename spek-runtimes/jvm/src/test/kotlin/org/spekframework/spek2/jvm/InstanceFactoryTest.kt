@@ -9,7 +9,7 @@ import org.spekframework.spek2.dsl.it
 import org.spekframework.spek2.lifecycle.InstanceFactory
 import org.spekframework.spek2.jvm.support.AbstractSpekJvmRuntimeTest
 import kotlin.reflect.KClass
-import kotlin.reflect.primaryConstructor
+import kotlin.reflect.full.primaryConstructor
 
 /**
  * @author Ranie Jade Ramiso

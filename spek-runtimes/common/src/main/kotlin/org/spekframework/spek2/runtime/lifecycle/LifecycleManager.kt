@@ -4,7 +4,6 @@ import org.spekframework.spek2.lifecycle.ActionScope
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
-import java.util.ArrayList
 
 /**
  * @author Ranie Jade Ramiso

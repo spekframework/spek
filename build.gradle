@@ -1,12 +1,15 @@
 buildscript {
     repositories {
+        maven {
+            url 'https://dl.bintray.com/kotlin/kotlin-eap-1.2'
+        }
         jcenter()
     }
 
     dependencies {
         classpath 'io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.13'
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.15'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
         classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:4.1.0'
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
@@ -54,9 +57,14 @@ afterEvaluate {
     }
 }
 
+
 allprojects {
-    group = 'org.spekframework.spek2'
+    // This causes a circular dependency for some reason.
+    // group = 'org.spekframework.spek2'
     repositories {
+        maven {
+            url 'https://dl.bintray.com/kotlin/kotlin-eap-1.2'
+        }
         jcenter()
     }
 

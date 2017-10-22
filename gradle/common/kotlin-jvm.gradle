@@ -1,0 +1,18 @@
+apply plugin: 'kotlin-platform-jvm'
+
+dependencies {
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
+    compile 'org.jetbrains.kotlin:kotlin-reflect'
+
+    testCompile 'com.natpryce:hamkrest'
+}
+
+tasks.withType(Jar) { task ->
+    task.manifest {
+        attributes \
+            'Implementation-Title': 'Spek', \
+            'Implementation-Version': rootProject.version, \
+            'Implementation-Kotlin-Version': kotlinVersion, \
+            'Build-Time': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+    }
+}

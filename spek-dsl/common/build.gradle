@@ -11,7 +11,3 @@ task javadocJar(type: Jar, dependsOn: dokka) {
     from dokka.outputDirectory
     classifier = 'javadoc'
 }
-
-dependencies {
-    compile project(':spek-dsl:common')
-}

@@ -1,6 +1,5 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
-apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
 apply plugin: 'org.jetbrains.dokka'
 
 task sourceJar(type: Jar) {
@@ -14,10 +13,5 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 }
 
 dependencies {
-    expectedBy project(':spek-runtimes:common')
-    compile project(':spek-dsl:jvm')
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
-
-    compile 'org.reflections:reflections'
-    compile 'com.xenomachina:kotlin-argparser'
+    expectedBy project(':spek-dsl:common')
 }
