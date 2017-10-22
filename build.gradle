@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven {
-            url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
+            url "https://dl.bintray.com/kotlin/kotlin-eap-1.2"
         }
         jcenter()
     }
@@ -59,10 +59,11 @@ afterEvaluate {
 
 
 allprojects {
-//    group = 'org.spekframework.spek2'
+    // This causes a circular dependency for some reason.
+    // group = 'org.spekframework.spek2'
     repositories {
         maven {
-            url "http://dl.bintray.com/kotlin/kotlin-eap-1.2"
+            url "https://dl.bintray.com/kotlin/kotlin-eap-1.2"
         }
         jcenter()
     }

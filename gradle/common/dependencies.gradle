@@ -17,7 +17,7 @@ dependencyManagement {
 
         dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {
             entry 'kotlin-stdlib-common'
-            entry 'kotlin-stdlib-jdk7'
+            entry 'kotlin-stdlib-jre8'
             entry 'kotlin-reflect'
             entry 'kotlin-test'
         }
