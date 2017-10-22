@@ -4,12 +4,12 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.jvm.support.AbstractSpekJvmRuntimeTest
+import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
 /**
  * @author Ranie Jade Ramiso
  */
-class AfterGroupTest: AbstractSpekJvmRuntimeTest() {
+class AfterGroupTest: AbstractSpekRuntimeTest() {
     @Test
     fun testAfterGroup() {
         class TestSpek: Spek({

@@ -7,12 +7,12 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
-import org.spekframework.spek2.jvm.support.AbstractSpekJvmRuntimeTest
+import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
 /**
  * @author Ranie Jade Ramiso
  */
-class LifecycleListenerOrderTest: AbstractSpekJvmRuntimeTest() {
+class LifecycleListenerOrderTest: AbstractSpekRuntimeTest() {
 
     @Test
     fun testBeforeExecuteTest() {

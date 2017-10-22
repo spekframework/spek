@@ -6,9 +6,9 @@ import com.nhaarman.mockito_kotlin.mock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.dsl.Pending
-import org.spekframework.spek2.jvm.JvmPathBuilder
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
+import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.ScopeId
 import org.spekframework.spek2.runtime.scope.ScopeType
 import kotlin.properties.Delegates
@@ -27,7 +27,7 @@ class TestDescriptorAdapterFactoryTest {
 
     @Test
     fun caching() {
-        val path = JvmPathBuilder()
+        val path = PathBuilder()
             .append("SomeClass")
             .build()
 
