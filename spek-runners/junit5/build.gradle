@@ -12,15 +12,6 @@ junitPlatform {
     }
 }
 
-dependencies {
-    compile project(':spek-runtimes:jvm')
-
-    compileOnly 'org.junit.platform:junit-platform-engine'
-
-    testCompile "com.nhaarman:mockito-kotlin"
-    testCompile 'org.junit.platform:junit-platform-engine'
-}
-
 task sourceJar(type: Jar) {
     from project.sourceSets.main.allSource
     classifier "sources"
@@ -29,4 +20,14 @@ task sourceJar(type: Jar) {
 task javadocJar(type: Jar, dependsOn: dokka) {
     from dokka.outputDirectory
     classifier = 'javadoc'
+}
+
+dependencies {
+    compile project(':spek-runtimes:jvm')
+    compileOnly 'org.junit.platform:junit-platform-engine'
+}
+
+dependencies {
+    testImplementation 'com.nhaarman:mockito-kotlin'
+    testImplementation 'org.junit.platform:junit-platform-engine'
 }

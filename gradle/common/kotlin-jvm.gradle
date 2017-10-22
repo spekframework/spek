@@ -2,9 +2,9 @@ apply plugin: 'kotlin-platform-jvm'
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
-    testCompile 'com.natpryce:hamkrest'
+    testImplementation 'com.natpryce:hamkrest'
 }
 
 tasks.withType(Jar) { task ->
