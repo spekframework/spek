@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         maven {
-            url "https://dl.bintray.com/kotlin/kotlin-eap-1.2"
+            url 'https://dl.bintray.com/kotlin/kotlin-eap-1.2'
         }
         jcenter()
     }
@@ -63,7 +63,7 @@ allprojects {
     // group = 'org.spekframework.spek2'
     repositories {
         maven {
-            url "https://dl.bintray.com/kotlin/kotlin-eap-1.2"
+            url 'https://dl.bintray.com/kotlin/kotlin-eap-1.2'
         }
         jcenter()
     }
