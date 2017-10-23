@@ -10,7 +10,7 @@ Visit the [web site](https://jetbrains.github.io/spek) for more documentation an
 ## Current State of the Project
 
 - Spek 1.x is in support mode, only bug fixes and documentation updates will be merged into 1.x branch.
-- Spek 2.x is main development branch.
+- Spek 2.x is main development branch, see [2.0.0 Milestone](https://github.com/spekframework/spek/milestone/3).
 
 ---
 
