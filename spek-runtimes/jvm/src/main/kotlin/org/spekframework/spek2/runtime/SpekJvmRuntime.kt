@@ -37,7 +37,7 @@ actual class SpekRuntime: AbstractRuntime() {
             .filter { it.findAnnotation<Ignore>() == null }
             .filter { !it.isAbstract }
             .map { klass ->
-                klass to JvmPathBuilder.from(klass).build()
+                klass to PathBuilder.from(klass).build()
             }
             .filter { (_, path) ->
                 discoveryRequest.path.isRelated(path)
