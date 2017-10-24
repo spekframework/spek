@@ -15,9 +15,11 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 dependencies {
     expectedBy project(':spek-runtimes:common')
-    compile project(':spek-dsl:jvm')
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
+}
 
-    compile 'org.reflections:reflections'
-    compile 'com.xenomachina:kotlin-argparser'
+dependencies {
+    compile project(':spek-dsl:jvm')
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+    implementation 'org.reflections:reflections'
+    implementation 'com.xenomachina:kotlin-argparser'
 }
