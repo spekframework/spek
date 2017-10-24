@@ -18,8 +18,8 @@ dependencies {
     testCompile project(':spek-extensions:subject:jvm')
     testCompile project(':spek-extensions:data-driven:jvm')
 
-    testCompile "org.jetbrains.kotlin:kotlin-test"
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.junit.platform:junit-platform-runner'
 
-    testCompile "org.junit.platform:junit-platform-runner"
     testRuntime project(':spek-runners:junit5')
 }

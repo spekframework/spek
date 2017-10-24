@@ -8,7 +8,6 @@ task sourceJar(type: Jar) {
     classifier "sources"
 }
 
-
 task javadocJar(type: Jar, dependsOn: dokka) {
     from dokka.outputDirectory
     classifier = 'javadoc'
@@ -16,6 +15,12 @@ task javadocJar(type: Jar, dependsOn: dokka) {
 
 dependencies {
     expectedBy project(':spek-extensions:data-driven:common')
+}
+
+dependencies {
     compile project(':spek-dsl:jvm')
-    testCompile 'org.jetbrains.kotlin:kotlin-test'
+}
+
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
