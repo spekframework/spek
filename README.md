@@ -5,7 +5,7 @@
 
 ## A Specification Framework for the JVM
 
-Visit the [web site](https://jetbrains.github.io/spek) for more documentation and information
+Visit the [web site](http://spekframework.org/) for more documentation and information
 
 ## Current State of the Project
 
