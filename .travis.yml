@@ -10,3 +10,10 @@ script:
 cache:
   directories:
     - $HOME/.gradle
+
+notifications:
+  email:
+    recipients:
+      - artem.zinnatullin@gmail.com
+    on_success: never
+    on_failure: always
