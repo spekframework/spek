@@ -14,6 +14,8 @@ include 'spek-extensions:subject:jvm'
 include 'spek-extensions:data-driven:common'
 include 'spek-extensions:data-driven:jvm'
 
+include 'spek-extensions:robolectric'
+
 //include 'distribution'
 include 'documentation'
 include 'samples'
