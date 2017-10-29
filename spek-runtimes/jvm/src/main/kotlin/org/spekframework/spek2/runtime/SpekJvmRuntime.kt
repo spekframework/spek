@@ -43,7 +43,7 @@ actual class SpekRuntime: AbstractRuntime() {
                 discoveryRequest.path.isRelated(path)
             }
             .map { (klass, path) ->
-                resolveSpec(klass, path)
+                resolveSpec(instanceFactoryFor(klass).create(klass), path)
             }
             // TODO: should we move final filtering to SpekRuntime?
             .map { it.apply { filterBy(discoveryRequest.path) } }
@@ -52,11 +52,10 @@ actual class SpekRuntime: AbstractRuntime() {
         return DiscoveryResult(scopes)
     }
 
-    override fun instanceFactoryFor(spek: KClass<*>): InstanceFactory {
-        val factory = spek.annotations.filterIsInstance<CreateWith>()
+    private fun instanceFactoryFor(spek: KClass<*>): InstanceFactory {
+        return spek.annotations.filterIsInstance<CreateWith>()
             .map { it.factory }
             .map { it.objectInstance ?: it.primaryConstructor!!.call() }
             .firstOrNull() ?: defaultInstanceFactory
-        return factory
     }
 }
