@@ -2,14 +2,13 @@ package org.spekframework.spek2.data_driven
 
 import org.spekframework.spek2.dsl.ActionBody
 import org.spekframework.spek2.dsl.SpecBody
-import org.spekframework.spek2.dsl.on as defaultOn
 
 expect fun String.format(vararg args: Any?): String
 
 inline fun <reified I1, reified Expected> SpecBody.on(description: String, vararg with: Data1<I1, Expected>, crossinline body: ActionBody.(i1: I1, e: Expected) -> Unit) {
     with.forEach {
         val (input, expected) = it
-        defaultOn(description = description.format(input, expected)) {
+        on(description = description.format(input, expected)) {
             body(this, input, expected)
         }
     }
@@ -18,7 +17,7 @@ inline fun <reified I1, reified Expected> SpecBody.on(description: String, varar
 inline fun <reified I1, reified I2, reified Expected> SpecBody.on(description: String, vararg with: Data2<I1, I2, Expected>, crossinline body: ActionBody.(i1: I1, i2: I2, e: Expected) -> Unit) {
     with.forEach {
         val (input1, input2, expected) = it
-        defaultOn(description = description.format(input1, input2, expected)) {
+        on(description = description.format(input1, input2, expected)) {
             body(this, input1, input2, expected)
         }
     }
@@ -27,7 +26,7 @@ inline fun <reified I1, reified I2, reified Expected> SpecBody.on(description: S
 inline fun <reified I1, reified I2, reified I3, reified Expected> SpecBody.on(description: String, vararg with: Data3<I1, I2, I3, Expected>, crossinline body: ActionBody.(i1: I1, i2: I2, i3: I3, e: Expected) -> Unit) {
     with.forEach {
         val (input1, input2, input3, expected) = it
-        defaultOn(description = description.format(input1, input2, input3, expected)) {
+        on(description = description.format(input1, input2, input3, expected)) {
             body(this, input1, input2, input3, expected)
         }
     }

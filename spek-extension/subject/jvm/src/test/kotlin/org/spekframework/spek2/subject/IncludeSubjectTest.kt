@@ -3,8 +3,6 @@ package org.spekframework.spek2.subject
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
-import org.spekframework.spek2.dsl.describe
-import org.spekframework.spek2.dsl.on
 import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 import java.util.ArrayDeque
 import java.util.LinkedList

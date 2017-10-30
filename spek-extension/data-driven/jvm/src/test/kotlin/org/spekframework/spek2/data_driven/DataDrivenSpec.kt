@@ -1,8 +1,6 @@
 package org.spekframework.spek2.data_driven
 
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.given
-import org.spekframework.spek2.dsl.it
 import kotlin.test.assertEquals
 
 class DataDrivenSpec : Spek({
