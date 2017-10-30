@@ -4,6 +4,9 @@ sudo: false
 language: java
 jdk: oraclejdk8
 
+install:
+  - echo "Overriding default Travis install step to avoid unnecessary './gradlew assemble'."
+
 script:
   - ci/build.sh
   
