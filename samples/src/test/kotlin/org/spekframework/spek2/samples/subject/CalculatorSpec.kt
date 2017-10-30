@@ -2,9 +2,6 @@ package org.spekframework.spek2.samples.subject
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.throws
-import org.spekframework.spek2.dsl.context
-import org.spekframework.spek2.dsl.describe
-import org.spekframework.spek2.dsl.it
 import org.spekframework.spek2.samples.Calculator
 import org.spekframework.spek2.subject.SubjectSpek
 import kotlin.test.assertEquals

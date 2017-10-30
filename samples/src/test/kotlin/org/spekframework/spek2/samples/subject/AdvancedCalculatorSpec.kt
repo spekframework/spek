@@ -1,7 +1,5 @@
 package org.spekframework.spek2.samples.subject
 
-import org.spekframework.spek2.dsl.describe
-import org.spekframework.spek2.dsl.it
 import org.spekframework.spek2.samples.AdvancedCalculator
 import org.spekframework.spek2.subject.SubjectSpek
 import org.spekframework.spek2.subject.itBehavesLike

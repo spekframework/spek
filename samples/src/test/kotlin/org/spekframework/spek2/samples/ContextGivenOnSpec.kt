@@ -1,9 +1,6 @@
 package org.spekframework.spek2.samples
 
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.given
-import org.spekframework.spek2.dsl.it
-import org.spekframework.spek2.dsl.on
 import kotlin.test.assertEquals
 
 class ContextGivenOnSpec : Spek({

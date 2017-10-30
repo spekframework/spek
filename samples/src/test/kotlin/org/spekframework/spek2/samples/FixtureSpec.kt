@@ -3,8 +3,6 @@ package org.spekframework.spek2.samples
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.describe
-import org.spekframework.spek2.dsl.it
 
 /**
  * @author Ranie Jade Ramiso
