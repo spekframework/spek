@@ -11,6 +11,7 @@ import org.spekframework.spek2.subject.dsl.SubjectProviderDsl
 @Experimental
 abstract class SubjectSpek<T>(val subjectSpec: SubjectProviderDsl<T>.() -> Unit): Spek({
     if (this is IncludedSubjectSpek<*>) {
+        @Suppress("UNCHECKED_CAST")
         subjectSpec.invoke(this as IncludedSubjectSpek<T>)
     } else {
         subjectSpec.invoke(SubjectProviderDslImpl(this))
