@@ -16,7 +16,6 @@ class FailingGroupTest: AbstractSpekRuntimeTest() {
 
             group("some failing group") {
                 throw RuntimeException()
-                test("this won't be executed") { }
             }
 
             group("some group") {
