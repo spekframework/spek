@@ -33,7 +33,7 @@ class DataDrivenSpec : Spek({
             }
         }
 
-        on("%s divided by %s", with = data(10, 2, expected = 5)) { dividend, divisor, result ->
+        on("%s divided by %s", data(10, 2, expected = 5)) { dividend, divisor, result ->
 
             it("returns $result") {
                 assertEquals(calculator.divide(dividend, divisor), result)
