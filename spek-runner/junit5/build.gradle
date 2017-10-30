@@ -1,7 +1,6 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
 apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
-apply plugin: 'org.jetbrains.dokka'
 
 junitPlatform {
     platformVersion '1.0.0-RC2'
@@ -12,18 +11,8 @@ junitPlatform {
     }
 }
 
-task sourceJar(type: Jar) {
-    from project.sourceSets.main.allSource
-    classifier "sources"
-}
-
-task javadocJar(type: Jar, dependsOn: dokka) {
-    from dokka.outputDirectory
-    classifier = 'javadoc'
-}
-
 dependencies {
-    compile project(':spek-runtimes:jvm')
+    compile project(':spek-runtime:jvm')
     compileOnly 'org.junit.platform:junit-platform-engine'
 }
 

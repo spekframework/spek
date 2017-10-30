@@ -1,20 +1,9 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
 apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
-apply plugin: 'org.jetbrains.dokka'
-
-task sourceJar(type: Jar) {
-    from project.sourceSets.main.allSource
-    classifier "sources"
-}
-
-task javadocJar(type: Jar, dependsOn: dokka) {
-    from dokka.outputDirectory
-    classifier = 'javadoc'
-}
 
 dependencies {
-    expectedBy project(':spek-extensions:subject:common')
+    expectedBy project(':spek-extension:subject:common')
 }
 
 dependencies {
@@ -23,8 +12,7 @@ dependencies {
 }
 
 dependencies {
-    testImplementation project(':spek-runtimes:common')
-    testImplementation project(':spek-runtimes:jvm')
+    testImplementation project(':spek-runtime:jvm')
 
     testCompileOnly 'org.junit.jupiter:junit-jupiter-api'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'

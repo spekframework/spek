@@ -1,2 +1,6 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-common.gradle"
+
+dependencies {
+    compile project(':spek-dsl:common')
+}
