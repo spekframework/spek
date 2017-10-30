@@ -1,12 +1,6 @@
 package org.spekframework.spek2.samples
 
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.it
-import org.spekframework.spek2.dsl.xcontext
-import org.spekframework.spek2.dsl.xdescribe
-import org.spekframework.spek2.dsl.xgiven
-import org.spekframework.spek2.dsl.xit
-import org.spekframework.spek2.dsl.xon
 import kotlin.test.assertEquals
 
 class SkipSampleSpec : Spek({
