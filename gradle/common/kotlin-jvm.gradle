@@ -13,6 +13,6 @@ tasks.withType(Jar) { task ->
             'Implementation-Title': 'Spek', \
             'Implementation-Version': rootProject.version, \
             'Implementation-Kotlin-Version': kotlinVersion, \
-            'Build-Time': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+            'Build-Time': System.getenv("TEAMCITY_VERSION") ? new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ') : new Date(0).format('yyyy-MM-dd\'T\'HH:mm:ssZ')
     }
 }
