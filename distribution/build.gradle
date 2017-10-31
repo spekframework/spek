@@ -6,10 +6,11 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 description = 'Spek Distribution packages'
 
-def artifact(delegate, project, artifactName) {
+
+def artifact(publication, project, artifactName) {
     def configure = {
+        groupId = 'org.spekframework.spek2'
         artifactId = artifactName
-        group = 'org.spekframework.spek2'
         version = rootProject.version
 
         from project.components.java
@@ -17,10 +18,6 @@ def artifact(delegate, project, artifactName) {
         artifact project.tasks['javadocJar']
 
         pom.withXml {
-            asNode().dependencies.dependency.each {
-                it.scope[0].value = ('compile')
-            }
-
             asNode().children().last() + {
                 resolveStrategy =  DELEGATE_FIRST
                 name 'Spek'
@@ -51,7 +48,7 @@ def artifact(delegate, project, artifactName) {
     }
 
     configure.resolveStrategy =  Closure.DELEGATE_FIRST
-    configure.delegate = delegate
+    configure.delegate = publication
     configure()
 }
 

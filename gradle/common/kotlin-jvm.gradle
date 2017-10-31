@@ -3,9 +3,6 @@ apply plugin: 'org.jetbrains.dokka'
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect'
-
-    testImplementation 'com.natpryce:hamkrest'
 }
 
 task sourceJar(type: Jar) {

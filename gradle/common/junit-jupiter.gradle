@@ -10,6 +10,7 @@ junitPlatform {
 }
 
 dependencies {
+    testCompile 'com.natpryce:hamkrest'
     testCompile 'org.junit.jupiter:junit-jupiter-api'
     testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }

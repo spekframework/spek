@@ -1,5 +1,5 @@
 apply plugin: 'kotlin-platform-common'
-apply plugin: 'org.jetbrains.dokka'
+//apply plugin: 'org.jetbrains.dokka'
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-common'
