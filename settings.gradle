@@ -3,17 +3,17 @@ rootProject.name = 'spek'
 include 'spek-dsl:common'
 include 'spek-dsl:jvm'
 
-include 'spek-runtimes:common'
-include 'spek-runtimes:jvm'
+include 'spek-runtime:common'
+include 'spek-runtime:jvm'
 
-include 'spek-runners:junit5'
+include 'spek-runner:junit5'
 
-include 'spek-extensions:subject:common'
-include 'spek-extensions:subject:jvm'
+include 'spek-extension:subject:common'
+include 'spek-extension:subject:jvm'
 
-include 'spek-extensions:data-driven:common'
-include 'spek-extensions:data-driven:jvm'
+include 'spek-extension:data-driven:common'
+include 'spek-extension:data-driven:jvm'
 
-//include 'distribution'
+include 'distribution'
 include 'documentation'
 include 'samples'

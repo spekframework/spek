@@ -1,280 +1,86 @@
-buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url 'https://jetbrains.jfrog.io/jetbrains/plugins-release'
-            credentials {
-                username = "${artifactory_user}"
-                password = "${artifactory_password}"
-            }
-        }
-
-    }
-    dependencies {
-        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.4.4"
-    }
-}
-
 apply plugin: 'base'
-apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: "com.jfrog.artifactory"
 
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 description = 'Spek Distribution packages'
 
-group = "org.spekframework.spek2"
-version = rootProject.version
 
-publishing {
-    publications {
-        dsl(MavenPublication) {
-            artifactId = 'spek-dsl'
+def artifact(publication, project, artifactName) {
+    def configure = {
+        groupId = 'org.spekframework.spek2'
+        artifactId = artifactName
+        version = rootProject.version
 
-            from project(':spek-dsl').components.java
-            artifact project(':spek-dsl').tasks['sourceJar']
-            artifact project(':spek-dsl').tasks['javadocJar']
+        from project.components.java
+        artifact project.tasks['sourceJar']
+        artifact project.tasks['javadocJar']
 
-            pom.withXml {
-                asNode().dependencies.dependency.each {
-                    it.scope[0].value = ('compile')
-                }
+        pom.withXml {
+            asNode().children().last() + {
+                resolveStrategy =  DELEGATE_FIRST
+                name 'Spek'
+                description 'A Specification Framework for Kotlin'
+                url 'https://spekframework.github.io/spek'
 
-                asNode().children().last() + {
-                    resolveStrategy = DELEGATE_FIRST
-                    name 'Spek'
-                    description 'A Specification Framework for the JVM'
-                    url 'https://spekframework.github.io/spek'
-                    licenses {
-                        license {
-                            name 'BSD New'
-                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
-                            distribution 'spek'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Spek Framework'
-                            name 'Spek Contributors'
-                            organization 'Spek Framework'
-                        }
-                    }
-                    scm {
-                        connection 'scm:git:git://github.com/spekframework/spek.git'
-                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
-                        url 'http://github.com/spekframework/spek'
+                licenses {
+                    license {
+                        name 'BSD New'
+                        url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
+                        distribution 'spek'
                     }
                 }
-            }
-        }
-
-        extensionSubject(MavenPublication) {
-            artifactId = 'spek-extension-subject'
-
-            from project(':spek-extensions:subject').components.java
-            artifact project(':spek-extensions:subject').tasks['sourceJar']
-            artifact project(':spek-extensions:subject').tasks['javadocJar']
-
-            pom.withXml {
-                asNode().dependencies.dependency.each {
-                    it.scope[0].value = ('compile')
-                }
-
-                asNode().children().last() + {
-                    resolveStrategy = DELEGATE_FIRST
-                    name 'Spek'
-                    description 'A Specification Framework for the JVM'
-                    url 'https://spekframework.github.io/spek'
-                    licenses {
-                        license {
-                            name 'BSD New'
-                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
-                            distribution 'spek'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Spek Framework'
-                            name 'Spek Contributors'
-                            organization 'Spek Framework'
-                        }
-                    }
-                    scm {
-                        connection 'scm:git:git://github.com/spekframework/spek.git'
-                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
-                        url 'http://github.com/spekframework/spek'
+                developers {
+                    developer {
+                        id 'Spek Framework'
+                        name 'Spek Contributors'
+                        organization 'Spek Framework'
                     }
                 }
-            }
-        }
-
-        extensionDataDriven(MavenPublication) {
-            artifactId = 'spek-extension-data-driven'
-
-            from project(':spek-extensions:data-driven').components.java
-            artifact project(':spek-extensions:data-driven').tasks['sourceJar']
-            artifact project(':spek-extensions:data-driven').tasks['javadocJar']
-
-            pom.withXml {
-                asNode().dependencies.dependency.each {
-                    it.scope[0].value = ('compile')
-                }
-
-                asNode().children().last() + {
-                    resolveStrategy = DELEGATE_FIRST
-                    name 'Spek'
-                    description 'A Specification Framework for the JVM'
-                    url 'https://spekframework.github.io/spek'
-                    licenses {
-                        license {
-                            name 'BSD New'
-                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
-                            distribution 'spek'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Spek Framework'
-                            name 'Spek Contributors'
-                            organization 'Spek Framework'
-                        }
-                    }
-                    scm {
-                        connection 'scm:git:git://github.com/spekframework/spek.git'
-                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
-                        url 'http://github.com/spekframework/spek'
-                    }
-                }
-            }
-        }
-
-        runnerJunit5(MavenPublication) {
-            artifactId = 'spek-runner-junit5'
-
-            from project(':spek-runners:junit5').components.java
-            artifact project(':spek-runners:junit5').tasks['sourceJar']
-            artifact project(':spek-runners:junit5').tasks['javadocJar']
-
-            pom.withXml {
-                asNode().dependencies.dependency.each {
-                    it.scope[0].value = ('compile')
-                }
-
-                asNode().children().last() + {
-                    resolveStrategy = DELEGATE_FIRST
-                    name 'Spek JUnit Platform Engine'
-                    description 'Spek TestEngine for the JUnit Platform'
-                    url 'https://spekframework.github.io/spek'
-                    licenses {
-                        license {
-                            name 'BSD New'
-                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
-                            distribution 'spek'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Spek Framework'
-                            name 'Spek Contributors'
-                            organization 'Spek Framework'
-                        }
-                    }
-                    scm {
-                        connection 'scm:git:git://github.com/spekframework/spek.git'
-                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
-                        url 'http://github.com/spekframework/spek'
-                    }
-                }
-            }
-        }
-
-
-        runtimeCommon(MavenPublication) {
-            artifactId = 'spek-runtime-common'
-
-            from project(':spek-runtimes:common').components.java
-            artifact project(':spek-runtimes:common').tasks['sourceJar']
-            artifact project(':spek-runtimes:common').tasks['javadocJar']
-
-            pom.withXml {
-                asNode().dependencies.dependency.each {
-                    it.scope[0].value = ('compile')
-                }
-
-                asNode().children().last() + {
-                    resolveStrategy = DELEGATE_FIRST
-                    name 'Spek'
-                    description 'A Specification Framework for the JVM'
-                    url 'https://spekframework.github.io/spek'
-                    licenses {
-                        license {
-                            name 'BSD New'
-                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
-                            distribution 'spek'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Spek Framework'
-                            name 'Spek Contributors'
-                            organization 'Spek Framework'
-                        }
-                    }
-                    scm {
-                        connection 'scm:git:git://github.com/spekframework/spek.git'
-                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
-                        url 'http://github.com/spekframework/spek'
-                    }
-                }
-            }
-        }
-
-        runtimeJvm(MavenPublication) {
-            artifactId = 'spek-runtime-jvm'
-
-            from project(':spek-runtimes:jvm').components.java
-            artifact project(':spek-runtimes:jvm').tasks['sourceJar']
-            artifact project(':spek-runtimes:jvm').tasks['javadocJar']
-
-            pom.withXml {
-                asNode().dependencies.dependency.each {
-                    it.scope[0].value = ('compile')
-                }
-
-                asNode().children().last() + {
-                    resolveStrategy = DELEGATE_FIRST
-                    name 'Spek'
-                    description 'A Specification Framework for the JVM'
-                    url 'https://spekframework.github.io/spek'
-                    licenses {
-                        license {
-                            name 'BSD New'
-                            url 'https://github.com/spekframework/spek/blob/master/LICENSE.TXT'
-                            distribution 'spek'
-                        }
-                    }
-                    developers {
-                        developer {
-                            id 'Spek Framework'
-                            name 'Spek Contributors'
-                            organization 'Spek Framework'
-                        }
-                    }
-                    scm {
-                        connection 'scm:git:git://github.com/spekframework/spek.git'
-                        developerConnection 'scm:git:https://github.com/spekframework/spek.git'
-                        url 'http://github.com/spekframework/spek'
-                    }
+                scm {
+                    connection 'scm:git:git://github.com/spekframework/spek.git'
+                    developerConnection 'scm:git:https://github.com/spekframework/spek.git'
+                    url 'http://github.com/spekframework/spek'
                 }
             }
         }
     }
+
+    configure.resolveStrategy =  Closure.DELEGATE_FIRST
+    configure.delegate = publication
+    configure()
 }
 
-def artifacts = ['dsl', 'runtimeCommon', 'runtimeJvm', 'runnerJunit5', 'extensionSubject', 'extensionDataDriven']
+publishing {
+    publications {
+        dslCommon(MavenPublication) { artifact(delegate, project(':spek-dsl:common'), 'spek-dsl-common') }
+        dslJvm(MavenPublication) { artifact(delegate, project(':spek-dsl:jvm'), 'spek-dsl-jvm') }
+
+        runtimeCommon(MavenPublication) { artifact(delegate, project(':spek-runtime:common'), 'spek-runtime-common') }
+        runtimeJvm(MavenPublication) { artifact(delegate, project(':spek-runtime:jvm'), 'spek-runtime-jvm') }
+
+        runnerJUnit5(MavenPublication) { artifact(delegate, project(':spek-runner:junit5'), 'spek-runner-junit5') }
+
+        extensionDataDrivenCommon(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:common'), 'spek-extension-data-driven-common') }
+        extensionDataDrivenJvm(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:jvm'), 'spek-extension-data-driven-jvm') }
+
+        extensionSubjectCommon(MavenPublication) { artifact(delegate, project(':spek-extension:subject:common'), 'spek-extension-subject-common') }
+        extensionSubjectJvm(MavenPublication) { artifact(delegate, project(':spek-extension:subject:jvm'), 'spek-extension-subject-jvm') }
+    }
+}
+
+def artifacts = [
+    'dslCommon',
+    'dslJvm',
+    'runtimeCommon',
+    'runtimeJvm',
+    'runnerJUnit5',
+    'extensionDataDrivenCommon',
+    'extensionDataDrivenJvm',
+    'extensionSubjectCommon',
+    'extensionSubjectJvm'
+]
 
 bintray {
     user = "${bintrayUser}"
@@ -299,30 +105,4 @@ bintray {
     }
 
     publications = artifacts
-}
-
-artifactory {
-    if ([artifactory_contextUrl, artifactory_user, artifactory_password].contains("nothing")) {
-        return
-    }
-    contextUrl = "${artifactory_contextUrl}"
-    publish {
-        repository {
-            repoKey = 'spek-snapshots'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-        }
-        defaults {
-            publications(artifacts)
-        }
-    }
-    resolve {
-        repository {
-            repoKey = 'libs-release'
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-        }
-    }
 }

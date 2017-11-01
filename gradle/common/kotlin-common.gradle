@@ -1,5 +1,16 @@
 apply plugin: 'kotlin-platform-common'
+//apply plugin: 'org.jetbrains.dokka'
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-common'
+}
+
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}
+
+task javadocJar(type: Jar /*, dependsOn: dokka */) {
+//    from dokka.outputDirectory
+    classifier = 'javadoc'
 }

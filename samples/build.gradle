@@ -15,11 +15,12 @@ description = 'Spek Samples'
 
 dependencies {
     testCompile project(':spek-dsl:jvm')
-    testCompile project(':spek-extensions:subject:jvm')
-    testCompile project(':spek-extensions:data-driven:jvm')
+    testCompile project(':spek-extension:subject:jvm')
+    testCompile project(':spek-extension:data-driven:jvm')
+    testCompile 'com.natpryce:hamkrest'
 
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.junit.platform:junit-platform-runner'
+    testCompile 'org.jetbrains.kotlin:kotlin-test'
+    testCompile 'org.junit.platform:junit-platform-runner'
 
-    testRuntime project(':spek-runners:junit5')
+    testRuntime project(':spek-runner:junit5')
 }

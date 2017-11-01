@@ -1,10 +1,18 @@
 apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'org.jetbrains.dokka'
 
 dependencies {
     compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+}
 
-    testImplementation 'com.natpryce:hamkrest'
+task sourceJar(type: Jar) {
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}
+
+task javadocJar(type: Jar, dependsOn: dokka) {
+    from dokka.outputDirectory
+    classifier = 'javadoc'
 }
 
 tasks.withType(Jar) { task ->
