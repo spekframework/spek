@@ -21,7 +21,7 @@ def artifact(publication, project, artifactName) {
             asNode().children().last() + {
                 resolveStrategy =  DELEGATE_FIRST
                 name 'Spek'
-                description 'A Specification Framework for the JVM'
+                description 'A Specification Framework for Kotlin'
                 url 'https://spekframework.github.io/spek'
 
                 licenses {
