@@ -14,6 +14,11 @@ include 'spek-extension:subject:jvm'
 include 'spek-extension:data-driven:common'
 include 'spek-extension:data-driven:jvm'
 
+include 'spek-plugin:idea-common'
+include 'spek-plugin:idea-common-jvm'
+include 'spek-plugin:idea-jvm'
+include 'spek-plugin:idea-studio'
+
 include 'distribution'
 include 'documentation'
 include 'samples'

@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+        maven { url 'http://dl.bintray.com/jetbrains/intellij-plugin-service' }
         jcenter()
     }
 
@@ -12,6 +13,7 @@ buildscript {
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
         classpath 'org.ajoberstar:gradle-git:1.5.1'
+        classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.2.17"
     }
 }
 

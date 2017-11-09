@@ -1,0 +1,13 @@
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: "kotlin"
+
+intellij {
+    pluginName = 'SpekFramework'
+    updateSinceUntilBuild = false
+    downloadSources = true
+    instrumentCode = false
+}
+
+dependencies {
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
