@@ -2,7 +2,6 @@ package robolectric
 
 import android.app.Activity
 import android.app.IntentService
-import android.app.Service
 import android.content.Intent
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -90,9 +89,7 @@ class RobolectricInstanceFactoryTest : AbstractSpekRuntimeTest() {
     class TestActivity2: Activity() { }
 
     class TestService: IntentService("TestService") {
-        override fun onHandleIntent(p0: Intent?) {
-
-        }
+        override fun onHandleIntent(p0: Intent?) { }
     }
 
 }

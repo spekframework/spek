@@ -37,10 +37,10 @@ class RobolectricLifeCycleListener(
     private var compiletimeSdkResourceTable: PackageResourceTable? = null
     @Transient private var dependencyResolver: DependencyResolver? = null
 
-    var orig: Thread? = null
-    var parallelUniverseInterface: ParallelUniverseInterface? = null
-    var testLifecycle: TestLifecycle<*>? = null
-    var priorContextClassLoader:ClassLoader? = null
+    lateinit var orig: Thread
+    lateinit var parallelUniverseInterface: ParallelUniverseInterface
+    lateinit var testLifecycle: TestLifecycle<*>
+    lateinit var priorContextClassLoader:ClassLoader
 
     override fun beforeExecuteTest(test: TestScope) {
         super.beforeExecuteTest(test)
@@ -51,8 +51,8 @@ class RobolectricLifeCycleListener(
         val cl = sdkEnvironment.bootstrappedClass<TestLifecycle<*>>(getTestLifecycleClass())
         testLifecycle = ReflectionHelpers.newInstance<TestLifecycle<*>>(cl)
 
-        parallelUniverseInterface!!.setSdkConfig(sdkEnvironment.sdkConfig)
-        parallelUniverseInterface!!.resetStaticState(config)
+        parallelUniverseInterface.setSdkConfig(sdkEnvironment.sdkConfig)
+        parallelUniverseInterface.resetStaticState(config)
 
         val sdkConfig = sdkEnvironment.sdkConfig
         val androidBuildVersionClass = sdkEnvironment.bootstrappedClass<Any>(Build.VERSION::class.java)
@@ -65,7 +65,7 @@ class RobolectricLifeCycleListener(
 
         // This will always be non empty since every class has basic methods like toString.
         val randomMethod = getJarResolver().javaClass.methods[0]
-        parallelUniverseInterface!!.setUpApplicationState(
+        parallelUniverseInterface.setUpApplicationState(
             randomMethod,
             testLifecycle,
             androidManifest,
@@ -73,9 +73,9 @@ class RobolectricLifeCycleListener(
             RoutingResourceTable(getCompiletimeSdkResourceTable(), appResourceTable),
             RoutingResourceTable(systemResourceTable, appResourceTable),
             RoutingResourceTable(systemResourceTable))
-        testLifecycle!!.beforeTest(null)
-        orig = parallelUniverseInterface!!.mainThread
-        parallelUniverseInterface!!.mainThread = Thread.currentThread()
+        testLifecycle.beforeTest(null)
+        orig = parallelUniverseInterface.mainThread
+        parallelUniverseInterface.mainThread = Thread.currentThread()
     }
 
     /**
@@ -161,15 +161,13 @@ class RobolectricLifeCycleListener(
 
     override fun afterExecuteTest(test: TestScope) {
         try {
-            parallelUniverseInterface!!.tearDownApplication()
+            parallelUniverseInterface.tearDownApplication()
         } finally {
-            parallelUniverseInterface!!.resetStaticState(
+            parallelUniverseInterface.resetStaticState(
                     config) // afterward too, so stuff doesn't hold on to classes?
         }
-        parallelUniverseInterface!!.setMainThread(orig);
+        parallelUniverseInterface.setMainThread(orig);
         Thread.currentThread().contextClassLoader = priorContextClassLoader
-        parallelUniverseInterface = null
-        testLifecycle = null
     }
 
     /**

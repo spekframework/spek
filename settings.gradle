@@ -13,7 +13,7 @@ include 'spek-extension:subject:jvm'
 
 include 'spek-extension:data-driven:common'
 include 'spek-extension:data-driven:jvm'
-include 'spek-extensions:robolectric'
+include 'spek-extension:robolectric'
 
 include 'distribution'
 include 'documentation'

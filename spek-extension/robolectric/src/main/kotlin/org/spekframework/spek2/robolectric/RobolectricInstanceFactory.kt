@@ -16,7 +16,6 @@ import org.robolectric.internal.SdkConfig
 import org.robolectric.internal.SdkEnvironment
 import org.robolectric.internal.bytecode.ClassHandler
 import org.robolectric.internal.bytecode.InstrumentationConfiguration
-import org.robolectric.internal.bytecode.Interceptor
 import org.robolectric.internal.bytecode.Interceptors
 import org.robolectric.internal.bytecode.SandboxConfig
 import org.robolectric.internal.bytecode.ShadowMap
@@ -39,7 +38,7 @@ import java.util.HashMap
 import java.util.Properties
 import kotlin.reflect.KClass
 
-object RobolectricInstanceFactory : InstanceFactory {
+object RobolectricInstanceFactory: InstanceFactory {
     private val appManifestsCache = HashMap<ManifestIdentifier, AndroidManifest>()
 
     @Transient private var dependencyResolver: DependencyResolver? = null
@@ -89,13 +88,9 @@ object RobolectricInstanceFactory : InstanceFactory {
 
     }
 
-    private fun findInterceptors(): Collection<Interceptor> {
-        return AndroidInterceptors.all()
-    }
+    private fun findInterceptors() = AndroidInterceptors.all()
 
-    private fun getInterceptors(): Interceptors {
-        return interceptors
-    }
+    private fun getInterceptors() = interceptors
 
     private fun configureShadows(sdkEnvironment: SdkEnvironment) {
         val builder = createShadowMap().newBuilder()
@@ -111,9 +106,7 @@ object RobolectricInstanceFactory : InstanceFactory {
         sdkEnvironment.configure(createClassHandler(shadowMap, sdkEnvironment), getInterceptors())
     }
 
-    private fun createShadowMap(): ShadowMap {
-        return ShadowMap.EMPTY
-    }
+    private fun createShadowMap() = ShadowMap.EMPTY
 
     private fun createClassHandler(shadowMap: ShadowMap, sdkEnvironment: SdkEnvironment): ClassHandler {
         return ShadowWrangler(shadowMap, sdkEnvironment.sdkConfig.apiLevel, interceptors)
@@ -126,10 +119,8 @@ object RobolectricInstanceFactory : InstanceFactory {
     }
 
     private fun addShadows(shadowClasses: MutableList<Class<*>>, annotation: SandboxConfig?) {
-        if (annotation != null) {
-            annotation.shadows.forEach {
-                shadowClasses.add(it.java.javaClass)
-            }
+        annotation?.shadows?.forEach {
+            shadowClasses.add(it.java.javaClass)
         }
     }
 
@@ -145,14 +136,7 @@ object RobolectricInstanceFactory : InstanceFactory {
         val identifier = manifestFactory.identify(config)
 
         synchronized(appManifestsCache) {
-            var appManifest: AndroidManifest?
-            appManifest = appManifestsCache[identifier]
-            if (appManifest == null) {
-                appManifest = manifestFactory.create(identifier)
-                appManifestsCache.put(identifier, appManifest)
-            }
-
-            return appManifest!!
+            return appManifestsCache.computeIfAbsent(identifier, { manifestFactory.create(identifier) })
         }
     }
 
