@@ -1,4 +1,4 @@
-package org.spekframework.idea
+package org.spekframework.intellij
 
 import com.intellij.execution.configurations.ConfigurationTypeBase
 import org.jetbrains.kotlin.idea.KotlinIcons
