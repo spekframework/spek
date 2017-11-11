@@ -29,6 +29,9 @@ import java.io.File
 import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 
+/**
+ * Lifecycle listener to set up and tear down the application state.
+ */
 class RobolectricLifeCycleListener(
     val sdkEnvironment: SdkEnvironment,
     val config:Config,

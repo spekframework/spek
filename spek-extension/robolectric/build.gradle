@@ -2,13 +2,14 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
 apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'java-library'
 
 dependencies {
     compile project(':spek-dsl:jvm')
 
     compile 'junit:junit:4.12'
     compile 'org.robolectric:robolectric:3.4.2'
-    implementation 'org.robolectric:android-all:o-preview-2-robolectric-0'
+    api 'org.robolectric:android-all:o-preview-2-robolectric-0'
 
     compile 'org.jetbrains.kotlin:kotlin-stdlib'
     compile 'org.jetbrains.kotlin:kotlin-reflect'

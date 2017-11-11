@@ -38,6 +38,9 @@ import java.util.HashMap
 import java.util.Properties
 import kotlin.reflect.KClass
 
+/**
+ * InstanceFactory to load test class on a custom classloader provided by Robolectric.
+ */
 object RobolectricInstanceFactory: InstanceFactory {
     private val appManifestsCache = HashMap<ManifestIdentifier, AndroidManifest>()
 
