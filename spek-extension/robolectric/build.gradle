@@ -11,11 +11,5 @@ dependencies {
     compile 'org.robolectric:robolectric:3.4.2'
     api 'org.robolectric:android-all:o-preview-2-robolectric-0'
 
-    compile 'org.jetbrains.kotlin:kotlin-stdlib'
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
-    compileOnly 'org.junit.platform:junit-platform-engine'
-
-    testCompile 'org.junit.jupiter:junit-jupiter-api'
     testCompile project(':spek-runtime:jvm')
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine'
 }
