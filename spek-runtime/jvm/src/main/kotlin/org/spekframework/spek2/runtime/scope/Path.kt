@@ -64,7 +64,7 @@ actual class PathBuilder(private val parent: Path) {
     actual fun build(): Path = parent
 
     actual companion object {
-        val ROOT: Path = Path("", null)
+        actual val ROOT: Path = Path("", null)
 
         actual fun from(clz: KClass<out Spek>): PathBuilder {
             return PathBuilder()

@@ -11,8 +11,11 @@ import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
+interface ConsoleLauncher {
+    fun run(args: Array<String>)
+}
 
-class CompoundRuntimeExecutionListener(private val listeners: List<ExecutionListener>): RuntimeExecutionListener() {
+class Spek2CompoundRuntimeExecutionListener(private val listeners: List<ExecutionListener>): RuntimeExecutionListener() {
 
     override fun executionStart() {
         listeners.forEach { it.executionStart() }
@@ -60,15 +63,13 @@ class CompoundRuntimeExecutionListener(private val listeners: List<ExecutionList
 
 }
 
-abstract class AbstractConsoleLauncher {
+abstract class AbstractSpek2ConsoleLauncher: ConsoleLauncher {
     private val runtime = SpekRuntime()
-
-    abstract fun run(args: Array<String>)
 
     protected fun execute(path: Path, listeners: List<ExecutionListener>) {
         val discoveryResult = runtime.discover(DiscoveryRequest(path))
-        runtime.execute(ExecutionRequest(discoveryResult.roots, CompoundRuntimeExecutionListener(listeners)))
+        runtime.execute(ExecutionRequest(discoveryResult.roots, Spek2CompoundRuntimeExecutionListener(listeners)))
     }
 }
 
-expect class ConsoleLauncher: AbstractConsoleLauncher
+expect class Spek2ConsoleLauncher: AbstractSpek2ConsoleLauncher

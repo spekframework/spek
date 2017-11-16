@@ -28,6 +28,7 @@ expect class PathBuilder {
     fun build(): Path
 
     companion object {
+        val ROOT: Path
         fun from(clz: KClass<out Spek>): PathBuilder
         fun parse(path: String): PathBuilder
     }

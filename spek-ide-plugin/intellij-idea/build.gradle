@@ -7,5 +7,5 @@ intellij {
 }
 
 dependencies {
-    compile project(':spek-runtime:jvm')
+    compile project(':spek-ide-plugin:intellij-jvm')
 }

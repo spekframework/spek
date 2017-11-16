@@ -4,3 +4,7 @@ apply from: "$rootDir/gradle/common/kotlin-common.gradle"
 dependencies {
     compile project(':spek-dsl:common')
 }
+
+jar {
+    baseName = 'spek-runtime-common'
+}

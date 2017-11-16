@@ -1,11 +1,10 @@
 apply plugin: 'org.jetbrains.intellij'
-apply plugin: "kotlin"
+apply plugin: "kotlin-platform-jvm"
 
 intellij {
-    pluginName = 'SpekFramework'
+    pluginName = 'Spek'
     updateSinceUntilBuild = false
     downloadSources = true
-    instrumentCode = false
 }
 
 dependencies {
