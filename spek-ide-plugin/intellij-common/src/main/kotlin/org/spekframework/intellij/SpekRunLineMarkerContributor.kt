@@ -13,13 +13,9 @@ class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
         return path?.let {
             Info(
                 AllIcons.RunConfigurations.TestState.Run,
-                TOOLTIP_PROVIDER,
+                Function<PsiElement, String> { "Run ${path.name}"},
                 *ExecutorAction.getActions(0)
             )
         }
-    }
-
-    companion object {
-        private val TOOLTIP_PROVIDER = Function<PsiElement, String> { "Run path" }
     }
 }

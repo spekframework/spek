@@ -11,6 +11,7 @@ import org.jdom.Element
 import org.jetbrains.kotlin.idea.KotlinIcons
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
+import org.spekframework.spek2.runtime.scope.isRoot
 
 abstract class SpekBaseConfigurationType(id: String, displayName: String): ConfigurationTypeBase(
     id,
@@ -75,7 +76,20 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
         EnvironmentVariablesComponent.readExternal(element, envs)
     }
 
-    override fun suggestedName() = "${path.name} [${path.parent?.toString()}]".trim()
+    override fun suggestedName(): String {
+        val parent = path.parent
+        val grandParent = parent?.parent
+
+        return if (path.name.isEmpty()) {
+            "Run specs in <default>"
+        } else if (parent != null && parent.isRoot) {
+            "Run specs in ${path.name}"
+        } else if (grandParent != null && grandParent.isRoot) {
+            "Run ${parent.name}.${path.name}"
+        } else {
+            "${path.name} [${parent?.toString()}]"
+        }
+    }
 
     companion object {
         const val PATH = "path"

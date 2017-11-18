@@ -1,6 +1,8 @@
 package org.spekframework.intellij
 
+import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
+import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.psi.KtClassOrObject
@@ -29,6 +31,14 @@ fun extractPath(element: PsiElement): Path? {
                         .build()
                 }
 
+            }
+        }
+        is PsiDirectory -> {
+            val pkg = element.getPackage()
+            if (pkg != null) {
+                path = PathBuilder()
+                    .append(pkg.qualifiedName)
+                    .build()
             }
         }
     }
