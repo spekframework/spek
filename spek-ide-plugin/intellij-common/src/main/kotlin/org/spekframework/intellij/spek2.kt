@@ -9,8 +9,4 @@ abstract class Spek2BaseRunConfiguration<T: RunConfigurationModule>(
     name: String,
     configurationModule: T,
     factory: ConfigurationFactory
-): SpekBaseRunConfiguration<T>(name, configurationModule, factory) {
-    var path: Path = PathBuilder.ROOT
-
-    override fun suggestedName() = path.toString()
-}
+): SpekBaseRunConfiguration<T>(name, configurationModule, factory)
