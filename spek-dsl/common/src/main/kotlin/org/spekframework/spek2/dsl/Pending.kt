@@ -1,7 +1,6 @@
 package org.spekframework.spek2.dsl
 
 /**
- * @author Ranie Jade Ramiso
  * @since 1.0
  */
 sealed class Pending constructor(val pending: Boolean) {

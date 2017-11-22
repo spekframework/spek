@@ -7,9 +7,6 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import kotlin.properties.Delegates
 
-/**
- * @author Ranie Jade Ramiso
- */
 class LifecycleManagerTest {
     var lifecycleManager by Delegates.notNull<LifecycleManager>()
 

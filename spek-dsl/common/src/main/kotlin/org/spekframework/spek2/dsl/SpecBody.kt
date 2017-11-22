@@ -7,7 +7,6 @@ import org.spekframework.spek2.meta.Synonym
 import org.spekframework.spek2.meta.SynonymType
 
 /**
- * @author Ranie Jade Ramiso
  * @since 1.0
  */
 @SpekDsl
@@ -29,7 +28,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a [group][SpecBody.group].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Group, prefix = "describe")
@@ -40,7 +38,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a [group][SpecBody.group].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Group, prefix = "context")
@@ -51,7 +48,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a [group][SpecBody.group].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Group, prefix = "given")
@@ -62,7 +58,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates an [action][SpecBody.action].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Action, prefix = "on")
@@ -73,7 +68,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a [group][SpecBody.group].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Group, prefix = "describe", excluded = true)
@@ -84,7 +78,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a [group][SpecBody.group].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Group, prefix = "context", excluded = true)
@@ -95,7 +88,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a [group][SpecBody.group].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Group, prefix = "given", excluded = true)
@@ -106,7 +98,6 @@ interface SpecBody: TestContainer {
     /**
      * Creates a pending [action][SpecBody.action].
      *
-     * @author Ranie Jade Ramiso
      * @since 1.0
      */
     @Synonym(type = SynonymType.Action, prefix = "on", excluded = true)

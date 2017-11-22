@@ -8,9 +8,6 @@ import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import kotlin.reflect.KClass
 
-/**
- * @author Ranie Jade Ramiso
- */
 abstract class AbstractSpekRuntimeTest {
     private val runtime = SpekRuntime()
 

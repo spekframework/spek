@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
-/**
- * @author Ranie Jade Ramiso
- */
 class ActionTest: AbstractSpekRuntimeTest() {
     @Test
     fun testOn() {

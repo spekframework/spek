@@ -4,7 +4,6 @@ import org.spekframework.spek2.lifecycle.InstanceFactory
 import kotlin.reflect.KClass
 
 /**
- * @author Ranie Jade Ramiso
  * @since 1.1
  */
 @Target(AnnotationTarget.CLASS)

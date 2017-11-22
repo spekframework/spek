@@ -7,9 +7,6 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 import kotlin.reflect.KProperty
 
-/**
- * @author Ranie Jade Ramiso
- */
 sealed class LifecycleAwareAdapter<T>(val factory: () -> T)
     : LifecycleAware<T>, LifecycleListener {
     var cached: T? = null

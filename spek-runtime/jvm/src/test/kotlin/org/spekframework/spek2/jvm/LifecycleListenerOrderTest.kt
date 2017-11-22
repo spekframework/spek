@@ -9,9 +9,6 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
-/**
- * @author Ranie Jade Ramiso
- */
 class LifecycleListenerOrderTest: AbstractSpekRuntimeTest() {
 
     @Test
