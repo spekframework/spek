@@ -6,9 +6,6 @@ import org.spekframework.spek2.lifecycle.LifecycleAware
 import org.spekframework.spek2.subject.dsl.SubjectProviderDsl
 import kotlin.properties.Delegates
 
-/**
- * @author Ranie Jade Ramiso
- */
 internal class SubjectProviderDslImpl<T>(spec: Spec): SubjectDslImpl<T>(spec), SubjectProviderDsl<T> {
     var adapter: LifecycleAware<T> by Delegates.notNull()
     override val subject: T

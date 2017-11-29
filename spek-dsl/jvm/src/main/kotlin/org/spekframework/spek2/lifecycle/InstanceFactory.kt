@@ -5,7 +5,6 @@ import org.spekframework.spek2.meta.Experimental
 import kotlin.reflect.KClass
 
 /**
- * @author Ranie Jade Ramiso
  * @since 1.1
  */
 @Experimental

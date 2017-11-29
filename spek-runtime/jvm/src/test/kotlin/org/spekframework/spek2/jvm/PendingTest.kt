@@ -7,9 +7,6 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.Pending
 import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
-/**
- * @author Ranie Jade Ramiso
- */
 class PendingTest: AbstractSpekRuntimeTest() {
     @Test
     fun testPendingGroup() {

@@ -8,9 +8,6 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
-/**
- * @author Ranie Jade Ramiso
- */
 class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedTestCaching() {

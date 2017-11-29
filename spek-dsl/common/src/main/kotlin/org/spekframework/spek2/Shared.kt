@@ -4,7 +4,6 @@ import org.spekframework.spek2.dsl.Spec
 import org.spekframework.spek2.meta.Experimental
 
 /**
- * @author Ranie Jade Ramiso
  * @since 1.1
  */
 @Experimental

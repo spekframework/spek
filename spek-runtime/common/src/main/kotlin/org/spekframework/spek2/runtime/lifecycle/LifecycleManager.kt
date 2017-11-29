@@ -5,9 +5,6 @@ import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 
-/**
- * @author Ranie Jade Ramiso
- */
 class LifecycleManager {
     private val listeners = ArrayList<LifecycleListener>()
 

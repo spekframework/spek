@@ -7,9 +7,6 @@ import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import org.spekframework.spek2.runtime.test.event.ExecutionEvent
 
-/**
- * @author Ranie Jade Ramiso
- */
 class ExecutionEventRecorder: RuntimeExecutionListener() {
     private val _executionEvents = mutableListOf<ExecutionEvent>()
     val executionEvents: List<ExecutionEvent> = _executionEvents

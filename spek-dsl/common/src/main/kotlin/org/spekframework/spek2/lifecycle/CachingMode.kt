@@ -4,8 +4,6 @@ import org.spekframework.spek2.meta.Experimental
 
 /**
  * Specifies how [lifecycle aware objects][LifecycleAware] are cached.
- *
- * @author Ranie Jade Ramiso
  */
 @Experimental
 enum class CachingMode {

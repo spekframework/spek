@@ -4,9 +4,6 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.spekframework.spek2.Spek
 
-/**
- * @author Ranie Jade Ramiso
- */
 class FixtureSpec : Spek({
     var counter = 0
     beforeEachTest {
