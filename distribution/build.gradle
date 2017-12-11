@@ -7,13 +7,14 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 description = 'Spek Distribution packages'
 
 
-def artifact(publication, project, artifactName) {
+def artifact(Publication publication, Project project, artifactName) {
     def configure = {
         groupId = 'org.spekframework.spek2'
         artifactId = artifactName
         version = rootProject.version
 
         from project.components.java
+        
         artifact project.tasks['sourceJar']
         artifact project.tasks['javadocJar']
 
@@ -44,6 +45,29 @@ def artifact(publication, project, artifactName) {
                     url 'http://github.com/spekframework/spek'
                 }
             }
+            
+            
+            // Because of tree-like structure of the project Gradle screws up groupId and artifactId of cross-module deps.
+            // ie         `<dependency><groupId>spek.spek-runtime</groupId><artifactId>jvm</artifactId></dependency>`
+            // instead of `<dependency><groupId>org.spekframework.spek2</groupId><artifactId>spek-runtime-jvm</artifactId></dependency>`
+            // So we traverse dependencies in generated pom and fix them.
+            asNode()
+                    .dependencies
+                    .dependency
+                    .findAll { dep -> dep.groupId.get(0).text().startsWith("${rootProject.name}") } // ie 'spek.'
+                    .collect { dep -> 
+                        Node groupIdNode = dep.groupId.get(0)
+                        Node artifactIdNode = dep.artifactId.get(0)
+                        
+                        String originalGroupId = groupIdNode.text()
+                        String originalArtifactId = artifactIdNode.text()
+                
+                        String fixedArtifactId = originalGroupId
+                                .substring(originalGroupId.indexOf('.') + 1, originalGroupId.length()) + '-' + originalArtifactId
+                
+                        groupIdNode.setValue(groupId)
+                        artifactIdNode.setValue(fixedArtifactId)
+                    } 
         }
     }
 
