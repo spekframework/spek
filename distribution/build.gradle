@@ -17,7 +17,7 @@ def artifact(Publication publication, Project project, artifactName) {
         
         artifact project.tasks['sourceJar']
         artifact project.tasks['javadocJar']
-        
+
         pom.withXml {
             asNode().children().last() + {
                 resolveStrategy =  DELEGATE_FIRST
