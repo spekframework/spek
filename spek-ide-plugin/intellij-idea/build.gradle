@@ -3,7 +3,7 @@ apply from: "$rootDir/gradle/common/idea-plugin.gradle"
 
 intellij {
     version = '2016.3'
-    plugins = ['org.jetbrains.kotlin:1.2.0-rc-39-IJ2016.3-5@EAP-1.2']
+    plugins = ['org.jetbrains.kotlin:1.2.0-release-IJ2016.3-1']
 }
 
 dependencies {

@@ -14,7 +14,6 @@ import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
 private val SPEK_CLASSES = listOf(
-    "org.jetbrains.spek.api.Spek",
     "org.spekframework.spek2.Spek"
 )
 
@@ -44,7 +43,7 @@ fun extractPath(element: PsiElement): Path? {
             }
         }
         is KtCallExpression -> {
-            path = extractPath(element)
+            // path = extractPath(element)
         }
     }
 

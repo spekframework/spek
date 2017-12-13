@@ -81,11 +81,11 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
         val grandParent = parent?.parent
 
         return if (path.name.isEmpty()) {
-            "Run specs in <default>"
+            "Specs in <default>"
         } else if (parent != null && parent.isRoot) {
-            "Run specs in ${path.name}"
+            "Specs in ${path.name}"
         } else if (grandParent != null && grandParent.isRoot) {
-            "Run ${parent.name}.${path.name}"
+            "${parent.name}.${path.name}"
         } else {
             "${path.name} [${parent?.toString()}]"
         }
