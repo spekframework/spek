@@ -5,7 +5,9 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
+import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.jetbrains.kotlin.psi.KtNamedFunction
 import org.jetbrains.kotlin.psi.KtPrimaryConstructor
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry
 import org.spekframework.spek2.runtime.scope.Path
@@ -41,6 +43,9 @@ fun extractPath(element: PsiElement): Path? {
                     .build()
             }
         }
+        is KtCallExpression -> {
+            path = extractPath(element)
+        }
     }
 
     return path
@@ -74,4 +79,19 @@ fun isSpekSubclass(element: KtClassOrObject): Boolean {
     return false
 }
 
+// TODO: check for @Ignore
 fun isSpekRunnable(element: KtClassOrObject) = element.isTopLevel() && !element.isAbstract()
+
+private fun extractPath(callExpression: KtCallExpression): Path? {
+    val calleeExpression = callExpression.calleeExpression
+    if (calleeExpression != null) {
+        val mainReference = calleeExpression.mainReference
+        if (mainReference != null) {
+            val resolved = mainReference.resolve()
+            if (resolved != null && resolved is KtNamedFunction) {
+            }
+        }
+    }
+    /// PsiTreeUtil.getParentOfType(element, type, true)
+    TODO()
+}
