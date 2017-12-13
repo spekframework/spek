@@ -17,7 +17,7 @@ enum class SynonymType {
  * @property excluded whether the synonym represents an ignored scope.
  */
 @Target(AnnotationTarget.FUNCTION)
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Synonym(val type: SynonymType,
                          val prefix: String = "",
                          val excluded: Boolean = false)
@@ -28,5 +28,5 @@ annotation class Synonym(val type: SynonymType,
  * @property desc the description, only applies if annotation is used on a function.
  */
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.VALUE_PARAMETER)
-@Retention(AnnotationRetention.BINARY)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Description(val desc: String = "")
