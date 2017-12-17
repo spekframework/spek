@@ -1,24 +1,17 @@
 package org.spekframework.intellij
 
-import com.intellij.codeInsight.AnnotationUtil
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
-import org.jetbrains.kotlin.asJava.toLightAnnotation
-import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
-import org.jetbrains.kotlin.name.FqName
-import org.jetbrains.kotlin.psi.KtAnnotationEntry
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtNamedFunction
 import org.jetbrains.kotlin.psi.KtPrimaryConstructor
+import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry
-import org.jetbrains.kotlin.psi.psiUtil.containingClass
-import org.jetbrains.kotlin.psi.psiUtil.referenceExpression
 import org.jetbrains.uast.java.annotations
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -102,7 +95,14 @@ private fun extractPath(callExpression: KtCallExpression): Path? {
         if (mainReference != null) {
             val resolved = mainReference.resolve()
             if (resolved != null && resolved is KtNamedFunction) {
-                extractSynonymAnnotation(resolved)
+                val synonym = extractSynonymAnnotation(resolved)
+                if (synonym != null) {
+                    val description = extractDescription(callExpression)
+                    if (description != null) {
+                        println("${synonym.prefix} $description")
+                    }
+                }
+
             }
         }
     }
@@ -110,17 +110,58 @@ private fun extractPath(callExpression: KtCallExpression): Path? {
     return null
 }
 
-private fun extractSynonymAnnotation(function: KtNamedFunction) {
+private enum class SynonymType {
+    Group,
+    Action,
+    Test
+}
+
+private data class SynonymData(val type: SynonymType,
+                               val prefix: String,
+                               val excluded: Boolean)
+
+private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymData? {
     val lightMethod = function.toLightMethods().firstOrNull()
     val annotation = lightMethod?.annotations?.find {
         SYNONYM_CLASSES.contains(it.qualifiedName)
     }
 
-    if (annotation != null) {
-        val type = annotation.findDeclaredAttributeValue("type")
+    return annotation?.let {
+        val type = annotation.findDeclaredAttributeValue("type")!!
         val prefix = annotation.findDeclaredAttributeValue("prefix")
         val excluded = annotation.findDeclaredAttributeValue("excluded")
 
-        println("Synonym(type=${type?.text}, prefix=${prefix?.text}, excluded=${excluded?.text})")
+        val synonymText = type.text
+        val synonymType = if (synonymText.endsWith("SynonymType.Group")) {
+            SynonymType.Group
+        } else if (synonymText.endsWith("SynonymType.Action")) {
+            SynonymType.Action
+        } else if (synonymText.endsWith("SynonymType.Test")) {
+            SynonymType.Test
+        } else {
+            throw IllegalStateException()
+        }
+
+        SynonymData(
+            synonymType,
+            prefix?.let { it.text.removeSurrounding("\"") } ?: "",
+            excluded?.let { it.text.toBoolean() } ?: false
+        )
+    }
+}
+
+private fun extractDescription(callExpression: KtCallExpression, index: Int = 0): String? {
+    val argument = callExpression.valueArguments.getOrNull(0)
+    val expression = argument?.getArgumentExpression()
+
+    return when (expression) {
+        is KtStringTemplateExpression -> {
+            if (!expression.hasInterpolation()) {
+                expression.entries.first().text
+            } else {
+                null
+            }
+        }
+        else -> null
     }
 }

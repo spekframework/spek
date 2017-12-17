@@ -15,7 +15,7 @@ class FixtureSpec : Spek({
             counter++
         }
 
-        it("should be 2") {
+        it("should be 2 $counter") {
             assertThat(counter, equalTo(2))
         }
 
