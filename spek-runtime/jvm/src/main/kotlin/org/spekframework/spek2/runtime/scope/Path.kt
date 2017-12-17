@@ -38,7 +38,7 @@ actual data class Path(actual val name: String, actual val parent: Path?) {
                 // this will be an empty string
                 path.name
             } else {
-                "${serialize(path.parent)}$PATH_SEPARATOR${path.name}".trimStart(*PATH_SEPARATOR.toCharArray())
+                "${serialize(path.parent)}$PATH_SEPARATOR${path.encoded}".trimStart(*PATH_SEPARATOR.toCharArray())
             }
         }
 

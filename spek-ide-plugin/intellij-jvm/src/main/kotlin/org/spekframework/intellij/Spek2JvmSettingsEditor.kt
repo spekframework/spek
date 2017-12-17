@@ -38,7 +38,7 @@ class Spek2JvmSettingsEditor(project: Project): SettingsEditor<Spek2JvmRunConfig
         }
 
     private var selectedPath by Delegates.observable(PathBuilder.ROOT) { _, _, value ->
-        path.component.text = value.toString()
+        path.component.setTextAndAddToHistory(value.serialize())
     }
 
     init {

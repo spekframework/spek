@@ -6,12 +6,19 @@ import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
+import org.jetbrains.kotlin.psi.KtBlockExpression
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.jetbrains.kotlin.psi.KtFunctionLiteral
+import org.jetbrains.kotlin.psi.KtLambdaArgument
+import org.jetbrains.kotlin.psi.KtLambdaExpression
 import org.jetbrains.kotlin.psi.KtNamedFunction
 import org.jetbrains.kotlin.psi.KtPrimaryConstructor
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry
+import org.jetbrains.kotlin.psi.KtSuperTypeList
+import org.jetbrains.kotlin.psi.KtValueArgument
+import org.jetbrains.kotlin.psi.KtValueArgumentList
 import org.jetbrains.uast.java.annotations
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -28,18 +35,7 @@ fun extractPath(element: PsiElement): Path? {
     var path: Path? = null
     when (element) {
         is KtClassOrObject -> {
-            if (isSpekSubclass(element) && isSpekRunnable(element)) {
-                val fqName = element.fqName
-                if (fqName != null) {
-                    val pkg = fqName.parent().asString()
-                    val cls = fqName.shortName().asString()
-                    path = PathBuilder()
-                        .append(pkg)
-                        .append(cls)
-                        .build()
-                }
-
-            }
+            path = pathBuilderFromKtClassOrObject(element)?.build()
         }
         is PsiDirectory -> {
             val pkg = element.getPackage()
@@ -88,7 +84,7 @@ fun isSpekSubclass(element: KtClassOrObject): Boolean {
 // TODO: check for @Ignore
 fun isSpekRunnable(element: KtClassOrObject) = element.isTopLevel() && !element.isAbstract()
 
-private fun extractPath(callExpression: KtCallExpression): Path? {
+private fun extractPath(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
     val calleeExpression = callExpression.calleeExpression
     if (calleeExpression != null) {
         val mainReference = calleeExpression.mainReference
@@ -96,17 +92,37 @@ private fun extractPath(callExpression: KtCallExpression): Path? {
             val resolved = mainReference.resolve()
             if (resolved != null && resolved is KtNamedFunction) {
                 val synonym = extractSynonymAnnotation(resolved)
-                if (synonym != null) {
+                if (synonym != null && !synonym.excluded) {
                     val description = extractDescription(callExpression)
                     if (description != null) {
-                        println("${synonym.prefix} $description")
+                        val parentCallExpression = getParentCallExpression(callExpression)
+
+                        if (parentCallExpression != null) {
+                            val newBuffer = mutableListOf<String>()
+                            newBuffer.add("${synonym.prefix} $description".trim())
+                            newBuffer.addAll(buffer)
+                            return extractPath(parentCallExpression, newBuffer)
+                        } else {
+                            // probably root scope
+                            val ktClassOrObject = getKtClassOrObject(callExpression)
+                            if (ktClassOrObject != null) {
+                                var builder = pathBuilderFromKtClassOrObject(ktClassOrObject)
+                                // TODO: PathBuilder is immutable for some reason :noidea: why I did this :)
+                                if (builder != null) {
+                                    buffer.forEach {
+                                        builder = builder!!.append(it)
+                                    }
+
+                                    return builder!!.build()
+                                }
+                            }
+                        }
                     }
                 }
 
             }
         }
     }
-    /// PsiTreeUtil.getParentOfType(element, type, true)
     return null
 }
 
@@ -164,4 +180,68 @@ private fun extractDescription(callExpression: KtCallExpression, index: Int = 0)
         }
         else -> null
     }
+}
+
+private fun getParentCallExpression(callExpression: KtCallExpression): KtCallExpression? {
+    val block = callExpression.parent
+    if (block is KtBlockExpression) {
+        val functionLiteral = block.parent
+        if (functionLiteral is KtFunctionLiteral) {
+            val lambdaExpression = functionLiteral.parent
+            if (lambdaExpression is KtLambdaExpression) {
+                val lambdaArgument = lambdaExpression.parent
+                if (lambdaArgument is KtLambdaArgument) {
+                    val parent = lambdaArgument.parent
+                    if (parent is KtCallExpression) {
+                        return parent
+                    }
+                }
+            }
+        }
+    }
+
+    return null
+}
+
+private fun getKtClassOrObject(callExpression: KtCallExpression): KtClassOrObject? {
+    val block = callExpression.parent
+    if (block is KtBlockExpression) {
+        val functionLiteral = block.parent
+        if (functionLiteral is KtFunctionLiteral) {
+            val lambdaExpression = functionLiteral.parent
+            if (lambdaExpression is KtLambdaExpression) {
+                val valueArgument = lambdaExpression.parent
+                if (valueArgument is KtValueArgument) {
+                    val valueArgumentList = valueArgument.parent
+                    if (valueArgumentList is KtValueArgumentList) {
+                        val superTypeCallEntry = valueArgumentList.parent
+                        if (superTypeCallEntry is KtSuperTypeCallEntry) {
+                            val superTypeList = superTypeCallEntry.parent
+                            if (superTypeList is KtSuperTypeList) {
+                                val cls = superTypeList.parent
+                                if (cls is KtClassOrObject) {
+                                    return cls
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return null
+}
+
+private fun pathBuilderFromKtClassOrObject(element: KtClassOrObject): PathBuilder? {
+    if (isSpekSubclass(element) && isSpekRunnable(element)) {
+        val fqName = element.fqName
+        if (fqName != null) {
+            val pkg = fqName.parent().asString()
+            val cls = fqName.shortName().asString()
+            return PathBuilder()
+                .append(pkg)
+                .append(cls)
+        }
+    }
+    return null
 }

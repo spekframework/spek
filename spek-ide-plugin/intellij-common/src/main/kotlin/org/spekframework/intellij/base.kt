@@ -78,14 +78,11 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
 
     override fun suggestedName(): String {
         val parent = path.parent
-        val grandParent = parent?.parent
 
         return if (path.name.isEmpty()) {
             "Specs in <default>"
         } else if (parent != null && parent.isRoot) {
             "Specs in ${path.name}"
-        } else if (grandParent != null && grandParent.isRoot) {
-            "${parent.name}.${path.name}"
         } else {
             "${path.name} [${parent?.toString()}]"
         }
