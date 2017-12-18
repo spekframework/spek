@@ -11,7 +11,8 @@ class SpekRunConfigurationProducer: RunConfigurationProducer<SpekBaseRunConfigur
 ) {
     override fun isConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
                                             context: ConfigurationContext): Boolean {
-        return false
+        val path = context.psiLocation?.let(::extractPath)
+        return configuration.path == path
     }
 
     override fun setupConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,

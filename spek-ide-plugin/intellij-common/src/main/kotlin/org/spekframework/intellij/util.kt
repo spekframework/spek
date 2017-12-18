@@ -96,10 +96,10 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                     val description = extractDescription(callExpression)
                     if (description != null) {
                         val parentCallExpression = getParentCallExpression(callExpression)
-
+                        val currentPath = "${synonym.prefix} $description".trim()
                         if (parentCallExpression != null) {
                             val newBuffer = mutableListOf<String>()
-                            newBuffer.add("${synonym.prefix} $description".trim())
+                            newBuffer.add(currentPath)
                             newBuffer.addAll(buffer)
                             return extractPath(parentCallExpression, newBuffer)
                         } else {
@@ -109,6 +109,7 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                                 var builder = pathBuilderFromKtClassOrObject(ktClassOrObject)
                                 // TODO: PathBuilder is immutable for some reason :noidea: why I did this :)
                                 if (builder != null) {
+                                    builder = builder.append(currentPath)
                                     buffer.forEach {
                                         builder = builder!!.append(it)
                                     }
