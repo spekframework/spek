@@ -106,15 +106,15 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                             // probably root scope
                             val ktClassOrObject = getKtClassOrObject(callExpression)
                             if (ktClassOrObject != null) {
-                                var builder = pathBuilderFromKtClassOrObject(ktClassOrObject)
+                                val builder = pathBuilderFromKtClassOrObject(ktClassOrObject)
                                 // TODO: PathBuilder is immutable for some reason :noidea: why I did this :)
                                 if (builder != null) {
-                                    builder = builder.append(currentPath)
+                                    builder.append(currentPath)
                                     buffer.forEach {
-                                        builder = builder!!.append(it)
+                                        builder.append(it)
                                     }
 
-                                    return builder!!.build()
+                                    return builder.build()
                                 }
                             }
                         }
