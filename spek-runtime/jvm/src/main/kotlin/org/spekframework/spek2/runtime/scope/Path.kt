@@ -9,6 +9,10 @@ actual data class Path(actual val name: String, actual val parent: Path?) {
         serialize(this)
     }
 
+    private val humanReadable by lazy {
+        serialize(this, false)
+    }
+
     private val encoded by lazy {
         encode(name)
     }
@@ -30,15 +34,24 @@ actual data class Path(actual val name: String, actual val parent: Path?) {
 
     actual fun serialize(): String = serialized
 
+    override fun toString(): String {
+        return humanReadable
+    }
+
     companion object {
         const val PATH_SEPARATOR = "/"
 
-        private fun serialize(path: Path): String {
+        private fun serialize(path: Path, encoded: Boolean = true): String {
             return if (path.parent == null) {
                 // this will be an empty string
                 path.name
             } else {
-                "${serialize(path.parent)}$PATH_SEPARATOR${path.encoded}".trimStart(*PATH_SEPARATOR.toCharArray())
+                val name = if (encoded) {
+                    path.encoded
+                } else {
+                    path.name
+                }
+                "${serialize(path.parent, encoded)}$PATH_SEPARATOR$name".trimStart(*PATH_SEPARATOR.toCharArray())
             }
         }
 

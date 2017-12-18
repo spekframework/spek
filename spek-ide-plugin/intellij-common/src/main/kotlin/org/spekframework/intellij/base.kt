@@ -84,7 +84,7 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
         } else if (parent != null && parent.isRoot) {
             "Specs in ${path.name}"
         } else {
-            "${path.name} [${parent?.toString()}]"
+            path.name
         }
     }
 
