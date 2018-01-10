@@ -42,16 +42,3 @@ allprojects {
 
     apply plugin: 'idea'
 }
-
-if (hasProperty('bintray_user')) {
-    ext.bintrayUser = getProperty('bintray_user')
-} else {
-    ext.bintrayUser = ''
-}
-
-if (hasProperty('bintray_api_key')) {
-    ext.bintrayApiKey = getProperty('bintray_api_key')
-} else {
-    ext.bintrayApiKey = ''
-}
-

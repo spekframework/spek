@@ -149,9 +149,9 @@ artifactory {
             username = "${bintrayUser}"
             password = "${bintrayApiKey}"
         }
-        dryRun = true
+
         defaults {
-            publications artifacts
+            publications (*artifacts)
             properties = [ 'bintray.repo': 'spekframework/maven', 'bintray.package': 'org.spekframework.spek2:spek2', 'bintray.version': project.version.toString() ]
         }
     }
