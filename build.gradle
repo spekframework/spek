@@ -1,8 +1,5 @@
 buildscript {
     repositories {
-        maven {
-            url 'https://dl.bintray.com/kotlin/kotlin-dev'
-        }
         jcenter()
     }
 
@@ -34,9 +31,6 @@ allprojects {
     // This causes a circular dependency for some reason.
     // group = 'org.spekframework.spek2'
     repositories {
-        maven {
-            url 'https://dl.bintray.com/kotlin/kotlin-dev'
-        }
         jcenter()
     }
 
