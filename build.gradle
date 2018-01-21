@@ -12,39 +12,11 @@ buildscript {
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
         classpath 'org.ajoberstar:gradle-git:1.5.1'
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.6.0"
     }
 }
 
-plugins {
-    id "com.zoltu.git-versioning" version "3.0.2"
-}
-
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-ZoltuGitVersioning {
-    customDescribeProcessor { describeResults ->
-        def matcher = (describeResults =~ /v(?<major>[0-9]+?)\.(?<minor>[0-9]+?)\.(?<patch>[0-9]+?)(?:\-(?<tags>[0-9A-Za-z\.\-]+))?\-(?<commitCount>[0-9]+?)\-g(?<sha>[a-zA-Z0-9]+)/)
-        matcher.matches()
-        [
-            major: matcher.group('major'),
-            minor: matcher.group('minor'),
-            commitCount: matcher.group('commitCount'),
-            sha: matcher.group('sha'),
-            tags: matcher.group('tags'),
-            patch: matcher.group('patch')
-        ]
-    }
-
-    customVersionToString { versionInfo ->
-        if (versionInfo.tags != null) {
-            "${versionInfo.major}.${versionInfo.minor}.${versionInfo.patch}-${versionInfo.tags}"
-        } else {
-            "${versionInfo.major}.${versionInfo.minor}.${versionInfo.patch}"
-        }
-    }
-}
+version = '2.0.0-SNAPSHOT'
 
 afterEvaluate {
     println "##teamcity[buildNumber \'${version}\']"
@@ -64,16 +36,3 @@ allprojects {
 
     apply plugin: 'idea'
 }
-
-if (hasProperty('bintray_user')) {
-    ext.bintrayUser = getProperty('bintray_user')
-} else {
-    ext.bintrayUser = ''
-}
-
-if (hasProperty('bintray_api_key')) {
-    ext.bintrayApiKey = getProperty('bintray_api_key')
-} else {
-    ext.bintrayApiKey = ''
-}
-
