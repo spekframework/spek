@@ -107,9 +107,22 @@ def artifacts = [
     'extensionSubjectJvm'
 ]
 
+// Can be null.
+def getProperyOrEnvVar(String name) {
+    return project.hasProperty(name) ? project.getProperty(name) : System.getenv(name)
+}
+
+def getBintrayUser() {
+    return getProperyOrEnvVar('BINTRAY_USER')
+}
+
+def getBintrayApiKey() {
+    return getProperyOrEnvVar('BINTRAY_API_KEY')
+}
+
 bintray {
-    user = "${bintrayUser}"
-    key = "${bintrayApiKey}"
+    user = getBintrayUser()
+    key = getBintrayApiKey()
     publish = false
 
     pkg {
@@ -146,8 +159,8 @@ artifactory {
             // when using oss.jfrog.org the credentials are from Bintray.
             repoKey = 'oss-snapshot-local'
 
-            username = "${bintrayUser}"
-            password = "${bintrayApiKey}"
+            username = getBintrayUser()
+            password = getBintrayApiKey()
         }
 
         defaults {
