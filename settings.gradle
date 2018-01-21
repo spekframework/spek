@@ -1,3 +1,12 @@
+// Temporary worakround for https://github.com/Kotlin/dokka/issues/146
+// Must put jcenter() first to resolve the correct artifacts for Dokka
+pluginManagement {
+    repositories {
+        jcenter()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'spek'
 
 include 'spek-dsl:common'
