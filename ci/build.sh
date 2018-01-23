@@ -4,12 +4,14 @@ set -e
 # You can run it from any directory.
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
+source "$PROJECT_DIR/ci/git_branch.sh"
+
 "$PROJECT_DIR"/gradlew --no-daemon --info --stacktrace clean build
 
 BINTRAY_USER="$BINTRAY_USER"
 BINTRAY_API_KEY="$BINTRAY_API_KEY"
 
-GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+GIT_BRANCH=`getCurrentGitBranch`
 
 function checkIfEnvVarIsNotEmpty() {
     local env_var_name="$1"
