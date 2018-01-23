@@ -1,7 +1,16 @@
 #!/bin/bash
 set -e
 
+function returnValueOrNull() {
+    if [ ! -z "$1" ]; then
+        echo "$1"
+    else
+        echo "$1"
+    fi
+}
+
 # Returns current git branch or "null" if branch cannot be resolved.
+# See https://docs.travis-ci.com/user/environment-variables/#Default-Environment-Variables
 function getCurrentGitBranch() {
     # Ask git first.
     local git_branch=`git rev-parse --abbrev-ref HEAD`
@@ -11,15 +20,9 @@ function getCurrentGitBranch() {
         echo "$git_branch"
     else
         if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-            echo "$TRAVIS_PULL_REQUEST_BRANCH"
+            echo `returnValueOrNull "$TRAVIS_BRANCH"`
         else
-            git_branch="$TRAVIS_BRANCH"
-
-            if [ ! -z "$git_branch" ]; then
-                echo "$git_branch"
-            else
-                echo "null"
-            fi
+            echo `returnValueOrNull "$TRAVIS_PULL_REQUEST_BRANCH"`
         fi
     fi
 }
