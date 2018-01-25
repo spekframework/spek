@@ -27,7 +27,6 @@ import org.junit.platform.engine.support.descriptor.ClassSource
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
 import java.lang.reflect.Modifier
-import java.nio.file.Paths
 import java.util.LinkedList
 import java.util.function.Consumer
 import kotlin.reflect.KClass
@@ -206,10 +205,13 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     class ActionCollector(val root: Scope.Action, val lifecycleManager: LifecycleManager,
                           val context: SpekExecutionContext): ActionBody {
+        private val indexes = mutableMapOf<String, Int>()
 
         override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
+            val ix = indexes.getOrPut(description, { 0 } ) + 1; indexes[description] = ix
+            val uniqueDescription = if (ix > 1) "$description #$ix" else description
             val test = Scope.Test(
-                root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, getSource(), lifecycleManager, body
+                root.uniqueId.append(TEST_SEGMENT_TYPE, uniqueDescription), pending, getSource(), lifecycleManager, body
             )
             root.addChild(test)
             context.engineExecutionListener.dynamicTestRegistered(test)
