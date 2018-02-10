@@ -22,16 +22,19 @@ open class Collector(val root: GroupScopeImpl,
                      val fixtures: FixturesAdapter): Spec {
     val ids = mutableMapOf<String, Int>()
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
+    override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> = memoized(mode, factory) { }
+
+    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): LifecycleAware<T> {
         val adapter = when (mode) {
-            CachingMode.GROUP -> LifecycleAwareAdapter.GroupCachingModeAdapter(factory)
-            CachingMode.TEST -> LifecycleAwareAdapter.TestCachingModeAdapter(factory)
-            CachingMode.SCOPE -> LifecycleAwareAdapter.ScopeCachingModeAdapter(root, factory)
+            CachingMode.GROUP -> LifecycleAwareAdapter.GroupCachingModeAdapter(factory, destructor)
+            CachingMode.TEST -> LifecycleAwareAdapter.TestCachingModeAdapter(factory, destructor)
+            CachingMode.SCOPE -> LifecycleAwareAdapter.ScopeCachingModeAdapter(root, factory, destructor)
         }
         return adapter.apply {
             registerListener(this)
         }
     }
+
 
     override fun registerListener(listener: LifecycleListener) {
         lifecycleManager.addListener(listener)
