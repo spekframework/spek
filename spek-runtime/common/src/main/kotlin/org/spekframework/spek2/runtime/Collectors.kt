@@ -9,6 +9,7 @@ import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleAware
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.runtime.execution.ExecutionContext
+import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.lifecycle.LifecycleAwareAdapter
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
@@ -130,7 +131,15 @@ class ActionCollector(val root: ActionScopeImpl, val lifecycleManager: Lifecycle
             lifecycleManager
         )
         root.addChild(test)
-        context.runtimeExecutionListener.dynamicTestRegistered(test, context)
+        context.executionListener.apply {
+            testExecutionStart(test)
+            try {
+                test.execute(context)
+                testExecutionFinish(test, ExecutionResult.Success)
+            } catch (e: Throwable) {
+                testExecutionFinish(test, ExecutionResult.Failure(e))
+            }
+        }
     }
 
 }

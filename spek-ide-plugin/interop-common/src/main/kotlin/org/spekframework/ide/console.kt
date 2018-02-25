@@ -5,7 +5,6 @@ import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.execution.RuntimeExecutionListener
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
@@ -15,7 +14,7 @@ interface ConsoleLauncher {
     fun run(args: Array<String>)
 }
 
-class Spek2CompoundRuntimeExecutionListener(private val listeners: List<ExecutionListener>): RuntimeExecutionListener() {
+class Spek2CompoundRuntimeExecutionListener(private val listeners: List<ExecutionListener>): ExecutionListener {
 
     override fun executionStart() {
         listeners.forEach { it.executionStart() }
