@@ -20,6 +20,13 @@ abstract class SpekBaseConfigurationType(id: String, displayName: String): Confi
     KotlinIcons.SMALL_LOGO_13
 )
 
+enum class ConfigurationKey(val key: String) {
+    PATH("path"),
+    PASS_PARENT_ENVS("passParentEnvs"),
+    WORKING_DIRECTORY("workingDirectory"),
+    PROGRAM_PARAMETERS("programParameters");
+}
+
 
 abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
                                                                    configurationModule: T,
@@ -59,19 +66,19 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
 
     override fun writeExternal(element: Element) {
         super.writeExternal(element)
-        JDOMExternalizerUtil.writeField(element, PASS_PARENT_ENVS, passParentEnvs.toString())
-        JDOMExternalizerUtil.writeField(element, WORKING_DIRECTORY, workingDirectory)
-        JDOMExternalizerUtil.writeField(element, PATH, path.serialize())
-        JDOMExternalizerUtil.writeField(element, PROGRAM_PARAMETERS, programParameters)
+        JDOMExternalizerUtil.writeField(element, ConfigurationKey.PASS_PARENT_ENVS.key, passParentEnvs.toString())
+        JDOMExternalizerUtil.writeField(element, ConfigurationKey.WORKING_DIRECTORY.key, workingDirectory)
+        JDOMExternalizerUtil.writeField(element, ConfigurationKey.PATH.key, path.serialize())
+        JDOMExternalizerUtil.writeField(element, ConfigurationKey.PROGRAM_PARAMETERS.key, programParameters)
         EnvironmentVariablesComponent.writeExternal(element, envs)
     }
 
     override fun readExternal(element: Element) {
         super.readExternal(element)
-        passParentEnvs = JDOMExternalizerUtil.readField(element, PASS_PARENT_ENVS, "false").toBoolean()
-        workingDirectory = JDOMExternalizerUtil.readField(element, WORKING_DIRECTORY)
-        programParameters = JDOMExternalizerUtil.readField(element, PROGRAM_PARAMETERS)
-        path = PathBuilder.parse(JDOMExternalizerUtil.readField(element, PATH, ""))
+        passParentEnvs = JDOMExternalizerUtil.readField(element, ConfigurationKey.PASS_PARENT_ENVS.key, "false").toBoolean()
+        workingDirectory = JDOMExternalizerUtil.readField(element, ConfigurationKey.WORKING_DIRECTORY.key)
+        programParameters = JDOMExternalizerUtil.readField(element, ConfigurationKey.PROGRAM_PARAMETERS.key)
+        path = PathBuilder.parse(JDOMExternalizerUtil.readField(element, ConfigurationKey.PATH.key, ""))
             .build()
         EnvironmentVariablesComponent.readExternal(element, envs)
     }
@@ -86,12 +93,5 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
         } else {
             path.name
         }
-    }
-
-    companion object {
-        const val PATH = "path"
-        const val PASS_PARENT_ENVS = "passParentEnvs"
-        const val WORKING_DIRECTORY = "workingDirectory"
-        const val PROGRAM_PARAMETERS = "programParameters"
     }
 }

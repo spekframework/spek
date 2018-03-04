@@ -1,5 +1,6 @@
 package org.spekframework.intellij
 
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.asJava.toLightMethods
@@ -156,14 +157,17 @@ private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymData? {
         } else if (synonymText.endsWith("SynonymType.Test")) {
             SynonymType.Test
         } else {
-            throw IllegalStateException()
+            LOG.warn("Unsupported synonym: $synonymText.")
+            null
         }
 
-        SynonymData(
-            synonymType,
-            prefix?.let { it.text.removeSurrounding("\"") } ?: "",
-            excluded?.let { it.text.toBoolean() } ?: false
-        )
+        synonymType?.let {
+            SynonymData(
+                it,
+                prefix?.let { it.text.removeSurrounding("\"") } ?: "",
+                excluded?.let { it.text.toBoolean() } ?: false
+            )
+        }
     }
 }
 
