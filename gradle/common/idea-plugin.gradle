@@ -1,5 +1,5 @@
 apply plugin: 'org.jetbrains.intellij'
-apply plugin: "kotlin-platform-jvm"
+apply plugin: 'kotlin-platform-jvm'
 
 intellij {
     pluginName = 'Spek'

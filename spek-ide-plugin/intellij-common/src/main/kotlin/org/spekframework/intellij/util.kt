@@ -32,25 +32,25 @@ private val SYNONYM_CLASSES = listOf(
 )
 
 fun extractPath(element: PsiElement): Path? {
-    var path: Path? = null
-    when (element) {
+    return when (element) {
         is KtClassOrObject -> {
-            path = pathBuilderFromKtClassOrObject(element)?.build()
+            pathBuilderFromKtClassOrObject(element)?.build()
         }
         is PsiDirectory -> {
             val pkg = element.getPackage()
             if (pkg != null) {
-                path = PathBuilder()
+                PathBuilder()
                     .append(pkg.qualifiedName)
                     .build()
+            } else {
+                null
             }
         }
         is KtCallExpression -> {
-             path = extractPath(element)
+             extractPath(element)
         }
+        else -> null
     }
-
-    return path
 }
 
 /**
