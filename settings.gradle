@@ -23,6 +23,14 @@ include 'spek-extension:subject:jvm'
 include 'spek-extension:data-driven:common'
 include 'spek-extension:data-driven:jvm'
 
+include 'spek-ide-plugin:interop-common'
+include 'spek-ide-plugin:interop-jvm'
+
+include 'spek-ide-plugin:intellij-common'
+include 'spek-ide-plugin:intellij-jvm'
+include 'spek-ide-plugin:intellij-idea'
+include 'spek-ide-plugin:intellij-studio'
+
 include 'distribution'
 include 'documentation'
 include 'samples'

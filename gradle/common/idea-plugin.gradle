@@ -1,0 +1,12 @@
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'kotlin-platform-jvm'
+
+intellij {
+    pluginName = 'Spek'
+    updateSinceUntilBuild = false
+    downloadSources = true
+}
+
+dependencies {
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
