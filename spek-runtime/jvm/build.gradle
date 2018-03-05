@@ -10,5 +10,4 @@ dependencies {
     compile project(':spek-dsl:jvm')
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.reflections:reflections'
-    implementation 'com.xenomachina:kotlin-argparser'
 }

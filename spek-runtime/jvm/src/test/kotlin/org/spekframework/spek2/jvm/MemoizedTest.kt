@@ -2,6 +2,8 @@ package org.spekframework.spek2.jvm
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
+import com.natpryce.hamkrest.isEmpty
+import com.natpryce.hamkrest.present
 import com.natpryce.hamkrest.sameInstance
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
@@ -36,6 +38,38 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
         assertThat(recorder.testFailureCount, equalTo(0))
     }
+
+    @Test
+    fun memoizedTestCachingWithDestructor() {
+        class MemoizedSpec : Spek({
+            val foo = memoized(
+                factory = { mutableListOf(1) },
+                destructor = { it.clear() }
+            )
+
+            var memoized1: List<Int>? = null
+            var memoized2: List<Int>? = null
+
+            test("first pass") {
+                memoized1 = foo()
+            }
+
+            test("second pass") {
+                memoized2 = foo()
+            }
+
+            test("check") {
+                assertThat(memoized1, !sameInstance(memoized2))
+                assertThat(memoized1, present(isEmpty))
+                assertThat(memoized2, present(isEmpty))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
 
     @Test
     fun memoizedTestBeforeAndAfterEachTest() {
@@ -99,6 +133,37 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     }
 
     @Test
+    fun memoizedGroupCachingWithDestructor() {
+        class MemoizedSpec : Spek({
+            val foo = memoized(
+                mode = CachingMode.GROUP,
+                factory = { mutableListOf(1) },
+                destructor = { it.clear() }
+            )
+
+            var memoized: List<Int>? = null
+
+            group("group") {
+                test("first pass") {
+                    memoized = foo()
+                }
+
+                test("check") {
+                    assertThat(memoized, present(!isEmpty))
+                }
+            }
+
+            test("check") {
+                assertThat(memoized, present(isEmpty))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
     fun memoizedNestedGroupCaching() {
         class MemoizedSpec : Spek({
             val foo = memoized(CachingMode.GROUP) {
@@ -123,6 +188,45 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             test("check") {
                 assertThat(memoized1, !sameInstance(memoized2))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
+    fun memoizedNestedGroupCachingWithDestructor() {
+        class MemoizedSpec : Spek({
+            val foo = memoized(
+                mode = CachingMode.GROUP,
+                factory = { mutableListOf(1) },
+                destructor = { it.clear() }
+            )
+
+            var memoized1: List<Int>? = null
+            var memoized2: List<Int>? = null
+
+            group("group") {
+                test("first pass") {
+                    memoized1 = foo()
+                }
+
+                group("another group") {
+                    test("second pass") {
+                        memoized2 = foo()
+                    }
+                }
+
+                test("check") {
+                    assertThat(memoized1, present(!isEmpty))
+                    assertThat(memoized2, present(isEmpty))
+                }
+            }
+
+            test("check") {
+                assertThat(memoized1, present(isEmpty))
             }
         })
 
@@ -198,6 +302,38 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
         assertThat(recorder.testFailureCount, equalTo(0))
     }
 
+    @Test
+    fun memoizedScopeCachingWithDestructor() {
+        class MemoizedSpec : Spek({
+            var memoized: List<Int>? = null
+
+            group("group") {
+                val foo = memoized(
+                    mode = CachingMode.SCOPE,
+                    factory = { mutableListOf(1) },
+                    destructor = { it.clear() }
+                )
+
+                group("another group") {
+                    test("second pass") {
+                        memoized = foo()
+                    }
+                }
+
+                test("check") {
+                    assertThat(memoized, present(!isEmpty))
+                }
+            }
+
+            test("check") {
+                assertThat(memoized, present(isEmpty))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
 
     @Test
     fun memoizedActionCaching() {
@@ -224,6 +360,36 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
             }
 
 
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
+
+    @Test
+    fun memoizedActionCachingWithDestructor() {
+        class MemoizedSpec : Spek({
+            val foo = memoized(
+                factory = { mutableListOf(1) },
+                destructor = { it.clear() }
+            )
+
+            var memoized: List<Int>? = null
+
+            action("some action") {
+                test("first pass") {
+                    memoized = foo()
+                }
+
+                test("check") {
+                    assertThat(memoized, present(!isEmpty))
+                }
+            }
+
+            test("check") {
+                assertThat(memoized, present(isEmpty))
+            }
         })
 
         val recorder = executeTestsForClass(MemoizedSpec::class)
