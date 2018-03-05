@@ -7,7 +7,7 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 import kotlin.reflect.KProperty
 
-sealed class LifecycleAwareAdapter<T>(val factory: () -> T)
+sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) -> Unit)
     : LifecycleAware<T>, LifecycleListener {
     var cached: T? = null
 
@@ -20,7 +20,8 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T)
         return cached!!
     }
 
-    class GroupCachingModeAdapter<T>(factory: () -> T): LifecycleAwareAdapter<T>(factory) {
+    class GroupCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
+        : LifecycleAwareAdapter<T>(factory, destructor) {
         val stack = mutableListOf<T?>()
 
         override fun beforeExecuteGroup(group: GroupScope) {
@@ -29,28 +30,34 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T)
         }
 
         override fun afterExecuteGroup(group: GroupScope) {
+            cached?.let { destructor(it) }
             if (stack.isNotEmpty()) {
                 cached = stack.removeAt(0)
             }
         }
     }
 
-    class ScopeCachingModeAdapter<T>(val group: GroupScope, factory: () -> T): LifecycleAwareAdapter<T>(factory) {
+    class ScopeCachingModeAdapter<T>(val group: GroupScope, factory: () -> T, destructor: (T) -> Unit)
+        : LifecycleAwareAdapter<T>(factory, destructor) {
         override fun afterExecuteGroup(group: GroupScope) {
             if (this.group == group) {
+                cached?.let { destructor(it) }
                 cached = null
             }
         }
     }
 
-    class TestCachingModeAdapter<T>(factory: () -> T): LifecycleAwareAdapter<T>(factory) {
+    class TestCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
+        : LifecycleAwareAdapter<T>(factory, destructor) {
         override fun afterExecuteTest(test: TestScope) {
             if (test.parent !is ActionScope) {
+                cached?.let { destructor(it) }
                 cached = null
             }
         }
 
         override fun afterExecuteAction(action: ActionScope) {
+            cached?.let { destructor(it) }
             cached = null
         }
     }
