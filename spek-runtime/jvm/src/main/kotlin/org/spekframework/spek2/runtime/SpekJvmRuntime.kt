@@ -12,6 +12,7 @@ import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRelated
+import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
@@ -25,7 +26,7 @@ actual class SpekRuntime: AbstractRuntime() {
     }
 
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
-        val reflections = createReflections(discoveryRequest.sourceDirs)
+        val reflections = createReflections(discoveryRequest.specDirs)
         val scopes = reflections.getSubTypesOf(Spek::class.java)
             .map(Class<out Spek>::kotlin)
             .filter { it.findAnnotation<Ignore>() == null }
@@ -57,8 +58,8 @@ actual class SpekRuntime: AbstractRuntime() {
         val urls = if (testDirs.isEmpty()) {
             ClasspathHelper.forClassLoader()
         } else {
-            testDirs.map { java.nio.file.Paths.get(it) }
-                .map { it.toUri().toURL() }
+            testDirs.map(::File)
+                .map { it.toURI().toURL() }
         }
 
         return Reflections(
