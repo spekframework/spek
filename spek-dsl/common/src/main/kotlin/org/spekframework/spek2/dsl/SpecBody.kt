@@ -18,6 +18,7 @@ interface SpecBody: TestContainer {
     fun action(description: String, pending: Pending = Pending.No, body: ActionBody.() -> Unit)
 
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T): LifecycleAware<T>
+    fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T, destructor: (T) -> Unit): LifecycleAware<T>
 
     fun beforeEachTest(callback: () -> Unit)
     fun afterEachTest(callback: () -> Unit)
