@@ -33,12 +33,17 @@ actual class SpekRuntime: AbstractRuntime() {
             .filter { !it.isAbstract }
             .map { klass ->
                 klass to PathBuilder.from(klass).build()
-            }.map { (klass, path) ->
+            }
+            .map { (klass, path) ->
                 val matched = discoveryRequest.paths.firstOrNull { it.isRelated(path) }
-                matched to resolveSpec(instanceFactoryFor(klass).create(klass), path)
-            }.filter { (path, _) -> path != null}
+                val root = matched?.let {
+                    resolveSpec(instanceFactoryFor(klass).create(klass), path)
+                }
+                matched to root
+            }
+            .filter { (path, root) -> path != null && root != null}
             .map { (path, root) ->
-                root.apply { filterBy(path!!) }
+                root!!.apply { filterBy(path!!) }
             }
             .filter { !it.isEmpty() }
 
