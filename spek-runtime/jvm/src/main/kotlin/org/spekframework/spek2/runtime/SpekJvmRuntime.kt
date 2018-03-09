@@ -33,15 +33,13 @@ actual class SpekRuntime: AbstractRuntime() {
             .filter { !it.isAbstract }
             .map { klass ->
                 klass to PathBuilder.from(klass).build()
+            }.map { (klass, path) ->
+                val matched = discoveryRequest.paths.firstOrNull { it.isRelated(path) }
+                matched to resolveSpec(instanceFactoryFor(klass).create(klass), path)
+            }.filter { (path, _) -> path != null}
+            .map { (path, root) ->
+                root.apply { filterBy(path!!) }
             }
-            .filter { (_, path) ->
-                discoveryRequest.path.isRelated(path)
-            }
-            .map { (klass, path) ->
-                resolveSpec(instanceFactoryFor(klass).create(klass), path)
-            }
-            // TODO: should we move final filtering to SpekRuntime?
-            .map { it.apply { filterBy(discoveryRequest.path) } }
             .filter { !it.isEmpty() }
 
         return DiscoveryResult(scopes)

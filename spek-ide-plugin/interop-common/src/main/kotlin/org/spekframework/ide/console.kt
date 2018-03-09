@@ -67,7 +67,7 @@ abstract class AbstractSpek2ConsoleLauncher: ConsoleLauncher {
     private val runtime = SpekRuntime()
 
     protected fun execute(path: Path, listeners: List<ExecutionListener>) {
-        val discoveryResult = runtime.discover(DiscoveryRequest(emptyList(), path))
+        val discoveryResult = runtime.discover(DiscoveryRequest(emptyList(), listOf(path)))
         runtime.execute(ExecutionRequest(discoveryResult.roots, Spek2CompoundRuntimeExecutionListener(listeners)))
     }
 }
