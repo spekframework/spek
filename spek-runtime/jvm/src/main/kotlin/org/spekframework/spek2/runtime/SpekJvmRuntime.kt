@@ -12,16 +12,10 @@ import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRelated
+import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
-
-// instantiate only once, it's very expensive
-val reflections = Reflections(
-    ConfigurationBuilder()
-        .setUrls(ClasspathHelper.forClassLoader())
-        .setScanners(SubTypesScanner())
-)
 
 actual class SpekRuntime: AbstractRuntime() {
     private val defaultInstanceFactory = object: InstanceFactory {
@@ -32,6 +26,7 @@ actual class SpekRuntime: AbstractRuntime() {
     }
 
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
+        val reflections = createReflections(discoveryRequest.sourceDirs)
         val scopes = reflections.getSubTypesOf(Spek::class.java)
             .map(Class<out Spek>::kotlin)
             .filter { it.findAnnotation<Ignore>() == null }
@@ -57,5 +52,20 @@ actual class SpekRuntime: AbstractRuntime() {
             .map { it.factory }
             .map { it.objectInstance ?: it.primaryConstructor!!.call() }
             .firstOrNull() ?: defaultInstanceFactory
+    }
+
+    private fun createReflections(testDirs: List<String>): Reflections {
+        val urls = if (testDirs.isEmpty()) {
+            ClasspathHelper.forClassLoader()
+        } else {
+            testDirs.map(::File)
+                .map { it.toURI().toURL() }
+        }
+
+        return Reflections(
+            ConfigurationBuilder()
+                .setUrls(urls)
+                .setScanners(SubTypesScanner())
+        )
     }
 }
