@@ -18,7 +18,7 @@ abstract class AbstractSpekRuntimeTest {
 
     protected fun executeTestsforPath(path: Path): ExecutionEventRecorder {
         return ExecutionEventRecorder().apply {
-            val discoveryRequest = DiscoveryRequest(path, emptyList())
+            val discoveryRequest = DiscoveryRequest(emptyList(), path)
             val discoveryResult = runtime.discover(discoveryRequest)
             val executionRequest = ExecutionRequest(discoveryResult.roots, this)
             runtime.execute(executionRequest)

@@ -26,7 +26,7 @@ actual class SpekRuntime: AbstractRuntime() {
     }
 
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
-        val reflections = createReflections(discoveryRequest.specDirs)
+        val reflections = createReflections(discoveryRequest.sourceDirs)
         val scopes = reflections.getSubTypesOf(Spek::class.java)
             .map(Class<out Spek>::kotlin)
             .filter { it.findAnnotation<Ignore>() == null }
