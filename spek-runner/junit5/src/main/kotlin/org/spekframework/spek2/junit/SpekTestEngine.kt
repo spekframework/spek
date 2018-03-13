@@ -23,7 +23,7 @@ class SpekTestEngine: TestEngine {
         val pathSelector = discoveryRequest.getSelectorsByType(PathSelector::class.java)
             .firstOrNull() ?: PathSelector(PathBuilder.ROOT)
 
-        val discoveryResult = runtime.discover(DiscoveryRequest(emptyList(), pathSelector.path))
+        val discoveryResult = runtime.discover(DiscoveryRequest(emptyList(), listOf(pathSelector.path)))
 
         discoveryResult.roots
             .map(this::toTestDescriptor)
