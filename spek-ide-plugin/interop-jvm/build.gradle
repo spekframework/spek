@@ -1,0 +1,10 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
+
+dependencies {
+    expectedBy project(':spek-ide-plugin:interop-common')
+}
+
+dependencies {
+    compileOnly project(':spek-runtime:jvm')
+}
