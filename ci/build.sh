@@ -16,7 +16,7 @@ GIT_BRANCH=`getCurrentGitBranch`
 function checkIfEnvVarIsNotEmpty() {
     local env_var_name="$1"
 
-    if [ -z "env_var_name" ]; then
+    if [ -z "$env_var_name" ]; then
         echo "Error: environment variable $env_var_name is empty."
         exit 1
     fi
@@ -26,8 +26,8 @@ GIT_BRANCH_FOR_SNAPSHOTS="az/snapshot-pub-creds"
 
 # TODO don't merge, change branch name to '2.x' before merge.
 if [ "$GIT_BRANCH" == "$GIT_BRANCH_FOR_SNAPSHOTS" ]; then
-    checkIfEnvVarIsNotEmpty "BINTRAY_USER"
-    checkIfEnvVarIsNotEmpty "BINTRAY_API_KEY"
+    checkIfEnvVarIsNotEmpty "$BINTRAY_USER"
+    checkIfEnvVarIsNotEmpty "$BINTRAY_API_KEY"
 
     echo "Publishing snapshot..."
     "$PROJECT_DIR"/gradlew artifactoryPublish --info --stacktrace
