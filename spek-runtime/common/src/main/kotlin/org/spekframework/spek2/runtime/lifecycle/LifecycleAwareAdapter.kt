@@ -21,7 +21,7 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
 
     override fun invoke(): T {
         val cached = this.cached
-        when(cached) {
+        return when(cached) {
             Cached.Empty -> {
                 val newCached = Cached.Value(factory())
                 this.cached = newCached
