@@ -28,7 +28,7 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
         is Cached.Value<T> -> cached.cast().value
     }
 
-    protected fun Cached<T>.cast() = cached as Cached.Value<T>
+    protected fun Cached<T>.cast() = this as Cached.Value<T>
 
     class GroupCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
         : LifecycleAwareAdapter<T>(factory, destructor) {
