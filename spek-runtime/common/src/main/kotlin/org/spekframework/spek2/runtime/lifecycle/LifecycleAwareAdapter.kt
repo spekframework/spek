@@ -9,20 +9,21 @@ import kotlin.reflect.KProperty
 
 sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) -> Unit)
     : LifecycleAware<T>, LifecycleListener {
-    var cached: T? = null
+    protected data class CachedValue<out T>(val value: T)
+    protected var cached: CachedValue<T>? = null
 
     override fun getValue(thisRef: Any?, property: KProperty<*>) = invoke()
 
     override fun invoke(): T {
         if (cached == null) {
-            cached = factory()
+            cached = CachedValue(factory())
         }
-        return cached!!
+        return cached!!.value
     }
 
     class GroupCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
         : LifecycleAwareAdapter<T>(factory, destructor) {
-        val stack = mutableListOf<T?>()
+        private val stack = mutableListOf<CachedValue<T>?>()
 
         override fun beforeExecuteGroup(group: GroupScope) {
             stack.add(0, cached)
@@ -30,7 +31,7 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
         }
 
         override fun afterExecuteGroup(group: GroupScope) {
-            cached?.let { destructor(it) }
+            cached?.let { destructor(it.value) }
             if (stack.isNotEmpty()) {
                 cached = stack.removeAt(0)
             }
@@ -41,7 +42,7 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
         : LifecycleAwareAdapter<T>(factory, destructor) {
         override fun afterExecuteGroup(group: GroupScope) {
             if (this.group == group) {
-                cached?.let { destructor(it) }
+                cached?.let { destructor(it.value) }
                 cached = null
             }
         }
@@ -51,13 +52,13 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
         : LifecycleAwareAdapter<T>(factory, destructor) {
         override fun afterExecuteTest(test: TestScope) {
             if (test.parent !is ActionScope) {
-                cached?.let { destructor(it) }
+                cached?.let { destructor(it.value) }
                 cached = null
             }
         }
 
         override fun afterExecuteAction(action: ActionScope) {
-            cached?.let { destructor(it) }
+            cached?.let { destructor(it.value) }
             cached = null
         }
     }
