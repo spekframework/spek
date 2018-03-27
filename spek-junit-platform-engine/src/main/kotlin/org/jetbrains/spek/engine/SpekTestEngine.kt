@@ -58,7 +58,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
 
     private fun resolveSpecs(discoveryRequest: EngineDiscoveryRequest, engineDescriptor: EngineDescriptor) {
         val isValidSpec = java.util.function.Predicate<Class<*>> {
-            Spek::class.java.isAssignableFrom(it) && !Modifier.isAbstract(it.modifiers)
+            Spek::class.java.isAssignableFrom(it) && !Modifier.isAbstract(it.modifiers) && it.constructors.any { it.parameters.isEmpty() }
         }
 
         val isSpecClass = java.util.function.Predicate<String>(String::isNotEmpty)

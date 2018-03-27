@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test
 /**
  * @author Ranie Jade Ramiso
  */
-class AbstractSpekTest: AbstractSpekTestEngineTest() {
+class InvalidSpekTest: AbstractSpekTestEngineTest() {
+
     @Test
-    fun testIgnoreAbstractClass() {
-        val recorder = executeForPackage("org.jetbrains.spek.engine.packageWithAbstractSpek")
+    fun testIgnoreInvalidSpek() {
+        val recorder = executeForPackage("org.jetbrains.spek.engine.packageWithInvalidSpek")
         assertThat(recorder.testStartedCount, equalTo(0))
     }
+
 }
