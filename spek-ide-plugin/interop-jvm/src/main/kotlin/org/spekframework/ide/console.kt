@@ -18,8 +18,8 @@ class Spek2ConsoleLauncher {
         val runtime =  SpekRuntime()
 
         val discoveryResult = runtime.discover(discoveryRequest)
-        val executionRequest = ExecutionRequest(discoveryRequest)
-        runtime.e
+        val executionRequest = ExecutionRequest(discoveryResult.roots, ServiceMessageAdapter())
+        runtime.execute(executionRequest)
     }
 }
 
