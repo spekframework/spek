@@ -1,6 +1,16 @@
 package org.spekframework.ide
 
-actual class Spek2ConsoleLauncher: AbstractSpek2ConsoleLauncher() {
-    override fun run(args: Array<String>) {
+import com.xenomachina.argparser.ArgParser
+
+class Spek2ConsoleLauncher {
+    fun run(args: Array<String>) {
     }
+}
+
+class LauncherArgs(prarser: ArgParser) {
+
+}
+
+fun main(args: Array<String>) {
+
 }
