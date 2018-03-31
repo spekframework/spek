@@ -2,16 +2,15 @@ package org.spekframework.spek2.junit
 
 import org.junit.platform.engine.EngineExecutionListener
 import org.junit.platform.engine.TestExecutionResult
-import org.spekframework.spek2.runtime.execution.ExecutionContext
+import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.execution.RuntimeExecutionListener
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener,
-                                      val factory: TestDescriptorAdapterFactory): RuntimeExecutionListener() {
+                                      val factory: TestDescriptorAdapterFactory): ExecutionListener {
     fun ScopeImpl.asDescriptor() = factory.create(this)
     fun ExecutionResult.toJunitResult() = when (this) {
         is ExecutionResult.Success -> TestExecutionResult.successful()
@@ -23,7 +22,12 @@ class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener,
     override fun executionFinish() { }
 
     override fun testExecutionStart(test: TestScopeImpl) {
-        listener.executionStarted(test.asDescriptor())
+        val descriptor = test.asDescriptor()
+        if (test.parent is ActionScopeImpl) {
+            listener.dynamicTestRegistered(descriptor)
+        }
+
+        listener.executionStarted(descriptor)
     }
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
@@ -56,10 +60,5 @@ class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener,
 
     override fun actionIgnored(action: ActionScopeImpl, reason: String?) {
         listener.executionSkipped(action.asDescriptor(), reason ?: "<no reason provided>")
-    }
-
-    override fun dynamicTestRegistered(test: TestScopeImpl, context: ExecutionContext) {
-        listener.dynamicTestRegistered(test.asDescriptor())
-        super.dynamicTestRegistered(test, context)
     }
 }

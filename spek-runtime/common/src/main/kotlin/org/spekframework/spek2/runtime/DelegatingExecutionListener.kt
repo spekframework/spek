@@ -2,14 +2,13 @@ package org.spekframework.spek2.runtime
 
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.execution.RuntimeExecutionListener
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 class DelegatingExecutionListener(
     val listeners: List<ExecutionListener>
-): RuntimeExecutionListener() {
+): ExecutionListener {
     override fun executionStart() {
         listeners.forEach { it.executionStart() }
     }
