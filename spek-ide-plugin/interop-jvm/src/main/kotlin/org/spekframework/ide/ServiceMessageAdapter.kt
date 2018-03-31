@@ -14,11 +14,11 @@ class ServiceMessageAdapter: ExecutionListener {
     override fun executionFinish() { }
 
     override fun testExecutionStart(test: TestScopeImpl) {
-        out("testStarted name='${test.path.name.toTcSafeString()}'")
+        out("testStarted name='${test.path.name.toServiceMessageSafeString()}'")
     }
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
-        val name = test.path.name.toTcSafeString()
+        val name = test.path.name.toServiceMessageSafeString()
         if (result is ExecutionResult.Failure) {
             val exceptionDetails = getExceptionDetails(result)
             out("testFailed name='$name' message='${exceptionDetails.first}' details='${exceptionDetails.second}'")
@@ -28,17 +28,17 @@ class ServiceMessageAdapter: ExecutionListener {
     }
 
     override fun testIgnored(test: TestScopeImpl, reason: String?) {
-        val name = test.path.name.toTcSafeString()
+        val name = test.path.name.toServiceMessageSafeString()
         out("testIgnored name='$name' ignoreComment='${reason ?: "no reason provided"}'")
         out("testFinished name='$name'")
     }
 
     override fun groupExecutionStart(group: GroupScopeImpl) {
-        out("testSuiteStarted name='${group.path.name.toTcSafeString()}'")
+        out("testSuiteStarted name='${group.path.name.toServiceMessageSafeString()}'")
     }
 
     override fun groupExecutionFinish(group: GroupScopeImpl, result: ExecutionResult) {
-        val name = group.path.name.toTcSafeString()
+        val name = group.path.name.toServiceMessageSafeString()
         if (result is ExecutionResult.Failure) {
             val exceptionDetails = getExceptionDetails(result)
 
@@ -51,17 +51,17 @@ class ServiceMessageAdapter: ExecutionListener {
     }
 
     override fun groupIgnored(group: GroupScopeImpl, reason: String?) {
-        val name = group.path.name.toTcSafeString()
+        val name = group.path.name.toServiceMessageSafeString()
         out("testIgnored name='$name' ignoreComment='${reason ?: "no reason provided"}'")
         out("testFinished name='$name'")
     }
 
     override fun actionExecutionStart(action: ActionScopeImpl) {
-        out("testSuiteStarted name='${action.path.name.toTcSafeString()}'")
+        out("testSuiteStarted name='${action.path.name.toServiceMessageSafeString()}'")
     }
 
     override fun actionExecutionFinish(action: ActionScopeImpl, result: ExecutionResult) {
-        val name = action.path.name.toTcSafeString()
+        val name = action.path.name.toServiceMessageSafeString()
         if (result is ExecutionResult.Failure) {
             val exceptionDetails = getExceptionDetails(result)
 
@@ -74,7 +74,7 @@ class ServiceMessageAdapter: ExecutionListener {
     }
 
     override fun actionIgnored(action: ActionScopeImpl, reason: String?) {
-        val name = action.path.name.toTcSafeString()
+        val name = action.path.name.toServiceMessageSafeString()
         out("testIgnored name='$name' ignoreComment='${reason ?: "no reason provided"}'")
         out("testFinished name='$name'")
     }
@@ -84,29 +84,30 @@ class ServiceMessageAdapter: ExecutionListener {
         val writer = CharArrayWriter()
         throwable.printStackTrace(PrintWriter(writer))
         val details = writer.toString()
-            .toTcSafeString()
+            .toServiceMessageSafeString()
 
-        val message = throwable.message?.toTcSafeString()
+        val message = throwable.message?.toServiceMessageSafeString()
 
         return message to details
     }
-}
 
-private fun String.toTcSafeString(): String {
-    return this.replace("|", "||")
-        .replace("\n", "|n")
-        .replace("\r", "|r")
-        .replace("'", "|'")
-        .replace("[", "|[")
-        .replace("]", "|]")
-        .replace(Regex("""\\u(\d\d\d\d)""")) {
-            "|0x${it.groupValues[1]}"
-        }
-}
+    private fun String.toServiceMessageSafeString(): String {
+        return this.replace("|", "||")
+            .replace("\n", "|n")
+            .replace("\r", "|r")
+            .replace("'", "|'")
+            .replace("[", "|[")
+            .replace("]", "|]")
+            .replace(Regex("""\\u(\d\d\d\d)""")) {
+                "|0x${it.groupValues[1]}"
+            }
+    }
 
-private fun out(event: String) {
-    /* ensure ##teamcity has it's own line*/
-    println()
-    println("##teamcity[$event]")
-}
+    private fun out(event: String) {
+        /* ensure service message has it's own line*/
+        println()
+        println("##teamcity[$event]")
+    }
 
+
+}
