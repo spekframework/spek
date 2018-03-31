@@ -1,6 +1,6 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply plugin: 'kotlin-platform-jvm'
-apply plugin: 'com.github.johnrengelman.plugin-shadow'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     compileOnly project(':spek-runtime:jvm')
@@ -12,6 +12,6 @@ shadowJar {
     relocate 'com.xenomachina', 'shadow.com.xenomachina'
 
     dependencies {
-        include(dependency('com.xenomachina:.*:.*'))
+        exclude(dependency('org.jetbrains.*:.*:.*'))
     }
 }

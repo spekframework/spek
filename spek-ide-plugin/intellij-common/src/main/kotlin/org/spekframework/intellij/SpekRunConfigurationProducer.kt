@@ -22,6 +22,7 @@ class SpekRunConfigurationProducer: RunConfigurationProducer<SpekBaseRunConfigur
         return if (path != null) {
             configuration.path = path
             configuration.setGeneratedName()
+            configuration.setModule(context.module)
             true
         } else {
             false

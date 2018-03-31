@@ -22,7 +22,7 @@ import com.intellij.openapi.roots.OrderEnumerator
 import com.intellij.openapi.util.JDOMExternalizerUtil
 import com.intellij.util.PathUtil
 import org.jdom.Element
-import org.spekframework.ide.ConsoleKt
+import org.spekframework.ide.ServiceMessageAdapter
 import java.util.*
 
 interface Spek2JvmParameterPatcher {
@@ -101,11 +101,11 @@ open class Spek2JvmRunConfiguration(name: String,
                 JavaParametersUtil.configureModule(module, params, pathType, jreHome)
 
                 val jars = mutableListOf(
-                    PathUtil.getJarPathForClass(ConsoleKt::class.java)
+                    PathUtil.getJarPathForClass(ServiceMessageAdapter::class.java)
                 )
 
                 params.classPath.addAll(jars)
-                params.mainClass = ConsoleKt::class.java.name
+                params.mainClass = "org.spekframework.ide.ConsoleKt"
 
                 // this will set the vm parameters
                 setupJavaParameters(params)
