@@ -9,30 +9,44 @@ import kotlin.reflect.KProperty
 
 sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) -> Unit)
     : LifecycleAware<T>, LifecycleListener {
-    var cached: T? = null
+
+    protected sealed class Cached<out T> {
+        object Empty : Cached<Nothing>()
+        data class Value<out T>(val value: T) : Cached<T>()
+    }
+
+    protected var cached: Cached<T> = Cached.Empty
 
     override fun getValue(thisRef: Any?, property: KProperty<*>) = invoke()
 
     override fun invoke(): T {
-        if (cached == null) {
-            cached = factory()
+        val cached = this.cached
+        return when(cached) {
+            Cached.Empty -> {
+                val newCached = Cached.Value(factory())
+                this.cached = newCached
+                newCached.value
+            }
+            is Cached.Value<T> -> cached.value
         }
-        return cached!!
     }
 
     class GroupCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
         : LifecycleAwareAdapter<T>(factory, destructor) {
-        val stack = mutableListOf<T?>()
+        private val stack = mutableListOf<Cached<T>>()
 
         override fun beforeExecuteGroup(group: GroupScope) {
             stack.add(0, cached)
-            cached = null
+            cached = Cached.Empty
         }
 
         override fun afterExecuteGroup(group: GroupScope) {
-            cached?.let { destructor(it) }
+            val cached = this.cached
+            if (cached is Cached.Value<T>) {
+                destructor(cached.value)
+            }
             if (stack.isNotEmpty()) {
-                cached = stack.removeAt(0)
+                this.cached = stack.removeAt(0)
             }
         }
     }
@@ -41,8 +55,11 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
         : LifecycleAwareAdapter<T>(factory, destructor) {
         override fun afterExecuteGroup(group: GroupScope) {
             if (this.group == group) {
-                cached?.let { destructor(it) }
-                cached = null
+                val cached = this.cached
+                when (cached) {
+                    is Cached.Value<T> -> destructor(cached.value)
+                }
+                this.cached = Cached.Empty
             }
         }
     }
@@ -51,14 +68,20 @@ sealed class LifecycleAwareAdapter<T>(val factory: () -> T, val destructor: (T) 
         : LifecycleAwareAdapter<T>(factory, destructor) {
         override fun afterExecuteTest(test: TestScope) {
             if (test.parent !is ActionScope) {
-                cached?.let { destructor(it) }
-                cached = null
+                val cached = this.cached
+                when (cached) {
+                    is Cached.Value<T> -> destructor(cached.value)
+                }
+                this.cached = Cached.Empty
             }
         }
 
         override fun afterExecuteAction(action: ActionScope) {
-            cached?.let { destructor(it) }
-            cached = null
+            val cached = this.cached
+            when (cached) {
+                is Cached.Value<T> -> destructor(cached.value)
+            }
+            this.cached = Cached.Empty
         }
     }
 }

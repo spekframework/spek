@@ -396,4 +396,20 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
         assertThat(recorder.testFailureCount, equalTo(0))
     }
+
+    @Test
+    fun memoizedWithNullValue() {
+        class MemoizedSpec : Spek({
+
+            val foo by memoized { null }
+
+            test("check") {
+                assertThat(foo, equalTo(null))
+            }
+        })
+
+        val recorder = executeTestsForClass(MemoizedSpec::class)
+
+        assertThat(recorder.testFailureCount, equalTo(0))
+    }
 }
