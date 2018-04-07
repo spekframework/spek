@@ -9,7 +9,7 @@ dependencies {
 
 task sourceJar(type: Jar) {
     baseName = archiveBaseName
-    from project.sourceSets.main.allSource
+    from project.sourceSets.main.java
     classifier "sources"
 }
 

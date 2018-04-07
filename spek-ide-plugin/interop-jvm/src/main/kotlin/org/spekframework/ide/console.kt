@@ -14,9 +14,6 @@ class Spek2ConsoleLauncher {
                 .build()
         }
 
-        println(args.sourceDirs)
-        println(paths)
-
         val discoveryRequest = DiscoveryRequest(args.sourceDirs.toList(), paths)
 
         val runtime =  SpekRuntime()

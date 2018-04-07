@@ -19,6 +19,7 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.roots.OrderEnumerator
+import com.intellij.openapi.roots.OrderRootType
 import com.intellij.openapi.util.JDOMExternalizerUtil
 import com.intellij.util.PathUtil
 import org.jdom.Element
@@ -115,8 +116,14 @@ open class Spek2JvmRunConfiguration(name: String,
                 }
 
                 module.module?.let {
-                    OrderEnumerator.orderEntries(it).recursively().classes()
-                        .pathsList.pathList
+                    OrderEnumerator.orderEntries(it)
+                        .withoutLibraries()
+                        .withoutDepModules()
+                        .withoutSdk()
+                        .recursively()
+                        .classes()
+                        .pathsList
+                        .pathList
                         .forEach {
                             params.programParametersList.add("--sourceDirs", it)
                         }
