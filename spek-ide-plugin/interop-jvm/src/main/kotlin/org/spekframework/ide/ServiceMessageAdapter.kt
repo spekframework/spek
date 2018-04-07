@@ -9,9 +9,9 @@ import java.io.CharArrayWriter
 import java.io.PrintWriter
 
 class ServiceMessageAdapter: ExecutionListener {
-    override fun executionStart() { }
+    override fun executionStart() = Unit
 
-    override fun executionFinish() { }
+    override fun executionFinish() = Unit
 
     override fun testExecutionStart(test: TestScopeImpl) {
         out("testStarted name='${test.path.name.toServiceMessageSafeString()}'")
@@ -22,7 +22,6 @@ class ServiceMessageAdapter: ExecutionListener {
         if (result is ExecutionResult.Failure) {
             val exceptionDetails = getExceptionDetails(result)
             out("testFailed name='$name' message='${exceptionDetails.first}' details='${exceptionDetails.second}'")
-
         }
         out("testFinished name='$name'")
     }
@@ -108,6 +107,4 @@ class ServiceMessageAdapter: ExecutionListener {
         println()
         println("##teamcity[$event]")
     }
-
-
 }
