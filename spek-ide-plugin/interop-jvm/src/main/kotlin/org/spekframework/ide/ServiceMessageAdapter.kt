@@ -82,8 +82,11 @@ class ServiceMessageAdapter: ExecutionListener {
         val throwable = result.cause
         val writer = CharArrayWriter()
         throwable.printStackTrace(PrintWriter(writer))
-        val details = writer.toString()
-            .toServiceMessageSafeString()
+
+        val details = CharArrayWriter().let {
+            throwable.printStackTrace(PrintWriter(it))
+            it.toString().toServiceMessageSafeString()
+        }
 
         val message = throwable.message?.toServiceMessageSafeString()
 
