@@ -8,4 +8,5 @@ intellij {
 
 dependencies {
     compile project(':spek-ide-plugin:intellij-common')
+    compile project(path: ':spek-ide-plugin:interop-jvm', configuration: 'shadow')
 }
