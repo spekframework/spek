@@ -24,7 +24,7 @@ class ServiceMessageAdapter: ExecutionListener {
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
         val name = test.path.name.toServiceMessageSafeString()
-        val duration = System.currentTimeMillis() - (durations[test.path] ?: 0)
+        val duration = System.currentTimeMillis() - durations[test.path]!!
         if (result is ExecutionResult.Failure) {
             val exceptionDetails = getExceptionDetails(result)
             out("testFailed name='$name' duration='$duration' message='${exceptionDetails.first}' details='${exceptionDetails.second}'")

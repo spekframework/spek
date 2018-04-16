@@ -101,7 +101,7 @@ open class Spek2JvmRunConfiguration(name: String,
                 val pathType = JavaParameters.JDK_AND_CLASSES_AND_TESTS
                 JavaParametersUtil.configureModule(module, params, pathType, jreHome)
 
-                val jars = mutableListOf(
+                val jars = listOf(
                     PathUtil.getJarPathForClass(ServiceMessageAdapter::class.java)
                 )
 
