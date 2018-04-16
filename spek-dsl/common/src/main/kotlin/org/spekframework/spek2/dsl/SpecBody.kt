@@ -31,26 +31,6 @@ interface SpecBody: TestContainer {
      *
      * @since 1.0
      */
-    @Synonym(type = SynonymType.Group, prefix = "describe")
-    fun describe(description: String, body: SpecBody.() -> Unit) {
-        group("describe $description", body = body)
-    }
-
-    /**
-     * Creates a [group][SpecBody.group].
-     *
-     * @since 1.0
-     */
-    @Synonym(type = SynonymType.Group, prefix = "context")
-    fun context(description: String, body: SpecBody.() -> Unit) {
-        group("context $description", body = body)
-    }
-
-    /**
-     * Creates a [group][SpecBody.group].
-     *
-     * @since 1.0
-     */
     @Synonym(type = SynonymType.Group, prefix = "given")
     fun given(description: String, body: SpecBody.() -> Unit) {
         group("given $description", body = body)
@@ -64,26 +44,6 @@ interface SpecBody: TestContainer {
     @Synonym(type = SynonymType.Action, prefix = "on")
     fun on(description: String, body: ActionBody.() -> Unit) {
         action("on $description", body = body)
-    }
-
-    /**
-     * Creates a [group][SpecBody.group].
-     *
-     * @since 1.0
-     */
-    @Synonym(type = SynonymType.Group, prefix = "describe", excluded = true)
-    fun xdescribe(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
-        group("describe $description", Pending.Yes(reason), body = body)
-    }
-
-    /**
-     * Creates a [group][SpecBody.group].
-     *
-     * @since 1.0
-     */
-    @Synonym(type = SynonymType.Group, prefix = "context", excluded = true)
-    fun xcontext(description: String, reason: String? = null, body: SpecBody.() -> Unit) {
-        group("context $description", Pending.Yes(reason), body = body)
     }
 
     /**
