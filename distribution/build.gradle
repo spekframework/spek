@@ -82,6 +82,9 @@ publishing {
         dslCommon(MavenPublication) { artifact(delegate, project(':spek-dsl:common'), 'spek-dsl-common') }
         dslJvm(MavenPublication) { artifact(delegate, project(':spek-dsl:jvm'), 'spek-dsl-jvm') }
 
+        dslSpecificationCommon(MavenPublication) { artifact(delegate, project(':spek-dsl-specification:common'), 'spek-dsl-specification-common') }
+        dslSpecificationJvm(MavenPublication) { artifact(delegate, project(':spek-dsl-specification:jvm'), 'spek-dsl-specification-jvm') }
+
         runtimeCommon(MavenPublication) { artifact(delegate, project(':spek-runtime:common'), 'spek-runtime-common') }
         runtimeJvm(MavenPublication) { artifact(delegate, project(':spek-runtime:jvm'), 'spek-runtime-jvm') }
 
