@@ -7,5 +7,7 @@ intellij {
 }
 
 dependencies {
-    compile project(':spek-runtime:jvm')
+    compile(project(':spek-runtime:jvm')) {
+        exclude group: 'org.jetbrains.kotlin'
+    }
 }
