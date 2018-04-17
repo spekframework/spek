@@ -33,12 +33,17 @@ open class GroupScopeImpl(id: ScopeId,
     fun getChildren() = children.toList()
 
     fun filterBy(path: Path) {
+        val tmp = mutableListOf<ScopeImpl>()
         children.filter { it.path.isRelated(path) }
             .forEach {
                 if (it is GroupScopeImpl) {
                     it.filterBy(path)
                 }
+                tmp.add(it)
             }
+
+        children.clear()
+        children.addAll(tmp)
     }
 
     fun isEmpty() = children.isEmpty()

@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>org.spekframework</id>
-    <name>Spek</name>
+    <name>Spek Framework</name>
     <vendor email="team@spekframework.org" url="http://spekframework.org">Spek Team</vendor>
     <description><![CDATA[
       Official IntelliJ IDEA plugin for <a href="http://jetbrains.github.io/spek/">Spek</a>.
