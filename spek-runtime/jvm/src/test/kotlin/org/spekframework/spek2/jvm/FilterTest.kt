@@ -12,7 +12,9 @@ class FilterTest: AbstractSpekRuntimeTest() {
     fun filter() {
         class TestSpek: Spek({
             group("group") {
-                test("test") {}
+                test("test") {
+                    counter++
+                }
                 test("another test") {}
             }
         })
@@ -25,6 +27,10 @@ class FilterTest: AbstractSpekRuntimeTest() {
         val recorder = executeTestsforPath(path)
 
         assertThat(recorder.testSuccessfulCount, equalTo(1))
+        assertThat(counter, equalTo(1))
     }
 
+    companion object {
+        var counter = 0
+    }
 }
