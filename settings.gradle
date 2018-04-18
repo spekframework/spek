@@ -12,6 +12,10 @@ rootProject.name = 'spek'
 include 'spek-dsl:common'
 include 'spek-dsl:jvm'
 
+include 'spek-dsl-specification:common'
+include 'spek-dsl-specification:jvm'
+include 'spek-dsl-specification:samples'
+
 include 'spek-runtime:common'
 include 'spek-runtime:jvm'
 
@@ -32,4 +36,3 @@ include 'spek-ide-plugin:intellij-studio'
 
 include 'distribution'
 include 'documentation'
-include 'samples'

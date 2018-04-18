@@ -11,16 +11,16 @@ class ActionTest: AbstractSpekRuntimeTest() {
     fun testOn() {
         class TestSpek: Spek({
             var count = 0
-            on("something") {
+            action("something") {
                 count++
 
-                it("do this") {
+                test("do this") {
                     assertThat(count, equalTo(1))
                 }
 
                 count++
 
-                it("do that") {
+                test("do that") {
                     assertThat(count, equalTo(2))
                 }
             }
