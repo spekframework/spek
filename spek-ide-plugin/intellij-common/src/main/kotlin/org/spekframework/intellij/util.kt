@@ -1,16 +1,15 @@
 package org.spekframework.intellij
 
 import com.intellij.lang.jvm.JvmModifier
-import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
-import com.intellij.psi.impl.compiled.ClsArrayInitializerMemberValueImpl
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
 import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import org.jetbrains.kotlin.idea.references.mainReference
+import org.jetbrains.kotlin.lexer.KtToken
 import org.jetbrains.kotlin.psi.*
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -27,12 +26,15 @@ private val DESCRIPTIONS_CLASSES = listOf(
     "org.spekframework.spek2.meta.Descriptions"
 )
 
+/**
+ * Marker exception for unsupported operations, we don't propagate this exceptions
+ * so that the IDE will not explode.
+ */
+class UnsupportedFeatureException(message: String): Throwable(message)
+
 fun extractPath(element: PsiElement): Path? {
-    return when (element) {
-        is KtClassOrObject -> {
-            pathBuilderFromKtClassOrObject(element.toLightClass())?.build()
-        }
-        is PsiDirectory -> {
+    return when {
+        element is PsiDirectory -> {
             val pkg = element.getPackage()
             if (pkg != null) {
                 PathBuilder()
@@ -42,8 +44,17 @@ fun extractPath(element: PsiElement): Path? {
                 null
             }
         }
-        is KtCallExpression -> {
-             extractPath(element)
+        isIdentifier(element) -> {
+            val parent = element.parent
+            when (parent) {
+                is KtNameReferenceExpression -> extractPath(parent.parent)
+                is KtClassOrObject -> extractPath(parent)
+                else -> null
+            }
+        }
+        element is KtCallExpression -> extractPathFromCallExpression(element)
+        element is KtClassOrObject -> {
+            pathBuilderFromKtClassOrObject(element.toLightClass())?.build()
         }
         else -> null
     }
@@ -72,14 +83,14 @@ fun isSpekSubclass(element: KtLightClass?): Boolean {
 // TODO: check for @Ignore
 fun isSpekRunnable(element: KtLightClass) = element.containingClass == null && !element.hasModifier(JvmModifier.ABSTRACT)
 
-private fun extractPath(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
+private fun extractPathFromCallExpression(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
     val calleeExpression = callExpression.calleeExpression
     if (calleeExpression != null) {
         val mainReference = calleeExpression.mainReference
         if (mainReference != null) {
             val resolved = mainReference.resolve()
             if (resolved != null && resolved is KtNamedFunction) {
-                val synonymContext = extractSynonymAnnotation(resolved)
+                val synonymContext = extractSynonymContext(resolved)
                 if (synonymContext != null && !synonymContext.isExcluded()) {
                     try {
                         val description = synonymContext.constructDescription(callExpression)
@@ -88,7 +99,7 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                             val newBuffer = mutableListOf<String>()
                             newBuffer.add(description)
                             newBuffer.addAll(buffer)
-                            return extractPath(parentCallExpression, newBuffer)
+                            return extractPathFromCallExpression(parentCallExpression, newBuffer)
                         } else {
                             // probably root scope
                             val ktClassOrObject = getRootScopeClassOrObject(callExpression)
@@ -115,100 +126,8 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
     return null
 }
 
-enum class PsiSynonymType {
-    GROUP,
-    ACTION,
-    TEST
-}
 
-data class PsiSynonym(val annotation: PsiAnnotation) {
-    val type: PsiSynonymType by lazy {
-        val type = annotation.findAttributeValue("type")!!.text
-
-        when {
-            type.endsWith("SynonymType.GROUP") -> PsiSynonymType.GROUP
-            type.endsWith("SynonymType.ACTION") -> PsiSynonymType.ACTION
-            type.endsWith("SynonymType.TEST") -> PsiSynonymType.TEST
-            else -> throw IllegalArgumentException("Unsupported synonym: $type.")
-        }
-    }
-
-    val prefix: String by lazy {
-        annotation.findAttributeValue("prefix")!!.text.removeSurrounding("\"")
-    }
-
-    val excluded: Boolean by lazy {
-        annotation.findAttributeValue("excluded")!!.text.toBoolean()
-    }
-}
-
-enum class PsiDescriptionLocation {
-    TYPE_PARAMETER,
-    VALUE_PARAMETER
-}
-
-class PsiDescription(val annotation: PsiAnnotation) {
-    val index: Int by lazy {
-        annotation.findAttributeValue("index")!!.text.toInt()
-    }
-
-    val location: PsiDescriptionLocation by lazy {
-        val text = annotation.findAttributeValue("location")!!.text
-        when {
-            text.endsWith("DescriptionLocation.TYPE_PARAMETER") -> PsiDescriptionLocation.TYPE_PARAMETER
-            text.endsWith("DescriptionLocation.VALUE_PARAMETER") -> PsiDescriptionLocation.VALUE_PARAMETER
-            else -> throw IllegalArgumentException("Unknown location type: $text")
-        }
-    }
-}
-
-class PsiDescriptions(val annotation: PsiAnnotation) {
-    val sources: Array<PsiDescription> by lazy {
-        val value = annotation.findAttributeValue("sources")!! as ClsArrayInitializerMemberValueImpl
-        val sources = value.initializers.map { it as PsiAnnotation }
-            .map(::PsiDescription)
-        sources.toTypedArray()
-    }
-}
-
-/**
- * Marker exception for unsupported operations, we don't propagate this exceptions
- * so that the IDE will not explode.
- */
-class UnsupportedFeatureException(message: String): Throwable(message)
-
-class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions) {
-    fun isExcluded(): Boolean = synonym.excluded
-
-    fun constructDescription(callExpression: KtCallExpression): String {
-        return descriptions.sources.map {
-            when (it.location) {
-                PsiDescriptionLocation.TYPE_PARAMETER -> throw UnsupportedFeatureException("Type parameter description is currently unsupported.")
-                PsiDescriptionLocation.VALUE_PARAMETER -> {
-                    val argument = callExpression.valueArguments.getOrNull(it.index)
-                    val expression = argument?.getArgumentExpression()
-
-                    when (expression) {
-                        is KtStringTemplateExpression -> {
-                            if (!expression.hasInterpolation()) {
-                                // might be empty at some point, especially when user is still typing
-                                expression.entries.firstOrNull()?.text ?: ""
-                            } else {
-                                throw UnsupportedFeatureException("Descriptions with interpolation are currently unsupported.")
-                            }
-                        }
-                        else -> throw IllegalArgumentException("Value argument description should be a string.")
-                    }
-                }
-                else -> IllegalArgumentException("Invalid location: ${it.location}")
-            }
-        }.fold(synonym.prefix) { prev, current ->
-            "$prev $current"
-        }
-    }
-}
-
-private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymContext? {
+private fun extractSynonymContext(function: KtNamedFunction): SynonymContext? {
     val lightMethod = function.toLightMethods().firstOrNull()
     if (lightMethod != null) {
         val synonym = lightMethod.annotations
@@ -316,4 +235,15 @@ private fun pathBuilderFromKtClassOrObject(element: KtLightClass?): PathBuilder?
         }
     }
     return null
+}
+
+fun isIdentifier(element: PsiElement): Boolean {
+    val node = element.node
+    if (node != null) {
+        val elementType = node.elementType
+        if (elementType is KtToken) {
+            return elementType.toString() == "IDENTIFIER"
+        }
+    }
+    return false
 }

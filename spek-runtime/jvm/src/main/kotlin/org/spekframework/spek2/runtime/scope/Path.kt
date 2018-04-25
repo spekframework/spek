@@ -1,7 +1,7 @@
 package org.spekframework.spek2.runtime.scope
 
 import org.spekframework.spek2.Spek
-import java.util.Base64
+import java.util.*
 import kotlin.reflect.KClass
 
 actual data class Path(actual val name: String, actual val parent: Path?) {
