@@ -23,7 +23,7 @@ abstract class AbstractRuntime {
 
         val qualifiedName = (path.parent?.name ?: "") + ".${path.name}"
         val classScope = GroupScopeImpl(ScopeId(ScopeType.CLASS, qualifiedName), path, null, Pending.No, lifecycleManager)
-        instance.spec.invoke(Collector(classScope, lifecycleManager, fixtures))
+        instance.root.invoke(Collector(classScope, lifecycleManager, fixtures))
 
         return classScope
     }
