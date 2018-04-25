@@ -13,7 +13,7 @@ class IncludeSubjectTest: AbstractSpekRuntimeTest() {
     @Test
     fun itShouldOverrideNestedSubject() {
         class JavaQueueSpec : SubjectSpek<Queue<String>>({
-            subject {
+            val subject by subject {
                 LinkedList()
             }
 

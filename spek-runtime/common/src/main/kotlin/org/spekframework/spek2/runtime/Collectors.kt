@@ -2,8 +2,8 @@ package org.spekframework.spek2.runtime
 
 import org.spekframework.spek2.dsl.ActionBody
 import org.spekframework.spek2.dsl.Pending
-import org.spekframework.spek2.dsl.Spec
-import org.spekframework.spek2.dsl.SpecBody
+import org.spekframework.spek2.dsl.Root
+import org.spekframework.spek2.dsl.GroupBody
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleAware
@@ -20,7 +20,7 @@ import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 open class Collector(val root: GroupScopeImpl,
                      val lifecycleManager: LifecycleManager,
-                     val fixtures: FixturesAdapter): Spec {
+                     val fixtures: FixturesAdapter): Root {
     val ids = mutableMapOf<String, Int>()
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> = memoized(mode, factory) { }
@@ -41,7 +41,7 @@ open class Collector(val root: GroupScopeImpl,
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, pending: Pending, body: SpecBody.() -> Unit) {
+    override fun group(description: String, pending: Pending, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),

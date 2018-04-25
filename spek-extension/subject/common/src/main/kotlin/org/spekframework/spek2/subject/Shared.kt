@@ -1,7 +1,7 @@
 package org.spekframework.spek2.subject
 
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.Spec
+import org.spekframework.spek2.dsl.Root
 import org.spekframework.spek2.include
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleAware
@@ -10,7 +10,7 @@ import org.spekframework.spek2.subject.dsl.SubjectDsl
 import org.spekframework.spek2.subject.dsl.SubjectProviderDsl
 import kotlin.reflect.KProperty
 
-internal class IncludedSubjectSpek<T>(val adapter: LifecycleAware<T>, spec: Spec): SubjectProviderDsl<T>, Spec by spec {
+internal class IncludedSubjectSpek<T>(val adapter: LifecycleAware<T>, root: Root): SubjectProviderDsl<T>, Root by root {
     override fun subject() = adapter
     override fun subject(mode: CachingMode, factory: () -> T): LifecycleAware<T> {
         return adapter
@@ -32,7 +32,7 @@ infix fun <T, K: T> SubjectDsl<K>.itBehavesLike(spec: SubjectSpek<T>) {
             }
 
         }
-        spec.spec.invoke(IncludedSubjectSpek(adapter, this))
+        spec.root.invoke(IncludedSubjectSpek(adapter, this))
     })
 
 }

@@ -10,7 +10,7 @@ interface TestContainer {
     fun test(description: String, pending: Pending = Pending.No, body: TestBody.() -> Unit)
 
     /**
-     * Creates a [test][SpecBody.test].
+     * Creates a [test][GroupBody.test].
      *
      * @author Ranie Jade Ramiso
      * @since 1.0
@@ -21,7 +21,7 @@ interface TestContainer {
     }
 
     /**
-     * Creates a pending [test][SpecBody.test].
+     * Creates a pending [test][GroupBody.test].
      *
      * @author Ranie Jade Ramiso
      * @since 1.0

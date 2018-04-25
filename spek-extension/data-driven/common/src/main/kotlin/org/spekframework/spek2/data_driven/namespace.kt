@@ -3,11 +3,11 @@
 package org.spekframework.spek2.data_driven
 
 import org.spekframework.spek2.dsl.ActionBody
-import org.spekframework.spek2.dsl.SpecBody
+import org.spekframework.spek2.dsl.GroupBody
 
 expect fun String.format(vararg args: Any?): String
 
-inline fun <I1, Expected> SpecBody.on(description: String, vararg with: Data1<I1, Expected>, crossinline body: ActionBody.(I1, Expected) -> Unit) {
+inline fun <I1, Expected> GroupBody.on(description: String, vararg with: Data1<I1, Expected>, crossinline body: ActionBody.(I1, Expected) -> Unit) {
     with.forEach { (input, expected) ->
         on(description = description.format(input, expected)) {
             body(input, expected)
@@ -15,7 +15,7 @@ inline fun <I1, Expected> SpecBody.on(description: String, vararg with: Data1<I1
     }
 }
 
-inline fun <I1, I2, Expected> SpecBody.on(description: String, vararg with: Data2<I1, I2, Expected>, crossinline body: ActionBody.(I1, I2, Expected) -> Unit) {
+inline fun <I1, I2, Expected> GroupBody.on(description: String, vararg with: Data2<I1, I2, Expected>, crossinline body: ActionBody.(I1, I2, Expected) -> Unit) {
     with.forEach { (input1, input2, expected) ->
         on(description = description.format(input1, input2, expected)) {
             body(input1, input2, expected)
@@ -23,7 +23,7 @@ inline fun <I1, I2, Expected> SpecBody.on(description: String, vararg with: Data
     }
 }
 
-inline fun <I1, I2, I3, Expected> SpecBody.on(description: String, vararg with: Data3<I1, I2, I3, Expected>, crossinline body: ActionBody.(I1, I2, I3, Expected) -> Unit) {
+inline fun <I1, I2, I3, Expected> GroupBody.on(description: String, vararg with: Data3<I1, I2, I3, Expected>, crossinline body: ActionBody.(I1, I2, I3, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, expected) ->
         on(description = description.format(input1, input2, input3, expected)) {
             body(input1, input2, input3, expected)
@@ -31,7 +31,7 @@ inline fun <I1, I2, I3, Expected> SpecBody.on(description: String, vararg with: 
     }
 }
 
-inline fun <I1, I2, I3, I4, Expected> SpecBody.on(description: String, vararg with: Data4<I1, I2, I3, I4, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, Expected) -> Unit) {
+inline fun <I1, I2, I3, I4, Expected> GroupBody.on(description: String, vararg with: Data4<I1, I2, I3, I4, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, input4, expected) ->
         on(description = description.format(input1, input2, input3, input4, expected)) {
             body(input1, input2, input3, input4, expected)
@@ -39,7 +39,7 @@ inline fun <I1, I2, I3, I4, Expected> SpecBody.on(description: String, vararg wi
     }
 }
 
-inline fun <I1, I2, I3, I4, I5, Expected> SpecBody.on(description: String, vararg with: Data5<I1, I2, I3, I4, I5, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, Expected) -> Unit) {
+inline fun <I1, I2, I3, I4, I5, Expected> GroupBody.on(description: String, vararg with: Data5<I1, I2, I3, I4, I5, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, input4, input5, expected) ->
         on(description = description.format(input1, input2, input3, input4, input5, expected)) {
             body(input1, input2, input3, input4, input5, expected)
@@ -47,7 +47,7 @@ inline fun <I1, I2, I3, I4, I5, Expected> SpecBody.on(description: String, varar
     }
 }
 
-inline fun <I1, I2, I3, I4, I5, I6, Expected> SpecBody.on(description: String, vararg with: Data6<I1, I2, I3, I4, I5, I6, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, Expected) -> Unit) {
+inline fun <I1, I2, I3, I4, I5, I6, Expected> GroupBody.on(description: String, vararg with: Data6<I1, I2, I3, I4, I5, I6, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, input4, input5, input6, expected) ->
         on(description = description.format(input1, input2, input3, input4, input5, input6, expected)) {
             body(input1, input2, input3, input4, input5, input6, expected)
@@ -55,7 +55,7 @@ inline fun <I1, I2, I3, I4, I5, I6, Expected> SpecBody.on(description: String, v
     }
 }
 
-inline fun <I1, I2, I3, I4, I5, I6, I7, Expected> SpecBody.on(description: String, vararg with: Data7<I1, I2, I3, I4, I5, I6, I7, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, I7, Expected) -> Unit) {
+inline fun <I1, I2, I3, I4, I5, I6, I7, Expected> GroupBody.on(description: String, vararg with: Data7<I1, I2, I3, I4, I5, I6, I7, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, I7, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, input4, input5, input6, input7, expected) ->
         on(description = description.format(input1, input2, input3, input4, input5, input6, input7, expected)) {
             body(input1, input2, input3, input4, input5, input6, input7, expected)
@@ -63,7 +63,7 @@ inline fun <I1, I2, I3, I4, I5, I6, I7, Expected> SpecBody.on(description: Strin
     }
 }
 
-inline fun <I1, I2, I3, I4, I5, I6, I7, I8, Expected> SpecBody.on(description: String, vararg with: Data8<I1, I2, I3, I4, I5, I6, I7, I8, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, I7, I8, Expected) -> Unit) {
+inline fun <I1, I2, I3, I4, I5, I6, I7, I8, Expected> GroupBody.on(description: String, vararg with: Data8<I1, I2, I3, I4, I5, I6, I7, I8, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, I7, I8, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, input4, input5, input6, input7, input8, expected) ->
         on(description = description.format(input1, input2, input3, input4, input5, input6, input7, input8, expected)) {
             body(input1, input2, input3, input4, input5, input6, input7, input8, expected)
@@ -71,7 +71,7 @@ inline fun <I1, I2, I3, I4, I5, I6, I7, I8, Expected> SpecBody.on(description: S
     }
 }
 
-inline fun <I1, I2, I3, I4, I5, I6, I7, I8, I9, Expected> SpecBody.on(description: String, vararg with: Data9<I1, I2, I3, I4, I5, I6, I7, I8, I9, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, I7, I8, I9, Expected) -> Unit) {
+inline fun <I1, I2, I3, I4, I5, I6, I7, I8, I9, Expected> GroupBody.on(description: String, vararg with: Data9<I1, I2, I3, I4, I5, I6, I7, I8, I9, Expected>, crossinline body: ActionBody.(I1, I2, I3, I4, I5, I6, I7, I8, I9, Expected) -> Unit) {
     with.forEach { (input1, input2, input3, input4, input5, input6, input7, input8, input9, expected) ->
         on(description = description.format(input1, input2, input3, input4, input5, input6, input7, input8, input9, expected)) {
             body(input1, input2, input3, input4, input5, input6, input7, input8, input9, expected)
