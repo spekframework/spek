@@ -1,9 +1,12 @@
 package org.spekframework.intellij
 
 import com.intellij.lang.jvm.JvmModifier
+import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
+import com.intellij.psi.impl.compiled.ClsArrayInitializerMemberValueImpl
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.asJava.elements.KtLightAnnotationForSourceEntry
 import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.core.getPackage
@@ -19,6 +22,10 @@ private val SPEK_CLASSES = listOf(
 
 private val SYNONYM_CLASSES = listOf(
     "org.spekframework.spek2.meta.Synonym"
+)
+
+private val DESCRIPTIONS_CLASSES = listOf(
+    "org.spekframework.spek2.meta.Descriptions"
 )
 
 fun extractPath(element: PsiElement): Path? {
@@ -73,15 +80,14 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
         if (mainReference != null) {
             val resolved = mainReference.resolve()
             if (resolved != null && resolved is KtNamedFunction) {
-                val synonym = extractSynonymAnnotation(resolved)
-                if (synonym != null && !synonym.excluded) {
-                    val description = extractDescription(callExpression)
-                    if (description != null) {
+                val synonymContext = extractSynonymAnnotation(resolved)
+                if (synonymContext != null && !synonymContext.isExcluded()) {
+                    try {
+                        val description = synonymContext.constructDescription(callExpression)
                         val parentCallExpression = getParentCallExpression(callExpression)
-                        val currentPath = "${synonym.prefix} $description".trim()
                         if (parentCallExpression != null) {
                             val newBuffer = mutableListOf<String>()
-                            newBuffer.add(currentPath)
+                            newBuffer.add(description)
                             newBuffer.addAll(buffer)
                             return extractPath(parentCallExpression, newBuffer)
                         } else {
@@ -89,9 +95,8 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                             val ktClassOrObject = getKtClassOrObject(callExpression)
                             if (ktClassOrObject != null) {
                                 val builder = pathBuilderFromKtClassOrObject(ktClassOrObject.toLightClass())
-                                // TODO: PathBuilder is immutable for some reason :noidea: why I did this :)
                                 if (builder != null) {
-                                    builder.append(currentPath)
+                                    builder.append(description)
                                     buffer.forEach {
                                         builder.append(it)
                                     }
@@ -100,6 +105,8 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                                 }
                             }
                         }
+                    } catch (e: UnsupportedFeatureException) {
+                        LOG.warn("Unsupported feature.", e)
                     }
                 }
 
@@ -109,63 +116,119 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
     return null
 }
 
-private enum class SynonymType {
-    Group,
-    Action,
-    Test
+enum class PsiSynonymType {
+    GROUP,
+    ACTION,
+    TEST
 }
 
-private data class SynonymData(val type: SynonymType,
-                               val prefix: String,
-                               val excluded: Boolean)
+data class PsiSynonym(val annotation: PsiAnnotation) {
+    val type: PsiSynonymType by lazy {
+        val type = annotation.findAttributeValue("type")!!.text
 
-private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymData? {
+        when {
+            type.endsWith("SynonymType.GROUP") -> PsiSynonymType.GROUP
+            type.endsWith("SynonymType.ACTION") -> PsiSynonymType.ACTION
+            type.endsWith("SynonymType.TEST") -> PsiSynonymType.TEST
+            else -> throw IllegalArgumentException("Unsupported synonym: $type.")
+        }
+    }
+
+    val prefix: String by lazy {
+        annotation.findAttributeValue("prefix")!!.text.removeSurrounding("\"")
+    }
+
+    val excluded: Boolean by lazy {
+        annotation.findAttributeValue("excluded")!!.text.toBoolean()
+    }
+}
+
+enum class PsiDescriptionLocation {
+    TYPE_PARAMETER,
+    VALUE_PARAMETER
+}
+
+class PsiDescription(val annotation: PsiAnnotation) {
+    val index: Int by lazy {
+        annotation.findAttributeValue("index")!!.text.toInt()
+    }
+
+    val location: PsiDescriptionLocation by lazy {
+        val text = annotation.findAttributeValue("location")!!.text
+        when {
+            text.endsWith("DescriptionLocation.TYPE_PARAMETER") -> PsiDescriptionLocation.TYPE_PARAMETER
+            text.endsWith("DescriptionLocation.VALUE_PARAMETER") -> PsiDescriptionLocation.VALUE_PARAMETER
+            else -> throw IllegalArgumentException("Unknown location type: $text")
+        }
+    }
+}
+
+class PsiDescriptions(val annotation: PsiAnnotation) {
+    val sources: Array<PsiDescription> by lazy {
+        val value = annotation.findAttributeValue("sources")!! as ClsArrayInitializerMemberValueImpl
+        val sources = value.initializers.map { it as PsiAnnotation }
+            .map(::PsiDescription)
+        sources.toTypedArray()
+    }
+}
+
+/**
+ * Marker exception for unsupported operations, we don't propagate this exceptions
+ * so that the IDE will not explode.
+ */
+class UnsupportedFeatureException(message: String): Throwable(message)
+
+class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions) {
+    fun isExcluded(): Boolean = synonym.excluded
+
+    fun constructDescription(callExpression: KtCallExpression): String {
+        return descriptions.sources.map {
+            when (it.location) {
+                PsiDescriptionLocation.TYPE_PARAMETER -> throw UnsupportedFeatureException("Type parameter description is currently unsupported.")
+                PsiDescriptionLocation.VALUE_PARAMETER -> {
+                    val argument = callExpression.valueArguments.getOrNull(it.index)
+                    val expression = argument?.getArgumentExpression()
+
+                    when (expression) {
+                        is KtStringTemplateExpression -> {
+                            if (!expression.hasInterpolation()) {
+                                // might be empty at some point, especially when user is still typing
+                                expression.entries.firstOrNull()?.text ?: ""
+                            } else {
+                                throw UnsupportedFeatureException("Descriptions with interpolation are currently unsupported.")
+                            }
+                        }
+                        else -> throw IllegalArgumentException("Value argument description should be a string.")
+                    }
+                }
+                else -> IllegalArgumentException("Invalid location: ${it.location}")
+            }
+        }.fold(synonym.prefix) { prev, current ->
+            "$prev $current"
+        }
+    }
+}
+
+private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymContext? {
     val lightMethod = function.toLightMethods().firstOrNull()
-    val annotation = lightMethod?.annotations?.find {
-        SYNONYM_CLASSES.contains(it.qualifiedName)
-    }
+    if (lightMethod != null) {
+        val synonym = lightMethod.annotations
+            .filter { SYNONYM_CLASSES.contains(it.qualifiedName) }
+            .map(::PsiSynonym)
+            .firstOrNull()
 
-    return annotation?.let {
-        val type = annotation.findDeclaredAttributeValue("type")!!
-        val prefix = annotation.findDeclaredAttributeValue("prefix")
-        val excluded = annotation.findDeclaredAttributeValue("excluded")
+        if (synonym != null) {
+            val descriptions = lightMethod.annotations
+                .filter { DESCRIPTIONS_CLASSES.contains(it.qualifiedName) }
+                .map(::PsiDescriptions)
+                .firstOrNull()
 
-        val synonymText = type.text
-        val synonymType = if (synonymText.endsWith("SynonymType.Group")) {
-            SynonymType.Group
-        } else if (synonymText.endsWith("SynonymType.Action")) {
-            SynonymType.Action
-        } else if (synonymText.endsWith("SynonymType.Test")) {
-            SynonymType.Test
-        } else {
-            LOG.warn("Unsupported synonym: $synonymText.")
-            null
-        }
-
-        synonymType?.let {
-            SynonymData(
-                it,
-                prefix?.let { it.text.removeSurrounding("\"") } ?: "",
-                excluded?.let { it.text.toBoolean() } ?: false
-            )
-        }
-    }
-}
-
-private fun extractDescription(callExpression: KtCallExpression, index: Int = 0): String? {
-    val argument = callExpression.valueArguments.getOrNull(0)
-    val expression = argument?.getArgumentExpression()
-
-    return when (expression) {
-        is KtStringTemplateExpression -> {
-            if (!expression.hasInterpolation()) {
-                expression.entries.first().text
-            } else {
-                null
+            if (descriptions != null) {
+                return SynonymContext(synonym, descriptions)
             }
         }
-        else -> null
     }
+    return null
 }
 
 private fun getParentCallExpression(callExpression: KtCallExpression): KtCallExpression? {

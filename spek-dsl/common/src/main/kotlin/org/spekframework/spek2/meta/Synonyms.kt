@@ -4,9 +4,9 @@ package org.spekframework.spek2.meta
  * Type of synonym.
  */
 enum class SynonymType {
-    Group,
-    Action,
-    Test
+    GROUP,
+    ACTION,
+    TEST
 }
 
 /**
@@ -22,11 +22,21 @@ annotation class Synonym(val type: SynonymType,
                          val prefix: String = "",
                          val excluded: Boolean = false)
 
+
 /**
  * Controls how descriptions are derived by the IDE.
  *
- * @property desc the description, only applies if annotation is used on a function.
+ * @property sources description sources.
  */
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.VALUE_PARAMETER)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Description(val desc: String = "")
+annotation class Descriptions(vararg val sources: Description)
+
+enum class DescriptionLocation {
+    TYPE_PARAMETER,
+    VALUE_PARAMETER
+}
+/**
+ * A description source.
+ */
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Description(val location: DescriptionLocation, val index: Int)
