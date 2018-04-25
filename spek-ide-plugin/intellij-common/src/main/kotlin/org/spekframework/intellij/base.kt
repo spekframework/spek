@@ -12,12 +12,13 @@ import org.jetbrains.kotlin.idea.KotlinIcons
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRoot
+import javax.swing.Icon
 
-abstract class SpekBaseConfigurationType(id: String, displayName: String): ConfigurationTypeBase(
+abstract class SpekBaseConfigurationType(id: String, displayName: String, icon: Icon): ConfigurationTypeBase(
     id,
     displayName,
     "Run specifications",
-    KotlinIcons.SMALL_LOGO_13
+    icon
 )
 
 enum class ConfigurationKey(val key: String) {

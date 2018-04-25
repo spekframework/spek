@@ -80,9 +80,9 @@ fun isInKotlinFile(element: PsiElement): Boolean {
  */
 fun isSpekSubclass(element: KtLightClass?): Boolean {
     if (element != null) {
-        val superClass = element.superClass as KtLightClass?
+        val superClass = element.superClass
 
-        if (superClass != null) {
+        if (superClass != null && superClass is KtLightClass) {
             val fqName = superClass.getKotlinFqName()
             return if (fqName != null && SPEK_CLASSES.contains(fqName.toString())) {
                 true
