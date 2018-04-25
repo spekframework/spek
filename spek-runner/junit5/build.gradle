@@ -3,17 +3,16 @@ apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
 apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
 
 junitPlatform {
-    platformVersion '1.0.0-RC2'
     filters {
         engines {
-            exclude 'spek'
+            exclude 'spek2'
         }
     }
 }
 
 dependencies {
     compile project(':spek-runtime:jvm')
-    compileOnly 'org.junit.platform:junit-platform-engine'
+    compile 'org.junit.platform:junit-platform-engine'
 }
 
 dependencies {

@@ -17,7 +17,7 @@ class SpekTestEngine: TestEngine {
     val factory = TestDescriptorAdapterFactory()
     val runtime by lazy { SpekRuntime() }
 
-    override fun getId() = "spek"
+    override fun getId() = "spek2"
 
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
