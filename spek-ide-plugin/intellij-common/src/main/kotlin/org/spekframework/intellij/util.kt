@@ -6,7 +6,6 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.impl.compiled.ClsArrayInitializerMemberValueImpl
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
-import org.jetbrains.kotlin.asJava.elements.KtLightAnnotationForSourceEntry
 import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.core.getPackage
@@ -84,7 +83,7 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                 if (synonymContext != null && !synonymContext.isExcluded()) {
                     try {
                         val description = synonymContext.constructDescription(callExpression)
-                        val parentCallExpression = getParentCallExpression(callExpression)
+                        val parentCallExpression = getParentScopeCallExpression(callExpression)
                         if (parentCallExpression != null) {
                             val newBuffer = mutableListOf<String>()
                             newBuffer.add(description)
@@ -92,7 +91,7 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                             return extractPath(parentCallExpression, newBuffer)
                         } else {
                             // probably root scope
-                            val ktClassOrObject = getKtClassOrObject(callExpression)
+                            val ktClassOrObject = getRootScopeClassOrObject(callExpression)
                             if (ktClassOrObject != null) {
                                 val builder = pathBuilderFromKtClassOrObject(ktClassOrObject.toLightClass())
                                 if (builder != null) {
@@ -231,7 +230,18 @@ private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymContext?
     return null
 }
 
-private fun getParentCallExpression(callExpression: KtCallExpression): KtCallExpression? {
+/**
+ * Call the parent of the current scope. Current scope is represented by [callExpression]
+ * <code>
+ *     group("some group") {
+ *          test("test") { .. }
+ *     }
+ * </code>
+ *
+ * Current scope here is `test` and what we want to retrieve is CallExpression of `group`.
+ *
+ */
+private fun getParentScopeCallExpression(callExpression: KtCallExpression): KtCallExpression? {
     val block = callExpression.parent
     if (block is KtBlockExpression) {
         val functionLiteral = block.parent
@@ -252,7 +262,18 @@ private fun getParentCallExpression(callExpression: KtCallExpression): KtCallExp
     return null
 }
 
-private fun getKtClassOrObject(callExpression: KtCallExpression): KtClassOrObject? {
+/**
+ * Get the containing Spek class, if the current scope is declared on the root.
+ * <code>
+ *     class MySpec: Spek({
+ *          describe("something") { ... }
+ *     })
+ * </code>
+ *
+ * Current scope here is `describe` and we want to retrieve the KtClassOrObject element of `MySpec`.
+ *
+ */
+private fun getRootScopeClassOrObject(callExpression: KtCallExpression): KtClassOrObject? {
     val block = callExpression.parent
     if (block is KtBlockExpression) {
         val functionLiteral = block.parent
