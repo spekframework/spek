@@ -7,7 +7,7 @@ import org.spekframework.spek2.subject.SubjectSpek
 import kotlin.test.assertEquals
 
 object CalculatorSpec: SubjectSpek<Calculator>({
-    subject { Calculator() }
+    val subject by subject { Calculator() }
 
     describe("addition") {
         it("should return the result of adding the first number to the second number") {

@@ -6,7 +6,7 @@ import org.spekframework.spek2.subject.itBehavesLike
 import kotlin.test.assertEquals
 
 object AdvancedCalculatorSpec: SubjectSpek<AdvancedCalculator>({
-    subject { AdvancedCalculator() }
+    val subject by subject { AdvancedCalculator() }
     itBehavesLike(CalculatorSpec)
 
     describe("pow") {
