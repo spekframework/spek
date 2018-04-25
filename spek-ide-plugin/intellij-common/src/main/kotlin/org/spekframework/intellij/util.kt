@@ -3,6 +3,7 @@ package org.spekframework.intellij
 import com.intellij.lang.jvm.JvmModifier
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
 import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.asJava.toLightMethods
@@ -32,7 +33,7 @@ private val DESCRIPTIONS_CLASSES = listOf(
  */
 class UnsupportedFeatureException(message: String): Throwable(message)
 
-fun extractPath(element: PsiElement): Path? {
+fun extractPath(element: PsiElement, searchNearestAlternative: Boolean = false): Path? {
     return when {
         element is PsiDirectory -> {
             val pkg = element.getPackage()
@@ -56,8 +57,22 @@ fun extractPath(element: PsiElement): Path? {
         element is KtClassOrObject -> {
             pathBuilderFromKtClassOrObject(element.toLightClass())?.build()
         }
-        else -> null
+        else -> {
+            if (searchNearestAlternative && isInKotlinFile(element)) {
+                var nearestCallExpression = PsiTreeUtil.getParentOfType(element, KtCallExpression::class.java)
+                if (nearestCallExpression != null) {
+                    return extractPath(nearestCallExpression)
+                }
+            }
+
+            null
+        }
     }
+}
+
+fun isInKotlinFile(element: PsiElement): Boolean {
+    val file = PsiTreeUtil.getParentOfType(element, KtFile::class.java)
+    return file != null
 }
 
 /**
