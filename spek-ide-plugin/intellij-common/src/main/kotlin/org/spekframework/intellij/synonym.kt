@@ -1,7 +1,7 @@
 package org.spekframework.intellij
 
 import com.intellij.psi.PsiAnnotation
-import com.intellij.psi.impl.compiled.ClsArrayInitializerMemberValueImpl
+import com.intellij.psi.PsiArrayInitializerMemberValue
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 
@@ -54,7 +54,7 @@ class PsiDescription(val annotation: PsiAnnotation) {
 
 class PsiDescriptions(val annotation: PsiAnnotation) {
     val sources: Array<PsiDescription> by lazy {
-        val value = annotation.findAttributeValue("sources")!! as ClsArrayInitializerMemberValueImpl
+        val value = annotation.findAttributeValue("sources")!! as PsiArrayInitializerMemberValue
         val sources = value.initializers.map { it as PsiAnnotation }
             .map(::PsiDescription)
         sources.toTypedArray()
