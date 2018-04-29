@@ -11,14 +11,14 @@ class SpekRunConfigurationProducer: RunConfigurationProducer<SpekBaseRunConfigur
 ) {
     override fun isConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
                                             context: ConfigurationContext): Boolean {
-        val path = context.psiLocation?.let(::extractPath)
+        val path = context.psiLocation?.let { extractPath(it, true) }
         return configuration.path == path
     }
 
     override fun setupConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
                                                context: ConfigurationContext,
                                                sourceElement: Ref<PsiElement>): Boolean {
-        val path = sourceElement.get().let(::extractPath)
+        val path = sourceElement.get().let { extractPath(it, true) }
         return if (path != null) {
             configuration.path = path
             configuration.setGeneratedName()
