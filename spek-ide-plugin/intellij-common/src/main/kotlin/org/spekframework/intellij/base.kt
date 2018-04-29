@@ -8,7 +8,6 @@ import com.intellij.execution.configurations.ModuleBasedConfiguration
 import com.intellij.execution.configurations.RunConfigurationModule
 import com.intellij.openapi.util.JDOMExternalizerUtil
 import org.jdom.Element
-import org.jetbrains.kotlin.idea.KotlinIcons
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRoot
@@ -40,6 +39,8 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
     private var programParameters: String? = null
 
     var path: Path = PathBuilder.ROOT
+
+    var producerType: ProducerType? = null
 
     override fun getWorkingDirectory() = workingDirectory
 
@@ -87,12 +88,16 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
     override fun suggestedName(): String {
         val parent = path.parent
 
+        val prefix = producerType?.let {
+            "($it)"
+        } ?: ""
+
         return if (path.name.isEmpty()) {
-            "Specs in <default>"
+            "$prefix Specs in <default>"
         } else if (parent != null && parent.isRoot) {
-            "Specs in ${path.name}"
+            "S$prefix pecs in ${path.name}"
         } else {
-            path.name
-        }
+            "$prefix ${path.name}"
+        }.trim()
     }
 }
