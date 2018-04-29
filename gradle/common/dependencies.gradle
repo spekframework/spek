@@ -20,6 +20,7 @@ dependencyManagement {
             entry 'kotlin-stdlib-jre8'
             entry 'kotlin-reflect'
             entry 'kotlin-test'
+            entry 'kotlin-test-common'
         }
 
         dependency 'org.reflections:reflections:0.9.11'

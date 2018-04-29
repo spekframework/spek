@@ -30,6 +30,9 @@ include 'spek-ide-plugin:intellij-jvm'
 include 'spek-ide-plugin:intellij-idea'
 include 'spek-ide-plugin:intellij-studio'
 
+include 'integration-test:common'
+include 'integration-test:jvm'
+
 include 'distribution'
 include 'documentation'
 include 'samples'
