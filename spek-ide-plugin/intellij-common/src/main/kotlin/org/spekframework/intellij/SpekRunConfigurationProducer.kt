@@ -12,11 +12,13 @@ import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
 import org.jetbrains.kotlin.config.TargetPlatformKind
 
 enum class ProducerType {
+    COMMON,
     JVM
 }
 
 fun TargetPlatformKind<*>.toProducerType(): ProducerType {
     return when (this) {
+        is TargetPlatformKind.Common -> ProducerType.COMMON
         is TargetPlatformKind.Jvm -> ProducerType.JVM
         else -> throw IllegalArgumentException("Unsupported platform kind: ${this}")
     }
@@ -46,10 +48,14 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
                 configuration.setModule(context.module)
                 canRun = true
             } else  if (kotlinFacetSettings.targetPlatformKind == TargetPlatformKind.Common) {
-                val (module, moduleKotlinFacetSettings) = findSupportedModule(context.project, kotlinFacetSettings)
-                configuration.setModule(module)
-                configuration.producerType = moduleKotlinFacetSettings.targetPlatformKind!!.toProducerType()
-                canRun = true
+                val result = findSupportedModule(context.project, kotlinFacetSettings)
+
+                if (result != null) {
+                    val (module, moduleKotlinFacetSettings) = result
+                    configuration.setModule(module)
+                    configuration.producerType = moduleKotlinFacetSettings.targetPlatformKind!!.toProducerType()
+                    canRun = true
+                }
             }
 
             if (canRun) {
@@ -62,13 +68,15 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
         }
     }
 
-    private fun findSupportedModule(project: Project, commonFacet: KotlinFacetSettings): Pair<Module, KotlinFacetSettings> {
+    private fun findSupportedModule(project: Project, commonFacet: KotlinFacetSettings): Pair<Module, KotlinFacetSettings>? {
         val moduleManager = ModuleManager.getInstance(project)
         val kotlinFacetSettingsProvider = KotlinFacetSettingsProvider.getInstance(project)
 
+//        throw RuntimeException("${commonFacet.implementedModuleNames}")
+
         return commonFacet.implementedModuleNames.map { moduleManager.findModuleByName(it)!! }
             .map { it to kotlinFacetSettingsProvider.getInitializedSettings(it) }
-            .first {
+            .firstOrNull {
                 isPlatformSupported(it.second.targetPlatformKind!!)
             }
     }
