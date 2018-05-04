@@ -19,7 +19,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="org.spekframework.intellij.Spek2JvmConfigurationType"/>
-        <runConfigurationProducer implementation="org.spekframework.intellij.SpekRunConfigurationProducer"/>
+        <runConfigurationProducer implementation="org.spekframework.intellij.Spek2JvmRunConfigurationProducer"/>
         <implicitUsageProvider implementation="org.spekframework.intellij.SpekImplicitUsageProvider"/>
         <runLineMarkerContributor language="kotlin" implementationClass="org.spekframework.intellij.SpekRunLineMarkerContributor"/>
     </extensions>

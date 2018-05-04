@@ -2,12 +2,30 @@ package org.spekframework.intellij
 
 import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.RunConfigurationProducer
-import com.intellij.execution.configurations.ConfigurationTypeUtil
+import com.intellij.openapi.module.Module
+import com.intellij.openapi.module.ModuleManager
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
+import org.jetbrains.kotlin.config.KotlinFacetSettings
+import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
+import org.jetbrains.kotlin.config.TargetPlatformKind
 
-class SpekRunConfigurationProducer: RunConfigurationProducer<SpekBaseRunConfiguration<*>>(
-    ConfigurationTypeUtil.findConfigurationType(SpekBaseConfigurationType::class.java)
+enum class ProducerType {
+    COMMON,
+    JVM
+}
+
+fun TargetPlatformKind<*>.toProducerType(): ProducerType {
+    return when (this) {
+        is TargetPlatformKind.Common -> ProducerType.COMMON
+        is TargetPlatformKind.Jvm -> ProducerType.JVM
+        else -> throw IllegalArgumentException("Unsupported platform kind: ${this}")
+    }
+}
+
+abstract class SpekRunConfigurationProducer(val producerType: ProducerType, configurationType: SpekBaseConfigurationType): RunConfigurationProducer<SpekBaseRunConfiguration<*>>(
+    configurationType
 ) {
     override fun isConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
                                             context: ConfigurationContext): Boolean {
@@ -22,11 +40,46 @@ class SpekRunConfigurationProducer: RunConfigurationProducer<SpekBaseRunConfigur
         return if (path != null) {
             configuration.path = path
             configuration.setGeneratedName()
-            configuration.setModule(context.module)
-            true
+            val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
+                .getInitializedSettings(context.module)
+
+            var canRun = false
+            if (isPlatformSupported(kotlinFacetSettings.targetPlatformKind!!)) {
+                configuration.setModule(context.module)
+                canRun = true
+            } else  if (kotlinFacetSettings.targetPlatformKind == TargetPlatformKind.Common) {
+                val result = findSupportedModule(context.project, kotlinFacetSettings)
+
+                if (result != null) {
+                    val (module, moduleKotlinFacetSettings) = result
+                    configuration.setModule(module)
+                    configuration.producerType = moduleKotlinFacetSettings.targetPlatformKind!!.toProducerType()
+                    canRun = true
+                }
+            }
+
+            if (canRun) {
+                configuration.setGeneratedName()
+            }
+
+            canRun
         } else {
             false
         }
     }
 
+    private fun findSupportedModule(project: Project, commonFacet: KotlinFacetSettings): Pair<Module, KotlinFacetSettings>? {
+        val moduleManager = ModuleManager.getInstance(project)
+        val kotlinFacetSettingsProvider = KotlinFacetSettingsProvider.getInstance(project)
+
+//        throw RuntimeException("${commonFacet.implementedModuleNames}")
+
+        return commonFacet.implementedModuleNames.map { moduleManager.findModuleByName(it)!! }
+            .map { it to kotlinFacetSettingsProvider.getInitializedSettings(it) }
+            .firstOrNull {
+                isPlatformSupported(it.second.targetPlatformKind!!)
+            }
+    }
+
+    private fun isPlatformSupported(targetPlatformKind: TargetPlatformKind<*>) = targetPlatformKind.toProducerType() == producerType
 }
