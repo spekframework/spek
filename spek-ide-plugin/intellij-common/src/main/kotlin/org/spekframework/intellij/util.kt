@@ -1,24 +1,16 @@
 package org.spekframework.intellij
 
-import com.intellij.lang.jvm.JvmModifier
-import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
-import com.intellij.psi.util.PsiUtil
-import org.jetbrains.kotlin.asJava.builder.toLightClassOrigin
-import org.jetbrains.kotlin.asJava.classes.KtLightClass
-import org.jetbrains.kotlin.asJava.toLightClass
 import org.jetbrains.kotlin.asJava.toLightMethods
-import org.jetbrains.kotlin.idea.caches.resolve.util.getJavaOrKotlinMemberDescriptor
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
-import org.jetbrains.kotlin.idea.refactoring.pullUp.getSuperTypeEntryByDescriptor
+import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.lexer.KtToken
 import org.jetbrains.kotlin.psi.*
-import org.jetbrains.kotlin.psi.psiUtil.getSuperNames
-import org.jetbrains.kotlin.resolve.lazy.data.KtClassInfoUtil
+import org.jetbrains.kotlin.psi.psiUtil.containingClassOrObject
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
@@ -62,7 +54,7 @@ fun extractPath(element: PsiElement, searchNearestAlternative: Boolean = false):
         }
         element is KtCallExpression -> extractPathFromCallExpression(element)
         element is KtClassOrObject -> {
-            pathBuilderFromKtClassOrObject(element.toLightClass())?.build()
+            pathBuilderFromKtClassOrObject(element)?.build()
         }
         else -> {
             if (searchNearestAlternative && isInKotlinFile(element)) {
@@ -82,28 +74,43 @@ fun isInKotlinFile(element: PsiElement): Boolean {
     return file != null
 }
 
-/**
- * Recursively check the type hierarchy until a match is found
- */
-fun isSpekSubclass(element: KtLightClass?): Boolean {
-    if (element != null) {
-        val superClass = element.superClass
+fun getSuperClass(element: KtClassOrObject): KtClassOrObject? {
+    val superTypes = element.superTypeListEntries
+    var superClass: KtClassOrObject? = null
 
-        if (superClass != null && superClass is KtLightClass) {
-            val fqName = superClass.getKotlinFqName()
-            return if (fqName != null && SPEK_CLASSES.contains(fqName.toString())) {
-                true
-            } else {
-                isSpekSubclass(superClass)
+    for (entry in superTypes) {
+        val typeRef = entry.typeAsUserType
+        if (typeRef != null) {
+            val refExp = typeRef.referenceExpression
+            if (refExp != null) {
+                val mainRef = refExp.mainReference.resolve()
+                if (mainRef is KtPrimaryConstructor) {
+                    superClass = mainRef.getContainingClassOrObject()
+                    break
+                }
             }
         }
     }
 
+    return superClass
+}
+
+
+fun isSpekSubclass(element: KtClassOrObject): Boolean {
+    val superClass = getSuperClass(element)
+    val fqName = superClass?.getKotlinFqName()
+    if (fqName != null) {
+        if (SPEK_CLASSES.contains(fqName.toString())) {
+            return true
+        } else {
+            return isSpekSubclass(superClass)
+        }
+    }
     return false
 }
 
 // TODO: check for @Ignore
-fun isSpekRunnable(element: KtLightClass) = element.containingClass == null && !element.hasModifier(JvmModifier.ABSTRACT)
+fun isSpekRunnable(element: KtClassOrObject) = element.containingClassOrObject == null && !element.isAbstract()
 
 private fun extractPathFromCallExpression(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
     val calleeExpression = callExpression.calleeExpression
@@ -126,7 +133,7 @@ private fun extractPathFromCallExpression(callExpression: KtCallExpression, buff
                             // probably root scope
                             val ktClassOrObject = getRootScopeClassOrObject(callExpression)
                             if (ktClassOrObject != null) {
-                                val builder = pathBuilderFromKtClassOrObject(ktClassOrObject.toLightClass())
+                                val builder = pathBuilderFromKtClassOrObject(ktClassOrObject)
                                 if (builder != null) {
                                     builder.append(description)
                                     buffer.forEach {
@@ -243,17 +250,15 @@ private fun getRootScopeClassOrObject(callExpression: KtCallExpression): KtClass
     return null
 }
 
-private fun pathBuilderFromKtClassOrObject(element: KtLightClass?): PathBuilder? {
-    if (element != null) {
-        if (isSpekSubclass(element) && isSpekRunnable(element)) {
-            val fqName = element.getKotlinFqName()
-            if (fqName != null) {
-                val pkg = fqName.parent().asString()
-                val cls = fqName.shortName().asString()
-                return PathBuilder()
-                    .append(pkg)
-                    .append(cls)
-            }
+private fun pathBuilderFromKtClassOrObject(element: KtClassOrObject): PathBuilder? {
+    if (isSpekSubclass(element) && isSpekRunnable(element)) {
+        val fqName = element.getKotlinFqName()
+        if (fqName != null) {
+            val pkg = fqName.parent().asString()
+            val cls = fqName.shortName().asString()
+            return PathBuilder()
+                .append(pkg)
+                .append(cls)
         }
     }
     return null

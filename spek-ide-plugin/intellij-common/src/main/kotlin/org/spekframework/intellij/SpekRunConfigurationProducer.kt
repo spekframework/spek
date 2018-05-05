@@ -10,6 +10,8 @@ import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
 import org.jetbrains.kotlin.config.TargetPlatformKind
+import org.jetbrains.kotlin.idea.facet.implementingModules
+import org.jetbrains.kotlin.idea.run.findJvmImplementationModule
 
 enum class ProducerType {
     COMMON,
@@ -43,13 +45,13 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
             val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
                 .getInitializedSettings(context.module)
 
+
             var canRun = false
             if (isPlatformSupported(kotlinFacetSettings.targetPlatformKind!!)) {
                 configuration.setModule(context.module)
                 canRun = true
             } else  if (kotlinFacetSettings.targetPlatformKind == TargetPlatformKind.Common) {
-                val result = findSupportedModule(context.project, kotlinFacetSettings)
-
+                val result = findSupportedModule(context.project, context.module)
                 if (result != null) {
                     val (module, moduleKotlinFacetSettings) = result
                     configuration.setModule(module)
@@ -68,13 +70,9 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
         }
     }
 
-    private fun findSupportedModule(project: Project, commonFacet: KotlinFacetSettings): Pair<Module, KotlinFacetSettings>? {
-        val moduleManager = ModuleManager.getInstance(project)
+    private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, KotlinFacetSettings>? {
         val kotlinFacetSettingsProvider = KotlinFacetSettingsProvider.getInstance(project)
-
-//        throw RuntimeException("${commonFacet.implementedModuleNames}")
-
-        return commonFacet.implementedModuleNames.map { moduleManager.findModuleByName(it)!! }
+        return commonModule.implementingModules
             .map { it to kotlinFacetSettingsProvider.getInitializedSettings(it) }
             .firstOrNull {
                 isPlatformSupported(it.second.targetPlatformKind!!)
