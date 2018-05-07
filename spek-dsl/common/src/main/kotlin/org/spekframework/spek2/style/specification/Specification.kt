@@ -19,13 +19,13 @@ class Suite(delegate: GroupBody): GroupBody by delegate {
         createSuite(description, pending, body)
     }
 
-    @Synonym(SynonymType.GROUP)
+    @Synonym(SynonymType.GROUP, excluded = true)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun xdescribe(description: String, reason: String = "", body: Suite.() -> Unit) {
         createSuite(description, Pending.Yes(reason), body)
     }
 
-    @Synonym(SynonymType.GROUP)
+    @Synonym(SynonymType.GROUP, excluded = true)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun xcontext(description: String, reason: String = "", body: Suite.() -> Unit) {
         createSuite(description, Pending.Yes(reason), body)
@@ -37,7 +37,7 @@ class Suite(delegate: GroupBody): GroupBody by delegate {
         createTest(description, pending, body)
     }
 
-    @Synonym(SynonymType.TEST)
+    @Synonym(SynonymType.TEST, excluded = true)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun xit(description: String, reason: String = "", body: TestBody.() -> Unit) {
         createTest(description, Pending.Yes(reason), body)
@@ -64,6 +64,12 @@ class Suite(delegate: GroupBody): GroupBody by delegate {
 @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
 fun GroupBody.describe(description: String, pending: Pending = Pending.No, body: Suite.() -> Unit) {
     createSuite(description, pending, body)
+}
+
+@Synonym(SynonymType.GROUP)
+@Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
+fun GroupBody.xdescribe(description: String, reason: String = "", body: Suite.() -> Unit) {
+    createSuite(description, Pending.Yes(reason), body)
 }
 
 private fun GroupBody.createSuite(description: String, pending: Pending, body: Suite.() -> Unit) {
