@@ -66,12 +66,12 @@ fun GroupBody.describe(description: String, pending: Pending = Pending.No, body:
     createSuite(description, pending, body)
 }
 
-fun GroupBody.createSuite(description: String, pending: Pending, body: Suite.() -> Unit) {
+private fun GroupBody.createSuite(description: String, pending: Pending, body: Suite.() -> Unit) {
     group(description, pending) {
         body(Suite(this))
     }
 }
 
-fun GroupBody.createTest(description: String, pending: Pending, body: TestBody.() -> Unit) {
+private fun GroupBody.createTest(description: String, pending: Pending, body: TestBody.() -> Unit) {
     test(description, pending, body)
 }
