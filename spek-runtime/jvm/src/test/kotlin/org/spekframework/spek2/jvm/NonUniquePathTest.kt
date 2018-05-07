@@ -11,8 +11,8 @@ class NonUniquePathTest: AbstractSpekRuntimeTest() {
     fun nonUnique() {
         class NonUniqueSpek: Spek({
             group("some group") {
-                it("duplicate") { }
-                it("duplicate") { }
+                test("duplicate") { }
+                test("duplicate") { }
             }
         })
 

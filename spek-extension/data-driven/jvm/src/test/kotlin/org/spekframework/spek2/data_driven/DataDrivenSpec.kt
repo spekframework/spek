@@ -1,11 +1,12 @@
 package org.spekframework.spek2.data_driven
 
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 import kotlin.test.assertEquals
 
 class DataDrivenSpec : Spek({
 
-    given("a calculator") {
+    describe("a calculator") {
 
         val calculator = Calculator()
 
@@ -17,7 +18,7 @@ class DataDrivenSpec : Spek({
 
         on("addition %s and %s", with = *data) { input1, input2, expected ->
 
-            it("returns $expected") {
+            test("returns $expected") {
                 assertEquals(expected, calculator.add(input1, input2))
             }
         }
@@ -28,14 +29,14 @@ class DataDrivenSpec : Spek({
             data(0, 5, 3, expected = -8)
         ) { minuend, subtrahend1, subtrahend2, expected ->
 
-            it("returns $expected") {
+            test("returns $expected") {
                 assertEquals(calculator.subtract(calculator.subtract(minuend, subtrahend1), subtrahend2), expected)
             }
         }
 
         on("%s divided by %s", data(10, 2, expected = 5)) { dividend, divisor, result ->
 
-            it("returns $result") {
+            test("returns $result") {
                 assertEquals(calculator.divide(dividend, divisor), result)
             }
         }

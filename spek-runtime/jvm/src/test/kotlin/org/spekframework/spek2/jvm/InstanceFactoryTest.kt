@@ -26,7 +26,7 @@ class InstanceFactoryTest: AbstractSpekRuntimeTest() {
     @Test
     fun testDefaultUsingSecondaryConstructors() {
         class SomeSpec(number: Int): Spek({
-            it("should be $number") { }
+            test("should be $number") { }
         }) {
             constructor(): this(10)
         }
@@ -39,7 +39,7 @@ class InstanceFactoryTest: AbstractSpekRuntimeTest() {
     fun testUsingObject() {
         @CreateWith(SimpleFactoryAsAnObject::class)
         class SomeSpec: Spek({
-            it("should work") {
+            test("should work") {
 
             }
         })
@@ -52,7 +52,7 @@ class InstanceFactoryTest: AbstractSpekRuntimeTest() {
     fun testUsingClass() {
         @CreateWith(SimpleFactoryAsAClass::class)
         class SomeSpec: Spek({
-            it("should work") {
+            test("should work") {
 
             }
         })
