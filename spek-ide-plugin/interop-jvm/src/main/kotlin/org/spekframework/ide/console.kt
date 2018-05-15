@@ -13,6 +13,7 @@ class Spek2ConsoleLauncher {
             PathBuilder.parse(it)
                 .build()
         }
+
         val discoveryRequest = DiscoveryRequest(args.sourceDirs.toList(), paths)
 
         val runtime =  SpekRuntime()
@@ -24,8 +25,8 @@ class Spek2ConsoleLauncher {
 }
 
 class LauncherArgs(parser: ArgParser) {
-    val sourceDirs by parser.adding("sourceDirs", help="Spec source dirs")
-    val paths by parser.adding("paths", help = "Spek paths to execute")
+    val sourceDirs by parser.adding("--sourceDirs", help="Spec source dirs")
+    val paths by parser.adding("--paths", help = "Spek paths to execute")
 }
 
 fun main(args: Array<String>) = mainBody {

@@ -4,26 +4,32 @@ import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
+import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import java.io.CharArrayWriter
 import java.io.PrintWriter
 
 class ServiceMessageAdapter: ExecutionListener {
-    override fun executionStart() = Unit
+    private val durations = mutableMapOf<Path, Long>()
+    override fun executionStart() { }
 
-    override fun executionFinish() = Unit
+    override fun executionFinish() {
+        durations.clear()
+    }
 
     override fun testExecutionStart(test: TestScopeImpl) {
+        durations[test.path] = System.currentTimeMillis()
         out("testStarted name='${test.path.name.toServiceMessageSafeString()}'")
     }
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
         val name = test.path.name.toServiceMessageSafeString()
+        val duration = System.currentTimeMillis() - durations[test.path]!!
         if (result is ExecutionResult.Failure) {
             val exceptionDetails = getExceptionDetails(result)
-            out("testFailed name='$name' message='${exceptionDetails.first}' details='${exceptionDetails.second}'")
+            out("testFailed name='$name' duration='$duration' message='${exceptionDetails.first}' details='${exceptionDetails.second}'")
         }
-        out("testFinished name='$name'")
+        out("testFinished name='$name' duration='$duration'")
     }
 
     override fun testIgnored(test: TestScopeImpl, reason: String?) {

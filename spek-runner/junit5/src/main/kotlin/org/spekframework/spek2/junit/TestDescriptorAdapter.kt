@@ -4,10 +4,13 @@ import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestSource
 import org.junit.platform.engine.TestTag
 import org.junit.platform.engine.UniqueId
+import org.junit.platform.engine.support.descriptor.ClassSource
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
-import java.util.Optional
+import org.spekframework.spek2.runtime.scope.ScopeType
+import java.util.*
+
 
 class TestDescriptorAdapter internal constructor(val scope: ScopeImpl,
                                                  val factory: TestDescriptorAdapterFactory): TestDescriptor {
@@ -21,7 +24,10 @@ class TestDescriptorAdapter internal constructor(val scope: ScopeImpl,
     private val _children = mutableSetOf<TestDescriptor>()
 
     override fun getSource(): Optional<TestSource> {
-        return Optional.empty()
+        return when(scope.id.type) {
+            ScopeType.CLASS -> Optional.of(ClassSource.from(scope.id.name))
+            else -> Optional.empty()
+        }
     }
 
     override fun removeFromHierarchy() {

@@ -1,26 +1,16 @@
 package org.spekframework.intellij
 
-import com.intellij.openapi.diagnostic.Logger
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.core.getPackage
+import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
-import org.jetbrains.kotlin.psi.KtBlockExpression
-import org.jetbrains.kotlin.psi.KtCallExpression
-import org.jetbrains.kotlin.psi.KtClassOrObject
-import org.jetbrains.kotlin.psi.KtFunctionLiteral
-import org.jetbrains.kotlin.psi.KtLambdaArgument
-import org.jetbrains.kotlin.psi.KtLambdaExpression
-import org.jetbrains.kotlin.psi.KtNamedFunction
-import org.jetbrains.kotlin.psi.KtPrimaryConstructor
-import org.jetbrains.kotlin.psi.KtStringTemplateExpression
-import org.jetbrains.kotlin.psi.KtSuperTypeCallEntry
-import org.jetbrains.kotlin.psi.KtSuperTypeList
-import org.jetbrains.kotlin.psi.KtValueArgument
-import org.jetbrains.kotlin.psi.KtValueArgumentList
-import org.jetbrains.uast.java.annotations
+import org.jetbrains.kotlin.lexer.KtToken
+import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.containingClassOrObject
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
@@ -32,12 +22,19 @@ private val SYNONYM_CLASSES = listOf(
     "org.spekframework.spek2.meta.Synonym"
 )
 
-fun extractPath(element: PsiElement): Path? {
-    return when (element) {
-        is KtClassOrObject -> {
-            pathBuilderFromKtClassOrObject(element)?.build()
-        }
-        is PsiDirectory -> {
+private val DESCRIPTIONS_CLASSES = listOf(
+    "org.spekframework.spek2.meta.Descriptions"
+)
+
+/**
+ * Marker exception for unsupported operations, we don't propagate this exceptions
+ * so that the IDE will not explode.
+ */
+class UnsupportedFeatureException(message: String): Throwable(message)
+
+fun extractPath(element: PsiElement, searchNearestAlternative: Boolean = false): Path? {
+    return when {
+        element is PsiDirectory -> {
             val pkg = element.getPackage()
             if (pkg != null) {
                 PathBuilder()
@@ -47,70 +44,98 @@ fun extractPath(element: PsiElement): Path? {
                 null
             }
         }
-        is KtCallExpression -> {
-             extractPath(element)
+        isIdentifier(element) -> {
+            val parent = element.parent
+            when (parent) {
+                is KtNameReferenceExpression -> extractPath(parent.parent)
+                is KtClassOrObject -> extractPath(parent)
+                else -> null
+            }
         }
-        else -> null
-    }
-}
-
-/**
- * Recursively check the type hierarchy until a match is found
- */
-fun isSpekSubclass(element: KtClassOrObject): Boolean {
-    val superTypeCallEntry = element.superTypeListEntries.filterIsInstance<KtSuperTypeCallEntry>()
-        .firstOrNull()
-
-    if (superTypeCallEntry != null) {
-        val constructorReference = superTypeCallEntry.calleeExpression.constructorReferenceExpression
-        if (constructorReference != null) {
-            val resolved = constructorReference.mainReference.resolve()
-
-            if (resolved != null && resolved is KtPrimaryConstructor) {
-                val cls = resolved.getContainingClassOrObject()
-                val fqName = cls.fqName
-                return if (fqName != null && SPEK_CLASSES.contains(fqName.toString())) {
-                    true
-                } else {
-                    isSpekSubclass(cls)
+        element is KtCallExpression -> extractPathFromCallExpression(element)
+        element is KtClassOrObject -> {
+            pathBuilderFromKtClassOrObject(element)?.build()
+        }
+        else -> {
+            if (searchNearestAlternative && isInKotlinFile(element)) {
+                var nearestCallExpression = PsiTreeUtil.getParentOfType(element, KtCallExpression::class.java)
+                if (nearestCallExpression != null) {
+                    return extractPath(nearestCallExpression)
                 }
             }
 
+            null
+        }
+    }
+}
+
+fun isInKotlinFile(element: PsiElement): Boolean {
+    val file = PsiTreeUtil.getParentOfType(element, KtFile::class.java)
+    return file != null
+}
+
+fun getSuperClass(element: KtClassOrObject): KtClassOrObject? {
+    val superTypes = element.superTypeListEntries
+    var superClass: KtClassOrObject? = null
+
+    for (entry in superTypes) {
+        val typeRef = entry.typeAsUserType
+        if (typeRef != null) {
+            val refExp = typeRef.referenceExpression
+            if (refExp != null) {
+                val mainRef = refExp.mainReference.resolve()
+                if (mainRef is KtPrimaryConstructor) {
+                    superClass = mainRef.getContainingClassOrObject()
+                    break
+                }
+            }
         }
     }
 
+    return superClass
+}
+
+
+fun isSpekSubclass(element: KtClassOrObject): Boolean {
+    val superClass = getSuperClass(element)
+    val fqName = superClass?.getKotlinFqName()
+    if (fqName != null) {
+        if (SPEK_CLASSES.contains(fqName.toString())) {
+            return true
+        } else {
+            return isSpekSubclass(superClass)
+        }
+    }
     return false
 }
 
 // TODO: check for @Ignore
-fun isSpekRunnable(element: KtClassOrObject) = element.isTopLevel() && !element.isAbstract()
+fun isSpekRunnable(element: KtClassOrObject) = element.containingClassOrObject == null && !element.isAbstract()
 
-private fun extractPath(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
+private fun extractPathFromCallExpression(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
     val calleeExpression = callExpression.calleeExpression
     if (calleeExpression != null) {
         val mainReference = calleeExpression.mainReference
         if (mainReference != null) {
             val resolved = mainReference.resolve()
             if (resolved != null && resolved is KtNamedFunction) {
-                val synonym = extractSynonymAnnotation(resolved)
-                if (synonym != null && !synonym.excluded) {
-                    val description = extractDescription(callExpression)
-                    if (description != null) {
-                        val parentCallExpression = getParentCallExpression(callExpression)
-                        val currentPath = "${synonym.prefix} $description".trim()
+                val synonymContext = extractSynonymContext(resolved)
+                if (synonymContext != null && !synonymContext.isExcluded()) {
+                    try {
+                        val description = synonymContext.constructDescription(callExpression)
+                        val parentCallExpression = getParentScopeCallExpression(callExpression)
                         if (parentCallExpression != null) {
                             val newBuffer = mutableListOf<String>()
-                            newBuffer.add(currentPath)
+                            newBuffer.add(description)
                             newBuffer.addAll(buffer)
-                            return extractPath(parentCallExpression, newBuffer)
+                            return extractPathFromCallExpression(parentCallExpression, newBuffer)
                         } else {
                             // probably root scope
-                            val ktClassOrObject = getKtClassOrObject(callExpression)
+                            val ktClassOrObject = getRootScopeClassOrObject(callExpression)
                             if (ktClassOrObject != null) {
                                 val builder = pathBuilderFromKtClassOrObject(ktClassOrObject)
-                                // TODO: PathBuilder is immutable for some reason :noidea: why I did this :)
                                 if (builder != null) {
-                                    builder.append(currentPath)
+                                    builder.append(description)
                                     buffer.forEach {
                                         builder.append(it)
                                     }
@@ -119,6 +144,8 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
                                 }
                             }
                         }
+                    } catch (e: UnsupportedFeatureException) {
+                        LOG.warn("Unsupported feature.", e)
                     }
                 }
 
@@ -128,66 +155,41 @@ private fun extractPath(callExpression: KtCallExpression, buffer: List<String> =
     return null
 }
 
-private enum class SynonymType {
-    Group,
-    Action,
-    Test
-}
 
-private data class SynonymData(val type: SynonymType,
-                               val prefix: String,
-                               val excluded: Boolean)
-
-private fun extractSynonymAnnotation(function: KtNamedFunction): SynonymData? {
+private fun extractSynonymContext(function: KtNamedFunction): SynonymContext? {
     val lightMethod = function.toLightMethods().firstOrNull()
-    val annotation = lightMethod?.annotations?.find {
-        SYNONYM_CLASSES.contains(it.qualifiedName)
-    }
+    if (lightMethod != null) {
+        val synonym = lightMethod.annotations
+            .filter { SYNONYM_CLASSES.contains(it.qualifiedName) }
+            .map(::PsiSynonym)
+            .firstOrNull()
 
-    return annotation?.let {
-        val type = annotation.findDeclaredAttributeValue("type")!!
-        val prefix = annotation.findDeclaredAttributeValue("prefix")
-        val excluded = annotation.findDeclaredAttributeValue("excluded")
+        if (synonym != null) {
+            val descriptions = lightMethod.annotations
+                .filter { DESCRIPTIONS_CLASSES.contains(it.qualifiedName) }
+                .map(::PsiDescriptions)
+                .firstOrNull()
 
-        val synonymText = type.text
-        val synonymType = if (synonymText.endsWith("SynonymType.Group")) {
-            SynonymType.Group
-        } else if (synonymText.endsWith("SynonymType.Action")) {
-            SynonymType.Action
-        } else if (synonymText.endsWith("SynonymType.Test")) {
-            SynonymType.Test
-        } else {
-            LOG.warn("Unsupported synonym: $synonymText.")
-            null
-        }
-
-        synonymType?.let {
-            SynonymData(
-                it,
-                prefix?.let { it.text.removeSurrounding("\"") } ?: "",
-                excluded?.let { it.text.toBoolean() } ?: false
-            )
-        }
-    }
-}
-
-private fun extractDescription(callExpression: KtCallExpression, index: Int = 0): String? {
-    val argument = callExpression.valueArguments.getOrNull(0)
-    val expression = argument?.getArgumentExpression()
-
-    return when (expression) {
-        is KtStringTemplateExpression -> {
-            if (!expression.hasInterpolation()) {
-                expression.entries.first().text
-            } else {
-                null
+            if (descriptions != null) {
+                return SynonymContext(synonym, descriptions)
             }
         }
-        else -> null
     }
+    return null
 }
 
-private fun getParentCallExpression(callExpression: KtCallExpression): KtCallExpression? {
+/**
+ * Call the parent of the current scope. Current scope is represented by [callExpression]
+ * <code>
+ *     group("some group") {
+ *          test("test") { .. }
+ *     }
+ * </code>
+ *
+ * Current scope here is `test` and what we want to retrieve is CallExpression of `group`.
+ *
+ */
+private fun getParentScopeCallExpression(callExpression: KtCallExpression): KtCallExpression? {
     val block = callExpression.parent
     if (block is KtBlockExpression) {
         val functionLiteral = block.parent
@@ -208,7 +210,18 @@ private fun getParentCallExpression(callExpression: KtCallExpression): KtCallExp
     return null
 }
 
-private fun getKtClassOrObject(callExpression: KtCallExpression): KtClassOrObject? {
+/**
+ * Get the containing Spek class, if the current scope is declared on the root.
+ * <code>
+ *     class MySpec: Spek({
+ *          describe("something") { ... }
+ *     })
+ * </code>
+ *
+ * Current scope here is `describe` and we want to retrieve the KtClassOrObject element of `MySpec`.
+ *
+ */
+private fun getRootScopeClassOrObject(callExpression: KtCallExpression): KtClassOrObject? {
     val block = callExpression.parent
     if (block is KtBlockExpression) {
         val functionLiteral = block.parent
@@ -239,7 +252,7 @@ private fun getKtClassOrObject(callExpression: KtCallExpression): KtClassOrObjec
 
 private fun pathBuilderFromKtClassOrObject(element: KtClassOrObject): PathBuilder? {
     if (isSpekSubclass(element) && isSpekRunnable(element)) {
-        val fqName = element.fqName
+        val fqName = element.getKotlinFqName()
         if (fqName != null) {
             val pkg = fqName.parent().asString()
             val cls = fqName.shortName().asString()
@@ -249,4 +262,15 @@ private fun pathBuilderFromKtClassOrObject(element: KtClassOrObject): PathBuilde
         }
     }
     return null
+}
+
+fun isIdentifier(element: PsiElement): Boolean {
+    val node = element.node
+    if (node != null) {
+        val elementType = node.elementType
+        if (elementType is KtToken) {
+            return elementType.toString() == "IDENTIFIER"
+        }
+    }
+    return false
 }

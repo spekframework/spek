@@ -1,10 +1,8 @@
 package org.spekframework.intellij
 
-import com.intellij.execution.configurations.ConfigurationFactory
-import com.intellij.execution.configurations.ConfigurationType
-import com.intellij.execution.configurations.JavaRunConfigurationModule
-import com.intellij.execution.configurations.RunConfiguration
+import com.intellij.execution.configurations.*
 import com.intellij.openapi.project.Project
+import org.jetbrains.kotlin.idea.KotlinIcons
 
 class Spek2JvmConfigurationFactory(type: ConfigurationType): ConfigurationFactory(type) {
     override fun createTemplateConfiguration(project: Project): RunConfiguration =
@@ -13,9 +11,15 @@ class Spek2JvmConfigurationFactory(type: ConfigurationType): ConfigurationFactor
 
 class Spek2JvmConfigurationType: SpekBaseConfigurationType(
     "org.spekframework.spek2-jvm",
-    "Spek 2 - JVM"
+    "Spek 2 - JVM",
+    KotlinIcons.SMALL_LOGO_13
 ) {
     init {
         addFactory(Spek2JvmConfigurationFactory(this))
     }
 }
+
+class Spek2JvmRunConfigurationProducer: SpekRunConfigurationProducer(
+    ProducerType.JVM,
+    ConfigurationTypeUtil.findConfigurationType(Spek2JvmConfigurationType::class.java)
+)

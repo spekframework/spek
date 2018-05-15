@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>org.spekframework</id>
-    <name>Spek</name>
+    <name>Spek Framework</name>
     <vendor email="team@spekframework.org" url="http://spekframework.org">Spek Team</vendor>
     <description><![CDATA[
       Official IntelliJ IDEA plugin for <a href="http://jetbrains.github.io/spek/">Spek</a>.
@@ -19,8 +19,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="org.spekframework.intellij.Spek2JvmConfigurationType"/>
-        <runConfigurationProducer implementation="org.spekframework.intellij.SpekRunConfigurationProducer"/>
-        <!--<implicitUsageProvider implementation="org.jetbrains.spek.idea.SpekJvmImplicitUsageProvider"/>-->
+        <runConfigurationProducer implementation="org.spekframework.intellij.Spek2JvmRunConfigurationProducer"/>
+        <implicitUsageProvider implementation="org.spekframework.intellij.SpekImplicitUsageProvider"/>
         <runLineMarkerContributor language="kotlin" implementationClass="org.spekframework.intellij.SpekRunLineMarkerContributor"/>
     </extensions>
 
