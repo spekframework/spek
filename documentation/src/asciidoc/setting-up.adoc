@@ -10,8 +10,29 @@ NOTE: For Android projects check <<setting-up-legacy>> section.
 === Gradle
 JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#running-tests-build[gradle plugin].
 
+
 [source,groovy,subs="+attributes"]
-.build.gradle
+.build.gradle (Gradle >= 4.6)
+----
+test {
+    useJUnitPlatform {
+        includeEngines 'spek'
+    }
+}
+
+repositories {
+    maven { url "https://dl.bintray.com/jetbrains/spek" }
+}
+
+// setup dependencies
+dependencies {
+    testCompile 'org.jetbrains.spek:spek-api:{version}'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:{version}'
+}
+----
+
+[source,groovy,subs="+attributes"]
+.build.gradle (Gradle < 4.6)
 ----
 // setup the plugin
 buildscript {
@@ -31,7 +52,7 @@ junitPlatform {
 }
 
 repositories {
-    maven { url "http://dl.bintray.com/jetbrains/spek" }
+    maven { url "https://dl.bintray.com/jetbrains/spek" }
 }
 
 // setup dependencies
@@ -41,9 +62,30 @@ dependencies {
 }
 ----
 
-=== Gradle Kotlin Script
+
+=== Gradle Kotlin Script (Gradle < 4.6)
+
 [source,kotlin,subs="+attributes"]
-.build.gradle.kts
+.build.gradle.kts (Gradle >= 4.6)
+----
+tasks {
+    "test"(Test::class) {
+        useJUnitPlatform {
+            includeEngines("spek")
+        }
+    }
+}
+
+// setup dependencies
+dependencies {
+    testCompile("org.jetbrains.spek:spek-api:{version}")
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:{version}")
+}
+----
+
+
+[source,kotlin,subs="+attributes"]
+.build.gradle.kts (Gradle < 4.6)
 ----
 import org.gradle.api.plugins.ExtensionAware
 
