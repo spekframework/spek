@@ -35,4 +35,3 @@ include 'integration-test:jvm'
 
 include 'distribution'
 include 'documentation'
-include 'samples'

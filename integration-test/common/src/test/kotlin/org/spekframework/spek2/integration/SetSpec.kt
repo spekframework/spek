@@ -1,10 +1,11 @@
 package org.spekframework.spek2.integration
 
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-object SetSpek: Spek({
+object SetSpec: Spek({
     describe("A set") {
         val set by memoized { mutableSetOf<String>() }
 
