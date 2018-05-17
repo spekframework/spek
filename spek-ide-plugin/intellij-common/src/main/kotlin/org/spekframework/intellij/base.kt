@@ -16,7 +16,7 @@ import javax.swing.Icon
 abstract class SpekBaseConfigurationType(id: String, displayName: String, icon: Icon): ConfigurationTypeBase(
     id,
     displayName,
-    "Run specifications",
+    "Run Spek scopes",
     icon
 )
 
