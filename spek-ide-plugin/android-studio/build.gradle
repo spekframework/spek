@@ -6,11 +6,22 @@ intellij {
     downloadSources = true
 
     localPath = "$localAndroidStudio"
-    plugins = ['gradle']
+    plugins = ["kotlin", 'gradle']
     alternativeIdePath = "$localAndroidStudio"
 }
 
 dependencies {
     compile project(':spek-ide-plugin:intellij-jvm')
     compileOnly fileTree(dir: "$localAndroidStudio/plugins/android/lib", include: ['*.jar'])
+}
+
+buildPlugin {
+    baseName = ''
+    version = "${project.version}-Studio3.1"
+}
+
+patchPluginXml {
+    version = "${project.version}-Studio3.1"
+    sinceBuild = "173.1"
+    untilBuild = "181.*"
 }
