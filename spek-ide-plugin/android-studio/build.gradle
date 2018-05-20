@@ -1,0 +1,16 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/idea-plugin.gradle"
+
+intellij {
+    updateSinceUntilBuild = false
+    downloadSources = true
+
+    localPath = "$localAndroidStudio"
+    plugins = ['gradle']
+    alternativeIdePath = "$localAndroidStudio"
+}
+
+dependencies {
+    compile project(':spek-ide-plugin:intellij-jvm')
+    compileOnly fileTree(dir: "$localAndroidStudio/plugins/android/lib", include: ['*.jar'])
+}
