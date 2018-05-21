@@ -1,39 +1,29 @@
 package org.spekframework.spek2.runtime
 
-import org.spekframework.spek2.dsl.ActionBody
-import org.spekframework.spek2.dsl.Pending
-import org.spekframework.spek2.dsl.Root
-import org.spekframework.spek2.dsl.GroupBody
-import org.spekframework.spek2.dsl.TestBody
+import org.spekframework.spek2.dsl.*
 import org.spekframework.spek2.lifecycle.CachingMode
-import org.spekframework.spek2.lifecycle.LifecycleAware
 import org.spekframework.spek2.lifecycle.LifecycleListener
+import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.lifecycle.LifecycleAwareAdapter
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
-import org.spekframework.spek2.runtime.scope.ActionScopeImpl
-import org.spekframework.spek2.runtime.scope.GroupScopeImpl
-import org.spekframework.spek2.runtime.scope.ScopeId
-import org.spekframework.spek2.runtime.scope.ScopeType
-import org.spekframework.spek2.runtime.scope.TestScopeImpl
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueImpl
+import org.spekframework.spek2.runtime.scope.*
 
 open class Collector(val root: GroupScopeImpl,
                      val lifecycleManager: LifecycleManager,
                      val fixtures: FixturesAdapter): Root {
     val ids = mutableMapOf<String, Int>()
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> = memoized(mode, factory) { }
+    override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): LifecycleAware<T> {
-        val adapter = when (mode) {
-            CachingMode.GROUP -> LifecycleAwareAdapter.GroupCachingModeAdapter(factory, destructor)
-            CachingMode.TEST -> LifecycleAwareAdapter.TestCachingModeAdapter(factory, destructor)
-            CachingMode.SCOPE -> LifecycleAwareAdapter.ScopeCachingModeAdapter(root, factory, destructor)
-        }
-        return adapter.apply {
-            registerListener(this)
-        }
+    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+        return MemoizedValueImpl(
+            root,
+            mode,
+            factory,
+            destructor
+        )
     }
 
 

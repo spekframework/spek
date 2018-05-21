@@ -8,14 +8,31 @@ import org.spekframework.spek2.lifecycle.Scope
 import org.spekframework.spek2.lifecycle.TestScope
 import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
+import kotlin.properties.ReadOnlyProperty
 
 sealed class ScopeImpl(val id: ScopeId,
                        val path: Path,
                        val pending: Pending,
                        val lifecycleManager: LifecycleManager): Scope {
+    private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
     abstract fun before(context: ExecutionContext)
     open fun execute(context: ExecutionContext) { }
     abstract fun after(context: ExecutionContext)
+
+    fun registerValue(name: String, value: ReadOnlyProperty<Any?, Any?>) {
+        values[name] = value
+    }
+
+    fun getValue(name: String): ReadOnlyProperty<Any?, Any?> {
+        return when {
+            values.containsKey(name) -> values[name]!!
+            parent != null -> (parent as ScopeImpl).getValue(name)
+            else -> throw IllegalArgumentException("No value for '$name'")
+        }
+    }
+
+
+    fun removeValue(name: String) = values.remove(name)
 }
 
 open class GroupScopeImpl(id: ScopeId,

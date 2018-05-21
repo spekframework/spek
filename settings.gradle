@@ -17,9 +17,6 @@ include 'spek-runtime:jvm'
 
 include 'spek-runner:junit5'
 
-include 'spek-extension:subject:common'
-include 'spek-extension:subject:jvm'
-
 include 'spek-extension:data-driven:common'
 include 'spek-extension:data-driven:jvm'
 

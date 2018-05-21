@@ -1,7 +1,7 @@
 package org.spekframework.spek2.dsl
 
 import org.spekframework.spek2.lifecycle.CachingMode
-import org.spekframework.spek2.lifecycle.LifecycleAware
+import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.meta.*
 
 /**
@@ -17,8 +17,8 @@ interface GroupBody: TestContainer {
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun action(description: String, pending: Pending = Pending.No, body: ActionBody.() -> Unit)
 
-    fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T): LifecycleAware<T>
-    fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T, destructor: (T) -> Unit): LifecycleAware<T>
+    fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T): MemoizedValue<T>
+    fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
 
     fun beforeEachTest(callback: () -> Unit)
     fun afterEachTest(callback: () -> Unit)

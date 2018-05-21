@@ -3,7 +3,7 @@ package org.spekframework.spek2.lifecycle
 import org.spekframework.spek2.meta.Experimental
 
 /**
- * Specifies how [lifecycle aware objects][LifecycleAware] are cached.
+ * Specifies how [lifecycle aware objects][MemoizedValue] are cached.
  */
 @Experimental
 enum class CachingMode {
