@@ -8,7 +8,7 @@ import org.spekframework.spek2.meta.*
  * @since 1.0
  */
 @SpekDsl
-interface GroupBody: TestContainer {
+interface GroupBody: TestContainer, ScopeBody {
     @Synonym(type = SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun group(description: String, pending: Pending = Pending.No, body: GroupBody.() -> Unit)

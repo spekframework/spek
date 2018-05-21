@@ -7,7 +7,8 @@ import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
-import org.spekframework.spek2.runtime.lifecycle.MemoizedValueImpl
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueCreator
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import org.spekframework.spek2.runtime.scope.*
 
 open class Collector(val root: GroupScopeImpl,
@@ -18,7 +19,7 @@ open class Collector(val root: GroupScopeImpl,
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
-        return MemoizedValueImpl(
+        return MemoizedValueCreator(
             root,
             mode,
             factory,
@@ -26,6 +27,9 @@ open class Collector(val root: GroupScopeImpl,
         )
     }
 
+    override fun <T> memoized(): MemoizedValue<T> {
+        return MemoizedValueReader(root)
+    }
 
     override fun registerListener(listener: LifecycleListener) {
         lifecycleManager.addListener(listener)
@@ -113,6 +117,10 @@ open class Collector(val root: GroupScopeImpl,
 }
 
 class ActionCollector(val root: ActionScopeImpl, val lifecycleManager: LifecycleManager, val context: ExecutionContext, val idFor: (String) -> ScopeId): ActionBody {
+
+    override fun <T> memoized(): MemoizedValue<T> {
+        return MemoizedValueReader(root)
+    }
 
     override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
