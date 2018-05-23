@@ -28,7 +28,10 @@ include 'spek-ide-plugin:interop-jvm'
 include 'spek-ide-plugin:intellij-common'
 include 'spek-ide-plugin:intellij-jvm'
 include 'spek-ide-plugin:intellij-idea'
-include 'spek-ide-plugin:intellij-studio'
+
+if (hasProperty("localAndroidStudio")) {
+    include 'spek-ide-plugin:android-studio'
+}
 
 include 'integration-test:common'
 include 'integration-test:jvm'
