@@ -9,3 +9,14 @@ intellij {
 dependencies {
     compile project(':spek-ide-plugin:intellij-jvm')
 }
+
+buildPlugin {
+    baseName = ''
+    version = "${project.version}-IJ$ijSdkVersion"
+}
+
+patchPluginXml {
+    version = "${project.version}-IJ$ijSdkVersion"
+    sinceBuild = "181.1"
+    untilBuild = "182.*"
+}

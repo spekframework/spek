@@ -4,7 +4,7 @@ apply plugin: 'org.jetbrains.dokka'
 def archiveBaseName = "${project.parent.name}-${project.name}"
 
 dependencies {
-    compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 }
 
 task sourceJar(type: Jar) {
