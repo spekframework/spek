@@ -14,7 +14,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedTestCaching() {
         class MemoizedSpec : Spek({
-            val foo = memoized {
+            val foo by memoized {
                 listOf(1)
             }
 
@@ -22,11 +22,11 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
             var memoized2: List<Int>? = null
 
             test("first pass") {
-                memoized1 = foo()
+                memoized1 = foo
             }
 
             test("second pass") {
-                memoized2 = foo()
+                memoized2 = foo
             }
 
             test("check") {
@@ -42,7 +42,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedTestCachingWithDestructor() {
         class MemoizedSpec : Spek({
-            val foo = memoized(
+            val foo by memoized(
                 factory = { mutableListOf(1) },
                 destructor = { it.clear() }
             )
@@ -51,11 +51,11 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
             var memoized2: List<Int>? = null
 
             test("first pass") {
-                memoized1 = foo()
+                memoized1 = foo
             }
 
             test("second pass") {
-                memoized2 = foo()
+                memoized2 = foo
             }
 
             test("check") {
@@ -77,20 +77,20 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             var counter = -1
 
-            val foo = memoized {
+            val foo by memoized {
                 ++counter
             }
 
             beforeEachTest {
-                assertThat(foo(), equalTo(0))
+                assertThat(foo, equalTo(0))
             }
 
             test("check") {
-                assertThat(foo(), equalTo(0))
+                assertThat(foo, equalTo(0))
             }
 
             afterEachTest {
-                assertThat(foo(), equalTo(0))
+                assertThat(foo, equalTo(0))
             }
         })
 
@@ -101,7 +101,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedGroupCaching() {
         class MemoizedSpec : Spek({
-            val foo = memoized(CachingMode.GROUP) {
+            val foo by memoized(CachingMode.GROUP) {
                 listOf(1)
             }
 
@@ -110,13 +110,13 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             group("group") {
                 test("first pass") {
-                    memoized1 = foo()
+                    memoized1 = foo
                 }
             }
 
             group("another group") {
                 test("second pass") {
-                    memoized2 = foo()
+                    memoized2 = foo
                 }
 
             }
@@ -135,7 +135,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedGroupCachingWithDestructor() {
         class MemoizedSpec : Spek({
-            val foo = memoized(
+            val foo by memoized(
                 mode = CachingMode.GROUP,
                 factory = { mutableListOf(1) },
                 destructor = { it.clear() }
@@ -145,7 +145,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             group("group") {
                 test("first pass") {
-                    memoized = foo()
+                    memoized = foo
                 }
 
                 test("check") {
@@ -166,7 +166,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedNestedGroupCaching() {
         class MemoizedSpec : Spek({
-            val foo = memoized(CachingMode.GROUP) {
+            val foo by memoized(CachingMode.GROUP) {
                 listOf(1)
             }
 
@@ -175,12 +175,12 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             group("group") {
                 test("first pass") {
-                    memoized1 = foo()
+                    memoized1 = foo
                 }
 
                 group("another group") {
                     test("second pass") {
-                        memoized2 = foo()
+                        memoized2 = foo
                     }
 
                 }
@@ -199,7 +199,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedNestedGroupCachingWithDestructor() {
         class MemoizedSpec : Spek({
-            val foo = memoized(
+            val foo by memoized(
                 mode = CachingMode.GROUP,
                 factory = { mutableListOf(1) },
                 destructor = { it.clear() }
@@ -210,12 +210,12 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             group("group") {
                 test("first pass") {
-                    memoized1 = foo()
+                    memoized1 = foo
                 }
 
                 group("another group") {
                     test("second pass") {
-                        memoized2 = foo()
+                        memoized2 = foo
                     }
                 }
 
@@ -238,7 +238,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedScopeCaching() {
         class MemoizedSpec : Spek({
-            val foo = memoized(CachingMode.SCOPE) {
+            val foo by memoized(CachingMode.SCOPE) {
                 listOf(1)
             }
 
@@ -247,13 +247,13 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             group("group") {
                 test("first pass") {
-                    memoized1 = foo()
+                    memoized1 = foo
                 }
             }
 
             group("another group") {
                 test("second pass") {
-                    memoized2 = foo()
+                    memoized2 = foo
                 }
 
             }
@@ -272,7 +272,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedScopeCachingWithNestedGroups() {
         class MemoizedSpec : Spek({
-            val foo = memoized(CachingMode.SCOPE) {
+            val foo by memoized(CachingMode.SCOPE) {
                 listOf(1)
             }
 
@@ -281,12 +281,12 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             group("group") {
                 test("first pass") {
-                    memoized1 = foo()
+                    memoized1 = foo
                 }
 
                 group("another group") {
                     test("second pass") {
-                        memoized2 = foo()
+                        memoized2 = foo
                     }
 
                 }
@@ -308,7 +308,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
             var memoized: List<Int>? = null
 
             group("group") {
-                val foo = memoized(
+                val foo by memoized(
                     mode = CachingMode.SCOPE,
                     factory = { mutableListOf(1) },
                     destructor = { it.clear() }
@@ -316,7 +316,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
                 group("another group") {
                     test("second pass") {
-                        memoized = foo()
+                        memoized = foo
                     }
                 }
 
@@ -338,7 +338,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedActionCaching() {
         class MemoizedSpec : Spek({
-            val foo = memoized {
+            val foo by memoized {
                 listOf(1)
             }
 
@@ -347,11 +347,11 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             action("some action") {
                 test("first pass") {
-                    memoized1 = foo()
+                    memoized1 = foo
                 }
 
                 test("second pass") {
-                    memoized2 = foo()
+                    memoized2 = foo
                 }
 
                 test("check") {
@@ -370,7 +370,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
     fun memoizedActionCachingWithDestructor() {
         class MemoizedSpec : Spek({
-            val foo = memoized(
+            val foo by memoized(
                 factory = { mutableListOf(1) },
                 destructor = { it.clear() }
             )
@@ -379,7 +379,7 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
 
             action("some action") {
                 test("first pass") {
-                    memoized = foo()
+                    memoized = foo
                 }
 
                 test("check") {
