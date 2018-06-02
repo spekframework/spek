@@ -34,4 +34,3 @@ include 'integration-test:common'
 include 'integration-test:jvm'
 
 include 'distribution'
-//include 'documentation'

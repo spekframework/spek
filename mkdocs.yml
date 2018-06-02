@@ -1,0 +1,54 @@
+site_name: Spek Framework
+
+# Meta tags (placed in header)
+site_description: 
+site_author: Spek Team
+site_url: https://spekframework.org
+
+# Repository (add link to repository on each page)
+repo_name: Spek Framework
+repo_url: https://github.com/spekframework/spek
+#edit_uri: edit/master/src/doc
+
+#Copyright (shown at the footer)
+copyright: 'Copyright &copy; 2018 Spek Team'
+
+# Meterial theme
+theme: 'material'
+#extra:
+#  palette:
+#    primary: 'indigo'
+#    accent: 'indigo'
+
+#  social:
+#    - type: 'github'
+#      link: 'https://github.com/you'
+#    - type: 'twitter'
+#      link: 'https://twitter.com/you'
+
+
+# Google Analytics
+#google_analytics:
+#  - 'UA-111111111-1'
+#  - 'auto'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite(guess_lang=false)
+  - footnotes
+  - meta
+  - toc(permalink=true)
+  - pymdownx.betterem(smart_enable=all)
+  - pymdownx.caret
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+
+pages:
+  - Home: index.md
+  - User guide:
+      - Setup: guide/setup.md
+  - About:
+      - Release notes: about/history.md
