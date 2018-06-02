@@ -48,7 +48,8 @@ markdown_extensions:
 
 pages:
   - Home: index.md
-  - User guide:
+  - User Guide:
+      - Breaking changes: guide/breaking-changes.md
       - Setup: guide/setup.md
   - About:
       - Release notes: about/history.md
