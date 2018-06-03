@@ -9,7 +9,8 @@ DSL is now split into two distinct styles: `specification` and `gherkin`.
 
 ## JUnit Platform
 `JUnit Platform` is now only used as a runner, instead of driving the whole discovery and execution phases. It now
-uses `spek2` as the test engine name to allow having Spek `1.x` and `2.x` tests in the same project.
+uses `spek2` as the test engine name to allow having `1.x` and `2.x` tests in the same project. This will pave the
+way to support Kotlin multiplatform projects.
 
 ## Removed Extensions
 The following extensions are removed.

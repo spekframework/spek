@@ -14,8 +14,10 @@ repo_url: https://github.com/spekframework/spek
 copyright: 'Copyright &copy; 2018 Spek Team'
 
 # Meterial theme
-theme: 'material'
-#extra:
+theme:
+  name: 'material'
+  logo:
+    icon: 'code'
 #  palette:
 #    primary: 'indigo'
 #    accent: 'indigo'
@@ -49,7 +51,10 @@ markdown_extensions:
 pages:
   - Home: index.md
   - User Guide:
-      - Breaking changes: guide/breaking-changes.md
-      - Setup: guide/setup.md
-  - About:
-      - Release notes: about/history.md
+      - 1.x:
+        - Setting up: guide/1.x/setup.md
+      - 2.x:
+        - Breaking changes: guide/2.x/breaking-changes.md
+        - Setting up:
+          - JVM: guide/2.x/setup-jvm.md
+          - Multiplatform: guide/2.x/setup-mpp.md
