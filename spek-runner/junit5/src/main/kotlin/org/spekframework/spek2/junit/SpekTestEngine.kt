@@ -14,10 +14,15 @@ import java.nio.file.Paths
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
 
 class SpekTestEngine: TestEngine {
-    val factory = TestDescriptorAdapterFactory()
-    val runtime by lazy { SpekRuntime() }
 
-    override fun getId() = "spek2"
+    companion object {
+        const val ID = "spek2"
+    }
+
+    private val factory = TestDescriptorAdapterFactory()
+    private val runtime by lazy { SpekRuntime() }
+
+    override fun getId() = ID
 
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
