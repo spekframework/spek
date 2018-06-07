@@ -1,5 +1,5 @@
 # Spek Framework
-Say goodbye to boilerplate and write meaningful tests.
+Say goodbye to boilerplate and write spektakular tests.
 
 ## Choose your style
 ### Specification

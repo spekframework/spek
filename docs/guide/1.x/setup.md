@@ -1,7 +1,6 @@
-Spek is implemented as a [JUnit Platform](https://junit.org/junit5) TestEngine. 
-
-Include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine` 
-in the test classpath. The former is needed during compilation, while the latter during runtime only.
+Spek is composed of two parts, the API (`org.jetbrains.spek:spek-api`) and a
+[JUnit Platform](https://junit.org/junit5) TestEngine implementation (`org.jetbrains.spek:spek-junit-platform-engine`). 
+The former is needed during compilation, while the latter only during runtime.
 
 ## Gradle
 Gradle `4.7` is recommended as it added a built-in support for JUnit Platform.
@@ -106,4 +105,4 @@ Installing the [plugin](https://plugins.jetbrains.com/plugin/8564-spek) will all
 running tests within IntelliJ IDEA and Android Studio.
 
 !!! warning "Limitations"
-    The plugin won't work when using JUnit Platform's `@RunWith` (`junit-vintage-engine`) support.
+    The plugin won't work when using JUnit Platform's `@RunWith` (**junit-vintage-engine**) support.
