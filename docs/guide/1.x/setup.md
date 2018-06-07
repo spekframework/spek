@@ -32,34 +32,6 @@ test {
     }
 }
 ```
-
-The following shows the equivalent build using Gradle's Kotlin DSL.
-
-```kotlin
-import org.gradle.kotlin.dsl.*
-
-dependencies {
-    // some version of kotlin
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    
-    testImplementation("org.jetbrains.spek:spek-api:1.x.x") {
-        exclude(group = "org.jetbrains.kotlin")
-    }
-    testRuntimeOnly("org.jetbrains.spek:spek-junit-platform-engine:1.x.x") {
-        exclude(group = "org.jetbrains.kotlin")
-        exclude(group = "org.junit.platform")
-    }
-
-    // spek requires kotlin-reflect, can be omitted if already in the classpath
-    testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
-}
-
-val test by tasks.getting(Test::class) {
-    useJUnitPlatform {
-        includeEngines("spek")
-    }
-}
-```
     
 ## Maven
 The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
