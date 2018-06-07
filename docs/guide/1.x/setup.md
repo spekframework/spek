@@ -1,4 +1,3 @@
-# Setting up
 Spek is implemented as a [JUnit Platform](https://junit.org/junit5) TestEngine. 
 
 Include `org.jetbrains.spek:spek-api` and `org.jetbrains.spek:spek-junit-platform-engine` 

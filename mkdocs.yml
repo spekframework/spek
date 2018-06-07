@@ -53,6 +53,7 @@ pages:
   - User Guide:
       - 1.x:
         - Setting up: guide/1.x/setup.md
+        - Preamble: guide/1.x/preamble.md
       - 2.x:
         - Breaking changes: guide/2.x/breaking-changes.md
         - Setting up:
