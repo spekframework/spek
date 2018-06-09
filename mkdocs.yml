@@ -1,7 +1,7 @@
 site_name: Spek Framework
 
 # Meta tags (placed in header)
-site_description: 
+site_description: Spektakular test framework for Kotlin.
 site_author: Spek Team
 site_url: https://spekframework.org
 
