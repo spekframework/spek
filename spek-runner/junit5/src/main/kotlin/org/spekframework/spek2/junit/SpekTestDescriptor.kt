@@ -52,13 +52,7 @@ class SpekTestDescriptor internal constructor(
     }
 
     override fun getParent(): Optional<TestDescriptor> {
-        // TODO: replace with just `scope.parent`?
-        val parent = if (scope is GroupScopeImpl) {
-            scope.parent
-        } else {
-            // TestScope which always have a parent
-            scope.parent!!
-        } as ScopeImpl?
+        val parent = scope.parent as ScopeImpl?
 
         return Optional.of(if (parent != null) {
             factory.create(parent)
