@@ -99,11 +99,10 @@ def artifacts = [
 
 // Can be null.
 String getProperyOrEnvVar(String name) {
-    String value = findProperty(name)
-    if (value == null) {
-        value = System.getenv(name)
+    if (hasProperty(name)) {
+        return findProperty(name)
     }
-    return  value
+    return System.getenv(name)
 }
 
 String getBintrayUser() {
