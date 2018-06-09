@@ -5,8 +5,10 @@ import org.spekframework.spek2.runtime.scope.ScopeImpl
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-sealed class MemoizedValueAdapter<T>(val factory: () -> T, val destructor: (T) -> Unit)
-    : ReadOnlyProperty<Any?, T>, LifecycleListener {
+sealed class MemoizedValueAdapter<T>(
+        val factory: () -> T,
+        val destructor: (T) -> Unit
+) : ReadOnlyProperty<Any?, T>, LifecycleListener {
 
     protected sealed class Cached<out T> {
         object Empty : Cached<Nothing>()
@@ -19,7 +21,7 @@ sealed class MemoizedValueAdapter<T>(val factory: () -> T, val destructor: (T) -
 
     fun get(): T {
         val cached = this.cached
-        return when(cached) {
+        return when (cached) {
             Cached.Empty -> {
                 val newCached = Cached.Value(factory())
                 this.cached = newCached
@@ -29,8 +31,11 @@ sealed class MemoizedValueAdapter<T>(val factory: () -> T, val destructor: (T) -
         }
     }
 
-    class GroupCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
-        : MemoizedValueAdapter<T>(factory, destructor) {
+    class GroupCachingModeAdapter<T>(
+            factory: () -> T,
+            destructor: (T) -> Unit
+    ) : MemoizedValueAdapter<T>(factory, destructor) {
+
         private val stack = mutableListOf<Cached<T>>()
 
         override fun beforeExecuteGroup(group: GroupScope) {
@@ -49,8 +54,11 @@ sealed class MemoizedValueAdapter<T>(val factory: () -> T, val destructor: (T) -
         }
     }
 
-    class ScopeCachingModeAdapter<T>(val scope: ScopeImpl, factory: () -> T, destructor: (T) -> Unit)
-        : MemoizedValueAdapter<T>(factory, destructor) {
+    class ScopeCachingModeAdapter<T>(
+            val scope: ScopeImpl,
+            factory: () -> T, destructor: (T) -> Unit
+    ) : MemoizedValueAdapter<T>(factory, destructor) {
+
         override fun afterExecuteGroup(group: GroupScope) {
             if (this.scope == group) {
                 val cached = this.cached
@@ -62,8 +70,11 @@ sealed class MemoizedValueAdapter<T>(val factory: () -> T, val destructor: (T) -
         }
     }
 
-    class TestCachingModeAdapter<T>(factory: () -> T, destructor: (T) -> Unit)
-        : MemoizedValueAdapter<T>(factory, destructor) {
+    class TestCachingModeAdapter<T>(
+            factory: () -> T,
+            destructor: (T) -> Unit
+    ) : MemoizedValueAdapter<T>(factory, destructor) {
+
         override fun afterExecuteTest(test: TestScope) {
             if (test.parent !is ActionScope) {
                 val cached = this.cached

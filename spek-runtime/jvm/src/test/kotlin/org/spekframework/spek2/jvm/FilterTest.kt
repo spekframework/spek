@@ -5,7 +5,6 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.scope.PathBuilder
-import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
 class FilterTest: AbstractSpekRuntimeTest() {
     @Test
@@ -24,7 +23,7 @@ class FilterTest: AbstractSpekRuntimeTest() {
             .append("test")
             .build()
 
-        val recorder = executeTestsforPath(path)
+        val recorder = executeTestsForPath(path)
 
         assertThat(recorder.testSuccessfulCount, equalTo(1))
         assertThat(counter, equalTo(1))

@@ -6,6 +6,7 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 
 class FixturesAdapter: LifecycleListener {
+
     private val beforeEachTest: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
     private val afterEachTest: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
 
@@ -57,16 +58,18 @@ class FixturesAdapter: LifecycleListener {
     }
 
     private fun invokeAllBeforeEachTest(group: GroupScope) {
-        if (group.parent != null) {
-            invokeAllBeforeEachTest(group.parent!!)
+        group.parent?.let {
+            invokeAllBeforeEachTest(it)
         }
+
         beforeEachTest[group]?.forEach { it.invoke() }
     }
 
     private fun invokeAllAfterEachTest(group: GroupScope) {
         afterEachTest[group]?.reversed()?.forEach { it.invoke() }
-        if (group.parent != null) {
-            invokeAllAfterEachTest(group.parent!!)
+
+        group.parent?.let {
+            invokeAllAfterEachTest(it)
         }
     }
 }

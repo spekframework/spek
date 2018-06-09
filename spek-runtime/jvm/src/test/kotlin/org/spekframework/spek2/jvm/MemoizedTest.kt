@@ -8,7 +8,6 @@ import com.natpryce.hamkrest.sameInstance
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode
-import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 
 class MemoizedTest : AbstractSpekRuntimeTest() {
     @Test
