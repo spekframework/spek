@@ -1,8 +1,5 @@
 Before diving into writing tests, it is important to understand Spek works.
 
-!!! info "Disclaimer"
-    To make it simple, other features like **fixtures** and **memoized** are not discussed this section.
-
 ## Scopes
 Tests are defined using nested lambdas where each lambda is considered a `scope`. There are 
 3 types of scope provided.
@@ -12,12 +9,34 @@ Tests are defined using nested lambdas where each lambda is considered a `scope`
 - `action` is similar to a test but can contain other tests.
 
 ## Phases
-Spek has two phases, `discovery` and `execution`. During discovery, the test tree is built
-by invoking all group scopes starting at the root while all other scope types are **collected**.
-After the the test is tree is build, the execution phase starts. In this phase, the test tree is traversed and 
-the scopes **collected** in the previous phase are invoked.
 
-To make it easier to understand, consider the test below.
+### Discovery
+During discovery, the test tree is built by invoking  all group scopes (starting at the root) while other scope types, 
+fixtures and memoized values are **collected**. The test tree is composed of, the invoked group scopes as non-leaf 
+nodes and the **collected** scope types as leaf nodes. Fixtures and memoized values are stored within 
+the scope they are declared.
+
+!!! important "Note for action scopes"
+    Since action scopes are not invoked during this phase, test scopes declared within them are not
+    part of the test tree yet, but hey are dynamically added during execution phase.
+
+### Execution
+In this phase, the test tree is traversed (starting from the root). The following snippet is an overview of how
+this phase is implemented.
+
+```kotlin
+fun execute(scope: Scope) {
+    invokeBeforeFixtures(scope)
+    when {
+        scope is Group -> scope.children.forEach(::execute)
+        scope is Action -> invokeAction(scope)
+        scope is Test -> invokeTest(scope)
+    }
+    invokeAfterFixtures(scope)
+}
+```
+Test scopes declared within action scopes are invoked immediately as they are encountered. To make it easier to
+ understand, consider the test below.
 
 ```kotlin
 object MySpec: Spek({
@@ -56,6 +75,25 @@ I'm in 'another test within an action'
 ```
 
 The lines highlighted are printed during discovery, while the remaining lines during execution.
+
+!!! warning "Execution order"
+    Execution order of scopes declared in a group scope (including the root) is **not** guaranteed.
+    
+### Fixtures
+Each scope by design have *before* and *after* execution hooks, which can be attached to using fixtures and invoked during 
+the execution phase.
+
+- `beforeGroup` and `afterGroup` can be used to run arbitrary code before and after a group is executed, respectively.
+- `beforeEachTest` and `afterEachTest` can be used to run arbitrary code before and after a action or test is executed, 
+   respectively.
+
+!!! important "A note for test scopes"
+    Test scopes declared within action scopes can't have execution hooks attached to them (due to how action scopes are 
+    implemented), so `beforeEachTest` and `afterEachTest` can't be used.
+    
+## Memoized values
+TBD
+
 
 ## Conclusion
 Since group scopes are **eagerly** invoked during the discovery phase, it is not recommended to have any
