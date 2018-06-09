@@ -13,15 +13,14 @@ import org.spekframework.spek2.runtime.scope.ScopeId
 import org.spekframework.spek2.runtime.scope.ScopeType
 import kotlin.properties.Delegates
 
-class TestDescriptorAdapterFactoryTest {
+class SpekTestDescriptorFactoryTest {
 
-    var factory: TestDescriptorAdapterFactory by Delegates.notNull()
+    var factory: SpekTestDescriptorFactory by Delegates.notNull()
     var lifecycleManager: LifecycleManager by Delegates.notNull()
-
 
     @BeforeEach
     fun setup() {
-        factory = TestDescriptorAdapterFactory()
+        factory = SpekTestDescriptorFactory()
         lifecycleManager = mock()
     }
 
