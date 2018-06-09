@@ -97,25 +97,20 @@ def artifacts = [
     'runnerJUnit5'
 ]
 
-// Can be null.
-String getProperyOrEnvVar(String name) {
-    if (hasProperty(name)) {
-        return findProperty(name)
+String propOrEnv(String name) {
+    String property = project.property(name)
+    if (property == null) {
+        property = ""
     }
-    return System.getenv(name)
+    return property
 }
 
-String getBintrayUser() {
-    return getProperyOrEnvVar('BINTRAY_USER')
-}
-
-String getBintrayApiKey() {
-    return getProperyOrEnvVar('BINTRAY_API_KEY')
-}
+def bintrayUser = propOrEnv("BINTRAY_USER")
+def bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
 bintray {
-    user = getBintrayUser()
-    key = getBintrayApiKey()
+    user = bintrayUser
+    key = bintrayApiKey
     publish = false
 
     pkg {
@@ -152,10 +147,8 @@ artifactory {
             // when using oss.jfrog.org the credentials are from Bintray.
             repoKey = 'oss-snapshot-local'
 
-//            username = getBintrayUser()
-//            password = getBintrayApiKey()
-            username = "$BINTRAY_USER"
-            password = "$BINTRAY_API_KEY"
+            username = bintrayUser
+            password = bintrayApiKey
         }
 
         defaults {
