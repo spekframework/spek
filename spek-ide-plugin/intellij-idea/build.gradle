@@ -2,10 +2,21 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/idea-plugin.gradle"
 
 intellij {
-    version = '2016.3'
-    plugins = ['org.jetbrains.kotlin:1.2.0-release-IJ2016.3-1']
+    version = ijSdkVersion
+    plugins = [ijSdkKotlinPluginCoords]
 }
 
 dependencies {
     compile project(':spek-ide-plugin:intellij-jvm')
+}
+
+buildPlugin {
+    baseName = ''
+    version = "${project.version}-IJ$ijSdkVersion"
+}
+
+patchPluginXml {
+    version = "${project.version}-IJ$ijSdkVersion"
+    sinceBuild = "181.1"
+    untilBuild = "182.*"
 }

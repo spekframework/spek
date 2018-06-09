@@ -1,13 +1,13 @@
 package org.spekframework.spek2.runtime.test
 
+import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.execution.RuntimeExecutionListener
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import org.spekframework.spek2.runtime.test.event.ExecutionEvent
 
-class ExecutionEventRecorder: RuntimeExecutionListener() {
+class ExecutionEventRecorder: ExecutionListener {
     private val _executionEvents = mutableListOf<ExecutionEvent>()
     val executionEvents: List<ExecutionEvent> = _executionEvents
     val testIgnoredCount: Int

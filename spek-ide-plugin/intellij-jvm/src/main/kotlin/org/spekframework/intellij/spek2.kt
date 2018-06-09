@@ -5,24 +5,26 @@ import com.intellij.execution.DefaultExecutionResult
 import com.intellij.execution.ExecutionResult
 import com.intellij.execution.Executor
 import com.intellij.execution.application.BaseJavaApplicationCommandLineState
-import com.intellij.execution.configurations.ConfigurationFactory
-import com.intellij.execution.configurations.JavaParameters
-import com.intellij.execution.configurations.JavaRunConfigurationModule
-import com.intellij.execution.configurations.RunConfiguration
-import com.intellij.execution.configurations.RunProfileState
+import com.intellij.execution.configurations.*
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.execution.runners.ProgramRunner
 import com.intellij.execution.testframework.sm.SMTestRunnerConnectionUtil
 import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties
 import com.intellij.execution.ui.ConsoleView
+import com.intellij.execution.util.JavaParametersUtil
 import com.intellij.openapi.extensions.ExtensionPointName
+import com.intellij.openapi.extensions.Extensions
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.options.SettingsEditor
+import com.intellij.openapi.roots.OrderEnumerator
+import com.intellij.openapi.roots.OrderRootType
 import com.intellij.openapi.util.JDOMExternalizerUtil
+import com.intellij.util.PathUtil
 import org.jdom.Element
-import java.util.Arrays
+import org.spekframework.ide.ServiceMessageAdapter
+import java.util.*
 
 interface Spek2JvmParameterPatcher {
     fun patch(module: Module, parameters: JavaParameters)
@@ -65,14 +67,14 @@ open class Spek2JvmRunConfiguration(name: String,
 
     override fun writeExternal(element: Element) {
         super.writeExternal(element)
-        JDOMExternalizerUtil.writeField(element, VM_PARAMTERS, vmParameters)
+        JDOMExternalizerUtil.writeField(element, VM_PARAMETERS, vmParameters)
         JDOMExternalizerUtil.writeField(element, ALTERNATIVE_JRE_PATH, alternativeJrePath)
         JDOMExternalizerUtil.writeField(element, ALTERNATIVE_JRE_PATH_ENABLED, alternativeJrePathEnabled.toString())
     }
 
     override fun readExternal(element: Element) {
         super.readExternal(element)
-        vmParameters = JDOMExternalizerUtil.readField(element, VM_PARAMTERS)
+        vmParameters = JDOMExternalizerUtil.readField(element, VM_PARAMETERS)
         alternativeJrePath = JDOMExternalizerUtil.readField(element, ALTERNATIVE_JRE_PATH)
         alternativeJrePathEnabled =
             JDOMExternalizerUtil.readField(element, ALTERNATIVE_JRE_PATH_ENABLED, "false").toBoolean()
@@ -86,7 +88,52 @@ open class Spek2JvmRunConfiguration(name: String,
     override fun getState(executor: Executor, environment: ExecutionEnvironment): RunProfileState {
         return object: BaseJavaApplicationCommandLineState<Spek2JvmRunConfiguration>(environment, this) {
             override fun createJavaParameters(): JavaParameters {
-                TODO()
+                val params = JavaParameters()
+                params.isUseClasspathJar = true
+                val module = myConfiguration.configurationModule
+                val jreHome = if (myConfiguration.isAlternativeJrePathEnabled) {
+                    myConfiguration.alternativeJrePath
+                } else {
+                    null
+                }
+
+                // AndroidJUnitPatcher
+                val pathType = JavaParameters.JDK_AND_CLASSES_AND_TESTS
+                JavaParametersUtil.configureModule(module, params, pathType, jreHome)
+
+                val jars = listOf(
+                    PathUtil.getJarPathForClass(ServiceMessageAdapter::class.java)
+                )
+
+                params.classPath.addAll(jars)
+                params.mainClass = "org.spekframework.ide.ConsoleKt"
+
+                // this will set the vm parameters
+                setupJavaParameters(params)
+
+                Extensions.getExtensions(Spek2JvmParameterPatcher.PARAMETER_PATCHER_EP).forEach {
+                    it.patch(module.module!!, params)
+                }
+
+                module.module?.let {
+                    OrderEnumerator.orderEntries(it)
+                        .withoutLibraries()
+                        .withoutDepModules()
+                        .withoutSdk()
+                        .recursively()
+                        .classes()
+                        .pathsList
+                        .pathList
+                        .forEach {
+                            params.programParametersList.add("--sourceDirs", it)
+                        }
+
+                }
+
+                params.programParametersList.add("--paths", path.serialize())
+
+
+                return params
             }
 
             fun createConsole(executor: Executor, processHandler: ProcessHandler): ConsoleView {
@@ -111,7 +158,7 @@ open class Spek2JvmRunConfiguration(name: String,
     }
 
     companion object {
-        const val VM_PARAMTERS = "vmParameters"
+        const val VM_PARAMETERS = "vmParameters"
         const val ALTERNATIVE_JRE_PATH = "alternativeJrePath"
         const val ALTERNATIVE_JRE_PATH_ENABLED = "alternativeJrePathEnabled"
 

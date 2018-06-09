@@ -27,20 +27,8 @@ interface ExecutionListener {
     fun actionIgnored(action: ActionScopeImpl, reason: String?)
 }
 
-abstract class RuntimeExecutionListener: ExecutionListener {
-    open fun dynamicTestRegistered(test: TestScopeImpl, context: ExecutionContext) {
-        testExecutionStart(test)
-        try {
-            test.execute(context)
-            testExecutionFinish(test, ExecutionResult.Success)
-        } catch (e: Throwable) {
-            testExecutionFinish(test, ExecutionResult.Failure(e))
-        }
-    }
-}
-
-data class ExecutionRequest(val roots: List<ScopeImpl>, val runtimeExecutionListener: RuntimeExecutionListener)
+data class ExecutionRequest(val roots: List<ScopeImpl>, val executionListener: ExecutionListener)
 
 data class ExecutionContext(val request: ExecutionRequest) {
-    val runtimeExecutionListener = request.runtimeExecutionListener
+    val executionListener = request.executionListener
 }

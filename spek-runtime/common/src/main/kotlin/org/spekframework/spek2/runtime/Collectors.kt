@@ -1,46 +1,41 @@
 package org.spekframework.spek2.runtime
 
-import org.spekframework.spek2.dsl.ActionBody
-import org.spekframework.spek2.dsl.Pending
-import org.spekframework.spek2.dsl.Spec
-import org.spekframework.spek2.dsl.SpecBody
-import org.spekframework.spek2.dsl.TestBody
+import org.spekframework.spek2.dsl.*
 import org.spekframework.spek2.lifecycle.CachingMode
-import org.spekframework.spek2.lifecycle.LifecycleAware
 import org.spekframework.spek2.lifecycle.LifecycleListener
+import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.runtime.execution.ExecutionContext
-import org.spekframework.spek2.runtime.lifecycle.LifecycleAwareAdapter
+import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
-import org.spekframework.spek2.runtime.scope.ActionScopeImpl
-import org.spekframework.spek2.runtime.scope.GroupScopeImpl
-import org.spekframework.spek2.runtime.scope.ScopeId
-import org.spekframework.spek2.runtime.scope.ScopeType
-import org.spekframework.spek2.runtime.scope.TestScopeImpl
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueCreator
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
+import org.spekframework.spek2.runtime.scope.*
 
 open class Collector(val root: GroupScopeImpl,
                      val lifecycleManager: LifecycleManager,
-                     val fixtures: FixturesAdapter): Spec {
+                     val fixtures: FixturesAdapter): Root {
     val ids = mutableMapOf<String, Int>()
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T): LifecycleAware<T> = memoized(mode, factory) { }
+    override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): LifecycleAware<T> {
-        val adapter = when (mode) {
-            CachingMode.GROUP -> LifecycleAwareAdapter.GroupCachingModeAdapter(factory, destructor)
-            CachingMode.TEST -> LifecycleAwareAdapter.TestCachingModeAdapter(factory, destructor)
-            CachingMode.SCOPE -> LifecycleAwareAdapter.ScopeCachingModeAdapter(root, factory, destructor)
-        }
-        return adapter.apply {
-            registerListener(this)
-        }
+    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+        return MemoizedValueCreator(
+            root,
+            mode,
+            factory,
+            destructor
+        )
     }
 
+    override fun <T> memoized(): MemoizedValue<T> {
+        return MemoizedValueReader(root)
+    }
 
     override fun registerListener(listener: LifecycleListener) {
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, pending: Pending, body: SpecBody.() -> Unit) {
+    override fun group(description: String, pending: Pending, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
@@ -123,6 +118,10 @@ open class Collector(val root: GroupScopeImpl,
 
 class ActionCollector(val root: ActionScopeImpl, val lifecycleManager: LifecycleManager, val context: ExecutionContext, val idFor: (String) -> ScopeId): ActionBody {
 
+    override fun <T> memoized(): MemoizedValue<T> {
+        return MemoizedValueReader(root)
+    }
+
     override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
             idFor(description),
@@ -133,7 +132,15 @@ class ActionCollector(val root: ActionScopeImpl, val lifecycleManager: Lifecycle
             lifecycleManager
         )
         root.addChild(test)
-        context.runtimeExecutionListener.dynamicTestRegistered(test, context)
+        context.executionListener.apply {
+            testExecutionStart(test)
+            try {
+                test.execute(context)
+                testExecutionFinish(test, ExecutionResult.Success)
+            } catch (e: Throwable) {
+                testExecutionFinish(test, ExecutionResult.Failure(e))
+            }
+        }
     }
 
 }

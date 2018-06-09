@@ -20,11 +20,12 @@ dependencyManagement {
             entry 'kotlin-stdlib-jre8'
             entry 'kotlin-reflect'
             entry 'kotlin-test'
+            entry 'kotlin-test-common'
         }
 
         dependency 'org.reflections:reflections:0.9.11'
 
-        dependency 'com.xenomachina:kotlin-argparser:2.0.3'
+        dependency 'com.xenomachina:kotlin-argparser:2.0.6'
 
         dependency "com.nhaarman:mockito-kotlin:1.5.0"
     }

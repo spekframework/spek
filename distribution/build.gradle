@@ -89,9 +89,6 @@ publishing {
 
         extensionDataDrivenCommon(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:common'), 'spek-extension-data-driven-common') }
         extensionDataDrivenJvm(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:jvm'), 'spek-extension-data-driven-jvm') }
-
-        extensionSubjectCommon(MavenPublication) { artifact(delegate, project(':spek-extension:subject:common'), 'spek-extension-subject-common') }
-        extensionSubjectJvm(MavenPublication) { artifact(delegate, project(':spek-extension:subject:jvm'), 'spek-extension-subject-jvm') }
     }
 }
 

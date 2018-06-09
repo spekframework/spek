@@ -2,20 +2,35 @@ package org.spekframework.spek2.runtime.scope
 
 import org.spekframework.spek2.dsl.Pending
 import org.spekframework.spek2.dsl.TestBody
-import org.spekframework.spek2.lifecycle.ActionScope
-import org.spekframework.spek2.lifecycle.GroupScope
-import org.spekframework.spek2.lifecycle.Scope
-import org.spekframework.spek2.lifecycle.TestScope
+import org.spekframework.spek2.lifecycle.*
 import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
+import kotlin.properties.ReadOnlyProperty
 
 sealed class ScopeImpl(val id: ScopeId,
                        val path: Path,
                        val pending: Pending,
                        val lifecycleManager: LifecycleManager): Scope {
+    private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
     abstract fun before(context: ExecutionContext)
     open fun execute(context: ExecutionContext) { }
     abstract fun after(context: ExecutionContext)
+
+    fun registerValue(name: String, value: ReadOnlyProperty<Any?, Any?>) {
+        values[name] = value
+    }
+
+    fun getValue(name: String): ReadOnlyProperty<Any?, Any?> {
+        return when {
+            values.containsKey(name) -> values[name]!!
+            parent != null -> (parent as ScopeImpl).getValue(name)
+            else -> throw IllegalArgumentException("No value for '$name'")
+        }
+    }
+
+
+    fun removeValue(name: String) = values.remove(name)
 }
 
 open class GroupScopeImpl(id: ScopeId,
@@ -33,12 +48,17 @@ open class GroupScopeImpl(id: ScopeId,
     fun getChildren() = children.toList()
 
     fun filterBy(path: Path) {
+        val tmp = mutableListOf<ScopeImpl>()
         children.filter { it.path.isRelated(path) }
             .forEach {
                 if (it is GroupScopeImpl) {
                     it.filterBy(path)
                 }
+                tmp.add(it)
             }
+
+        children.clear()
+        children.addAll(tmp)
     }
 
     fun isEmpty() = children.isEmpty()
@@ -79,7 +99,11 @@ class TestScopeImpl(id: ScopeId,
         lifecycleManager.beforeExecuteTest(this)
     }
     override fun execute(context: ExecutionContext) {
-        body.invoke(object: TestBody {})
+        body.invoke(object: TestBody {
+            override fun <T> memoized(): MemoizedValue<T> {
+                return MemoizedValueReader(this@TestScopeImpl)
+            }
+        })
     }
     override fun after(context: ExecutionContext) {
         lifecycleManager.afterExecuteTest(this)

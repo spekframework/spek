@@ -1,10 +1,17 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
-
-dependencies {
-    expectedBy project(':spek-ide-plugin:interop-common')
-}
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
     compileOnly project(':spek-runtime:jvm')
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile 'com.xenomachina:kotlin-argparser'
+}
+
+shadowJar {
+    relocate 'com.xenomachina', 'shadow.com.xenomachina'
+
+    dependencies {
+        exclude(dependency('org.jetbrains.*:.*:.*'))
+    }
 }
