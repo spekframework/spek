@@ -98,7 +98,7 @@ def artifacts = [
 ]
 
 String propOrEnv(String name) {
-    String property = project.property(name)
+    String property = project.findProperty(name)
     if (property == null) {
         property = ""
     }
