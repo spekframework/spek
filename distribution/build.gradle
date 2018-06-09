@@ -86,9 +86,6 @@ publishing {
         runtimeJvm(MavenPublication) { artifact(delegate, project(':spek-runtime:jvm'), 'spek-runtime-jvm') }
 
         runnerJUnit5(MavenPublication) { artifact(delegate, project(':spek-runner:junit5'), 'spek-runner-junit5') }
-
-        extensionDataDrivenCommon(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:common'), 'spek-extension-data-driven-common') }
-        extensionDataDrivenJvm(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:jvm'), 'spek-extension-data-driven-jvm') }
     }
 }
 
@@ -97,23 +94,23 @@ def artifacts = [
     'dslJvm',
     'runtimeCommon',
     'runtimeJvm',
-    'runnerJUnit5',
-    'extensionDataDrivenCommon',
-    'extensionDataDrivenJvm',
-    'extensionSubjectCommon',
-    'extensionSubjectJvm'
+    'runnerJUnit5'
 ]
 
 // Can be null.
-def getProperyOrEnvVar(String name) {
-    return project.hasProperty(name) ? project.getProperty(name) : System.getenv(name)
+String getProperyOrEnvVar(String name) {
+    String value = findProperty(name)
+    if (value == null) {
+        value = System.getenv(name)
+    }
+    return  value
 }
 
-def getBintrayUser() {
+String getBintrayUser() {
     return getProperyOrEnvVar('BINTRAY_USER')
 }
 
-def getBintrayApiKey() {
+String getBintrayApiKey() {
     return getProperyOrEnvVar('BINTRAY_API_KEY')
 }
 
@@ -156,8 +153,10 @@ artifactory {
             // when using oss.jfrog.org the credentials are from Bintray.
             repoKey = 'oss-snapshot-local'
 
-            username = getBintrayUser()
-            password = getBintrayApiKey()
+//            username = getBintrayUser()
+//            password = getBintrayApiKey()
+            username = "$BINTRAY_USER"
+            password = "$BINTRAY_API_KEY"
         }
 
         defaults {
