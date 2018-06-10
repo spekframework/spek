@@ -31,7 +31,7 @@ class SpekTestDescriptorFactoryTest {
             .build()
 
         val scope = GroupScopeImpl(
-            ScopeId(ScopeType.CLASS, "SomeClass"),
+            ScopeId(ScopeType.Class, "SomeClass"),
             path,
             null,
             Pending.No,
