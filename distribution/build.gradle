@@ -15,7 +15,7 @@ def artifact(Publication publication, Project project, artifactName) {
         version = rootProject.version
 
         from project.components.java
-        
+
         artifact project.tasks['sourceJar']
         artifact project.tasks['javadocJar']
 
@@ -46,8 +46,8 @@ def artifact(Publication publication, Project project, artifactName) {
                     url 'http://github.com/spekframework/spek'
                 }
             }
-            
-            
+
+
             // Because of tree-like structure of the project Gradle screws up groupId and artifactId of cross-module deps.
             // ie         `<dependency><groupId>spek.spek-runtime</groupId><artifactId>jvm</artifactId></dependency>`
             // instead of `<dependency><groupId>org.spekframework.spek2</groupId><artifactId>spek-runtime-jvm</artifactId></dependency>`
@@ -56,19 +56,19 @@ def artifact(Publication publication, Project project, artifactName) {
                     .dependencies
                     .dependency
                     .findAll { dep -> dep.groupId.get(0).text().startsWith("${rootProject.name}") } // ie 'spek.'
-                    .collect { dep -> 
+                    .collect { dep ->
                         Node groupIdNode = dep.groupId.get(0)
                         Node artifactIdNode = dep.artifactId.get(0)
-                        
+
                         String originalGroupId = groupIdNode.text()
                         String originalArtifactId = artifactIdNode.text()
-                
+
                         String fixedArtifactId = originalGroupId
                                 .substring(originalGroupId.indexOf('.') + 1, originalGroupId.length()) + '-' + originalArtifactId
-                
+
                         groupIdNode.setValue(groupId)
                         artifactIdNode.setValue(fixedArtifactId)
-                    } 
+                    }
         }
     }
 
@@ -86,9 +86,6 @@ publishing {
         runtimeJvm(MavenPublication) { artifact(delegate, project(':spek-runtime:jvm'), 'spek-runtime-jvm') }
 
         runnerJUnit5(MavenPublication) { artifact(delegate, project(':spek-runner:junit5'), 'spek-runner-junit5') }
-
-        extensionDataDrivenCommon(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:common'), 'spek-extension-data-driven-common') }
-        extensionDataDrivenJvm(MavenPublication) { artifact(delegate, project(':spek-extension:data-driven:jvm'), 'spek-extension-data-driven-jvm') }
     }
 }
 
@@ -97,11 +94,7 @@ def artifacts = [
     'dslJvm',
     'runtimeCommon',
     'runtimeJvm',
-    'runnerJUnit5',
-    'extensionDataDrivenCommon',
-    'extensionDataDrivenJvm',
-    'extensionSubjectCommon',
-    'extensionSubjectJvm'
+    'runnerJUnit5'
 ]
 
 bintray {
