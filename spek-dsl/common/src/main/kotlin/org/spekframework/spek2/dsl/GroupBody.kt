@@ -4,9 +4,6 @@ import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.meta.*
 
-/**
- * @since 1.0
- */
 @SpekDsl
 interface GroupBody: TestContainer, ScopeBody {
     @Synonym(type = SynonymType.GROUP)
