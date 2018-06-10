@@ -1,4 +1,4 @@
-package org.spekframework.spek2.runtime.test.event
+package org.spekframework.spek2.jvm
 
 import org.spekframework.spek2.lifecycle.Scope
 import org.spekframework.spek2.runtime.execution.ExecutionResult

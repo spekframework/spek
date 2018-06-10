@@ -9,20 +9,22 @@ import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
-class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener,
-                                      val factory: TestDescriptorAdapterFactory): ExecutionListener {
-    fun ScopeImpl.asDescriptor() = factory.create(this)
-    fun ExecutionResult.toJunitResult() = when (this) {
-        is ExecutionResult.Success -> TestExecutionResult.successful()
-        is ExecutionResult.Failure -> TestExecutionResult.failed(this.cause)
+class JUnitEngineExecutionListenerAdapter(
+        private val listener: EngineExecutionListener,
+        private val factory: SpekTestDescriptorFactory
+) : ExecutionListener {
+
+    companion object {
+        private const val DEFAULT_IGNORE_REASON = "<no reason provided>"
     }
 
-    override fun executionStart() { }
+    override fun executionStart() = Unit
 
-    override fun executionFinish() { }
+    override fun executionFinish() = Unit
 
     override fun testExecutionStart(test: TestScopeImpl) {
-        val descriptor = test.asDescriptor()
+        val descriptor = test.asJUnitDescriptor()
+
         if (test.parent is ActionScopeImpl) {
             listener.dynamicTestRegistered(descriptor)
         }
@@ -31,34 +33,41 @@ class RuntimeExecutionListenerAdapter(val listener: EngineExecutionListener,
     }
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
-        listener.executionFinished(test.asDescriptor(), result.toJunitResult())
+        listener.executionFinished(test.asJUnitDescriptor(), result.asJUnitResult())
     }
 
     override fun testIgnored(test: TestScopeImpl, reason: String?) {
-        listener.executionSkipped(test.asDescriptor(), reason ?: "<no reason provided>")
+        listener.executionSkipped(test.asJUnitDescriptor(), reason ?: DEFAULT_IGNORE_REASON)
     }
 
     override fun groupExecutionStart(group: GroupScopeImpl) {
-        listener.executionStarted(group.asDescriptor())
+        listener.executionStarted(group.asJUnitDescriptor())
     }
 
     override fun groupExecutionFinish(group: GroupScopeImpl, result: ExecutionResult) {
-        listener.executionFinished(group.asDescriptor(), result.toJunitResult())
+        listener.executionFinished(group.asJUnitDescriptor(), result.asJUnitResult())
     }
 
     override fun groupIgnored(group: GroupScopeImpl, reason: String?) {
-        listener.executionSkipped(group.asDescriptor(), reason ?: "<no reason provided>")
+        listener.executionSkipped(group.asJUnitDescriptor(), reason ?: DEFAULT_IGNORE_REASON)
     }
 
     override fun actionExecutionStart(action: ActionScopeImpl) {
-        listener.executionStarted(action.asDescriptor())
+        listener.executionStarted(action.asJUnitDescriptor())
     }
 
     override fun actionExecutionFinish(action: ActionScopeImpl, result: ExecutionResult) {
-        listener.executionFinished(action.asDescriptor(), result.toJunitResult())
+        listener.executionFinished(action.asJUnitDescriptor(), result.asJUnitResult())
     }
 
     override fun actionIgnored(action: ActionScopeImpl, reason: String?) {
-        listener.executionSkipped(action.asDescriptor(), reason ?: "<no reason provided>")
+        listener.executionSkipped(action.asJUnitDescriptor(), reason ?: DEFAULT_IGNORE_REASON)
+    }
+
+    private fun ScopeImpl.asJUnitDescriptor() = factory.create(this)
+
+    private fun ExecutionResult.asJUnitResult() = when (this) {
+        is ExecutionResult.Success -> TestExecutionResult.successful()
+        is ExecutionResult.Failure -> TestExecutionResult.failed(this.cause)
     }
 }

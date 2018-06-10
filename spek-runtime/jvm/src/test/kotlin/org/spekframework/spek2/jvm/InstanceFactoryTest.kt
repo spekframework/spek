@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import org.spekframework.spek2.CreateWith
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.InstanceFactory
-import org.spekframework.spek2.runtime.test.AbstractSpekRuntimeTest
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 

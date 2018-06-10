@@ -9,15 +9,19 @@ import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.PathBuilder
-import org.spekframework.spek2.runtime.scope.ScopeImpl
 import java.nio.file.Paths
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
 
-class SpekTestEngine: TestEngine {
-    val factory = TestDescriptorAdapterFactory()
-    val runtime by lazy { SpekRuntime() }
+class SpekTestEngine : TestEngine {
 
-    override fun getId() = "spek2"
+    companion object {
+        const val ID = "spek2"
+    }
+
+    private val descriptorFactory = SpekTestDescriptorFactory()
+    private val runtime by lazy { SpekRuntime() }
+
+    override fun getId() = ID
 
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
@@ -27,13 +31,13 @@ class SpekTestEngine: TestEngine {
             .map { Paths.get(it) }
             .map { it.toString() }
 
-        val pathSelector = discoveryRequest.getSelectorsByType(PathSelector::class.java)
-            .firstOrNull() ?: PathSelector(PathBuilder.ROOT)
+        val pathSelector = discoveryRequest.getSelectorsByType(SpekPathDiscoverySelector::class.java)
+            .firstOrNull() ?: SpekPathDiscoverySelector(PathBuilder.ROOT)
 
         val discoveryResult = runtime.discover(DiscoveryRequest(sourceDirs, listOf(pathSelector.path)))
 
         discoveryResult.roots
-            .map(this::toTestDescriptor)
+            .map { descriptorFactory.create(it) }
             .forEach(engineDescriptor::addChild)
 
         return engineDescriptor
@@ -41,17 +45,13 @@ class SpekTestEngine: TestEngine {
 
     override fun execute(request: JUnitExecutionRequest) {
         val roots = request.rootTestDescriptor.children
-            .filterIsInstance<TestDescriptorAdapter>()
-            .map(TestDescriptorAdapter::scope)
+            .filterIsInstance<SpekTestDescriptor>()
+            .map(SpekTestDescriptor::scope)
 
-        val runtimeExecutionRequest = ExecutionRequest(
-            roots, RuntimeExecutionListenerAdapter(request.engineExecutionListener, factory)
+        val executionRequest = ExecutionRequest(
+            roots, JUnitEngineExecutionListenerAdapter(request.engineExecutionListener, descriptorFactory)
         )
 
-        runtime.execute(runtimeExecutionRequest)
-    }
-
-    private fun toTestDescriptor(root: ScopeImpl): TestDescriptor {
-        return factory.create(root)
+        runtime.execute(executionRequest)
     }
 }
