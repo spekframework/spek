@@ -6,7 +6,7 @@ import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.meta.*
 
 @SpekDsl
-class Suite(delegate: GroupBody): GroupBody by delegate {
+class Suite(delegate: GroupBody) : GroupBody by delegate {
     @Synonym(SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun describe(description: String, pending: Pending = Pending.No, body: Suite.() -> Unit) {

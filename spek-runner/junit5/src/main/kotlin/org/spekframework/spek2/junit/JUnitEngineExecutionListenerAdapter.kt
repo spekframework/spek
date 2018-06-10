@@ -10,8 +10,8 @@ import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 class JUnitEngineExecutionListenerAdapter(
-        private val listener: EngineExecutionListener,
-        private val factory: SpekTestDescriptorFactory
+    private val listener: EngineExecutionListener,
+    private val factory: SpekTestDescriptorFactory
 ) : ExecutionListener {
 
     companion object {

@@ -5,10 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class FailingGroupTest: AbstractSpekRuntimeTest() {
+class FailingGroupTest : AbstractSpekRuntimeTest() {
     @Test
     fun testFailingGroup() {
-        class FailingSpec: Spek({
+        class FailingSpec : Spek({
 
             group("some failing group") {
                 throw RuntimeException()

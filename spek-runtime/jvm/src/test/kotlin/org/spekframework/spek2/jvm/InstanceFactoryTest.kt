@@ -9,25 +9,25 @@ import org.spekframework.spek2.lifecycle.InstanceFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
-class InstanceFactoryTest: AbstractSpekRuntimeTest() {
-    object SimpleFactoryAsAnObject: InstanceFactory {
-        override fun <T: Spek> create(spek: KClass<T>): T {
+class InstanceFactoryTest : AbstractSpekRuntimeTest() {
+    object SimpleFactoryAsAnObject : InstanceFactory {
+        override fun <T : Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.primaryConstructor!!.call()
         }
     }
 
-    class SimpleFactoryAsAClass: InstanceFactory {
-        override fun <T: Spek> create(spek: KClass<T>): T {
+    class SimpleFactoryAsAClass : InstanceFactory {
+        override fun <T : Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.primaryConstructor!!.call()
         }
     }
 
     @Test
     fun testDefaultUsingSecondaryConstructors() {
-        class SomeSpec(number: Int): Spek({
+        class SomeSpec(number: Int) : Spek({
             test("should be $number") { }
         }) {
-            constructor(): this(10)
+            constructor() : this(10)
         }
 
         val recorder = executeTestsForClass(SomeSpec::class)
@@ -37,7 +37,7 @@ class InstanceFactoryTest: AbstractSpekRuntimeTest() {
     @Test
     fun testUsingObject() {
         @CreateWith(SimpleFactoryAsAnObject::class)
-        class SomeSpec: Spek({
+        class SomeSpec : Spek({
             test("should work") {
 
             }
@@ -50,7 +50,7 @@ class InstanceFactoryTest: AbstractSpekRuntimeTest() {
     @Test
     fun testUsingClass() {
         @CreateWith(SimpleFactoryAsAClass::class)
-        class SomeSpec: Spek({
+        class SomeSpec : Spek({
             test("should work") {
 
             }

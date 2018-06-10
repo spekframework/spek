@@ -9,8 +9,8 @@ import org.spekframework.spek2.runtime.scope.*
 import java.util.*
 
 class SpekTestDescriptor internal constructor(
-        val scope: ScopeImpl,
-        private val factory: SpekTestDescriptorFactory
+    val scope: ScopeImpl,
+    private val factory: SpekTestDescriptorFactory
 ) : TestDescriptor {
 
     companion object {
@@ -54,12 +54,14 @@ class SpekTestDescriptor internal constructor(
     override fun getParent(): Optional<TestDescriptor> {
         val parent = scope.parent as ScopeImpl?
 
-        return Optional.of(if (parent != null) {
-            factory.create(parent)
-        } else {
-            // Root scope, setParent(...) was called before.
-            engineDescriptor!!
-        })
+        return Optional.of(
+            if (parent != null) {
+                factory.create(parent)
+            } else {
+                // Root scope, setParent(...) was called before.
+                engineDescriptor!!
+            }
+        )
     }
 
     override fun addChild(descriptor: TestDescriptor) {
@@ -74,5 +76,6 @@ class SpekTestDescriptor internal constructor(
 
     override fun removeFromHierarchy() = throw UnsupportedOperationException()
     override fun removeChild(descriptor: TestDescriptor) = throw UnsupportedOperationException()
-    override fun findByUniqueId(uniqueId: UniqueId): Optional<out TestDescriptor> = throw UnsupportedOperationException()
+    override fun findByUniqueId(uniqueId: UniqueId): Optional<out TestDescriptor> =
+        throw UnsupportedOperationException()
 }

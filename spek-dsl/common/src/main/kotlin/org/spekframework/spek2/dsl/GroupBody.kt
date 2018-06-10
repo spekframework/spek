@@ -5,7 +5,7 @@ import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.meta.*
 
 @SpekDsl
-interface GroupBody: TestContainer, ScopeBody {
+interface GroupBody : TestContainer, ScopeBody {
     @Synonym(type = SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun group(description: String, pending: Pending = Pending.No, body: GroupBody.() -> Unit)

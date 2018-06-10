@@ -17,9 +17,9 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
 
-actual class SpekRuntime: AbstractRuntime() {
-    private val defaultInstanceFactory = object: InstanceFactory {
-        override fun <T: Spek> create(spek: KClass<T>): T {
+actual class SpekRuntime : AbstractRuntime() {
+    private val defaultInstanceFactory = object : InstanceFactory {
+        override fun <T : Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.constructors.first { it.parameters.isEmpty() }
                 .call()
         }
@@ -41,7 +41,7 @@ actual class SpekRuntime: AbstractRuntime() {
                 }
                 matched to root
             }
-            .filter { (path, root) -> path != null && root != null}
+            .filter { (path, root) -> path != null && root != null }
             .map { (path, root) ->
                 root!!.apply { filterBy(path!!) }
             }

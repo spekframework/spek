@@ -6,6 +6,6 @@ import org.spekframework.spek2.meta.SpekDsl
 
 @Experimental
 @SpekDsl
-interface Root: GroupBody {
+interface Root : GroupBody {
     fun registerListener(listener: LifecycleListener)
 }

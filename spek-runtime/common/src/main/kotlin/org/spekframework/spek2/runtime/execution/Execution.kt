@@ -6,8 +6,8 @@ import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 sealed class ExecutionResult {
-    object Success: ExecutionResult()
-    class Failure(val cause: Throwable): ExecutionResult()
+    object Success : ExecutionResult()
+    class Failure(val cause: Throwable) : ExecutionResult()
 }
 
 interface ExecutionListener {

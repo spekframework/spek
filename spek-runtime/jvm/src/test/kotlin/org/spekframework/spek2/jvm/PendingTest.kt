@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.Pending
 
-class PendingTest: AbstractSpekRuntimeTest() {
+class PendingTest : AbstractSpekRuntimeTest() {
     @Test
     fun testPendingGroup() {
-        class PendingSpek: Spek({
+        class PendingSpek : Spek({
             group("foo") {
                 test("bar") { }
             }
@@ -26,7 +26,7 @@ class PendingTest: AbstractSpekRuntimeTest() {
 
     @Test
     fun testPendingTest() {
-        class PendingSpek: Spek({
+        class PendingSpek : Spek({
             group("foo") {
                 test("bar") { }
                 test("a pending bar", pending = Pending.Yes()) { }
