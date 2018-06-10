@@ -6,17 +6,17 @@ import org.spekframework.spek2.runtime.scope.ScopeImpl
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
+class MemoizedValueCreator<out T>(
+        val scope: ScopeImpl,
+        private val mode: CachingMode,
+        val factory: () -> T,
+        private val destructor: (T) -> Unit
+) : MemoizedValue<T> {
 
-class MemoizedValueCreator<T>(val scope: ScopeImpl,
-                              val mode: CachingMode,
-                              val factory: () -> T,
-                              val destructor: (T) -> Unit)
-    : MemoizedValue<T> {
     override operator fun provideDelegate(
-        thisRef: Any?,
-        property: KProperty<*>
+            thisRef: Any?,
+            property: KProperty<*>
     ): ReadOnlyProperty<Any?, T> {
-
 
         val adapter = when (mode) {
             CachingMode.GROUP -> MemoizedValueAdapter.GroupCachingModeAdapter(factory, destructor)
@@ -33,12 +33,12 @@ class MemoizedValueCreator<T>(val scope: ScopeImpl,
     }
 }
 
-class MemoizedValueReader<T>(val scope: ScopeImpl)
-    : MemoizedValue<T> {
+class MemoizedValueReader<out T>(val scope: ScopeImpl) : MemoizedValue<T> {
+
     @Suppress("UNCHECKED_CAST")
     override operator fun provideDelegate(
-        thisRef: Any?,
-        property: KProperty<*>
+            thisRef: Any?,
+            property: KProperty<*>
     ): ReadOnlyProperty<Any?, T> {
         return scope.getValue(property.name) as ReadOnlyProperty<Any?, T>
     }
