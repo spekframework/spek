@@ -22,9 +22,8 @@ function checkIfEnvVarIsNotEmpty() {
     fi
 }
 
-GIT_BRANCH_FOR_SNAPSHOTS="az/snapshot-pub-creds"
+GIT_BRANCH_FOR_SNAPSHOTS="2.x"
 
-# TODO don't merge, change branch name to '2.x' before merge.
 if [ "$GIT_BRANCH" == "$GIT_BRANCH_FOR_SNAPSHOTS" ]; then
     checkIfEnvVarIsNotEmpty "$BINTRAY_USER"
     checkIfEnvVarIsNotEmpty "$BINTRAY_API_KEY"
