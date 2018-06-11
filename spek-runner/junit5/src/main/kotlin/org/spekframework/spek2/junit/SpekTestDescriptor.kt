@@ -39,8 +39,8 @@ class SpekTestDescriptor internal constructor(
     }
 
     override fun getSource(): Optional<TestSource> = when (scope.id.type) {
-        ScopeType.CLASS -> Optional.of(ClassSource.from(scope.id.name))
-        ScopeType.SCOPE -> Optional.empty()
+        ScopeType.Class -> Optional.of(ClassSource.from(scope.id.name))
+        ScopeType.Scope -> Optional.empty()
     }
 
     override fun setParent(parent: TestDescriptor?) {

@@ -1,11 +1,10 @@
-package org.spekframework.spek2.runtime.test
+package org.spekframework.spek2.jvm
 
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
-import org.spekframework.spek2.runtime.test.event.ExecutionEvent
 
 class ExecutionEventRecorder: ExecutionListener {
     private val _executionEvents = mutableListOf<ExecutionEvent>()

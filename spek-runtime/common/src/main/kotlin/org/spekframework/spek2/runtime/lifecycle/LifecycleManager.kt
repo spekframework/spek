@@ -6,7 +6,8 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 
 class LifecycleManager {
-    private val listeners = ArrayList<LifecycleListener>()
+
+    private val listeners = mutableListOf<LifecycleListener>()
 
     fun addListener(listener: LifecycleListener) {
         if (listeners.contains(listener)) {
@@ -15,10 +16,6 @@ class LifecycleManager {
         }
 
         listeners.add(0, listener)
-    }
-
-    fun removeListener(listener: LifecycleListener) {
-        listeners.remove(listener)
     }
 
     fun beforeExecuteTest(test: TestScope) {

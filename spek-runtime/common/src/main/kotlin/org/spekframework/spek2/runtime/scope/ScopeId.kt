@@ -1,8 +1,8 @@
 package org.spekframework.spek2.runtime.scope
 
 enum class ScopeType {
-    CLASS,
-    SCOPE;
+    Class,
+    Scope;
 
     override fun toString() = name.toLowerCase()
 }
