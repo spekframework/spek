@@ -9,10 +9,10 @@ import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import kotlin.properties.ReadOnlyProperty
 
 sealed class ScopeImpl(
-        val id: ScopeId,
-        val path: Path,
-        val pending: Pending,
-        val lifecycleManager: LifecycleManager
+    val id: ScopeId,
+    val path: Path,
+    val pending: Pending,
+    val lifecycleManager: LifecycleManager
 ) : Scope {
 
     private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
@@ -35,11 +35,11 @@ sealed class ScopeImpl(
 }
 
 open class GroupScopeImpl(
-        id: ScopeId,
-        path: Path,
-        override val parent: GroupScope?,
-        pending: Pending,
-        lifecycleManager: LifecycleManager
+    id: ScopeId,
+    path: Path,
+    override val parent: GroupScope?,
+    pending: Pending,
+    lifecycleManager: LifecycleManager
 ) : ScopeImpl(id, path, pending, lifecycleManager), GroupScope {
 
     private val children = mutableListOf<ScopeImpl>()
@@ -52,14 +52,14 @@ open class GroupScopeImpl(
 
     fun filterBy(path: Path) {
         val filteredChildren = children
-                .filter { it.path.isRelated(path) }
-                .map {
-                    if (it is GroupScopeImpl) {
-                        it.filterBy(path)
-                    }
-
-                    it
+            .filter { it.path.isRelated(path) }
+            .map {
+                if (it is GroupScopeImpl) {
+                    it.filterBy(path)
                 }
+
+                it
+            }
 
         children.clear()
         children.addAll(filteredChildren)
@@ -77,12 +77,12 @@ open class GroupScopeImpl(
 }
 
 class ActionScopeImpl(
-        id: ScopeId,
-        path: Path,
-        parent: GroupScope?,
-        private val body: ActionScopeImpl.(ExecutionContext) -> Unit,
-        pending: Pending,
-        lifecycleManager: LifecycleManager
+    id: ScopeId,
+    path: Path,
+    parent: GroupScope?,
+    private val body: ActionScopeImpl.(ExecutionContext) -> Unit,
+    pending: Pending,
+    lifecycleManager: LifecycleManager
 ) : GroupScopeImpl(id, path, parent, pending, lifecycleManager), ActionScope {
 
     override fun before(context: ExecutionContext) {
@@ -99,12 +99,12 @@ class ActionScopeImpl(
 }
 
 class TestScopeImpl(
-        id: ScopeId,
-        path: Path,
-        override val parent: GroupScope,
-        private val body: TestBody.() -> Unit,
-        pending: Pending,
-        lifecycleManager: LifecycleManager
+    id: ScopeId,
+    path: Path,
+    override val parent: GroupScope,
+    private val body: TestBody.() -> Unit,
+    pending: Pending,
+    lifecycleManager: LifecycleManager
 ) : ScopeImpl(id, path, pending, lifecycleManager), TestScope {
 
     override fun before(context: ExecutionContext) {

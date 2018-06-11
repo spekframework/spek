@@ -5,10 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class ActionTest: AbstractSpekRuntimeTest() {
+class ActionTest : AbstractSpekRuntimeTest() {
     @Test
     fun testOn() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             var count = 0
             action("something") {
                 count++

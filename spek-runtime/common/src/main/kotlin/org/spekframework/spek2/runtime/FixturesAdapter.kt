@@ -5,7 +5,7 @@ import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 
-class FixturesAdapter: LifecycleListener {
+class FixturesAdapter : LifecycleListener {
 
     private val beforeEachTest: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
     private val afterEachTest: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()

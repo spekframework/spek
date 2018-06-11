@@ -7,7 +7,7 @@ import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.meta.*
 
 @SpekDsl
-class Feature(delegate: GroupBody): GroupBody by delegate {
+class Feature(delegate: GroupBody) : GroupBody by delegate {
     @Synonym(SynonymType.ACTION, prefix = "Scenario: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Scenario(description: String, pending: Pending = Pending.No, body: Scenario.() -> Unit) {
@@ -16,10 +16,11 @@ class Feature(delegate: GroupBody): GroupBody by delegate {
         }
     }
 }
+
 // Give, When, Then and And don't need synonym annotations since
 // they should not be executed individually.
 @SpekDsl
-class Scenario(delegate: ActionBody): ActionBody by delegate {
+class Scenario(delegate: ActionBody) : ActionBody by delegate {
     fun Given(description: String, body: TestBody.() -> Unit) {
         test("Given $description", body = body)
     }

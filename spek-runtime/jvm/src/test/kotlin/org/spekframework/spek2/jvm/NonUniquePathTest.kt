@@ -5,10 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class NonUniquePathTest: AbstractSpekRuntimeTest() {
+class NonUniquePathTest : AbstractSpekRuntimeTest() {
     @Test
     fun nonUnique() {
-        class NonUniqueSpek: Spek({
+        class NonUniqueSpek : Spek({
             group("some group") {
                 test("duplicate") { }
                 test("duplicate") { }

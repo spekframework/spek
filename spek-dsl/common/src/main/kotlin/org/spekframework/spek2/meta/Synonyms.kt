@@ -18,9 +18,11 @@ enum class SynonymType {
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Synonym(val type: SynonymType,
-                         val prefix: String = "",
-                         val excluded: Boolean = false)
+annotation class Synonym(
+    val type: SynonymType,
+    val prefix: String = "",
+    val excluded: Boolean = false
+)
 
 
 /**
@@ -35,6 +37,7 @@ enum class DescriptionLocation {
     TYPE_PARAMETER,
     VALUE_PARAMETER
 }
+
 /**
  * A description source.
  */

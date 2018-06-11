@@ -12,9 +12,9 @@ import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import org.spekframework.spek2.runtime.scope.*
 
 open class Collector(
-        val root: GroupScopeImpl,
-        private val lifecycleManager: LifecycleManager,
-        private val fixtures: FixturesAdapter
+    val root: GroupScopeImpl,
+    private val lifecycleManager: LifecycleManager,
+    private val fixtures: FixturesAdapter
 ) : Root {
 
     private val ids = mutableMapOf<String, Int>()
@@ -23,10 +23,10 @@ open class Collector(
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
         return MemoizedValueCreator(
-                root,
-                mode,
-                factory,
-                destructor
+            root,
+            mode,
+            factory,
+            destructor
         )
     }
 
@@ -40,11 +40,11 @@ open class Collector(
 
     override fun group(description: String, pending: Pending, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
-                idFor(description),
-                root.path.resolve(description),
-                root,
-                pending,
-                lifecycleManager
+            idFor(description),
+            root.path.resolve(description),
+            root,
+            pending,
+            lifecycleManager
         )
         root.addChild(group)
         val collector = Collector(group, lifecycleManager, fixtures)
@@ -52,28 +52,30 @@ open class Collector(
             body.invoke(collector)
         } catch (e: Throwable) {
             collector.beforeGroup { throw e }
-            group.addChild(TestScopeImpl(
+            group.addChild(
+                TestScopeImpl(
                     idFor("Group Failure"),
                     root.path.resolve("Group Failure"),
                     root,
                     {},
                     pending,
                     lifecycleManager
-            ))
+                )
+            )
         }
 
     }
 
     override fun action(description: String, pending: Pending, body: ActionBody.() -> Unit) {
         val action = ActionScopeImpl(
-                idFor(description),
-                root.path.resolve(description),
-                root,
-                {
-                    body.invoke(ActionCollector(this, lifecycleManager, it, this@Collector::idFor))
-                },
-                pending,
-                lifecycleManager
+            idFor(description),
+            root.path.resolve(description),
+            root,
+            {
+                body.invoke(ActionCollector(this, lifecycleManager, it, this@Collector::idFor))
+            },
+            pending,
+            lifecycleManager
         )
 
         root.addChild(action)
@@ -81,12 +83,12 @@ open class Collector(
 
     override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
-                idFor(description),
-                root.path.resolve(description),
-                root,
-                body,
-                pending,
-                lifecycleManager
+            idFor(description),
+            root.path.resolve(description),
+            root,
+            body,
+            pending,
+            lifecycleManager
         )
         root.addChild(test)
     }
@@ -116,10 +118,10 @@ open class Collector(
 }
 
 class ActionCollector(
-        val root: ActionScopeImpl,
-        private val lifecycleManager: LifecycleManager,
-        private val context: ExecutionContext,
-        private val idFor: (String) -> ScopeId
+    val root: ActionScopeImpl,
+    private val lifecycleManager: LifecycleManager,
+    private val context: ExecutionContext,
+    private val idFor: (String) -> ScopeId
 ) : ActionBody {
 
     override fun <T> memoized(): MemoizedValue<T> {
@@ -128,12 +130,12 @@ class ActionCollector(
 
     override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
-                idFor(description),
-                root.path.resolve(description),
-                root,
-                body,
-                pending,
-                lifecycleManager
+            idFor(description),
+            root.path.resolve(description),
+            root,
+            body,
+            pending,
+            lifecycleManager
         )
         root.addChild(test)
         context.executionListener.apply {

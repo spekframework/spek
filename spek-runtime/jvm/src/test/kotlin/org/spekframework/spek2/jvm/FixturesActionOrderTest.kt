@@ -5,12 +5,12 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class FixturesActionOrderTest: AbstractSpekRuntimeTest() {
+class FixturesActionOrderTest : AbstractSpekRuntimeTest() {
     @Test
     fun testBeforeEachTestOrder() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             beforeEachTest { buffer.appendln("1") }
             beforeEachTest { buffer.appendln("2") }
 
@@ -40,7 +40,7 @@ class FixturesActionOrderTest: AbstractSpekRuntimeTest() {
     fun testAfterEachTestOrder() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             afterEachTest { buffer.appendln("1") }
             afterEachTest { buffer.appendln("2") }
 
@@ -70,7 +70,7 @@ class FixturesActionOrderTest: AbstractSpekRuntimeTest() {
     fun testBeforeGroupOrder() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             beforeGroup { buffer.appendln("1") }
             beforeGroup { buffer.appendln("2") }
 
@@ -100,7 +100,7 @@ class FixturesActionOrderTest: AbstractSpekRuntimeTest() {
     fun testAfterGroupOrder() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             afterGroup { buffer.appendln("1") }
             afterGroup { buffer.appendln("2") }
 

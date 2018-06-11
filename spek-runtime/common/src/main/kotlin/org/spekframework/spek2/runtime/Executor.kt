@@ -50,11 +50,12 @@ class Executor {
         is TestScopeImpl -> context.executionListener.testExecutionStart(scope)
     }
 
-    private fun scopeExecutionFinished(scope: ScopeImpl, result: ExecutionResult, context: ExecutionContext) = when (scope) {
-        is ActionScopeImpl -> context.executionListener.actionExecutionFinish(scope, result)
-        is GroupScopeImpl -> context.executionListener.groupExecutionFinish(scope, result)
-        is TestScopeImpl -> context.executionListener.testExecutionFinish(scope, result)
-    }
+    private fun scopeExecutionFinished(scope: ScopeImpl, result: ExecutionResult, context: ExecutionContext) =
+        when (scope) {
+            is ActionScopeImpl -> context.executionListener.actionExecutionFinish(scope, result)
+            is GroupScopeImpl -> context.executionListener.groupExecutionFinish(scope, result)
+            is TestScopeImpl -> context.executionListener.testExecutionFinish(scope, result)
+        }
 
     private fun scopeIgnored(scope: ScopeImpl, reason: String?, context: ExecutionContext) = when (scope) {
         is ActionScopeImpl -> context.executionListener.actionIgnored(scope, reason)

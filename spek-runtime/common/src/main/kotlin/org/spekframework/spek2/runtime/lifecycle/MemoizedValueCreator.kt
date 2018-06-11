@@ -7,15 +7,15 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 class MemoizedValueCreator<out T>(
-        val scope: ScopeImpl,
-        private val mode: CachingMode,
-        val factory: () -> T,
-        private val destructor: (T) -> Unit
+    val scope: ScopeImpl,
+    private val mode: CachingMode,
+    val factory: () -> T,
+    private val destructor: (T) -> Unit
 ) : MemoizedValue<T> {
 
     override operator fun provideDelegate(
-            thisRef: Any?,
-            property: KProperty<*>
+        thisRef: Any?,
+        property: KProperty<*>
     ): ReadOnlyProperty<Any?, T> {
 
         val adapter = when (mode) {
@@ -37,8 +37,8 @@ class MemoizedValueReader<out T>(val scope: ScopeImpl) : MemoizedValue<T> {
 
     @Suppress("UNCHECKED_CAST")
     override operator fun provideDelegate(
-            thisRef: Any?,
-            property: KProperty<*>
+        thisRef: Any?,
+        property: KProperty<*>
     ): ReadOnlyProperty<Any?, T> {
         return scope.getValue(property.name) as ReadOnlyProperty<Any?, T>
     }

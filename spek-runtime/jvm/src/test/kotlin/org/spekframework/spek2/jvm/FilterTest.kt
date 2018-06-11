@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
-class FilterTest: AbstractSpekRuntimeTest() {
+class FilterTest : AbstractSpekRuntimeTest() {
     @Test
     fun filter() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("group") {
                 test("test") {
                     counter++

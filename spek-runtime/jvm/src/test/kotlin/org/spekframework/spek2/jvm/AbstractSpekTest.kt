@@ -5,8 +5,8 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class AbstractSpekTest: AbstractSpekRuntimeTest() {
-    abstract class SomeAbstractSpek: Spek({})
+class AbstractSpekTest : AbstractSpekRuntimeTest() {
+    abstract class SomeAbstractSpek : Spek({})
 
     @Test
     fun testIgnoreAbstractClass() {
