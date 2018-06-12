@@ -4,36 +4,36 @@ import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.Pending
+import org.spekframework.spek2.dsl.Skip
 
-class PendingTest : AbstractSpekRuntimeTest() {
+class SkipTest : AbstractSpekRuntimeTest() {
     @Test
-    fun testPendingGroup() {
-        class PendingSpek : Spek({
+    fun testSkipGroup() {
+        class SkipSpek : Spek({
             group("foo") {
                 test("bar") { }
             }
 
-            group("a pending foo", Pending.Yes()) {
-                test("a bar inside a pending foo") { }
+            group("a skip foo", Skip.Yes()) {
+                test("a bar inside a skip foo") { }
             }
         })
 
-        val recorder = executeTestsForClass(PendingSpek::class)
+        val recorder = executeTestsForClass(SkipSpek::class)
 
         assertThat(recorder.containerIgnoredCount, equalTo(1))
     }
 
     @Test
-    fun testPendingTest() {
-        class PendingSpek : Spek({
+    fun testSkipTest() {
+        class SkipSpek : Spek({
             group("foo") {
                 test("bar") { }
-                test("a pending bar", pending = Pending.Yes()) { }
+                test("a skip bar", skip = Skip.Yes()) { }
             }
         })
 
-        val recorder = executeTestsForClass(PendingSpek::class)
+        val recorder = executeTestsForClass(SkipSpek::class)
 
         assertThat(recorder.testStartedCount, equalTo(1))
         assertThat(recorder.testIgnoredCount, equalTo(1))

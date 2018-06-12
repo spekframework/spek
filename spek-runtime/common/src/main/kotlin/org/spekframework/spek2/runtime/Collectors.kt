@@ -38,12 +38,12 @@ open class Collector(
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, pending: Pending, body: GroupBody.() -> Unit) {
+    override fun group(description: String, skip: Skip, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
             root,
-            pending,
+            skip,
             lifecycleManager
         )
         root.addChild(group)
@@ -58,7 +58,7 @@ open class Collector(
                     root.path.resolve("Group Failure"),
                     root,
                     {},
-                    pending,
+                    skip,
                     lifecycleManager
                 )
             )
@@ -66,7 +66,7 @@ open class Collector(
 
     }
 
-    override fun action(description: String, pending: Pending, body: ActionBody.() -> Unit) {
+    override fun action(description: String, skip: Skip, body: ActionBody.() -> Unit) {
         val action = ActionScopeImpl(
             idFor(description),
             root.path.resolve(description),
@@ -74,20 +74,20 @@ open class Collector(
             {
                 body.invoke(ActionCollector(this, lifecycleManager, it, this@Collector::idFor))
             },
-            pending,
+            skip,
             lifecycleManager
         )
 
         root.addChild(action)
     }
 
-    override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
+    override fun test(description: String, skip: Skip, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
             idFor(description),
             root.path.resolve(description),
             root,
             body,
-            pending,
+            skip,
             lifecycleManager
         )
         root.addChild(test)
@@ -128,13 +128,13 @@ class ActionCollector(
         return MemoizedValueReader(root)
     }
 
-    override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
+    override fun test(description: String, skip: Skip, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
             idFor(description),
             root.path.resolve(description),
             root,
             body,
-            pending,
+            skip,
             lifecycleManager
         )
         root.addChild(test)

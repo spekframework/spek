@@ -1,6 +1,6 @@
 package org.spekframework.spek2.runtime.scope
 
-import org.spekframework.spek2.dsl.Pending
+import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.*
 import org.spekframework.spek2.runtime.execution.ExecutionContext
@@ -11,7 +11,7 @@ import kotlin.properties.ReadOnlyProperty
 sealed class ScopeImpl(
     val id: ScopeId,
     val path: Path,
-    val pending: Pending,
+    val skip: Skip,
     val lifecycleManager: LifecycleManager
 ) : Scope {
 
@@ -38,9 +38,9 @@ open class GroupScopeImpl(
     id: ScopeId,
     path: Path,
     override val parent: GroupScope?,
-    pending: Pending,
+    skip: Skip,
     lifecycleManager: LifecycleManager
-) : ScopeImpl(id, path, pending, lifecycleManager), GroupScope {
+) : ScopeImpl(id, path, skip, lifecycleManager), GroupScope {
 
     private val children = mutableListOf<ScopeImpl>()
 
@@ -81,9 +81,9 @@ class ActionScopeImpl(
     path: Path,
     parent: GroupScope?,
     private val body: ActionScopeImpl.(ExecutionContext) -> Unit,
-    pending: Pending,
+    skip: Skip,
     lifecycleManager: LifecycleManager
-) : GroupScopeImpl(id, path, parent, pending, lifecycleManager), ActionScope {
+) : GroupScopeImpl(id, path, parent, skip, lifecycleManager), ActionScope {
 
     override fun before(context: ExecutionContext) {
         lifecycleManager.beforeExecuteAction(this)
@@ -103,9 +103,9 @@ class TestScopeImpl(
     path: Path,
     override val parent: GroupScope,
     private val body: TestBody.() -> Unit,
-    pending: Pending,
+    skip: Skip,
     lifecycleManager: LifecycleManager
-) : ScopeImpl(id, path, pending, lifecycleManager), TestScope {
+) : ScopeImpl(id, path, skip, lifecycleManager), TestScope {
 
     override fun before(context: ExecutionContext) {
         lifecycleManager.beforeExecuteTest(this)

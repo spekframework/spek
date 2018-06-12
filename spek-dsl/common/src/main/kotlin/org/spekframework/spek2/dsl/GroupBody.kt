@@ -8,11 +8,11 @@ import org.spekframework.spek2.meta.*
 interface GroupBody : TestContainer, ScopeBody {
     @Synonym(type = SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun group(description: String, pending: Pending = Pending.No, body: GroupBody.() -> Unit)
+    fun group(description: String, skip: Skip = Skip.No, body: GroupBody.() -> Unit)
 
     @Synonym(type = SynonymType.ACTION)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun action(description: String, pending: Pending = Pending.No, body: ActionBody.() -> Unit)
+    fun action(description: String, skip: Skip = Skip.No, body: ActionBody.() -> Unit)
 
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T): MemoizedValue<T>
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>

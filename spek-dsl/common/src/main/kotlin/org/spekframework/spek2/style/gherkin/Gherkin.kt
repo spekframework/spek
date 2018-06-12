@@ -2,7 +2,7 @@ package org.spekframework.spek2.style.gherkin
 
 import org.spekframework.spek2.dsl.ActionBody
 import org.spekframework.spek2.dsl.GroupBody
-import org.spekframework.spek2.dsl.Pending
+import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.meta.*
 
@@ -10,8 +10,8 @@ import org.spekframework.spek2.meta.*
 class Feature(delegate: GroupBody) : GroupBody by delegate {
     @Synonym(SynonymType.ACTION, prefix = "Scenario: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun Scenario(description: String, pending: Pending = Pending.No, body: Scenario.() -> Unit) {
-        action("Scenario: $description", pending) {
+    fun Scenario(description: String, skip: Skip = Skip.No, body: Scenario.() -> Unit) {
+        action("Scenario: $description", skip) {
             body(Scenario(this))
         }
     }
@@ -40,8 +40,8 @@ class Scenario(delegate: ActionBody) : ActionBody by delegate {
 
 @Synonym(SynonymType.GROUP, prefix = "Feature: ")
 @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-fun GroupBody.Feature(description: String, pending: Pending = Pending.No, body: Feature.() -> Unit) {
-    group("Feature: $description", pending) {
+fun GroupBody.Feature(description: String, skip: Skip = Skip.No, body: Feature.() -> Unit) {
+    group("Feature: $description", skip) {
         body(Feature(this))
     }
 }
