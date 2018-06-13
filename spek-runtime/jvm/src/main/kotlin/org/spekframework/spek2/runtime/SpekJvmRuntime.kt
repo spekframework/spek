@@ -5,7 +5,7 @@ import org.reflections.scanners.SubTypesScanner
 import org.reflections.util.ClasspathHelper
 import org.reflections.util.ConfigurationBuilder
 import org.spekframework.spek2.CreateWith
-import org.spekframework.spek2.Ignore
+import org.spekframework.spek2.meta.Ignore
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.InstanceFactory
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest

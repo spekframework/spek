@@ -1,4 +1,4 @@
-package org.spekframework.spek2
+package org.spekframework.spek2.meta
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
