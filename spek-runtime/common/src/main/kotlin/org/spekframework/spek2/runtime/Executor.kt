@@ -1,6 +1,6 @@
 package org.spekframework.spek2.runtime
 
-import org.spekframework.spek2.dsl.Pending
+import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.ActionScopeImpl
@@ -17,8 +17,8 @@ class Executor {
     }
 
     private fun execute(scope: ScopeImpl, context: ExecutionContext) {
-        if (scope.pending is Pending.Yes) {
-            scopeIgnored(scope, scope.pending.reason, context)
+        if (scope.skip is Skip.Yes) {
+            scopeIgnored(scope, scope.skip.reason, context)
         } else {
             scopeExecutionStarted(scope, context)
             val result = executeSafely {

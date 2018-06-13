@@ -5,7 +5,7 @@ import com.natpryce.hamkrest.sameInstance
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.spekframework.spek2.dsl.Pending
+import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -34,7 +34,7 @@ class SpekTestDescriptorFactoryTest {
             ScopeId(ScopeType.Class, "SomeClass"),
             path,
             null,
-            Pending.No,
+            Skip.No,
             lifecycleManager
         )
 

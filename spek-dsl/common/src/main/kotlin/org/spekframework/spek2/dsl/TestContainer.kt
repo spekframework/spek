@@ -6,5 +6,5 @@ import org.spekframework.spek2.meta.*
 interface TestContainer {
     @Synonym(type = SynonymType.TEST)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun test(description: String, pending: Pending = Pending.No, body: TestBody.() -> Unit)
+    fun test(description: String, skip: Skip = Skip.No, body: TestBody.() -> Unit)
 }
