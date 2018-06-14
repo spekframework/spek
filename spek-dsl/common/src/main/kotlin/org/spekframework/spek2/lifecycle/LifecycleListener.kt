@@ -1,13 +1,10 @@
 package org.spekframework.spek2.lifecycle
 
-import org.spekframework.spek2.meta.Experimental
-
-@Experimental
 interface LifecycleListener {
-    fun beforeExecuteTest(test: TestScope) {}
-    fun afterExecuteTest(test: TestScope) {}
-    fun beforeExecuteGroup(group: GroupScope) {}
-    fun afterExecuteGroup(group: GroupScope) {}
-    fun beforeExecuteAction(action: ActionScope) {}
-    fun afterExecuteAction(action: ActionScope) {}
+    fun beforeExecuteTest(test: TestScope) = Unit
+    fun afterExecuteTest(test: TestScope) = Unit
+    fun beforeExecuteGroup(group: GroupScope) = Unit
+    fun afterExecuteGroup(group: GroupScope) = Unit
+    fun beforeExecuteAction(action: ActionScope) = Unit
+    fun afterExecuteAction(action: ActionScope) = Unit
 }
