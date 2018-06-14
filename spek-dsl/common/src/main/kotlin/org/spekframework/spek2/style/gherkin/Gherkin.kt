@@ -30,7 +30,7 @@ class Scenario(delegate: ActionBody) : ActionBody by delegate {
     }
 
     fun Then(description: String, body: TestBody.() -> Unit) {
-        test("And $description", body = body)
+        test("Then $description", body = body)
     }
 
     fun And(description: String, body: TestBody.() -> Unit) {
