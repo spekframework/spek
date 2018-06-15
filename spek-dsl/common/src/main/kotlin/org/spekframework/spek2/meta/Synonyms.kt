@@ -5,7 +5,6 @@ package org.spekframework.spek2.meta
  */
 enum class SynonymType {
     GROUP,
-    ACTION,
     TEST
 }
 

@@ -4,8 +4,6 @@ import org.spekframework.spek2.dsl.*
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.MemoizedValue
-import org.spekframework.spek2.runtime.execution.ExecutionContext
-import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueCreator
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
@@ -14,10 +12,14 @@ import org.spekframework.spek2.runtime.scope.*
 open class Collector(
     val root: GroupScopeImpl,
     private val lifecycleManager: LifecycleManager,
-    private val fixtures: FixturesAdapter
+    private val fixtures: FixturesAdapter,
+    order: Order
 ) : Root {
 
-    private val ids = mutableMapOf<String, Int>()
+    private val ids: MutableMap<String, Int> = when (order) {
+        Order.Unspecified -> HashMap()
+        Order.Strict -> LinkedHashMap()
+    }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
@@ -38,7 +40,7 @@ open class Collector(
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, skip: Skip, body: GroupBody.() -> Unit) {
+    override fun group(description: String, skip: Skip, order: Order, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
@@ -47,7 +49,7 @@ open class Collector(
             lifecycleManager
         )
         root.addChild(group)
-        val collector = Collector(group, lifecycleManager, fixtures)
+        val collector = Collector(group, lifecycleManager, fixtures, order)
         try {
             body.invoke(collector)
         } catch (e: Throwable) {
@@ -64,21 +66,6 @@ open class Collector(
             )
         }
 
-    }
-
-    override fun action(description: String, skip: Skip, body: ActionBody.() -> Unit) {
-        val action = ActionScopeImpl(
-            idFor(description),
-            root.path.resolve(description),
-            root,
-            {
-                body.invoke(ActionCollector(this, lifecycleManager, it, this@Collector::idFor))
-            },
-            skip,
-            lifecycleManager
-        )
-
-        root.addChild(action)
     }
 
     override fun test(description: String, skip: Skip, body: TestBody.() -> Unit) {
@@ -115,38 +102,4 @@ open class Collector(
 
         return ScopeId(ScopeType.Scope, if (current > 1) "$description [$current]" else description)
     }
-}
-
-class ActionCollector(
-    val root: ActionScopeImpl,
-    private val lifecycleManager: LifecycleManager,
-    private val context: ExecutionContext,
-    private val idFor: (String) -> ScopeId
-) : ActionBody {
-
-    override fun <T> memoized(): MemoizedValue<T> {
-        return MemoizedValueReader(root)
-    }
-
-    override fun test(description: String, skip: Skip, body: TestBody.() -> Unit) {
-        val test = TestScopeImpl(
-            idFor(description),
-            root.path.resolve(description),
-            root,
-            body,
-            skip,
-            lifecycleManager
-        )
-        root.addChild(test)
-        context.executionListener.apply {
-            testExecutionStart(test)
-            try {
-                test.execute(context)
-                testExecutionFinish(test, ExecutionResult.Success)
-            } catch (e: Throwable) {
-                testExecutionFinish(test, ExecutionResult.Failure(e))
-            }
-        }
-    }
-
 }
