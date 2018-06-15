@@ -24,22 +24,6 @@ class AfterEachTest : AbstractSpekRuntimeTest() {
     }
 
     @Test
-    fun testAfterEachAction() {
-        counter = 0
-        class TestSpek : Spek({
-            action("group") {
-                test("test") { }
-                test("another test") { }
-            }
-            afterEachTest { counter++ }
-
-        })
-
-        executeTestsForClass(TestSpek::class)
-        assertThat(counter, equalTo(1))
-    }
-
-    @Test
     fun testAfterEachFailure() {
         class TestSpek : Spek({
             group("group") {

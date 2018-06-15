@@ -1,6 +1,7 @@
 package org.spekframework.spek2.runtime
 
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.dsl.Order
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
@@ -24,7 +25,7 @@ abstract class AbstractRuntime {
         val qualifiedName = (path.parent?.name ?: "") + ".${path.name}"
         val classScope =
             GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager)
-        instance.root.invoke(Collector(classScope, lifecycleManager, fixtures))
+        instance.root.invoke(Collector(classScope, lifecycleManager, fixtures, Order.Unspecified))
 
         return classScope
     }

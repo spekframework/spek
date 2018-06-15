@@ -23,21 +23,6 @@ class BeforeEachTest : AbstractSpekRuntimeTest() {
     }
 
     @Test
-    fun testBeforeEachLazyAction() {
-        counter = 0
-        class TestSpek : Spek({
-            beforeEachTest { counter++ }
-            action("group") {
-                test("test") { }
-                test("another test") { }
-            }
-        })
-
-        executeTestsForClass(TestSpek::class)
-        assertThat(counter, equalTo(1))
-    }
-
-    @Test
     fun testBeforeEachFailure() {
         class TestSpek : Spek({
             group("group") {
