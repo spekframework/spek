@@ -8,7 +8,7 @@ import org.spekframework.spek2.meta.*
 interface GroupBody : TestContainer, ScopeBody {
     @Synonym(type = SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun group(description: String, skip: Skip = Skip.No, order: Order = Order.Unspecified, body: GroupBody.() -> Unit)
+    fun group(description: String, skip: Skip = Skip.No, body: GroupBody.() -> Unit)
 
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T): MemoizedValue<T>
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>

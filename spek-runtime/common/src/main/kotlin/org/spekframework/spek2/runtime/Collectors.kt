@@ -12,14 +12,10 @@ import org.spekframework.spek2.runtime.scope.*
 open class Collector(
     val root: GroupScopeImpl,
     private val lifecycleManager: LifecycleManager,
-    private val fixtures: FixturesAdapter,
-    order: Order
+    private val fixtures: FixturesAdapter
 ) : Root {
 
-    private val ids: MutableMap<String, Int> = when (order) {
-        Order.Unspecified -> HashMap()
-        Order.Strict -> LinkedHashMap()
-    }
+    private val ids = linkedMapOf<String, Int>()
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
@@ -40,7 +36,7 @@ open class Collector(
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, skip: Skip, order: Order, body: GroupBody.() -> Unit) {
+    override fun group(description: String, skip: Skip, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
@@ -49,7 +45,7 @@ open class Collector(
             lifecycleManager
         )
         root.addChild(group)
-        val collector = Collector(group, lifecycleManager, fixtures, order)
+        val collector = Collector(group, lifecycleManager, fixtures)
         try {
             body.invoke(collector)
         } catch (e: Throwable) {
