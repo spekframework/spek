@@ -1,6 +1,5 @@
 package org.spekframework.spek2.runtime.lifecycle
 
-import org.spekframework.spek2.lifecycle.ActionScope
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
@@ -32,13 +31,5 @@ class LifecycleManager {
 
     fun afterExecuteGroup(group: GroupScope) {
         listeners.reversed().forEach { it.afterExecuteGroup(group) }
-    }
-
-    fun beforeExecuteAction(action: ActionScope) {
-        listeners.forEach { it.beforeExecuteAction(action) }
-    }
-
-    fun afterExecuteAction(action: ActionScope) {
-        listeners.reversed().forEach { it.afterExecuteAction(action) }
     }
 }

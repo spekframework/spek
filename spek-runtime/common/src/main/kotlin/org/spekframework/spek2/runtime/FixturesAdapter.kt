@@ -1,6 +1,5 @@
 package org.spekframework.spek2.runtime
 
-import org.spekframework.spek2.lifecycle.ActionScope
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
@@ -14,23 +13,11 @@ class FixturesAdapter : LifecycleListener {
     private val afterGroup: LinkedHashMap<GroupScope, MutableList<() -> Unit>> = LinkedHashMap()
 
     override fun beforeExecuteTest(test: TestScope) {
-        if (test.parent !is ActionScope) {
-            invokeAllBeforeEachTest(test.parent)
-        }
+        invokeAllBeforeEachTest(test.parent)
     }
 
     override fun afterExecuteTest(test: TestScope) {
-        if (test.parent !is ActionScope) {
-            invokeAllAfterEachTest(test.parent)
-        }
-    }
-
-    override fun beforeExecuteAction(action: ActionScope) {
-        invokeAllBeforeEachTest(action)
-    }
-
-    override fun afterExecuteAction(action: ActionScope) {
-        invokeAllAfterEachTest(action)
+        invokeAllAfterEachTest(test.parent)
     }
 
     override fun beforeExecuteGroup(group: GroupScope) {

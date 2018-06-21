@@ -5,6 +5,4 @@ interface LifecycleListener {
     fun afterExecuteTest(test: TestScope) = Unit
     fun beforeExecuteGroup(group: GroupScope) = Unit
     fun afterExecuteGroup(group: GroupScope) = Unit
-    fun beforeExecuteAction(action: ActionScope) = Unit
-    fun afterExecuteAction(action: ActionScope) = Unit
 }
