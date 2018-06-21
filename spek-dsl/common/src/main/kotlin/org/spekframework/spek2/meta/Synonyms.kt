@@ -9,7 +9,7 @@ enum class SynonymType {
 }
 
 /**
- * Marks a function as a synonym to either a group, action or test scope.
+ * Marks a function as a synonym to either a group or test scope.
  *
  * @property type type of scope.
  * @property prefix prefix appended to the description (if applicable), this will appear in the test report.

@@ -7,7 +7,6 @@ import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 
 enum class PsiSynonymType {
     GROUP,
-    ACTION,
     TEST
 }
 
@@ -17,7 +16,6 @@ data class PsiSynonym(val annotation: PsiAnnotation) {
 
         when {
             type.endsWith("SynonymType.GROUP") -> PsiSynonymType.GROUP
-            type.endsWith("SynonymType.ACTION") -> PsiSynonymType.ACTION
             type.endsWith("SynonymType.TEST") -> PsiSynonymType.TEST
             else -> throw IllegalArgumentException("Unsupported synonym: $type.")
         }
