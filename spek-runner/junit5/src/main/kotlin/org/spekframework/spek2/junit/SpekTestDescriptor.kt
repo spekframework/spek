@@ -69,8 +69,6 @@ class SpekTestDescriptor internal constructor(
 
     override fun getChildren() = childDescriptors
 
-    override fun mayRegisterTests(): Boolean = false
-
     override fun getTags(): MutableSet<TestTag> = mutableSetOf()
 
     override fun removeFromHierarchy() = throw UnsupportedOperationException()
