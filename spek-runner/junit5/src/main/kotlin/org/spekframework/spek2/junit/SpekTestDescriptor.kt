@@ -34,7 +34,6 @@ class SpekTestDescriptor internal constructor(
 
     override fun getType(): TestDescriptor.Type = when (scope) {
         is GroupScopeImpl -> TestDescriptor.Type.CONTAINER
-        is ActionScopeImpl -> TestDescriptor.Type.CONTAINER_AND_TEST
         is TestScopeImpl -> TestDescriptor.Type.TEST
     }
 
@@ -70,7 +69,7 @@ class SpekTestDescriptor internal constructor(
 
     override fun getChildren() = childDescriptors
 
-    override fun mayRegisterTests(): Boolean = scope is ActionScopeImpl
+    override fun mayRegisterTests(): Boolean = false
 
     override fun getTags(): MutableSet<TestTag> = mutableSetOf()
 
