@@ -10,10 +10,6 @@ interface GroupBody : TestContainer, ScopeBody {
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun group(description: String, skip: Skip = Skip.No, body: GroupBody.() -> Unit)
 
-    @Synonym(type = SynonymType.ACTION)
-    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun action(description: String, skip: Skip = Skip.No, body: ActionBody.() -> Unit)
-
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T): MemoizedValue<T>
     fun <T> memoized(mode: CachingMode = CachingMode.TEST, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
 

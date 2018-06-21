@@ -335,68 +335,6 @@ class MemoizedTest : AbstractSpekRuntimeTest() {
     }
 
     @Test
-    fun memoizedActionCaching() {
-        class MemoizedSpec : Spek({
-            val foo by memoized {
-                listOf(1)
-            }
-
-            var memoized1: List<Int>? = null
-            var memoized2: List<Int>? = null
-
-            action("some action") {
-                test("first pass") {
-                    memoized1 = foo
-                }
-
-                test("second pass") {
-                    memoized2 = foo
-                }
-
-                test("check") {
-                    assertThat(memoized1, sameInstance(memoized2))
-                }
-            }
-
-
-        })
-
-        val recorder = executeTestsForClass(MemoizedSpec::class)
-
-        assertThat(recorder.testFailureCount, equalTo(0))
-    }
-
-    @Test
-    fun memoizedActionCachingWithDestructor() {
-        class MemoizedSpec : Spek({
-            val foo by memoized(
-                factory = { mutableListOf(1) },
-                destructor = { it.clear() }
-            )
-
-            var memoized: List<Int>? = null
-
-            action("some action") {
-                test("first pass") {
-                    memoized = foo
-                }
-
-                test("check") {
-                    assertThat(memoized, present(!isEmpty))
-                }
-            }
-
-            test("check") {
-                assertThat(memoized, present(isEmpty))
-            }
-        })
-
-        val recorder = executeTestsForClass(MemoizedSpec::class)
-
-        assertThat(recorder.testFailureCount, equalTo(0))
-    }
-
-    @Test
     fun memoizedWithNullValue() {
         class MemoizedSpec : Spek({
 

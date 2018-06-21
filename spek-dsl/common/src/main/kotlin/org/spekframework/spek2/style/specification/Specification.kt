@@ -7,6 +7,7 @@ import org.spekframework.spek2.meta.*
 
 @SpekDsl
 class Suite(delegate: GroupBody) : GroupBody by delegate {
+
     @Synonym(SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun describe(description: String, skip: Skip = Skip.No, body: Suite.() -> Unit) {
