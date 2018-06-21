@@ -2,7 +2,6 @@ package org.spekframework.spek2.jvm
 
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
@@ -57,18 +56,6 @@ class ExecutionEventRecorder : ExecutionListener {
 
     override fun groupIgnored(group: GroupScopeImpl, reason: String?) {
         _executionEvents.add(ExecutionEvent.Ignored(group, reason))
-    }
-
-    override fun actionExecutionStart(action: ActionScopeImpl) {
-        _executionEvents.add(ExecutionEvent.Started(action))
-    }
-
-    override fun actionExecutionFinish(action: ActionScopeImpl, result: ExecutionResult) {
-        _executionEvents.add(ExecutionEvent.Finished(action, result))
-    }
-
-    override fun actionIgnored(action: ActionScopeImpl, reason: String?) {
-        _executionEvents.add(ExecutionEvent.Ignored(action, reason))
     }
 
     private inline fun <reified T : ExecutionResult> getTestFinishedEventsByStatus(): Sequence<ExecutionEvent.Finished> {

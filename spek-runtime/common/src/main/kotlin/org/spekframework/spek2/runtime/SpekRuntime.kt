@@ -4,7 +4,6 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
-import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
@@ -29,9 +28,7 @@ abstract class AbstractRuntime {
         return classScope
     }
 
-    fun execute(request: ExecutionRequest) {
-        Executor().execute(ExecutionContext(request))
-    }
+    fun execute(request: ExecutionRequest) = Executor().execute(request)
 }
 
 expect class SpekRuntime() : AbstractRuntime

@@ -2,8 +2,10 @@ package org.spekframework.spek2.runtime.scope
 
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
-import org.spekframework.spek2.lifecycle.*
-import org.spekframework.spek2.runtime.execution.ExecutionContext
+import org.spekframework.spek2.lifecycle.GroupScope
+import org.spekframework.spek2.lifecycle.MemoizedValue
+import org.spekframework.spek2.lifecycle.Scope
+import org.spekframework.spek2.lifecycle.TestScope
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import kotlin.properties.ReadOnlyProperty
@@ -17,9 +19,9 @@ sealed class ScopeImpl(
 
     private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
 
-    abstract fun before(context: ExecutionContext)
-    open fun execute(context: ExecutionContext) = Unit
-    abstract fun after(context: ExecutionContext)
+    abstract fun before()
+    abstract fun execute()
+    abstract fun after()
 
     fun registerValue(name: String, value: ReadOnlyProperty<Any?, Any?>) {
         values[name] = value
@@ -30,8 +32,6 @@ sealed class ScopeImpl(
         parent != null -> (parent as ScopeImpl).getValue(name)
         else -> throw IllegalArgumentException("No value for '$name'")
     }
-
-    fun removeValue(name: String) = values.remove(name)
 }
 
 open class GroupScopeImpl(
@@ -67,35 +67,9 @@ open class GroupScopeImpl(
 
     fun isEmpty() = children.isEmpty()
 
-    override fun before(context: ExecutionContext) {
-        lifecycleManager.beforeExecuteGroup(this)
-    }
-
-    override fun after(context: ExecutionContext) {
-        lifecycleManager.afterExecuteGroup(this)
-    }
-}
-
-class ActionScopeImpl(
-    id: ScopeId,
-    path: Path,
-    parent: GroupScope?,
-    private val body: ActionScopeImpl.(ExecutionContext) -> Unit,
-    skip: Skip,
-    lifecycleManager: LifecycleManager
-) : GroupScopeImpl(id, path, parent, skip, lifecycleManager), ActionScope {
-
-    override fun before(context: ExecutionContext) {
-        lifecycleManager.beforeExecuteAction(this)
-    }
-
-    override fun execute(context: ExecutionContext) {
-        body.invoke(this, context)
-    }
-
-    override fun after(context: ExecutionContext) {
-        lifecycleManager.afterExecuteAction(this)
-    }
+    override fun before() = lifecycleManager.beforeExecuteGroup(this)
+    override fun execute() = Unit
+    override fun after() = lifecycleManager.afterExecuteGroup(this)
 }
 
 class TestScopeImpl(
@@ -107,11 +81,9 @@ class TestScopeImpl(
     lifecycleManager: LifecycleManager
 ) : ScopeImpl(id, path, skip, lifecycleManager), TestScope {
 
-    override fun before(context: ExecutionContext) {
-        lifecycleManager.beforeExecuteTest(this)
-    }
+    override fun before() = lifecycleManager.beforeExecuteTest(this)
 
-    override fun execute(context: ExecutionContext) {
+    override fun execute() {
         body.invoke(object : TestBody {
             override fun <T> memoized(): MemoizedValue<T> {
                 return MemoizedValueReader(this@TestScopeImpl)
@@ -119,7 +91,5 @@ class TestScopeImpl(
         })
     }
 
-    override fun after(context: ExecutionContext) {
-        lifecycleManager.afterExecuteTest(this)
-    }
+    override fun after() = lifecycleManager.afterExecuteTest(this)
 }

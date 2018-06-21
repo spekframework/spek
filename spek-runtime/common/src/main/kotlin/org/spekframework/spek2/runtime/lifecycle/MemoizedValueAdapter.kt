@@ -1,6 +1,5 @@
 package org.spekframework.spek2.runtime.lifecycle
 
-import org.spekframework.spek2.lifecycle.ActionScope
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
@@ -79,16 +78,6 @@ sealed class MemoizedValueAdapter<T>(
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
         override fun afterExecuteTest(test: TestScope) {
-            if (test.parent !is ActionScope) {
-                val cached = this.cached
-                when (cached) {
-                    is Cached.Value<T> -> destructor(cached.value)
-                }
-                this.cached = Cached.Empty
-            }
-        }
-
-        override fun afterExecuteAction(action: ActionScope) {
             val cached = this.cached
             when (cached) {
                 is Cached.Value<T> -> destructor(cached.value)

@@ -1,39 +1,41 @@
 package org.spekframework.spek2.runtime
 
 import org.spekframework.spek2.dsl.Skip
-import org.spekframework.spek2.runtime.execution.ExecutionContext
+import org.spekframework.spek2.runtime.execution.ExecutionListener
+import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 class Executor {
 
-    fun execute(context: ExecutionContext) {
-        context.executionListener.executionStart()
-        context.request.roots.forEach { execute(it, context) }
-        context.executionListener.executionFinish()
+    fun execute(request: ExecutionRequest) {
+        request.executionListener.executionStart()
+        request.roots.forEach { execute(it, request.executionListener) }
+        request.executionListener.executionFinish()
     }
 
-    private fun execute(scope: ScopeImpl, context: ExecutionContext) {
+    private fun execute(scope: ScopeImpl, listener: ExecutionListener) {
         if (scope.skip is Skip.Yes) {
-            scopeIgnored(scope, scope.skip.reason, context)
+            scopeIgnored(scope, scope.skip.reason, listener)
         } else {
-            scopeExecutionStarted(scope, context)
+            scopeExecutionStarted(scope, listener)
+
             val result = executeSafely {
                 try {
-                    scope.before(context)
-                    scope.execute(context)
+                    scope.before()
+                    scope.execute()
 
-                    if (scope is GroupScopeImpl && scope !is ActionScopeImpl) {
-                        scope.getChildren().forEach { execute(it, context) }
+                    if (scope is GroupScopeImpl) {
+                        scope.getChildren().forEach { execute(it, listener) }
                     }
                 } finally {
-                    scope.after(context)
+                    scope.after()
                 }
             }
-            scopeExecutionFinished(scope, result, context)
+
+            scopeExecutionFinished(scope, result, listener)
         }
     }
 
@@ -44,22 +46,21 @@ class Executor {
         ExecutionResult.Failure(e)
     }
 
-    private fun scopeExecutionStarted(scope: ScopeImpl, context: ExecutionContext) = when (scope) {
-        is ActionScopeImpl -> context.executionListener.actionExecutionStart(scope)
-        is GroupScopeImpl -> context.executionListener.groupExecutionStart(scope)
-        is TestScopeImpl -> context.executionListener.testExecutionStart(scope)
-    }
-
-    private fun scopeExecutionFinished(scope: ScopeImpl, result: ExecutionResult, context: ExecutionContext) =
+    private fun scopeExecutionStarted(scope: ScopeImpl, listener: ExecutionListener) =
         when (scope) {
-            is ActionScopeImpl -> context.executionListener.actionExecutionFinish(scope, result)
-            is GroupScopeImpl -> context.executionListener.groupExecutionFinish(scope, result)
-            is TestScopeImpl -> context.executionListener.testExecutionFinish(scope, result)
+            is GroupScopeImpl -> listener.groupExecutionStart(scope)
+            is TestScopeImpl -> listener.testExecutionStart(scope)
         }
 
-    private fun scopeIgnored(scope: ScopeImpl, reason: String?, context: ExecutionContext) = when (scope) {
-        is ActionScopeImpl -> context.executionListener.actionIgnored(scope, reason)
-        is GroupScopeImpl -> context.executionListener.groupIgnored(scope, reason)
-        is TestScopeImpl -> context.executionListener.testIgnored(scope, reason)
-    }
+    private fun scopeExecutionFinished(scope: ScopeImpl, result: ExecutionResult, listener: ExecutionListener) =
+        when (scope) {
+            is GroupScopeImpl -> listener.groupExecutionFinish(scope, result)
+            is TestScopeImpl -> listener.testExecutionFinish(scope, result)
+        }
+
+    private fun scopeIgnored(scope: ScopeImpl, reason: String?, listener: ExecutionListener) =
+        when (scope) {
+            is GroupScopeImpl -> listener.groupIgnored(scope, reason)
+            is TestScopeImpl -> listener.testIgnored(scope, reason)
+        }
 }

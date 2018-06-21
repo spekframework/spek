@@ -2,7 +2,6 @@ package org.spekframework.ide
 
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionResult
-import org.spekframework.spek2.runtime.scope.ActionScopeImpl
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
@@ -57,29 +56,6 @@ class ServiceMessageAdapter: ExecutionListener {
 
     override fun groupIgnored(group: GroupScopeImpl, reason: String?) {
         val name = group.path.name.toServiceMessageSafeString()
-        out("testIgnored name='$name' ignoreComment='${reason ?: "no reason provided"}'")
-        out("testFinished name='$name'")
-    }
-
-    override fun actionExecutionStart(action: ActionScopeImpl) {
-        out("testSuiteStarted name='${action.path.name.toServiceMessageSafeString()}'")
-    }
-
-    override fun actionExecutionFinish(action: ActionScopeImpl, result: ExecutionResult) {
-        val name = action.path.name.toServiceMessageSafeString()
-        if (result is ExecutionResult.Failure) {
-            val exceptionDetails = getExceptionDetails(result)
-
-            // fake a child test
-            out("testStarted name='$name'")
-            out("testFailed name='$name' message='${exceptionDetails.first}' details='${exceptionDetails.second}'")
-            out("testFinished name='$name'")
-        }
-        out("testSuiteFinished name='$name'")
-    }
-
-    override fun actionIgnored(action: ActionScopeImpl, reason: String?) {
-        val name = action.path.name.toServiceMessageSafeString()
         out("testIgnored name='$name' ignoreComment='${reason ?: "no reason provided"}'")
         out("testFinished name='$name'")
     }
