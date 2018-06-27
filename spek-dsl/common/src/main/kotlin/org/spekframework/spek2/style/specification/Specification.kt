@@ -3,6 +3,7 @@ package org.spekframework.spek2.style.specification
 import org.spekframework.spek2.dsl.GroupBody
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
+import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.meta.*
 
 @SpekDsl
@@ -74,7 +75,7 @@ fun GroupBody.xdescribe(description: String, reason: String = "", body: Suite.()
 }
 
 private fun GroupBody.createSuite(description: String, skip: Skip, body: Suite.() -> Unit) {
-    group(description, skip) {
+    group(description, skip, CachingMode.TEST) {
         body(Suite(this))
     }
 }

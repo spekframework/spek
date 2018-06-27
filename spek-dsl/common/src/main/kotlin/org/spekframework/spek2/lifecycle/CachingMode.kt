@@ -18,5 +18,7 @@ enum class CachingMode {
     /**
      * Each test will get their own unique instance.
      */
-    TEST
+    TEST,
+
+    INHERIT
 }
