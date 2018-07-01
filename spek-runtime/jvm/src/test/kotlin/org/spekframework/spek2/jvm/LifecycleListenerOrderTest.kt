@@ -8,14 +8,14 @@ import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
 
-class LifecycleListenerOrderTest: AbstractSpekRuntimeTest() {
+class LifecycleListenerOrderTest : AbstractSpekRuntimeTest() {
 
     @Test
     fun testBeforeExecuteTest() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
+        class TestSpek : Spek({
+            registerListener(object : LifecycleListener {
                 override fun beforeExecuteTest(test: TestScope) {
                     buffer.appendln("1")
                 }
@@ -48,8 +48,8 @@ class LifecycleListenerOrderTest: AbstractSpekRuntimeTest() {
     fun testAfterExecuteTest() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
+        class TestSpek : Spek({
+            registerListener(object : LifecycleListener {
                 override fun afterExecuteTest(test: TestScope) {
                     buffer.appendln("1")
                 }
@@ -83,8 +83,8 @@ class LifecycleListenerOrderTest: AbstractSpekRuntimeTest() {
     fun testBeforeExecuteGroup() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
+        class TestSpek : Spek({
+            registerListener(object : LifecycleListener {
                 override fun beforeExecuteGroup(group: GroupScope) {
                     buffer.appendln("1")
                 }
@@ -115,8 +115,8 @@ class LifecycleListenerOrderTest: AbstractSpekRuntimeTest() {
     fun testAfterExecuteGroup() {
         buffer.setLength(0)
 
-        class TestSpek: Spek({
-            registerListener(object: LifecycleListener {
+        class TestSpek : Spek({
+            registerListener(object : LifecycleListener {
                 override fun afterExecuteGroup(group: GroupScope) {
                     buffer.appendln("1")
                 }

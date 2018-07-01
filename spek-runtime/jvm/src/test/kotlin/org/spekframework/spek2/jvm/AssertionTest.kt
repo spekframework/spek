@@ -5,10 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class AssertionTest: AbstractSpekRuntimeTest() {
+class AssertionTest : AbstractSpekRuntimeTest() {
     @Test
     fun testPassingSpek() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("group") {
                 test("test") {}
                 test("another test") {}
@@ -22,7 +22,7 @@ class AssertionTest: AbstractSpekRuntimeTest() {
 
     @Test
     fun testFailingSpek() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("group") {
                 test("test") { assertThat(true, equalTo(false)) }
                 test("another test") {}

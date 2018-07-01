@@ -5,10 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class BeforeGroupTest: AbstractSpekRuntimeTest() {
+class BeforeGroupTest : AbstractSpekRuntimeTest() {
     @Test
     fun testBeforeGroup() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             var counter = 0
 
             beforeGroup { counter++ }

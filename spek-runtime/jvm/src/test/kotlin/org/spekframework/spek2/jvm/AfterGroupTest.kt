@@ -5,10 +5,10 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class AfterGroupTest: AbstractSpekRuntimeTest() {
+class AfterGroupTest : AbstractSpekRuntimeTest() {
     @Test
     fun testAfterGroup() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             var counter = 0
             group("nested group") {
                 afterGroup { counter++ }

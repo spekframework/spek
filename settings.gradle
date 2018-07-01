@@ -17,9 +17,6 @@ include 'spek-runtime:jvm'
 
 include 'spek-runner:junit5'
 
-include 'spek-extension:data-driven:common'
-include 'spek-extension:data-driven:jvm'
-
 include 'spek-ide-plugin:interop-jvm'
 
 include 'spek-ide-plugin:intellij-common'

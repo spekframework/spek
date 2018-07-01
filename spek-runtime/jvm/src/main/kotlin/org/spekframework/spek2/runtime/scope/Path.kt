@@ -70,7 +70,7 @@ actual data class Path(actual val name: String, actual val parent: Path?) {
 }
 
 actual class PathBuilder(private var parent: Path) {
-    constructor(): this(ROOT)
+    constructor() : this(ROOT)
 
     actual fun append(name: String): PathBuilder {
         parent = Path(name, parent)

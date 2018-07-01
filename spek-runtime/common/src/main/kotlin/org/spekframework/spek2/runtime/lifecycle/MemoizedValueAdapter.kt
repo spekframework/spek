@@ -1,13 +1,15 @@
 package org.spekframework.spek2.runtime.lifecycle
 
-import org.spekframework.spek2.lifecycle.*
+import org.spekframework.spek2.lifecycle.GroupScope
+import org.spekframework.spek2.lifecycle.LifecycleListener
+import org.spekframework.spek2.lifecycle.TestScope
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 sealed class MemoizedValueAdapter<T>(
-        val factory: () -> T,
-        val destructor: (T) -> Unit
+    val factory: () -> T,
+    val destructor: (T) -> Unit
 ) : ReadOnlyProperty<Any?, T>, LifecycleListener {
 
     protected sealed class Cached<out T> {
@@ -32,8 +34,8 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class GroupCachingModeAdapter<T>(
-            factory: () -> T,
-            destructor: (T) -> Unit
+        factory: () -> T,
+        destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
         private val stack = mutableListOf<Cached<T>>()
@@ -55,8 +57,8 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class ScopeCachingModeAdapter<T>(
-            val scope: ScopeImpl,
-            factory: () -> T, destructor: (T) -> Unit
+        val scope: ScopeImpl,
+        factory: () -> T, destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
         override fun afterExecuteGroup(group: GroupScope) {
@@ -71,21 +73,11 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class TestCachingModeAdapter<T>(
-            factory: () -> T,
-            destructor: (T) -> Unit
+        factory: () -> T,
+        destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
         override fun afterExecuteTest(test: TestScope) {
-            if (test.parent !is ActionScope) {
-                val cached = this.cached
-                when (cached) {
-                    is Cached.Value<T> -> destructor(cached.value)
-                }
-                this.cached = Cached.Empty
-            }
-        }
-
-        override fun afterExecuteAction(action: ActionScope) {
             val cached = this.cached
             when (cached) {
                 is Cached.Value<T> -> destructor(cached.value)

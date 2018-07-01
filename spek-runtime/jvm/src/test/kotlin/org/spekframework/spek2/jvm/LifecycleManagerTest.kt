@@ -17,7 +17,7 @@ class LifecycleManagerTest {
 
     @Test
     fun sameListenerRegistration() {
-        val listener = object: LifecycleListener { }
+        val listener = object : LifecycleListener {}
         lifecycleManager.addListener(listener)
 
         try {

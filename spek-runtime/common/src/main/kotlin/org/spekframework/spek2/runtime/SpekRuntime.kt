@@ -1,10 +1,10 @@
 package org.spekframework.spek2.runtime
 
 import org.spekframework.spek2.Spek
-import org.spekframework.spek2.dsl.Pending
+import org.spekframework.spek2.dsl.Skip
+import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
-import org.spekframework.spek2.runtime.execution.ExecutionContext
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
@@ -22,15 +22,14 @@ abstract class AbstractRuntime {
         }
 
         val qualifiedName = (path.parent?.name ?: "") + ".${path.name}"
-        val classScope = GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Pending.No, lifecycleManager)
-        instance.root.invoke(Collector(classScope, lifecycleManager, fixtures))
+        val classScope =
+            GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager)
+        instance.root.invoke(Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST))
 
         return classScope
     }
 
-    fun execute(request: ExecutionRequest) {
-        Executor().execute(ExecutionContext(request))
-    }
+    fun execute(request: ExecutionRequest) = Executor().execute(request)
 }
 
-expect class SpekRuntime(): AbstractRuntime
+expect class SpekRuntime() : AbstractRuntime

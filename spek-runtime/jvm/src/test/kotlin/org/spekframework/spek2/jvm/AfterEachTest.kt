@@ -5,11 +5,11 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class AfterEachTest: AbstractSpekRuntimeTest() {
+class AfterEachTest : AbstractSpekRuntimeTest() {
     @Test
     fun testAfterEach() {
         counter = 0
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("group") {
                 test("test") { }
                 test("another test") { }
@@ -24,24 +24,8 @@ class AfterEachTest: AbstractSpekRuntimeTest() {
     }
 
     @Test
-    fun testAfterEachAction() {
-        counter = 0
-        class TestSpek: Spek({
-            action("group") {
-                test("test") { }
-                test("another test") { }
-            }
-            afterEachTest { counter++ }
-
-        })
-
-        executeTestsForClass(TestSpek::class)
-        assertThat(counter, equalTo(1))
-    }
-
-    @Test
     fun testAfterEachFailure() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("group") {
                 test("test") { }
                 test("another test") { }
@@ -58,7 +42,7 @@ class AfterEachTest: AbstractSpekRuntimeTest() {
     @Test
     fun testAfterEachShouldStillBeInvokedWhenTestFails() {
         counter = 0
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("another group") {
                 test("test") {
                     assertThat(true, equalTo(false))
@@ -77,7 +61,7 @@ class AfterEachTest: AbstractSpekRuntimeTest() {
     @Test
     fun testAfterEachShouldStillBeInvokedWhenBeforeEach() {
         counter = 0
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("another group") {
                 beforeEachTest {
                     assertThat(true, equalTo(false))

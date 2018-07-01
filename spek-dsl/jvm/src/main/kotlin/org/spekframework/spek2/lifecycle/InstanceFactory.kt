@@ -6,5 +6,5 @@ import kotlin.reflect.KClass
 
 @Experimental
 interface InstanceFactory {
-    fun <T: Spek> create(spek: KClass<T>): T
+    fun <T : Spek> create(spek: KClass<T>): T
 }

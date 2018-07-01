@@ -5,12 +5,11 @@ package org.spekframework.spek2.meta
  */
 enum class SynonymType {
     GROUP,
-    ACTION,
     TEST
 }
 
 /**
- * Marks a function as a synonym to either a group, action or test scope.
+ * Marks a function as a synonym to either a group or test scope.
  *
  * @property type type of scope.
  * @property prefix prefix appended to the description (if applicable), this will appear in the test report.
@@ -18,9 +17,11 @@ enum class SynonymType {
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
-annotation class Synonym(val type: SynonymType,
-                         val prefix: String = "",
-                         val excluded: Boolean = false)
+annotation class Synonym(
+    val type: SynonymType,
+    val prefix: String = "",
+    val excluded: Boolean = false
+)
 
 
 /**
@@ -35,6 +36,7 @@ enum class DescriptionLocation {
     TYPE_PARAMETER,
     VALUE_PARAMETER
 }
+
 /**
  * A description source.
  */

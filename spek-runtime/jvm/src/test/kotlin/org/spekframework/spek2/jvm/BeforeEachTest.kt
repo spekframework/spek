@@ -5,11 +5,11 @@ import com.natpryce.hamkrest.equalTo
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.Spek
 
-class BeforeEachTest: AbstractSpekRuntimeTest() {
+class BeforeEachTest : AbstractSpekRuntimeTest() {
     @Test
     fun testBeforeEach() {
         counter = 0
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             beforeEachTest { counter++ }
             group("group") {
                 beforeEachTest { counter++ }
@@ -23,23 +23,8 @@ class BeforeEachTest: AbstractSpekRuntimeTest() {
     }
 
     @Test
-    fun testBeforeEachLazyAction() {
-        counter = 0
-        class TestSpek: Spek({
-            beforeEachTest { counter++ }
-            action("group") {
-                test("test") { }
-                test("another test") { }
-            }
-        })
-
-        executeTestsForClass(TestSpek::class)
-        assertThat(counter, equalTo(1))
-    }
-
-    @Test
     fun testBeforeEachFailure() {
-        class TestSpek: Spek({
+        class TestSpek : Spek({
             group("group") {
                 beforeEachTest { assertThat(true, equalTo(false)) }
                 test("test") { }
