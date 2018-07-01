@@ -16,6 +16,9 @@ dependencies {
 }
 
 dependencies {
-    testImplementation 'com.nhaarman:mockito-kotlin'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin'
     testImplementation 'org.junit.platform:junit-platform-engine'
+
+    // enable final class mocking
+    testRuntimeOnly 'org.mockito:mockito-inline'
 }
