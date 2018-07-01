@@ -1,7 +1,7 @@
 = Spek User Guide
 :toc: left
 :source-highlighter: highlight.js
-:revremark: pass:m[https://jetbrains.github.io/spek[Spek Home]]
+:revremark: pass:m[https://spekframework.github.io/spek[Spek Home]]
 
 include::overview.adoc[]
 
