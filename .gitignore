@@ -1,3 +1,6 @@
+# mkdocs
+site/
+
 # Java specific
 *.class
 target

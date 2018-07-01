@@ -1,5 +1,0 @@
-== Resources
-* https://spekframework.github.io/spek[Spek Home]
-* {githubRepo}[Github Repository]
-* {issueTracker}[Issue Tracker]
-* https://kotlinlang.org[The Kotlin Language]
