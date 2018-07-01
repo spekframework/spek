@@ -9,10 +9,11 @@ import org.spekframework.spek2.runtime.lifecycle.MemoizedValueCreator
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import org.spekframework.spek2.runtime.scope.*
 
-open class Collector(
+class Collector(
     val root: GroupScopeImpl,
     private val lifecycleManager: LifecycleManager,
-    private val fixtures: FixturesAdapter
+    private val fixtures: FixturesAdapter,
+    override val defaultCachingMode: CachingMode
 ) : Root {
 
     private val ids = linkedMapOf<String, Int>()
@@ -36,7 +37,7 @@ open class Collector(
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, skip: Skip, body: GroupBody.() -> Unit) {
+    override fun group(description: String, skip: Skip, defaultCachingMode: CachingMode, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
@@ -45,7 +46,12 @@ open class Collector(
             lifecycleManager
         )
         root.addChild(group)
-        val collector = Collector(group, lifecycleManager, fixtures)
+        val cachingMode = if (defaultCachingMode == CachingMode.INHERIT) {
+            this.defaultCachingMode
+        } else {
+            defaultCachingMode
+        }
+        val collector = Collector(group, lifecycleManager, fixtures, cachingMode)
         try {
             body.invoke(collector)
         } catch (e: Throwable) {

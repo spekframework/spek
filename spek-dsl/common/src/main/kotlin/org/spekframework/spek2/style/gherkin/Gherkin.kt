@@ -3,38 +3,51 @@ package org.spekframework.spek2.style.gherkin
 import org.spekframework.spek2.dsl.GroupBody
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
+import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.meta.*
 
+@Synonym(SynonymType.GROUP, prefix = "Feature: ")
+@Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
+fun GroupBody.Feature(description: String, body: FeatureBody.() -> Unit) {
+    group("Feature: $description", defaultCachingMode = CachingMode.GROUP) {
+        body(FeatureBody(this))
+    }
+}
+
 @SpekDsl
-class GivenBody(delegate: GroupBody) : GroupBody by delegate {
-    @Synonym(SynonymType.GROUP, prefix = "When: ")
+class FeatureBody(delegate: GroupBody): GroupBody by delegate {
+    @Synonym(SynonymType.GROUP, prefix = "Scenario: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun When(description: String, skip: Skip = Skip.No, body: WhenBody.() -> Unit) {
-        group("When: $description", skip) {
-            body(WhenBody(this))
+    fun Scenario(description: String, body: ScenarioBody.() -> Unit) {
+        group("Scenario: $description", defaultCachingMode = CachingMode.SCOPE) {
+            body(ScenarioBody(this))
         }
     }
 }
 
 @SpekDsl
-class WhenBody(delegate: GroupBody) : GroupBody by delegate {
+class ScenarioBody(delegate: GroupBody): GroupBody by delegate {
+    @Synonym(SynonymType.TEST, prefix = "Given: ")
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
+    fun Given(description: String, body: TestBody.() -> Unit) {
+        test("Given: $description", body = body)
+    }
+
+    @Synonym(SynonymType.TEST, prefix = "When: ")
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
+    fun When(description: String, body: TestBody.() -> Unit) {
+        test("When: $description", body = body)
+    }
+
     @Synonym(SynonymType.TEST, prefix = "Then: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun Then(description: String, skip: Skip = Skip.No, body: ThenBody.() -> Unit) {
-        test("Then: $description", skip) {
-            body(ThenBody(this))
-        }
+    fun Then(description: String, body: TestBody.() -> Unit) {
+        test("Then: $description", body = body)
     }
-}
 
-
-@SpekDsl
-class ThenBody(delegate: TestBody) : TestBody by delegate
-
-@Synonym(SynonymType.GROUP, prefix = "Given: ")
-@Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-fun GroupBody.Given(description: String, skip: Skip = Skip.No, body: GivenBody.() -> Unit) {
-    group("Feature: $description", skip) {
-        body(GivenBody(this))
+    @Synonym(SynonymType.TEST, prefix = "And: ")
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
+    fun And(description: String, body: TestBody.() -> Unit) {
+        test("And: $description", body = body)
     }
 }
