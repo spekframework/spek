@@ -19,7 +19,12 @@ buildscript {
 }
 
 plugins {
-    id 'nebula.release' version '6.0.0'
+    id 'org.ajoberstar.reckon' version '0.7.0'
+}
+
+reckon {
+    scopeFromProp()
+    stageFromProp('beta', 'rc', 'final')
 }
 
 afterEvaluate {
