@@ -22,14 +22,14 @@ function checkIfEnvVarIsNotEmpty() {
     fi
 }
 
-GIT_BRANCH_FOR_SNAPSHOTS="2.x"
+#GIT_BRANCH_FOR_SNAPSHOTS="2.x"
 
-if [ "$GIT_BRANCH" == "$GIT_BRANCH_FOR_SNAPSHOTS" ]; then
-    checkIfEnvVarIsNotEmpty "$BINTRAY_USER"
-    checkIfEnvVarIsNotEmpty "$BINTRAY_API_KEY"
-
-    echo "Publishing snapshot..."
-    "$PROJECT_DIR"/gradlew snapshot artifactoryPublish --info --stacktrace
-else
-    echo "Snapshot will not be published for this build, because branch '$GIT_BRANCH' doesn't match '$GIT_BRANCH_FOR_SNAPSHOTS'."
-fi
+#if [ "$GIT_BRANCH" == "$GIT_BRANCH_FOR_SNAPSHOTS" ]; then
+#    checkIfEnvVarIsNotEmpty "$BINTRAY_USER"
+#    checkIfEnvVarIsNotEmpty "$BINTRAY_API_KEY"
+#
+#    echo "Publishing snapshot..."
+#    "$PROJECT_DIR"/gradlew snapshot artifactoryPublish --info --stacktrace
+#else
+#    echo "Snapshot will not be published for this build, because branch '$GIT_BRANCH' doesn't match '$GIT_BRANCH_FOR_SNAPSHOTS'."
+#fi
