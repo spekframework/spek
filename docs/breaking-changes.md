@@ -20,3 +20,4 @@ The following extensions are removed.
 
 ## Removed APIs
 - `Spek.include`, introduced only to support the subject extension.
+- `action` scope is dropped to simplify the API.

@@ -49,14 +49,9 @@ markdown_extensions:
   - pymdownx.superfences
 
 pages:
-  - Home: index.md
-  - User Guide:
-      - 1.x:
-        - Setting up: guide/1.x/setup.md
-        - Preamble: guide/1.x/preamble.md
-        - Writing tests: guide/1.x/writing-tests.md
-      - 2.x:
-        - Breaking changes: guide/2.x/breaking-changes.md
-        - Setting up:
-          - JVM: guide/2.x/setup-jvm.md
-          - Multiplatform: guide/2.x/setup-mpp.md
+  - Overview: index.md
+  - Breaking changes: breaking-changes.md
+  - Migrating to 2.x: migration.md
+  - Setting up:
+    - JVM: setup-jvm.md
+    - Multiplatform: setup-mpp.md
