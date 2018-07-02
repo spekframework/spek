@@ -3,7 +3,7 @@
 
 ![Spek Logo](spek-logo.png)
 
-## A Specification Framework for the JVM
+## A Test Framework for Kotlin
 
 Visit the [web site](http://spekframework.org/) for more documentation and information.
 
@@ -14,7 +14,7 @@ Visit the [web site](http://spekframework.org/) for more documentation and infor
 
 ---
 
-Copyright (c) 2012-2017, Spek Core Team and Contributors
+Copyright (c) 2018, Spek Core Team and Contributors
 
 Licensed under [Modified BSD](https://github.com/JetBrains/spek/blob/2.x/LICENSE.TXT)
 
