@@ -114,12 +114,12 @@ bintray {
     publish = false
 
     pkg {
-        repo = 'spek2'
-        desc = "Specification framework for the JVM"
-        name = 'spek'
+        repo = 'spek'
+        desc = "Test framework for Kotlin"
+        name = 'spek2'
         userOrg = 'spekframework'
         licenses = ['BSD New']
-        labels = ['kotlin', 'testing', 'specification-framework']
+        labels = ['kotlin', 'testing']
         vcsUrl = 'https://github.com/spekframework/spek.git'
 
         githubRepo = 'spekframework/spek'
