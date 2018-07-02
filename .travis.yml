@@ -7,6 +7,11 @@ jdk: oraclejdk8
 install:
   - echo "Overriding default Travis install step to avoid unnecessary './gradlew assemble'."
 
+branches:
+  only:
+    - 1.x
+    - 2.x
+
 script:
   - ci/build.sh
   
