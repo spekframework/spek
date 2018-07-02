@@ -18,10 +18,11 @@ buildscript {
     }
 }
 
-version = '2.0.0-SNAPSHOT'
+plugins {
+    id 'nebula.release' version '6.0.0'
+}
 
 afterEvaluate {
-    println "##teamcity[buildNumber \'${version}\']"
     def v = version
     allprojects {
         version = v
