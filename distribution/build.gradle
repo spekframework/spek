@@ -1,7 +1,7 @@
 apply plugin: 'base'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'com.jfrog.artifactory'
+//apply plugin: 'com.jfrog.artifactory'
 
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
@@ -134,26 +134,26 @@ bintray {
 }
 
 // snapshots
-artifactory {
-    contextUrl = 'https://oss.jfrog.org'
-    resolve {
-        repository {
-            repoKey = 'libs-release'
-        }
-    }
-    publish {
-        repository {
-            // The Artifactory repository key to publish to
-            // when using oss.jfrog.org the credentials are from Bintray.
-            repoKey = 'oss-snapshot-local'
-
-            username = bintrayUser
-            password = bintrayApiKey
-        }
-
-        defaults {
-            publications (*artifacts)
-            properties = [ 'bintray.repo': 'spekframework/maven', 'bintray.package': 'org.spekframework.spek2:spek2', 'bintray.version': project.version.toString() ]
-        }
-    }
-}
+//artifactory {
+//    contextUrl = 'https://oss.jfrog.org'
+//    resolve {
+//        repository {
+//            repoKey = 'libs-release'
+//        }
+//    }
+//    publish {
+//        repository {
+//            // The Artifactory repository key to publish to
+//            // when using oss.jfrog.org the credentials are from Bintray.
+//            repoKey = 'oss-snapshot-local'
+//
+//            username = bintrayUser
+//            password = bintrayApiKey
+//        }
+//
+//        defaults {
+//            publications (*artifacts)
+//            properties = [ 'bintray.repo': 'spekframework/maven', 'bintray.package': 'org.spekframework.spek2:spek2', 'bintray.version': project.version.toString() ]
+//        }
+//    }
+//}

@@ -13,7 +13,6 @@ buildscript {
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.3'
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
         classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.3.4"
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.7.4"
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.3"
     }
 }
