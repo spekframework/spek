@@ -6,7 +6,7 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/.."
 
 source "$PROJECT_DIR/ci/git_branch.sh"
 
-"$PROJECT_DIR"/gradlew --no-daemon --info --stacktrace clean build
+"$PROJECT_DIR"/gradlew --no-daemon --info --stacktrace clean snapshot build
 
 BINTRAY_USER="$BINTRAY_USER"
 BINTRAY_API_KEY="$BINTRAY_API_KEY"
@@ -29,7 +29,7 @@ if [ "$GIT_BRANCH" == "$GIT_BRANCH_FOR_SNAPSHOTS" ]; then
     checkIfEnvVarIsNotEmpty "$BINTRAY_API_KEY"
 
     echo "Publishing snapshot..."
-    "$PROJECT_DIR"/gradlew artifactoryPublish --info --stacktrace
+    "$PROJECT_DIR"/gradlew snapshot artifactoryPublish --info --stacktrace
 else
     echo "Snapshot will not be published for this build, because branch '$GIT_BRANCH' doesn't match '$GIT_BRANCH_FOR_SNAPSHOTS'."
 fi
