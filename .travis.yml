@@ -23,7 +23,7 @@ jobs:
 
 stages:
   - build
-  - name: publish
+  - name: release
     if: tag IS present
 
 before_cache:
