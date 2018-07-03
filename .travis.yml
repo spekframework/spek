@@ -4,13 +4,12 @@ sudo: false
 language: java
 jdk: oraclejdk8
 
-install:
-  - echo "Overriding default Travis install step to avoid unnecessary './gradlew assemble'."
-
 branches:
   only:
     - 1.x
     - 2.x
+
+install: skip
 
 jobs:
   include:
@@ -23,7 +22,11 @@ stages:
   - build
   - name: publish
     if: tag IS present
-  
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
     - $HOME/.gradle
