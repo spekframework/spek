@@ -86,7 +86,11 @@ class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions)
                 else -> throw IllegalArgumentException("Invalid location: ${it.location}")
             }
         }.fold(synonym.prefix) { prev, current ->
-            "$prev $current"
+            if (prev.isNotEmpty()) {
+                "$prev $current"
+            } else {
+                current
+            }
         }
     }
 }

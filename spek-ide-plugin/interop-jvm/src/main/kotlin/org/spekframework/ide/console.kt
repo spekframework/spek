@@ -16,7 +16,7 @@ class Spek2ConsoleLauncher {
 
         val discoveryRequest = DiscoveryRequest(args.sourceDirs.toList(), paths)
 
-        val runtime =  SpekRuntime()
+        val runtime = SpekRuntime()
 
         val discoveryResult = runtime.discover(discoveryRequest)
         val executionRequest = ExecutionRequest(discoveryResult.roots, ServiceMessageAdapter())

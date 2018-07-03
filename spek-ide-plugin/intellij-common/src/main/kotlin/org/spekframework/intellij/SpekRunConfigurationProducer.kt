@@ -3,15 +3,13 @@ package org.spekframework.intellij
 import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.RunConfigurationProducer
 import com.intellij.openapi.module.Module
-import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
 import org.jetbrains.kotlin.config.TargetPlatformKind
-import org.jetbrains.kotlin.idea.facet.implementingModules
-import org.jetbrains.kotlin.idea.run.findJvmImplementationModule
+import org.jetbrains.kotlin.idea.caches.project.implementingModules
 
 enum class ProducerType {
     COMMON,
