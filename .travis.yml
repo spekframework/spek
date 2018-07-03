@@ -11,6 +11,9 @@ branches:
 
 install: skip
 
+git:
+  depth: 150
+
 jobs:
   include:
     - stage: build
