@@ -19,7 +19,7 @@ jobs:
     - stage: build
       script: ./gradlew --no-daemon --info --stacktrace clean build
     - stage: release
-      script: echo "Hello!"
+      script: ./gradlew --no-daemon --info --stacktrace bintrayPublish
 
 stages:
   - build

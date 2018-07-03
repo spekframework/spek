@@ -112,7 +112,6 @@ bintray {
     user = bintrayUser
     key = bintrayApiKey
     publish = false
-
     pkg {
         repo = 'spek'
         desc = "Test framework for Kotlin"
