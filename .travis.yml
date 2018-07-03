@@ -12,8 +12,17 @@ branches:
     - 1.x
     - 2.x
 
-script:
-  - ci/build.sh
+jobs:
+  include:
+    - stage: build
+      script: ./gradlew --no-daemon --info --stacktrace clean build
+    - stage: release
+      script: echo "Hello!"
+
+stages:
+  - build
+  - name: publish
+    if: tag IS present
   
 cache:
   directories:
@@ -23,5 +32,6 @@ notifications:
   email:
     recipients:
       - artem.zinnatullin@gmail.com
+      - raniejaderamiso@gmail.com
     on_success: never
     on_failure: always
