@@ -6,7 +6,7 @@ intellij {
     downloadSources = true
 
     localPath = "$localAndroidStudio"
-    plugins = ["kotlin", 'gradle']
+    plugins = ['kotlin', 'gradle']
     alternativeIdePath = "$localAndroidStudio"
 }
 
