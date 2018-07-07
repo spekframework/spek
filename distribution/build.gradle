@@ -108,12 +108,18 @@ String propOrEnv(String name) {
 def bintrayUser = propOrEnv("BINTRAY_USER")
 def bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
+def bintrayRepo = 'spek-dev'
+if ("$version".matches("^\\d+\\.\\d+\\.\\d+\$")) {
+    bintrayRepo = 'spek'
+}
+
 bintray {
     user = bintrayUser
     key = bintrayApiKey
     publish = false
+    dryRun = true
     pkg {
-        repo = 'spek'
+        repo = bintrayRepo
         desc = "Test framework for Kotlin"
         name = 'spek2'
         userOrg = 'spekframework'
