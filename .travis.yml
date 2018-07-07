@@ -8,6 +8,7 @@ branches:
   only:
     - 1.x
     - 2.x
+    - /^\d+\.\d+\.\d+(-\S*)?$/
 
 install: skip
 
