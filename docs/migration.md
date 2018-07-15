@@ -7,15 +7,18 @@ has `spek2`, this allows having `1.x` and `2.x` tests in the same project.
     ```groovy
     test {
         useJUnitPlatform {
-            includeEngines 'spek', 'spek2'
+            includeEngines 'spek', 'spek2', 'some-other-test-engine'
         }
     }
     ```
 
 ## Maven coordinates
-Spek is split into an API and a runtime (referred to as runner in `2.x`), replace `org.jetbrains.spek:spek-api` and 
-`org.jetbrains.spek:spek-junit-platform-engine` with `org.spekframework.spek2:spek-dsl-jvm` and 
-`org.spekframework.spek2:spek-junit5-runner`, respectively.
+The table below shows the equivalent `1.x` and `2.x` artifacts.
+
+| 1.x                                             | 2.x                                          |
+|-------------------------------------------------|----------------------------------------------|
+| `org.jetbrains.spek:spek-api`                   | `org.spekframework.spek2:spek2-dsl-jvm`      |
+| `org.jetbrains.spek:spek-junit-platform-engine` | `org.spekframework.spek2:spek-runner-junit5` |
 
 ## Base package
 The base package is now `org.spekframework.spek2`, but since most of the API has change it's not easy as replacing
@@ -26,16 +29,49 @@ The base package is now `org.spekframework.spek2`, but since most of the API has
 different synonyms is not allowed.
 
 ### describe, context, it
-This `1.x` style is the most straightforward to migrate, just add an import to
-`org.spekframework.spek2.specification.describe`.
+This `1.x` style is the most straightforward to migrate, adding an import to
+`org.spekframework.spek2.specification.describe` should work in most cases. However, a major difference is `context` and `it` are not allowed in the root
+scope, you have to either wrap them in a `describe` or for `context` rename it to `describe`.
 
 ```kotlin
-import org.spekframework.spek2.specifcation.describe
+object SetSpec: Spek({
+    val set by memoized { mutableSetOf<String>() }
+
+    context("is empty") {
+        it("should have a size of 0") {
+            assertEquals(0, set.size)
+        }
+
+        it("should throw when first is invoked") {
+            assertFailsWith(NoSuchElementException::class) {
+                set.first()
+            }
+          }
+      }
+  })
+```
+
+For example, the `2.x` equivalent for the test above is:
+
+```kotlin
+import org.spekframework.spek2.style.specifcation.describe
 import org.spekframework.spek2.Spek
 
-object MySpec: Spek({
-    describe("Something") {
-        ...
+object SetSpec: Spek({
+    describe("A set") {
+        val set by memoized { mutableSetOf<String>() }
+
+        context("is empty") {
+            it("should have a size of 0") {
+                assertEquals(0, set.size)
+            }
+
+            it("should throw when first is invoked") {
+                assertFailsWith(NoSuchElementException::class) {
+                    set.first()
+                }
+            }
+        }
     }
 })
 ```
@@ -44,7 +80,7 @@ object MySpec: Spek({
 `2.x` introduces a complete gherkin like DSL and this style is roughly equivalent to it.
 
 ```kotlin
-import org.spekframework.spek2.gherkin.Feature
+import org.spekframework.spek2.style.gherkin.Feature
 import org.spekframework.spek2.Spek
 
 object MyFeature: Spek({
