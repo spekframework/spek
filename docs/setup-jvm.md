@@ -12,11 +12,11 @@ dependencies {
     testImplementation ('org.spekframework.spek2:spek-dsl-jvm:2.x.x')  {
         exclude group: 'org.jetbrains.kotlin'
     }
-    testRuntimeOnly ('org.spekframework.spek2:spek-junit5-runner') {
+    testRuntimeOnly ('org.spekframework.spek2:spek-runner-junit5') {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
-    
+
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
@@ -50,7 +50,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
                 </dependency>
                 <dependency>
                     <groupId>org.spekframework.spek2</groupId>
-                    <artifactId>spek-junit5-runner</artifactId>
+                    <artifactId>spek-runner-junit5</artifactId>
                     <version>2.x.x</version>
                     <exclusions>
                         <exclusion>
