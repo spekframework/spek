@@ -1,12 +1,9 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
-apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
 
-junitPlatform {
-    filters {
-        engines {
-            exclude 'spek2'
-        }
+test {
+    useJUnitPlatform {
+        excludeEngines 'spek2'
     }
 }
 
@@ -16,9 +13,13 @@ dependencies {
 }
 
 dependencies {
+    testImplementation 'com.natpryce:hamkrest'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin'
     testImplementation 'org.junit.platform:junit-platform-engine'
 
     // enable final class mocking
     testRuntimeOnly 'org.mockito:mockito-inline'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
 }
