@@ -1,6 +1,9 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
-apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
+
+test {
+    useJUnitPlatform()
+}
 
 dependencies {
     expectedBy project(':spek-runtime:common')
@@ -10,4 +13,10 @@ dependencies {
     compile project(':spek-dsl:jvm')
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
     implementation 'org.reflections:reflections'
+}
+
+dependencies {
+    testImplementation 'com.natpryce:hamkrest'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
