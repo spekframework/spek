@@ -9,7 +9,7 @@ import org.jetbrains.spek.api.lifecycle.InstanceFactory
 import org.jetbrains.spek.engine.support.AbstractSpekTestEngineTest
 import org.junit.jupiter.api.Test
 import kotlin.reflect.KClass
-import kotlin.reflect.primaryConstructor
+import kotlin.reflect.full.primaryConstructor
 
 /**
  * @author Ranie Jade Ramiso

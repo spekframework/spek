@@ -2,11 +2,7 @@ package org.jetbrains.spek.engine
 
 import org.jetbrains.spek.api.CreateWith
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.ActionBody
-import org.jetbrains.spek.api.dsl.Pending
-import org.jetbrains.spek.api.dsl.Spec
-import org.jetbrains.spek.api.dsl.SpecBody
-import org.jetbrains.spek.api.dsl.TestBody
+import org.jetbrains.spek.api.dsl.*
 import org.jetbrains.spek.api.lifecycle.CachingMode
 import org.jetbrains.spek.api.lifecycle.InstanceFactory
 import org.jetbrains.spek.api.lifecycle.LifecycleAware
@@ -14,11 +10,7 @@ import org.jetbrains.spek.api.lifecycle.LifecycleListener
 import org.jetbrains.spek.engine.lifecycle.LifecycleAwareAdapter
 import org.jetbrains.spek.engine.lifecycle.LifecycleManager
 import org.junit.platform.commons.util.ReflectionUtils
-import org.junit.platform.engine.EngineDiscoveryRequest
-import org.junit.platform.engine.ExecutionRequest
-import org.junit.platform.engine.TestDescriptor
-import org.junit.platform.engine.TestSource
-import org.junit.platform.engine.UniqueId
+import org.junit.platform.engine.*
 import org.junit.platform.engine.discovery.ClassSelector
 import org.junit.platform.engine.discovery.ClasspathRootSelector
 import org.junit.platform.engine.discovery.PackageSelector
@@ -27,11 +19,10 @@ import org.junit.platform.engine.support.descriptor.ClassSource
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
 import java.lang.reflect.Modifier
-import java.nio.file.Paths
-import java.util.LinkedList
+import java.util.*
 import java.util.function.Consumer
 import kotlin.reflect.KClass
-import kotlin.reflect.primaryConstructor
+import kotlin.reflect.full.primaryConstructor
 
 /**
  * @author Ranie Jade Ramiso
