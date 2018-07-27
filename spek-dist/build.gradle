@@ -209,13 +209,13 @@ bintray {
     pkg {
         repo = 'spek'
         desc = "Specification framework for the JVM"
-        name = 'spek'
-        userOrg = 'jetbrains'
+        name = 'spek1'
+        userOrg = 'spekframework'
         licenses = ['BSD New']
         labels = ['kotlin', 'testing', 'specification-framework']
-        vcsUrl = 'https://github.com/JetBrains/spek.git'
+        vcsUrl = 'https://github.com/spekframework/spek.git'
 
-        githubRepo = 'JetBrains/spek'
+        githubRepo = 'spekframework/spek'
 
 
         version {
