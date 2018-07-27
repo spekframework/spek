@@ -19,6 +19,10 @@ task javadocJar(type: Jar, dependsOn: dokka) {
     classifier = 'javadoc'
 }
 
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
 jar {
     baseName = archiveBaseName
 }

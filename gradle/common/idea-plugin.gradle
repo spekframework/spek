@@ -10,3 +10,10 @@ intellij {
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+        verbose = true
+    }
+}
