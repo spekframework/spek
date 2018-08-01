@@ -32,7 +32,7 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
     class Action(uniqueId: UniqueId, pending: Pending,
                  source: TestSource?,
                  lifecycleManager: LifecycleManager,
-                 private val body: Action.(SpekExecutionContext) -> Unit)
+                 private val body: Action.(Node.DynamicTestExecutor) -> Unit)
         : Scope(uniqueId, pending, source, lifecycleManager), ActionScope {
         override fun getType() = CONTAINER
 
@@ -41,11 +41,11 @@ sealed class Scope(uniqueId: UniqueId, val pending: Pending, val source: TestSou
             return context
         }
 
-        override fun execute(context: SpekExecutionContext, dynamicTestExecutor: Node.DynamicTestExecutor?): SpekExecutionContext {
+        override fun execute(context: SpekExecutionContext, dynamicTestExecutor: Node.DynamicTestExecutor): SpekExecutionContext {
             val collector = ThrowableCollector()
 
             if (collector.isEmpty()) {
-                collector.executeSafely { body.invoke(this, context) }
+                collector.executeSafely { body.invoke(this, dynamicTestExecutor) }
             }
 
             collector.assertEmpty()

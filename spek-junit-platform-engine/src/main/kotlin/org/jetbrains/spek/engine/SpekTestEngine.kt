@@ -18,6 +18,7 @@ import org.junit.platform.engine.discovery.UniqueIdSelector
 import org.junit.platform.engine.support.descriptor.ClassSource
 import org.junit.platform.engine.support.descriptor.EngineDescriptor
 import org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine
+import org.junit.platform.engine.support.hierarchical.Node
 import java.lang.reflect.Modifier
 import java.util.*
 import java.util.function.Consumer
@@ -45,7 +46,7 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     override fun getId(): String = "spek"
 
     override fun createExecutionContext(request: ExecutionRequest)
-        = SpekExecutionContext(request)
+        = SpekExecutionContext()
 
     private fun resolveSpecs(discoveryRequest: EngineDiscoveryRequest, engineDescriptor: EngineDescriptor) {
         val isValidSpec = java.util.function.Predicate<Class<*>> {
@@ -162,10 +163,10 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
         override fun action(description: String, pending: Pending, body: ActionBody.() -> Unit) {
             val action = Scope.Action(
                 root.uniqueId.append(GROUP_SEGMENT_TYPE, description),
-                pending, getSource(), lifecycleManager, {
-                    body.invoke(ActionCollector(this, lifecycleManager, it))
-                }
-            )
+                pending, getSource(), lifecycleManager
+            ) { dynamicTestExecutor ->
+                body.invoke(ActionCollector(this, lifecycleManager, dynamicTestExecutor))
+            }
 
             root.addChild(action)
         }
@@ -196,14 +197,14 @@ class SpekTestEngine: HierarchicalTestEngine<SpekExecutionContext>() {
     }
 
     class ActionCollector(val root: Scope.Action, val lifecycleManager: LifecycleManager,
-                          val context: SpekExecutionContext): ActionBody {
+                          val dynamicTestExecutor: Node.DynamicTestExecutor): ActionBody {
 
         override fun test(description: String, pending: Pending, body: TestBody.() -> Unit) {
             val test = Scope.Test(
                 root.uniqueId.append(TEST_SEGMENT_TYPE, description), pending, getSource(), lifecycleManager, body
             )
             root.addChild(test)
-            context.engineExecutionListener.dynamicTestRegistered(test)
+            dynamicTestExecutor.execute(test)
         }
 
     }
