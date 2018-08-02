@@ -34,7 +34,7 @@ class ActionTest: AbstractSpekTestEngineTest() {
         val recorder = executeTestsForClass(TestSpek::class)
 
         assertThat(recorder.dynamicTestRegisteredCount, equalTo(2))
-        assertThat(recorder.testSuccessfulCount, equalTo(1))
-        assertThat(recorder.testFailureCount, equalTo(1))
+        assertThat(recorder.testSuccessfulCount, equalTo(2))
+        assertThat(recorder.testFailureCount, equalTo(0))
     }
 }
