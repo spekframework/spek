@@ -1,3 +1,2 @@
-mkdocs-material>=3.0.3
-mkdocs>=1.0.0
-tornado>=5.0.0
+mkdocs-material
+mkdocs>=0.9.0
