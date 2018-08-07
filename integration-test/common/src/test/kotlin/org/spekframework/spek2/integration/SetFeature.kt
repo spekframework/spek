@@ -36,5 +36,22 @@ object SetFeature: Spek({
                 }
             }
         }
+
+        Scenario("getting the first item") {
+            val item = "foo"
+            Given("a non-empty set")  {
+                set.add(item)
+            }
+
+            lateinit var result: String
+
+            When("getting the first item") {
+                result = set.first()
+            }
+
+            Then("it should return the first item") {
+                assertEquals(item, result)
+            }
+        }
     }
 })

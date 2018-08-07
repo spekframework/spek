@@ -83,6 +83,7 @@ object SetSpec: Spek({
 object SetSpek: Spek({
     val set by memoized { ... }
 
+    // testing side-effects
     given("an empty set)" {
         beforeEachTest {
             // assume(list.isEmpty())
@@ -115,10 +116,26 @@ object SetSpek: Spek({
             }
         }
     }
+
+    // testing a return value
+    given("a set with one item") {
+        val item = "foo"
+        beforeEachTest {
+            set.add(item)
+        }
+
+        on("getting the first item") {
+            val result = set.first()
+
+            it("should return the first item") {
+                assertEquals(item, result)
+            }
+        }
+    }
 })
 ```
 
-The test above can is equivalent to:
+The test above is equivalent to:
 
 ```kotlin
 object SetFeature: Spek({
@@ -151,6 +168,23 @@ object SetFeature: Spek({
                 assertFailsWith(NoSuchElementException::class) {
                     set.first()
                 }
+            }
+        }
+
+        Scenario("getting first item") {
+            val item = "foo"
+            Given("a non-empty set")  {
+                set.add(item)
+            }
+
+            lateinit var result: String
+
+            When("getting the first item") {
+                result = set.first()
+            }
+
+            Then("it should return the first item") {
+                assertEquals(item, result)
             }
         }
     }
