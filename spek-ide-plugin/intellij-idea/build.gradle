@@ -12,11 +12,10 @@ dependencies {
 
 buildPlugin {
     baseName = ''
-    version = "${project.version}-IJ$ijSdkVersion"
+    version = "${project.version}-IJ"
 }
 
 patchPluginXml {
-    version = "${project.version}-IJ$ijSdkVersion"
+    version = "${project.version}-IJ"
     sinceBuild = "181.1"
-    untilBuild = "182.*"
 }
