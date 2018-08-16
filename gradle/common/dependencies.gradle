@@ -23,7 +23,7 @@ dependencyManagement {
             entry 'kotlin-test-common'
         }
 
-        dependency 'org.reflections:reflections:0.9.11'
+        dependency 'io.github.classgraph:classgraph:4.0.6'
 
         dependency 'com.xenomachina:kotlin-argparser:2.0.6'
 
