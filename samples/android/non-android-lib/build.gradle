@@ -1,0 +1,19 @@
+apply plugin: 'kotlin'
+apply plugin: 'jacoco'
+
+test {
+    useJUnitPlatform {
+        includeEngines 'spek2'
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // assertion
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
+    //spek2
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+}
