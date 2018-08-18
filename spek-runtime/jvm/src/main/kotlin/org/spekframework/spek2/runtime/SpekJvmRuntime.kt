@@ -61,8 +61,7 @@ actual class SpekRuntime : AbstractRuntime() {
         }
 
         return cg.scan().use {
-            val classes = it.getSubclasses(Spek::class.qualifiedName!!)
-            classes.stream()
+            it.getSubclasses(Spek::class.qualifiedName!!).stream()
                 .map { it.loadClass() as Class<out Spek> }
                 .map { it.kotlin }
                 .toList()
