@@ -1,9 +1,6 @@
 package org.spekframework.spek2.runtime
 
-import org.reflections.Reflections
-import org.reflections.scanners.SubTypesScanner
-import org.reflections.util.ClasspathHelper
-import org.reflections.util.ConfigurationBuilder
+import io.github.classgraph.ClassGraph
 import org.spekframework.spek2.CreateWith
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.InstanceFactory
@@ -12,10 +9,10 @@ import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRelated
-import java.io.File
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
+import kotlin.streams.toList
 
 actual class SpekRuntime : AbstractRuntime() {
     private val defaultInstanceFactory = object : InstanceFactory {
@@ -26,9 +23,7 @@ actual class SpekRuntime : AbstractRuntime() {
     }
 
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
-        val reflections = createReflections(discoveryRequest.sourceDirs)
-        val scopes = reflections.getSubTypesOf(Spek::class.java)
-            .map(Class<out Spek>::kotlin)
+        val scopes = scanClasses(discoveryRequest.sourceDirs)
             .filter { it.findAnnotation<Ignore>() == null }
             .filter { !it.isAbstract }
             .map { klass ->
@@ -57,18 +52,19 @@ actual class SpekRuntime : AbstractRuntime() {
             .firstOrNull() ?: defaultInstanceFactory
     }
 
-    private fun createReflections(testDirs: List<String>): Reflections {
-        val urls = if (testDirs.isEmpty()) {
-            ClasspathHelper.forJavaClassPath()
-        } else {
-            testDirs.map(::File)
-                .map { it.toURI().toURL() }
+    private fun scanClasses(testDirs: List<String>): List<KClass<out Spek>> {
+        val cg = ClassGraph()
+            .enableClassInfo()
+
+        if (testDirs.isNotEmpty()) {
+            cg.overrideClasspath(testDirs)
         }
 
-        return Reflections(
-            ConfigurationBuilder()
-                .setUrls(urls)
-                .setScanners(SubTypesScanner())
-        )
+        return cg.scan().use {
+            it.getSubclasses(Spek::class.qualifiedName!!).stream()
+                .map { it.loadClass() as Class<out Spek> }
+                .map { it.kotlin }
+                .toList()
+        }
     }
 }
