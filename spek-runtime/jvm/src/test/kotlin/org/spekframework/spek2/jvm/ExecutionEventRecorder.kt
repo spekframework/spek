@@ -16,6 +16,8 @@ class ExecutionEventRecorder : ExecutionListener {
         get() = countTestEventsByType<ExecutionEvent.Started>()
     val containerStartedCount: Int
         get() = countContainerEventsByType<ExecutionEvent.Started>()
+    val containerFinishedCount: Int
+        get() = countContainerEventsByType<ExecutionEvent.Finished>()
     val testFinishedCount: Int
         get() = countTestEventsByType<ExecutionEvent.Finished>()
     val testSuccessfulCount: Int
