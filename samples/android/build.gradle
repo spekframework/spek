@@ -19,11 +19,8 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
         jcenter()
         maven { url "https://dl.bintray.com/spekframework/spek-dev" }
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }
