@@ -1,0 +1,10 @@
+apply plugin: 'kotlin-platform-common'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlin_version"
+}
+
+dependencies {
+    testImplementation "org.spekframework.spek2:spek-dsl-common:$spek_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-common:$kotlin_version"
+}

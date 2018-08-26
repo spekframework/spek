@@ -1,0 +1,4 @@
+rootProject.name = 'spek-multiplatform-example'
+
+include 'common'
+include 'jvm'

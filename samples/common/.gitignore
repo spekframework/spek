@@ -1,0 +1,37 @@
+# mkdocs
+site/
+
+# Java specific
+*.class
+target
+classes/
+
+# OS / App generated files
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
+*.sass-cache
+*~
+build/
+.gradle/
+*build/artifacts
+bin/
+obj/
+_ReSharper.*
+out/
+*.csproj.user
+*.resharper.user
+*.resharper
+*.suo
+*.cache
+*.user
+*.dotsettings
+*.dotsettings.*
+~$*
+.DS_Store/
+lib/kotlin-runtime.jar
+*/target/*
+.idea/
+*.iml
