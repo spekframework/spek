@@ -4,15 +4,19 @@
 Gradle `4.7` is recommended as it added a built-in support for JUnit Platform.
 
 ```groovy
+repositories {
+    maven { url "https://dl.bintray.com/spekframework/spek-dev" }
+}
+
 // setup dependencies
 dependencies {
     // some version of Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    testImplementation ('org.spekframework.spek2:spek-dsl-jvm:2.x.x')  {
+    testImplementation ('org.spekframework.spek2:spek-dsl-jvm:2.0.0-alpha.1')  {
         exclude group: 'org.jetbrains.kotlin'
     }
-    testRuntimeOnly ('org.spekframework.spek2:spek-runner-junit5') {
+    testRuntimeOnly ('org.spekframework.spek2:spek-runner-junit5:2.0.0-alpha.1') {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
@@ -51,7 +55,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
                 <dependency>
                     <groupId>org.spekframework.spek2</groupId>
                     <artifactId>spek-runner-junit5</artifactId>
-                    <version>2.x.x</version>
+                    <version>2.0.0-alpha.1</version>
                     <exclusions>
                         <exclusion>
                             <groupId>org.jetbrains.kotlin</groupId>
@@ -68,6 +72,12 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
     </plugins>
 </build>
 ...
+<repositories>
+    <repository>
+        <id>spek-dev</id>
+        <url>https://dl.bintray.com/spekframework/spek-dev</url>
+    </repository>
+</repositories>
 <dependencies>
     ...
     <dependency>
@@ -79,7 +89,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
     <dependency>
         <groupId>org.spekframework.spek2</groupId>
         <artifactId>spek-dsl-jvm</artifactId>
-        <version>2.x.x</version>
+        <version>2.0.0-alpha.1</version>
         <scope>test</scope>
         <exclusions>
             <exclusion>
@@ -99,4 +109,4 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
 ```
 
 ## IntelliJ Plugin
-`2.x` requires a new plugin to be installed, TBD.
+To use the new [plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) you need to add a custom plugin repository: `https://plugins.jetbrains.com/plugins/dev/10915` (`Settings -> Plugins -> Browse Repositories -> Manage repositories`).
