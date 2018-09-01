@@ -21,7 +21,9 @@ jobs:
     - stage: build
       script: ./gradlew --no-daemon --info --stacktrace clean build
     - stage: release
-      script: ./gradlew --no-daemon --info --stacktrace bintrayUpload
+      script:
+        - ./gradlew --no-daemon --info --stacktrace bintrayUpload
+        - curl -X POST -d '' $NETLIFY_DEPLOY_URL
 
 stages:
   - build
