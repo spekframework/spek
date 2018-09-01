@@ -25,6 +25,8 @@ include 'spek-ide-plugin:intellij-idea'
 
 if (hasProperty("localAndroidStudio")) {
     include 'spek-ide-plugin:android-studio'
+    include 'spek-ide-plugin:android-studio3.1'
+    include 'spek-ide-plugin:android-studio3.2'
 }
 
 include 'integration-test:common'
