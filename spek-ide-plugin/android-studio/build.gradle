@@ -17,7 +17,7 @@ dependencies {
 
 buildPlugin {
     baseName = ''
-    version = "${project.version}-Studio3"
+    version = "${project.version}-Studio3.1"
 }
 
 patchPluginXml {
