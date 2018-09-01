@@ -11,7 +11,7 @@ repositories {
 // setup dependencies
 dependencies {
     // some version of Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     testImplementation ('org.spekframework.spek2:spek-dsl-jvm:2.0.0-alpha.1')  {
         exclude group: 'org.jetbrains.kotlin'
