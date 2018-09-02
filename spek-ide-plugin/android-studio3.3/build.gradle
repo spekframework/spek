@@ -17,11 +17,11 @@ dependencies {
 
 buildPlugin {
     baseName = ''
-    version = "${project.version}-Studio3.2"
+    version = "${project.version}-Studio3.3"
 }
 
 patchPluginXml {
-    version = "${project.version}-Studio3.2"
-    sinceBuild = "181.5281"
-    untilBuild = "181.*"
+    version = "${project.version}-Studio3.3"
+    sinceBuild = "182.3911"
+    untilBuild = "182.*"
 }
