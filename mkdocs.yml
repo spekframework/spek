@@ -55,3 +55,7 @@ pages:
   - Setting up:
     - JVM: setup-jvm.md
     - Multiplatform: setup-mpp.md
+  - Core Concepts: core-concepts.md
+  - Styles:
+    - Specification: specification.md
+    - Gherkin: gherkin.md
