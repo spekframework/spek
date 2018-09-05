@@ -1,0 +1,62 @@
+package org.spekframework.spek2.integration
+
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.lifecycle.CachingMode
+import kotlin.test.assertTrue
+
+object MemoizedTests: Spek({
+    group("by default each tests will have a unique instance") {
+        lateinit var previousValue: Set<String>
+        val value by memoized { setOf("") }
+
+        test("previous value") {
+            previousValue = value
+        }
+
+        test("should not be equal to previous value") {
+            assertTrue(previousValue !== value)
+        }
+    }
+
+    group("Using CachingMode.SCOPE, every test will share the same instance") {
+        lateinit var previousValue: Set<String>
+        val value by memoized(CachingMode.SCOPE) { setOf("") }
+
+        test("previous value") {
+            previousValue = value
+        }
+
+        test("should be equal to previous value") {
+            assertTrue(previousValue === value)
+        }
+
+        test("should be equal to previous value") {
+            assertTrue(previousValue === value)
+        }
+    }
+
+    group("Using CachingMode.GROUP, each group will have a unique instance") {
+        lateinit var previousValue: Set<String>
+        val value by memoized(CachingMode.GROUP) { setOf("") }
+
+        group("first") {
+            beforeGroup {
+                previousValue = value
+            }
+
+            test("should be equal to previous value") {
+                assertTrue(previousValue === value)
+            }
+
+            test("should be equal to previous value") {
+                assertTrue(previousValue === value)
+            }
+        }
+
+        group("second") {
+            beforeGroup {
+                assertTrue(previousValue !== value)
+            }
+        }
+    }
+})
