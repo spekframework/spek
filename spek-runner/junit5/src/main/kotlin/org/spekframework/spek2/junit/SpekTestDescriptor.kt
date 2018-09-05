@@ -5,7 +5,10 @@ import org.junit.platform.engine.TestSource
 import org.junit.platform.engine.TestTag
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.ClassSource
-import org.spekframework.spek2.runtime.scope.*
+import org.spekframework.spek2.runtime.scope.GroupScopeImpl
+import org.spekframework.spek2.runtime.scope.ScopeImpl
+import org.spekframework.spek2.runtime.scope.ScopeType
+import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import java.util.*
 
 class SpekTestDescriptor internal constructor(
@@ -71,8 +74,19 @@ class SpekTestDescriptor internal constructor(
 
     override fun getTags(): MutableSet<TestTag> = mutableSetOf()
 
-    override fun removeFromHierarchy() = throw UnsupportedOperationException()
-    override fun removeChild(descriptor: TestDescriptor) = throw UnsupportedOperationException()
+    override fun removeFromHierarchy() {
+        parent.ifPresent { parent ->
+            parent.removeChild(this)
+        }
+    }
+
+    override fun removeChild(descriptor: TestDescriptor) {
+        if (scope is GroupScopeImpl) {
+            childDescriptors.remove(descriptor)
+            scope.removeChild((descriptor as SpekTestDescriptor).scope)
+        }
+    }
+
     override fun findByUniqueId(uniqueId: UniqueId): Optional<out TestDescriptor> =
         throw UnsupportedOperationException()
 }

@@ -48,6 +48,10 @@ open class GroupScopeImpl(
         children.add(child)
     }
 
+    fun removeChild(child: ScopeImpl) {
+        children.remove(child)
+    }
+
     fun getChildren() = children.toList()
 
     fun filterBy(path: Path) {
