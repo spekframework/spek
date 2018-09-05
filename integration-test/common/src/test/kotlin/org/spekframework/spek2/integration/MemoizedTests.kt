@@ -18,7 +18,7 @@ object MemoizedTests: Spek({
         }
     }
 
-    group("Using CachingMode.SCOPE, every test will share the same instance") {
+    group("Using CachingMode.SCOPE, every test within the same group will share the same instance") {
         lateinit var previousValue: Set<String>
         val value by memoized(CachingMode.SCOPE) { setOf("") }
 
