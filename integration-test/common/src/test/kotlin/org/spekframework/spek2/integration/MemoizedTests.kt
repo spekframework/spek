@@ -54,7 +54,7 @@ object MemoizedTests: Spek({
         }
 
         group("second") {
-            beforeGroup {
+            test("should not be equal to previous value") {
                 assertTrue(previousValue !== value)
             }
         }
