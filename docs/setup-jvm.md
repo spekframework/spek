@@ -37,7 +37,7 @@ test {
 The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
 
 !!! warning "Requirements"
-    Please use Maven Surefire `2.21.0` with the `junit-platform-surefire-provider`.
+    Please use Maven Surefire `2.22.0` with the `junit-platform-surefire-provider`.
 ```xml
 ...
 <build>
@@ -45,14 +45,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
         ...
         <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.21.0</version>
-            <dependencies>
-                <dependency>
-                    <groupId>org.junit.platform</groupId>
-                    <artifactId>junit-platform-surefire-provider</artifactId>
-                    <version>{junit.platform.version}</version>
-                </dependency>
-            </dependencies>
+            <version>2.22.0</version>
         </plugin>
     </plugins>
 </build>
