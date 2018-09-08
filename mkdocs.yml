@@ -54,7 +54,7 @@ pages:
   - Migrating to 2.x: migration.md
   - Setting up:
     - JVM: setup-jvm.md
-    - Multiplatform: setup-mpp.md
+    - Android: setup-android.md
   - Core Concepts: core-concepts.md
   - Styles:
     - Specification: specification.md
