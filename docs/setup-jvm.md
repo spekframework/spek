@@ -37,7 +37,7 @@ test {
 The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
 
 !!! warning "Requirements"
-    Please use Maven Surefire `2.21.0` with the `junit-platform-surefire-provider`.
+    Please use Maven Surefire `2.22.0` with the `junit-platform-surefire-provider`.
 ```xml
 ...
 <build>
@@ -45,29 +45,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
         ...
         <plugin>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.21.0</version>
-            <dependencies>
-                <dependency>
-                    <groupId>org.junit.platform</groupId>
-                    <artifactId>junit-platform-surefire-provider</artifactId>
-                    <version>{junit.platform.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.spekframework.spek2</groupId>
-                    <artifactId>spek-runner-junit5</artifactId>
-                    <version>2.0.0-alpha.1</version>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.jetbrains.kotlin</groupId>
-                            <artifactId>*</artifactId>
-                        </exclusion>
-                        <exclusion>
-                            <groupId>org.junit.platform</groupId>
-                            <artifactId>*</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-            </dependencies>
+            <version>2.22.0</version>
         </plugin>
     </plugins>
 </build>
@@ -89,11 +67,26 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
     <dependency>
         <groupId>org.spekframework.spek2</groupId>
         <artifactId>spek-dsl-jvm</artifactId>
-        <version>2.0.0-alpha.1</version>
+        <version>2.0.0-alpha.2</version>
         <scope>test</scope>
         <exclusions>
             <exclusion>
                 <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>*</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <dependency>
+        <groupId>org.spekframework.spek2</groupId>
+        <artifactId>spek-runner-junit5</artifactId>
+        <version>2.0.0-alpha.2</version>
+        <exclusions>
+            <exclusion>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>*</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.junit.platform</groupId>
                 <artifactId>*</artifactId>
             </exclusion>
         </exclusions>
