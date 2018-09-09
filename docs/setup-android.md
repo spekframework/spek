@@ -2,7 +2,7 @@
 For non-android modules in your project you can follow the [JVM](setup-jvm.md) instructions.
 
 ```groovy
-// junit5 doesn't support android projects out of the box
+// Required as JUnit 5 doesn't support android projects out of the box.
 apply plugin: "de.mannodermaus.android-junit5"
 
 android {
