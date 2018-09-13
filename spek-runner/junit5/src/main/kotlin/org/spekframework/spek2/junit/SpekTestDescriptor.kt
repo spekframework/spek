@@ -33,7 +33,7 @@ class SpekTestDescriptor internal constructor(
 
     override fun getUniqueId() = id
 
-    override fun getDisplayName(): String = scope.path.name
+    override fun getDisplayName(): String = scope.path.toString()
 
     override fun getType(): TestDescriptor.Type = when (scope) {
         is GroupScopeImpl -> TestDescriptor.Type.CONTAINER
