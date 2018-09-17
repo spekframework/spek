@@ -87,7 +87,7 @@ object MyTest: Spek({
         }
 
         afterEachTest {
-            println("before each test")
+            println("after each test")
         }
     }
 
