@@ -1,4 +1,4 @@
-This style brings in a Gherkin-like DSL into Spek.
+This style is inspired by Cucumber's [Gherkin](https://docs.cucumber.io/gherkin/) syntax.
 
 ```kotlin
 object SetFeature: Spek({
