@@ -35,7 +35,8 @@ class SpekTestDescriptorFactoryTest {
             path,
             null,
             Skip.No,
-            lifecycleManager
+            lifecycleManager,
+            false
         )
 
         assertThat(factory.create(scope), sameInstance(factory.create(scope)))

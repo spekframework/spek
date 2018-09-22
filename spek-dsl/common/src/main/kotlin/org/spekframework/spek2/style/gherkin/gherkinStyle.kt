@@ -2,7 +2,6 @@ package org.spekframework.spek2.style.gherkin
 
 import org.spekframework.spek2.dsl.GroupBody
 import org.spekframework.spek2.dsl.LifecycleAware
-import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.meta.*
@@ -20,7 +19,7 @@ class FeatureBody(val delegate: GroupBody): LifecycleAware by delegate {
     @Synonym(SynonymType.GROUP, prefix = "Scenario: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Scenario(description: String, body: ScenarioBody.() -> Unit) {
-        delegate.group("Scenario: $description", defaultCachingMode = CachingMode.SCOPE) {
+        delegate.group("Scenario: $description", defaultCachingMode = CachingMode.SCOPE, preserveExecutionOrder = true) {
             body(ScenarioBody(this))
         }
     }
