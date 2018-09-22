@@ -1,2 +1,4 @@
 mkdocs-material==2.9.4
 mkdocs==0.17.5
+pygments==2.2.0
+pymdown-extensions==4.12
