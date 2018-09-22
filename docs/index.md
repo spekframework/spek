@@ -1,7 +1,5 @@
-!!! warning ""
-    `2.x` is still currently in development.
+Spek `2.x` is a complete rewrite of Spek with Kotlin multiplatform support in mind. The DSL is also reworked into
+two distinct styles: [specification](specification.md) and [gherkin](gherkin.md).
 
-This documentation is for `2.x`, the documentation for `1.x` can be found [here](https://spekframework.github.io/spek/docs/latest)
-
-There are some significant changes made for `2.x`, see [Breaking changes](breaking-changes.md) for a detailed list. A dedicated [migration](migration.md)
-section is also provided.
+A dedicated [migration](migration.md) section and the list of [breaking changes](breaking-changes.md) is provided.
+If you need the `1.x` user guide then it can be found [here](https://spekframework.github.io/spek/docs/latest).
