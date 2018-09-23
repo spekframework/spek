@@ -6,4 +6,4 @@ if [ -d "$BASEDIR/p3" ]; then
     source ./p3/bin/activate
     pip install -r requirements.txt
 fi
-mkdocs build
+mkdocs serve

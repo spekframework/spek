@@ -41,9 +41,9 @@ markdown_extensions:
   - footnotes
   - meta
   - toc:
-      - permalink: true
+      permalink: true
   - pymdownx.betterem:
-      - smart_enable: all
+      smart_enable: all
   - pymdownx.caret
   - pymdownx.inlinehilite
   - pymdownx.magiclink
