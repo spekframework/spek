@@ -37,7 +37,7 @@ theme:
 # Extensions
 markdown_extensions:
   - admonition
-  - codehilite(guess_lang=false)
+  - codehilite
   - footnotes
   - meta
   - toc(permalink=true)
