@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+set -e
 BASEDIR=$(dirname "$0")
 VIRTUALENV_DIR="$BASEDIR/p3"
 
