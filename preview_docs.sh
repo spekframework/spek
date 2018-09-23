@@ -1,9 +1,11 @@
 #! /usr/bin/env bash
 BASEDIR=$(dirname "$0")
-if [ -d "$BASEDIR/p3" ]; then
+VIRTUALENV_DIR="$BASEDIR/p3"
+
+if [[ ! -d "$VIRTUALENV_DIR" ]]; then
     pip install virtualenv
-    virtualenv -p python3 p3
-    source ./p3/bin/activate
+    virtualenv -p python3 "$VIRTUALENV_DIR"
+    source "$VIRTUALENV_DIR/bin/activate"
     pip install -r requirements.txt
 fi
 mkdocs serve
