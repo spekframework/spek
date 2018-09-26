@@ -37,11 +37,13 @@ theme:
 # Extensions
 markdown_extensions:
   - admonition
-  - codehilite(guess_lang=false)
+  - codehilite
   - footnotes
   - meta
-  - toc(permalink=true)
-  - pymdownx.betterem(smart_enable=all)
+  - toc:
+      permalink: true
+  - pymdownx.betterem:
+      smart_enable: all
   - pymdownx.caret
   - pymdownx.inlinehilite
   - pymdownx.magiclink
