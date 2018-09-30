@@ -1,4 +1,4 @@
-[![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/spekframework/spek/spek2/images/download.svg) ](https://bintray.com/spekframework/spek/spek2/_latestVersion)
 [![CI](https://travis-ci.org/spekframework/spek.svg?branch=2.x)](https://travis-ci.org/spekframework/spek)
 
 ![Spek Logo](spek-logo.png)
