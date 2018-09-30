@@ -109,7 +109,7 @@ def bintrayUser = propOrEnv("BINTRAY_USER")
 def bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
 def bintrayRepo = 'spek-dev'
-if ("$version".matches("^\\d+\\.\\d+\\.\\d+(-rc\\.d+)?\$")) {
+if ("$version".matches("^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+)?")) {
     bintrayRepo = 'spek'
 }
 
