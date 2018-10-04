@@ -61,7 +61,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
     <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-stdlib</artifactId>
-        <version>{kotlin.version}</version>
+        <version>${kotlin.version}</version>
         <scope>compile</scope>
     </dependency>
     <dependency>
@@ -94,7 +94,7 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
     <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-reflect</artifactId>
-        <version>{kotlin.version}</version>
+        <version>${kotlin.version}</version>
         <scope>test</scope>
     </dependency>
 </dependencies>
