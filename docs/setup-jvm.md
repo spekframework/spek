@@ -102,4 +102,4 @@ The JUnit Team has provided a basic plugin to run JUnit Platform tests in Maven.
 ```
 
 ## IntelliJ Plugin
-To use the new [plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) you need to add a custom plugin repository: `https://plugins.jetbrains.com/plugins/dev/10915` (`Settings -> Plugins -> Browse Repositories -> Manage repositories`).
+The new [plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) is available at IntelliJ's plugin repository (search for `Spek Framework`).

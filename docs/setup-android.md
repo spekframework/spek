@@ -44,3 +44,6 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 ```
+
+## Android Studio Plugin
+The new [plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) is available at IntelliJ's plugin repository (search for `Spek Framework`).
