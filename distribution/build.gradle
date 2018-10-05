@@ -74,7 +74,7 @@ def artifact(Publication publication, Project project, artifactName) {
 
     configure.resolveStrategy =  Closure.DELEGATE_FIRST
     configure.delegate = publication
-    configure()
+    project.afterEvaluate(configure)
 }
 
 publishing {
@@ -89,13 +89,7 @@ publishing {
     }
 }
 
-def artifacts = [
-    'dslCommon',
-    'dslJvm',
-    'runtimeCommon',
-    'runtimeJvm',
-    'runnerJUnit5'
-]
+def artifacts = publishing.publications.collect { it.name }
 
 String propOrEnv(String name) {
     String property = project.findProperty(name)
