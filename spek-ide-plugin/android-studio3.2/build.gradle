@@ -22,6 +22,6 @@ buildPlugin {
 
 patchPluginXml {
     version = "${project.version}-Studio3.2"
-    sinceBuild = "181.5281"
-    untilBuild = "181.5281.*"
+    sinceBuild = "181.5540"
+    untilBuild = "181.5540.*"
 }
