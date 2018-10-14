@@ -1,11 +1,11 @@
 # Setting up for Android
 ## Build
 ### Android modules
-To be able to run tests from gradle, we need to apply a third [plugin](https://github.com/mannodermaus/android-junit5) as Gradle's
+To be able to run tests from gradle, we need to apply a third party [plugin](https://github.com/mannodermaus/android-junit5) as Gradle's
 native support for JUnit 5 does not support android modules.
 
 ```groovy
-// Required as JUnit 5 doesn't support android projects out of the box.
+// Required as JUnit 5 doesn't support android modules out of the box.
 apply plugin: "de.mannodermaus.android-junit5"
 
 android {
@@ -59,12 +59,12 @@ repositories {
 // setup dependencies
 dependencies {
     // some version of Kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:$spek_version'
 
-    testImplementation ('org.spekframework.spek2:spek-dsl-jvm:2.0.0-rc.1')  {
+    testImplementation ('org.spekframework.spek2:spek-dsl-jvm:$spek_version')  {
         exclude group: 'org.jetbrains.kotlin'
     }
-    testImplementation ('org.spekframework.spek2:spek-runner-junit5:2.0.0-rc.1') {
+    testImplementation ('org.spekframework.spek2:spek-runner-junit5:$spek_version') {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
@@ -84,10 +84,10 @@ test {
 ## Running tests
 ### Gradle
 If you followed the previous section correctly, the tests can be run by just invoking the `test` task (`gradlew test`). Currently, there
-is no way to run a specific test via gradle.
+is no way to run a specific test via Gradle.
 
 ### Android Studio
-To run tests in Android Studio you need to install this [plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) (search for `Spek Framework`).
+To run tests in Android Studio you need to install [Spek Framework plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) (search for `Spek Framework`).
 The plugin will allow you to:
 
 - Run all tests in a package (there should be an option under `Run` -> `Specs in <package>` when right clicking a package in the explorer)
