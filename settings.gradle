@@ -1,9 +1,38 @@
+// Temporary worakround for https://github.com/Kotlin/dokka/issues/146
+// Must put jcenter() first to resolve the correct artifacts for Dokka
+pluginManagement {
+    repositories {
+        jcenter()
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'spek'
 
-include 'spek-api'
-include 'spek-subject-extension'
-include 'junit-platform-engine-test-support'
-include 'spek-junit-platform-engine'
-include 'spek-dist'
+include 'spek-dsl:common'
+include 'spek-dsl:jvm'
+
+include 'spek-dsl-specification:common'
+include 'spek-dsl-specification:jvm'
+include 'spek-dsl-specification:samples'
+
+include 'spek-runtime:common'
+include 'spek-runtime:jvm'
+
+include 'spek-runner:junit5'
+
+include 'spek-extension:subject:common'
+include 'spek-extension:subject:jvm'
+
+include 'spek-extension:data-driven:common'
+include 'spek-extension:data-driven:jvm'
+
+include 'spek-ide-plugin:interop-jvm'
+
+include 'spek-ide-plugin:intellij-common'
+include 'spek-ide-plugin:intellij-jvm'
+include 'spek-ide-plugin:intellij-idea'
+include 'spek-ide-plugin:intellij-studio'
+
+include 'distribution'
 include 'documentation'
-include 'spek-samples'

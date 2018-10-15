@@ -28,19 +28,13 @@ comply with this guidance. You can have multiple *it* but you limit each to one 
 
 **Q: Can I contribute?**
 
-http://github.com/jetbrains/spek[Please do!]
-
-**Q: Is Spek an official JetBrains project?**
-
-No. Spek was a project initiated by https://hadihariri.com[Hadi Hariri] and has multiple contributors both internally from JetBrains as well as externally. While it is
-hosted on the JetBrains account under GitHub, it is not a project that is officially supported.
+http://github.com/spekframework/spek[Please do!]
 
 **Q: Is Spek the recommended way to test Kotlin code**
 
-Spek is just one of many options available to write tests, however any testing framework can be used with Kotlin, such as JUnit. Depending on your preferences, style and SUT, then Spek may or may not be the otpion for you. 
+Spek is just one of many options available to write tests, however any testing framework can be used with Kotlin, such as JUnit. Depending on your preferences, style and SUT, then Spek may or may not be the option for you.
 
 **Q: What is the licensing?**
 
-Spek is licensed under https://github.com/JetBrains/spek/blob/master/LICENSE.TXT[BSD].
-
+Spek is licensed under https://github.com/spekframework/spek/blob/master/LICENSE.TXT[BSD].
 

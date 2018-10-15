@@ -1,0 +1,22 @@
+# Disabling sudo moves build to the Container Based Infrastructure on Travis CI.
+sudo: false
+
+language: java
+jdk: oraclejdk8
+
+install:
+  - echo "Overriding default Travis install step to avoid unnecessary './gradlew assemble'."
+
+script:
+  - ci/build.sh
+  
+cache:
+  directories:
+    - $HOME/.gradle
+
+notifications:
+  email:
+    recipients:
+      - artem.zinnatullin@gmail.com
+    on_success: never
+    on_failure: always

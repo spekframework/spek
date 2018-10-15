@@ -1,0 +1,22 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
+apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
+
+junitPlatform {
+    platformVersion '1.0.0-RC2'
+    filters {
+        engines {
+            exclude 'spek'
+        }
+    }
+}
+
+dependencies {
+    compile project(':spek-runtime:jvm')
+    compileOnly 'org.junit.platform:junit-platform-engine'
+}
+
+dependencies {
+    testImplementation 'com.nhaarman:mockito-kotlin'
+    testImplementation 'org.junit.platform:junit-platform-engine'
+}

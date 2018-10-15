@@ -1,0 +1,24 @@
+apply plugin: 'kotlin-platform-common'
+//apply plugin: 'org.jetbrains.dokka'
+
+def archiveBaseName = "${project.parent.name}-${project.name}"
+
+dependencies {
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-common'
+}
+
+task sourceJar(type: Jar) {
+    baseName = archiveBaseName
+    from project.sourceSets.main.allSource
+    classifier "sources"
+}
+
+task javadocJar(type: Jar /*, dependsOn: dokka */) {
+    baseName = archiveBaseName
+//    from dokka.outputDirectory
+    classifier = 'javadoc'
+}
+
+jar {
+    baseName = archiveBaseName
+}

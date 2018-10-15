@@ -10,7 +10,7 @@ NOTE: For Android projects check <<setting-up-legacy>> section.
 === Gradle
 JUnit Platform provides a http://junit.org/junit5/docs/current/user-guide/#running-tests-build[gradle plugin].
 
-[source,groovy,subs="attributes"]
+[source,groovy,subs="+attributes"]
 .build.gradle
 ----
 // setup the plugin
@@ -42,7 +42,7 @@ dependencies {
 ----
 
 === Gradle Kotlin Script
-[source,kotlin,subs="attributes"]
+[source,kotlin,subs="+attributes"]
 .build.gradle.kts
 ----
 import org.gradle.api.plugins.ExtensionAware
@@ -91,6 +91,29 @@ fun FiltersExtension.engines(setup: EnginesExtension.() -> Unit) {
 }
 ----
 
+=== Using later versions of Kotlin
+If you are using a version of Kotlin that is different than the one used by Spek, you will want to exclude
+the group in your dependency definition.
+
+[source,groovy,subs="+attributes"]
+.build.gradle
+----
+dependencies {
+
+    // your application's newer version of Kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testCompile ('org.jetbrains.spek:spek-api:{version}') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testRuntime ('org.jetbrains.spek:spek-junit-platform-engine:{version}') {
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
+}
+----
+
 === Maven
 
 JUnit provides support for http://junit.org/junit5/docs/current/user-guide/#running-tests-build-maven[Maven].
@@ -127,5 +150,3 @@ class CalculatorSpec: Spek({
 ----
 
 IMPORTANT: As mentioned in the <<ide-support>> section, the IDEA plugin won't work if you're using the JUnit 4 runner.
-
-

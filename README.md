@@ -1,16 +1,20 @@
 [![Download](https://api.bintray.com/packages/jetbrains/spek/spek/images/download.svg) ](https://bintray.com/jetbrains/spek/spek/_latestVersion)
-[![TeamCity](http://teamcity.jetbrains.com/app/rest/builds/buildType:(id:Spek_BuildAndTests)/statusIcon)](http://teamcity.jetbrains.com/viewType.html?buildTypeId=Spek_BuildAndTests)
+[![CI](https://travis-ci.org/spekframework/spek.svg?branch=2.x)](https://travis-ci.org/spekframework/spek)
 
 ![Spek Logo](spek-logo.png)
 
 ## A Specification Framework for the JVM
 
+Visit the [web site](http://spekframework.org/) for more documentation and information.
 
+## Current State of the Project
 
-Visit the [web site](https://jetbrains.github.io/spek) for more documentation and information
+- Spek `2.x` is main development branch, see [2.0.0 Milestone](https://github.com/spekframework/spek/milestone/3).
+- Spek `1.x` is in support mode, only bug fixes and documentation updates will be merged into 1.x branch.
 
+---
 
-Copyright (c) 2012-2016 Hadi Hariri and Contributors
+Copyright (c) 2012-2017, Spek Core Team and Contributors
 
-Licensed under [Modified BSD](https://github.com/JetBrains/spek/blob/master/LICENSE.TXT)
+Licensed under [Modified BSD](https://github.com/JetBrains/spek/blob/2.x/LICENSE.TXT)
 

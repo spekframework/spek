@@ -1,0 +1,12 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/idea-plugin.gradle"
+
+intellij {
+    version = '2018.1'
+    plugins = ['org.jetbrains.kotlin:1.2.31-release-IJ2018.1-1']
+}
+
+dependencies {
+    compile project(':spek-ide-plugin:intellij-common')
+    compile project(path: ':spek-ide-plugin:interop-jvm', configuration: 'shadow')
+}

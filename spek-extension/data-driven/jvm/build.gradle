@@ -1,0 +1,15 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
+apply from: "$rootDir/gradle/common/junit-jupiter.gradle"
+
+dependencies {
+    expectedBy project(':spek-extension:data-driven:common')
+}
+
+dependencies {
+    compile project(':spek-dsl:jvm')
+}
+
+dependencies {
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}

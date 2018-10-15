@@ -1,0 +1,17 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    compileOnly project(':spek-runtime:jvm')
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile 'com.xenomachina:kotlin-argparser'
+}
+
+shadowJar {
+    relocate 'com.xenomachina', 'shadow.com.xenomachina'
+
+    dependencies {
+        exclude(dependency('org.jetbrains.*:.*:.*'))
+    }
+}
