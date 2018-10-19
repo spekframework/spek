@@ -1,4 +1,7 @@
 # Setting up for Android
+The main repository contains an [android sample](https://github.com/spekframework/spek/tree/2.x/samples/android) which
+you can check out instead of this section.
+
 ## Build
 ### Android modules
 To be able to run tests from gradle, we need to apply a third party [plugin](https://github.com/mannodermaus/android-junit5) as Gradle's
