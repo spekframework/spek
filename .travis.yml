@@ -7,7 +7,7 @@ jdk:
 matrix:
   include:
   - jdk: openjdk10
-    before_install:
+    before_script:
     - rm "${JAVA_HOME}/lib/security/cacerts"
     - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
 
