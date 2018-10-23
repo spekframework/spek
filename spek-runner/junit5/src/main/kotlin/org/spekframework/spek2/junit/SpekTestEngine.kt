@@ -4,10 +4,14 @@ import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
+import org.junit.platform.engine.discovery.ClassSelector
 import org.junit.platform.engine.discovery.ClasspathRootSelector
+import org.junit.platform.engine.discovery.MethodSelector
+import org.junit.platform.engine.discovery.PackageSelector
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
+import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import java.nio.file.Paths
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
@@ -31,10 +35,34 @@ class SpekTestEngine : TestEngine {
             .map { Paths.get(it) }
             .map { it.toString() }
 
-        val pathSelector = discoveryRequest.getSelectorsByType(SpekPathDiscoverySelector::class.java)
-            .firstOrNull() ?: SpekPathDiscoverySelector(PathBuilder.ROOT)
+        val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
+            .map {
+                val packageName = it.javaClass.`package`.name
+                val className = it.javaClass.name.removePrefix("$packageName.")
 
-        val discoveryResult = runtime.discover(DiscoveryRequest(sourceDirs, listOf(pathSelector.path)))
+                PathBuilder()
+                    .append(packageName)
+                    .append(className)
+                    .build()
+            }
+
+        val packageSelectors = discoveryRequest.getSelectorsByType(PackageSelector::class.java)
+            .map {
+                PathBuilder().append(it.packageName)
+                    .build()
+            }
+
+        val filters = mutableListOf<Path>()
+
+        filters.addAll(classSelectors)
+        filters.addAll(packageSelectors)
+
+        // todo: empty filter should imply root
+        if (filters.isEmpty()) {
+            filters.add(PathBuilder.ROOT)
+        }
+
+        val discoveryResult = runtime.discover(DiscoveryRequest(sourceDirs, filters.toList()))
 
         discoveryResult.roots
             .map { descriptorFactory.create(it) }
