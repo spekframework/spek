@@ -4,6 +4,7 @@ sudo: false
 language: java
 jdk:
   - openjdk10
+
 matrix:
   include:
   - jdk: openjdk10
@@ -17,7 +18,7 @@ branches:
     - 2.x
     - /^\d+\.\d+\.\d+(-\S*)?$/
 
-install: skip
+install: true
 
 git:
   depth: 150
