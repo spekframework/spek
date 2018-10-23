@@ -3,7 +3,7 @@ sudo: false
 
 language: java
 jdk:
-  - openjdk10
+  - oraclejdk11
 
 branches:
   only:
