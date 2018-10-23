@@ -4,6 +4,12 @@ sudo: false
 language: java
 jdk:
   - oraclejdk11
+matrix:
+  include:
+  - jdk: openjdk10
+    before_install:
+    - rm "${JAVA_HOME}/lib/security/cacerts"
+    - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
 
 branches:
   only:
