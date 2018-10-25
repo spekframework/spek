@@ -4,10 +4,11 @@ import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
-import org.junit.platform.engine.discovery.ClasspathRootSelector
+import org.junit.platform.engine.discovery.*
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
+import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import java.nio.file.Paths
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
@@ -16,6 +17,16 @@ class SpekTestEngine : TestEngine {
 
     companion object {
         const val ID = "spek2"
+        // Spek does not know how to handle these selectors, fallback to no matching tests.
+        private val UNSUPPORTED_SELECTORS = listOf(
+            MethodSelector::class.java,
+            FileSelector::class.java,
+            ModuleSelector::class.java,
+            ClasspathResourceSelector::class.java,
+            UniqueIdSelector::class.java,
+            UriSelector::class.java,
+            DirectorySelector::class.java
+        )
     }
 
     private val descriptorFactory = SpekTestDescriptorFactory()
@@ -26,15 +37,43 @@ class SpekTestEngine : TestEngine {
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
 
+        if (containsUnsupportedSelector(discoveryRequest)) {
+            return engineDescriptor
+        }
+
         val sourceDirs = discoveryRequest.getSelectorsByType(ClasspathRootSelector::class.java)
             .map { it.classpathRoot }
             .map { Paths.get(it) }
             .map { it.toString() }
 
-        val pathSelector = discoveryRequest.getSelectorsByType(SpekPathDiscoverySelector::class.java)
-            .firstOrNull() ?: SpekPathDiscoverySelector(PathBuilder.ROOT)
+        val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
+            .map {
+                val packageName = it.javaClass.`package`.name
+                val className = it.javaClass.name.removePrefix("$packageName.")
 
-        val discoveryResult = runtime.discover(DiscoveryRequest(sourceDirs, listOf(pathSelector.path)))
+                PathBuilder()
+                    .append(packageName)
+                    .append(className)
+                    .build()
+            }
+
+        val packageSelectors = discoveryRequest.getSelectorsByType(PackageSelector::class.java)
+            .map {
+                PathBuilder().append(it.packageName)
+                    .build()
+            }
+
+        val filters = linkedSetOf<Path>()
+
+        filters.addAll(classSelectors)
+        filters.addAll(packageSelectors)
+
+        // todo: empty filter should imply root
+        if (filters.isEmpty()) {
+            filters.add(PathBuilder.ROOT)
+        }
+
+        val discoveryResult = runtime.discover(DiscoveryRequest(sourceDirs, filters.toList()))
 
         discoveryResult.roots
             .map { descriptorFactory.create(it) }
@@ -53,5 +92,14 @@ class SpekTestEngine : TestEngine {
         )
 
         runtime.execute(executionRequest)
+    }
+
+    private fun containsUnsupportedSelector(discoveryRequest: EngineDiscoveryRequest): Boolean {
+        for (selector in UNSUPPORTED_SELECTORS) {
+            if (discoveryRequest.getSelectorsByType(selector).isNotEmpty()) {
+                return true
+            }
+        }
+        return false
     }
 }

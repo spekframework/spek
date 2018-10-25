@@ -3,7 +3,7 @@ sudo: false
 
 language: java
 jdk:
-  - oraclejdk10
+  - openjdk10
 
 branches:
   only:
@@ -11,7 +11,10 @@ branches:
     - 2.x
     - /^\d+\.\d+\.\d+(-\S*)?$/
 
-install: skip
+before_install:
+  - rm "${JAVA_HOME}/lib/security/cacerts"
+  - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+install: echo skip
 
 git:
   depth: 150
