@@ -13,6 +13,7 @@ dependencyManagement {
         dependencySet(group: 'org.junit.jupiter', version: '5.0.1') {
             entry 'junit-jupiter-api'
             entry 'junit-jupiter-engine'
+            entry 'junit-jupiter-launcher'
         }
 
         dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {

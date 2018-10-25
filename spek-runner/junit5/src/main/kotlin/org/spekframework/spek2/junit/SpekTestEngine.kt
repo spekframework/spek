@@ -4,10 +4,7 @@ import org.junit.platform.engine.EngineDiscoveryRequest
 import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
-import org.junit.platform.engine.discovery.ClassSelector
-import org.junit.platform.engine.discovery.ClasspathRootSelector
-import org.junit.platform.engine.discovery.MethodSelector
-import org.junit.platform.engine.discovery.PackageSelector
+import org.junit.platform.engine.discovery.*
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -20,6 +17,16 @@ class SpekTestEngine : TestEngine {
 
     companion object {
         const val ID = "spek2"
+        // Spek does not know how to handle these selectors, fallback to no matching tests.
+        private val UNSUPPORTED_SELECTORS = listOf(
+            MethodSelector::class.java,
+            FileSelector::class.java,
+            ModuleSelector::class.java,
+            ClasspathResourceSelector::class.java,
+            UniqueIdSelector::class.java,
+            UriSelector::class.java,
+            DirectorySelector::class.java
+        )
     }
 
     private val descriptorFactory = SpekTestDescriptorFactory()
@@ -29,6 +36,10 @@ class SpekTestEngine : TestEngine {
 
     override fun discover(discoveryRequest: EngineDiscoveryRequest, uniqueId: UniqueId): TestDescriptor {
         val engineDescriptor = SpekEngineDescriptor(uniqueId, id)
+
+        if (containsUnsupportedSelector(discoveryRequest)) {
+            return engineDescriptor
+        }
 
         val sourceDirs = discoveryRequest.getSelectorsByType(ClasspathRootSelector::class.java)
             .map { it.classpathRoot }
@@ -52,7 +63,7 @@ class SpekTestEngine : TestEngine {
                     .build()
             }
 
-        val filters = mutableListOf<Path>()
+        val filters = linkedSetOf<Path>()
 
         filters.addAll(classSelectors)
         filters.addAll(packageSelectors)
@@ -81,5 +92,14 @@ class SpekTestEngine : TestEngine {
         )
 
         runtime.execute(executionRequest)
+    }
+
+    private fun containsUnsupportedSelector(discoveryRequest: EngineDiscoveryRequest): Boolean {
+        for (selector in UNSUPPORTED_SELECTORS) {
+            if (discoveryRequest.getSelectorsByType(selector).isNotEmpty()) {
+                return true
+            }
+        }
+        return false
     }
 }
