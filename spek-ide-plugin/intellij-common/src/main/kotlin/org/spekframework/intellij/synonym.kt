@@ -2,6 +2,7 @@ package org.spekframework.intellij
 
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiArrayInitializerMemberValue
+import org.jetbrains.kotlin.asJava.elements.KtLightAnnotationForSourceEntry
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtStringTemplateExpression
 
@@ -52,10 +53,17 @@ class PsiDescription(val annotation: PsiAnnotation) {
 
 class PsiDescriptions(val annotation: PsiAnnotation) {
     val sources: Array<PsiDescription> by lazy {
-        val value = annotation.findAttributeValue("sources")!! as PsiArrayInitializerMemberValue
-        val sources = value.initializers.map { it as PsiAnnotation }
-            .map(::PsiDescription)
-        sources.toTypedArray()
+        val value = annotation.findAttributeValue("sources")!!
+
+        if (value is PsiArrayInitializerMemberValue) {
+            value.initializers.map { it as PsiAnnotation }
+                .map(::PsiDescription)
+                .toTypedArray()
+        } else if (value is KtLightAnnotationForSourceEntry) {
+            arrayOf(PsiDescription(value))
+        } else {
+            throw AssertionError()
+        }
     }
 }
 

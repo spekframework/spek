@@ -4,7 +4,6 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.toLightMethods
-import org.jetbrains.kotlin.idea.caches.resolve.analyze
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
@@ -12,7 +11,6 @@ import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.lexer.KtToken
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.containingClassOrObject
-import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
@@ -115,8 +113,6 @@ fun isSpekSubclass(element: KtClassOrObject): Boolean {
 fun isSpekRunnable(element: KtClassOrObject) = element.containingClassOrObject == null && !element.isAbstract()
 
 private fun extractPathFromCallExpression(callExpression: KtCallExpression, buffer: List<String> = emptyList()): Path? {
-    val resultingDescriptor = callExpression.getResolvedCall(callExpression.analyze())?.resultingDescriptor ?: return null
-    val map = resultingDescriptor.annotations.map { it.allValueArguments.toString() }
     val calleeExpression = callExpression.calleeExpression
     if (calleeExpression != null) {
         val mainReference = calleeExpression.mainReference
