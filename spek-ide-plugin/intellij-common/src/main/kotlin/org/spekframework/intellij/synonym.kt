@@ -62,7 +62,7 @@ class PsiDescriptions(val annotation: PsiAnnotation) {
         } else if (value is KtLightAnnotationForSourceEntry) {
             arrayOf(PsiDescription(value))
         } else {
-            throw AssertionError()
+            throw AssertionError("Can not defer sources from $value.")
         }
     }
 }
