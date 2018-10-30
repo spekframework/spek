@@ -8,18 +8,20 @@ import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
-import org.jetbrains.kotlin.config.TargetPlatformKind
 import org.jetbrains.kotlin.idea.caches.project.implementingModules
+import org.jetbrains.kotlin.platform.IdePlatformKind
+import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
+import org.jetbrains.kotlin.platform.impl.JvmIdePlatformKind
 
 enum class ProducerType {
     COMMON,
     JVM
 }
 
-fun TargetPlatformKind<*>.toProducerType(): ProducerType {
+fun IdePlatformKind<*>.toProducerType(): ProducerType {
     return when (this) {
-        is TargetPlatformKind.Common -> ProducerType.COMMON
-        is TargetPlatformKind.Jvm -> ProducerType.JVM
+        CommonIdePlatformKind -> ProducerType.COMMON
+        JvmIdePlatformKind -> ProducerType.JVM
         else -> throw IllegalArgumentException("Unsupported platform kind: ${this}")
     }
 }
@@ -45,15 +47,15 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
 
 
             var canRun = false
-            if (isPlatformSupported(kotlinFacetSettings.targetPlatformKind!!)) {
+            if (isPlatformSupported(kotlinFacetSettings.platform!!.kind)) {
                 configuration.setModule(context.module)
                 canRun = true
-            } else  if (kotlinFacetSettings.targetPlatformKind == TargetPlatformKind.Common) {
+            } else  if (kotlinFacetSettings.platform!!.kind == CommonIdePlatformKind) {
                 val result = findSupportedModule(context.project, context.module)
                 if (result != null) {
                     val (module, moduleKotlinFacetSettings) = result
                     configuration.setModule(module)
-                    configuration.producerType = moduleKotlinFacetSettings.targetPlatformKind!!.toProducerType()
+                    configuration.producerType = moduleKotlinFacetSettings.platform!!.kind.toProducerType()
                     canRun = true
                 }
             }
@@ -73,9 +75,9 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
         return commonModule.implementingModules
             .map { it to kotlinFacetSettingsProvider.getInitializedSettings(it) }
             .firstOrNull {
-                isPlatformSupported(it.second.targetPlatformKind!!)
+                isPlatformSupported(it.second.platform!!.kind)
             }
     }
 
-    private fun isPlatformSupported(targetPlatformKind: TargetPlatformKind<*>) = targetPlatformKind.toProducerType() == producerType
+    private fun isPlatformSupported(kind: IdePlatformKind<*>) = kind.toProducerType() == producerType
 }
