@@ -16,7 +16,7 @@ import javax.swing.Icon
 abstract class SpekBaseConfigurationType(id: String, displayName: String, icon: Icon): ConfigurationTypeBase(
     id,
     displayName,
-    "Run Spek scopes",
+    "Run Spek 2 tests.",
     icon
 )
 
@@ -93,9 +93,9 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
         } ?: ""
 
         return if (path.name.isEmpty()) {
-            "$prefix Specs in <default>"
+            "$prefix Spek Tests in <default>"
         } else if (parent != null && parent.isRoot) {
-            "S$prefix pecs in ${path.name}"
+            "$prefix Spek Tests ${path.name}"
         } else {
             "$prefix ${path.name}"
         }.trim()

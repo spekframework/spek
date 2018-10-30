@@ -41,7 +41,6 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
         val path = sourceElement.get().let { extractPath(it, true) }
         return if (path != null) {
             configuration.path = path
-            configuration.setGeneratedName()
             val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
                 .getInitializedSettings(context.module)
 

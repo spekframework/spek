@@ -28,7 +28,7 @@ class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
         return path?.let {
             Info(
                 AllIcons.RunConfigurations.TestState.Run,
-                Function<PsiElement, String> { "Run ${path.name}"},
+                Function<PsiElement, String> { "[Spek] Run ${path.name}"},
                 *ExecutorAction.getActions(0)
             )
         }
