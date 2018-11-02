@@ -11,5 +11,17 @@ object CalculatorSpec : Spek({
         it("should return 4") {
             assertEquals(expected = 4, actual = calculator.add(2, 2))
         }
+
+        it("should return 2") {
+            assertEquals(expected = 2, actual = calculator.subtract(4, 2))
+        }
+
+        it("should return 4") {
+            assertEquals(expected = 4, actual = calculator.mul(2, 2))
+        }
+
+        it("should return 2") {
+            assertEquals(expected = 2, actual = calculator.div(4, 2))
+        }
     }
 })
