@@ -17,7 +17,7 @@ The table below shows the equivalent `1.x` and `2.x` artifacts.
 
 | 1.x                                             | 2.x                                          |
 |-------------------------------------------------|----------------------------------------------|
-| `org.jetbrains.spek:spek-api`                   | `org.spekframework.spek2:spek2-dsl-jvm`      |
+| `org.jetbrains.spek:spek-api`                   | `org.spekframework.spek2:spek-dsl-jvm`       |
 | `org.jetbrains.spek:spek-junit-platform-engine` | `org.spekframework.spek2:spek-runner-junit5` |
 
 ## Base package
