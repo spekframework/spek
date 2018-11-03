@@ -8,8 +8,10 @@ import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
+import org.jetbrains.kotlin.idea.references.resolveMainReferenceToDescriptors
 import org.jetbrains.kotlin.lexer.KtToken
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.containingClass
 import org.jetbrains.kotlin.psi.psiUtil.containingClassOrObject
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -33,6 +35,11 @@ private val DESCRIPTIONS_CLASSES = listOf(
 class UnsupportedFeatureException(message: String): Throwable(message)
 
 fun extractPath(element: PsiElement, searchNearestAlternative: Boolean = false): Path? {
+    val enclosingClass = PsiTreeUtil.getParentOfType(element, KtClassOrObject::class.java)
+    println(element::class.java)
+    println(element.text)
+    println(enclosingClass?.fqName)
+    println()
     return when {
         element is PsiDirectory -> {
             val pkg = element.getPackage()
@@ -79,17 +86,27 @@ fun getSuperClass(element: KtClassOrObject): KtClassOrObject? {
     var superClass: KtClassOrObject? = null
 
     for (entry in superTypes) {
-        val typeRef = entry.typeAsUserType
-        if (typeRef != null) {
-            val refExp = typeRef.referenceExpression
-            if (refExp != null) {
-                val mainRef = refExp.mainReference.resolve()
-                if (mainRef is KtPrimaryConstructor) {
-                    superClass = mainRef.getContainingClassOrObject()
-                    break
-                }
+        if (entry is KtSuperTypeCallEntry) {
+            val ref = entry.calleeExpression.constructorReferenceExpression
+                ?.mainReference
+                ?.resolve()
+
+            if (ref is KtPrimaryConstructor) {
+                superClass = ref.getContainingClassOrObject()
+                break
             }
         }
+//        val typeRef = entry.typeAsUserType
+//        if (typeRef != null) {
+//            val refExp = typeRef.referenceExpression
+//            if (refExp != null) {
+//                val mainRef = refExp.mainReference.resolve()
+//                if (mainRef is KtPrimaryConstructor) {
+//                    superClass = mainRef.getContainingClassOrObject()
+//                    break
+//                }
+//            }
+//        }
     }
 
     return superClass
