@@ -8,11 +8,10 @@ import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
-import org.jetbrains.kotlin.idea.references.resolveMainReferenceToDescriptors
 import org.jetbrains.kotlin.lexer.KtToken
 import org.jetbrains.kotlin.psi.*
-import org.jetbrains.kotlin.psi.psiUtil.containingClass
 import org.jetbrains.kotlin.psi.psiUtil.containingClassOrObject
+import org.spekframework.intellij.domain.ScopeDescriptorCache
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
@@ -36,10 +35,9 @@ class UnsupportedFeatureException(message: String): Throwable(message)
 
 fun extractPath(element: PsiElement, searchNearestAlternative: Boolean = false): Path? {
     val enclosingClass = PsiTreeUtil.getParentOfType(element, KtClassOrObject::class.java)
-    println(element::class.java)
-    println(element.text)
-    println(enclosingClass?.fqName)
-    println()
+    if (enclosingClass != null) {
+        println(ScopeDescriptorCache.toDescriptor(enclosingClass))
+    }
     return when {
         element is PsiDirectory -> {
             val pkg = element.getPackage()
