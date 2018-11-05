@@ -18,7 +18,7 @@ class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
             return null
         }
 
-        val context = PsiTreeUtil.getContextOfType(element,true, KtClassOrObject::class.java, KtCallExpression::class.java)
+        val context = PsiTreeUtil.getContextOfType(element,false, KtClassOrObject::class.java, KtCallExpression::class.java)
 
         val path = if (context != null) {
             if (context is KtClassOrObject) {
