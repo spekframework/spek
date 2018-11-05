@@ -1,5 +1,6 @@
 package org.spekframework.intellij.domain
 
+import com.google.common.cache.CacheBuilder
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
@@ -9,7 +10,7 @@ import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.lazy.data.KtClassInfoUtil
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
-import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
 
 sealed class ScopeDescriptor(val path: Path, val element: KtElement) {
     class Group(path: Path, element: KtElement, val children: List<ScopeDescriptor>): ScopeDescriptor(path, element) {
@@ -47,12 +48,23 @@ private val DESCRIPTIONS_CLASSES = listOf(
 )
 
 
+private const val CACHE_EXPIRATION: Long = 10
+
+private const val CACHE_MAX_SIZE: Long = 500
+
 object ScopeDescriptorCache {
-    private val cache = ConcurrentHashMap<String, Pair<Long, ScopeDescriptor.Group>>()
-    private val index = ConcurrentHashMap<String, ScopeDescriptor>()
+    private val cache = CacheBuilder.newBuilder()
+        .maximumSize(CACHE_MAX_SIZE)
+        .expireAfterWrite(CACHE_EXPIRATION, TimeUnit.MINUTES)
+        .build<String, Pair<Long, ScopeDescriptor.Group>>()
+
+    private val index = CacheBuilder.newBuilder()
+        .maximumSize(CACHE_MAX_SIZE)
+        .expireAfterWrite(CACHE_EXPIRATION, TimeUnit.MINUTES)
+        .build<String, ScopeDescriptor>()
 
     fun findDescriptor(path: Path): ScopeDescriptor? {
-        return index[path.serialize()]
+        return index.getIfPresent(path.serialize())
     }
 
     fun toDescriptor(callExpression: KtCallExpression): ScopeDescriptor? {
@@ -71,7 +83,7 @@ object ScopeDescriptorCache {
             return null
         }
 
-        val cached = cache.compute(checkNotNull(clz.fqName).asString()) { _, value ->
+        val cached = cache.asMap().compute(checkNotNull(clz.fqName).asString()) { _, value ->
             if (value != null && value.first == clz.modificationStamp) {
                 value
             } else {
@@ -107,7 +119,7 @@ object ScopeDescriptorCache {
             }
         }
         return ScopeDescriptor.Group(path, clz, children.toList()).apply {
-            index[path.serialize()] = this
+            index.asMap()[path.serialize()] = this
         }
     }
 
@@ -143,7 +155,7 @@ object ScopeDescriptorCache {
                     PsiSynonymType.TEST -> ScopeDescriptor.Test(path, callExpression)
                 }
 
-                index[path.serialize()] = descriptor
+                index.asMap()[path.serialize()] = descriptor
 
                 scopes.add(descriptor)
             }
