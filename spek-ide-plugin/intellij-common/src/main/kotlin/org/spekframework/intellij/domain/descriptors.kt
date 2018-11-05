@@ -62,7 +62,7 @@ object ScopeDescriptorCache {
 
     fun toDescriptor(clz: KtClassOrObject): ScopeDescriptor.Group? {
         // TODO(rr): check @Ignore
-        if (!isSpekSubclass(clz) && clz.isAbstract()) {
+        if (!isSpekSubclass(clz) || clz.isAbstract()) {
             return null
         }
 
