@@ -49,6 +49,11 @@ private val DESCRIPTIONS_CLASSES = listOf(
 
 object ScopeDescriptorCache {
     private val cache = ConcurrentHashMap<String, Pair<Long, ScopeDescriptor.Group>>()
+    private val index = ConcurrentHashMap<String, ScopeDescriptor>()
+
+    fun findDescriptor(path: Path): ScopeDescriptor? {
+        return index[path.serialize()]
+    }
 
     fun toDescriptor(callExpression: KtCallExpression): ScopeDescriptor? {
         val context = fetchSynonymContext(callExpression)
@@ -101,7 +106,9 @@ object ScopeDescriptorCache {
                 }
             }
         }
-        return ScopeDescriptor.Group(path, clz, children.toList())
+        return ScopeDescriptor.Group(path, clz, children.toList()).apply {
+            index[path.serialize()] = this
+        }
     }
 
     private fun buildScopes(parent: Path, block: KtBlockExpression): List<ScopeDescriptor> {
@@ -135,6 +142,8 @@ object ScopeDescriptorCache {
                     }
                     PsiSynonymType.TEST -> ScopeDescriptor.Test(path, callExpression)
                 }
+
+                index[path.serialize()] = descriptor
 
                 scopes.add(descriptor)
             }

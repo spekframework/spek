@@ -11,6 +11,7 @@ import com.intellij.execution.runners.ExecutionEnvironment
 import com.intellij.execution.runners.ProgramRunner
 import com.intellij.execution.testframework.sm.SMTestRunnerConnectionUtil
 import com.intellij.execution.testframework.sm.runner.SMTRunnerConsoleProperties
+import com.intellij.execution.testframework.sm.runner.SMTestLocator
 import com.intellij.execution.ui.ConsoleView
 import com.intellij.execution.util.JavaParametersUtil
 import com.intellij.openapi.extensions.ExtensionPointName
@@ -19,7 +20,6 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.module.ModuleManager
 import com.intellij.openapi.options.SettingsEditor
 import com.intellij.openapi.roots.OrderEnumerator
-import com.intellij.openapi.roots.OrderRootType
 import com.intellij.openapi.util.JDOMExternalizerUtil
 import com.intellij.util.PathUtil
 import org.jdom.Element
@@ -137,9 +137,13 @@ open class Spek2JvmRunConfiguration(name: String,
             }
 
             fun createConsole(executor: Executor, processHandler: ProcessHandler): ConsoleView {
-                val consoleProperties = SMTRunnerConsoleProperties(
+                val consoleProperties = object: SMTRunnerConsoleProperties(
                     this@Spek2JvmRunConfiguration, "spek", executor
-                )
+                ) {
+                    override fun getTestLocator(): SMTestLocator? {
+                        return SpekScopeLocator
+                    }
+                }
                 return SMTestRunnerConnectionUtil.createAndAttachConsole(
                     "spek2",
                     processHandler,

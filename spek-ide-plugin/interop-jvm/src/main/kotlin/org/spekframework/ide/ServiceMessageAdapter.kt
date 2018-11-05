@@ -18,7 +18,7 @@ class ServiceMessageAdapter: ExecutionListener {
 
     override fun testExecutionStart(test: TestScopeImpl) {
         durations[test.path] = System.currentTimeMillis()
-        out("testStarted name='${test.path.name.toServiceMessageSafeString()}'")
+        out("testStarted name='${test.path.name.toServiceMessageSafeString()}' locationHint='spek://${test.path.serialize()}'")
     }
 
     override fun testExecutionFinish(test: TestScopeImpl, result: ExecutionResult) {
@@ -38,7 +38,7 @@ class ServiceMessageAdapter: ExecutionListener {
     }
 
     override fun groupExecutionStart(group: GroupScopeImpl) {
-        out("testSuiteStarted name='${group.path.name.toServiceMessageSafeString()}'")
+        out("testSuiteStarted name='${group.path.name.toServiceMessageSafeString()}' locationHint='spek://${group.path.serialize()}'")
     }
 
     override fun groupExecutionFinish(group: GroupScopeImpl, result: ExecutionResult) {

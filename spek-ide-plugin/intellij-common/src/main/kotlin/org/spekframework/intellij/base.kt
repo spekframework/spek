@@ -1,13 +1,20 @@
 package org.spekframework.intellij
 
 import com.intellij.execution.CommonProgramRunConfigurationParameters
+import com.intellij.execution.Location
+import com.intellij.execution.PsiLocation
 import com.intellij.execution.configuration.EnvironmentVariablesComponent
 import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.configurations.ConfigurationTypeBase
 import com.intellij.execution.configurations.ModuleBasedConfiguration
 import com.intellij.execution.configurations.RunConfigurationModule
+import com.intellij.execution.testframework.sm.runner.SMTestLocator
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.JDOMExternalizerUtil
+import com.intellij.psi.PsiElement
+import com.intellij.psi.search.GlobalSearchScope
 import org.jdom.Element
+import org.spekframework.intellij.domain.ScopeDescriptorCache
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRoot
@@ -100,4 +107,21 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
             "$prefix ${path.name}"
         }.trim()
     }
+}
+
+object SpekScopeLocator: SMTestLocator {
+    override fun getLocation(protocol: String, path: String, project: Project, scope: GlobalSearchScope): MutableList<Location<PsiElement>> {
+        if (protocol != "spek") {
+            return mutableListOf()
+        }
+        val locations = mutableListOf<Location<PsiElement>>()
+        val path = PathBuilder.parse(path).build()
+        val descriptor = ScopeDescriptorCache.findDescriptor(path)
+
+        if (descriptor != null) {
+            locations.add(PsiLocation(descriptor.element))
+        }
+        return locations
+    }
+
 }
