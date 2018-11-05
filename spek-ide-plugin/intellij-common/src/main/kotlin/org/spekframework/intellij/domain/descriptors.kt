@@ -1,6 +1,5 @@
 package org.spekframework.intellij.domain
 
-import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
@@ -14,12 +13,6 @@ import java.util.concurrent.ConcurrentHashMap
 
 sealed class ScopeDescriptor(val path: Path, val element: KtElement) {
     class Group(path: Path, element: KtElement, val children: List<ScopeDescriptor>): ScopeDescriptor(path, element) {
-        fun findDescriptorForElement(element: PsiElement): ScopeDescriptor? {
-            if (element !is KtElement) {
-                return null
-            }
-            return findDescriptorForElement(element)
-        }
         fun findDescriptorForElement(element: KtElement): ScopeDescriptor? {
             return findMatching(this, element)
         }

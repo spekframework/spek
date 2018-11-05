@@ -73,7 +73,7 @@ class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions)
     fun constructDescription(callExpression: KtCallExpression): String {
         return descriptions.sources.map {
             when (it.location) {
-                PsiDescriptionLocation.TYPE_PARAMETER -> throw UnsupportedFeatureException("Type parameter description is currently unsupported.")
+                PsiDescriptionLocation.TYPE_PARAMETER -> throw AssertionError("Type parameter description is currently unsupported.")
                 PsiDescriptionLocation.VALUE_PARAMETER -> {
                     val argument = callExpression.valueArguments.getOrNull(it.index)
                     val expression = argument?.getArgumentExpression()
@@ -84,11 +84,11 @@ class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions)
                                 // might be empty at some point, especially when user is still typing
                                 expression.entries.firstOrNull()?.text ?: ""
                             } else {
-                                throw UnsupportedFeatureException("Descriptions with interpolation are currently unsupported.")
+                                throw AssertionError("Descriptions with interpolation are currently unsupported.")
                             }
                         }
                         // can happen when user is still typing
-                        else -> throw UnsupportedFeatureException("Value argument description should be a string.")
+                        else -> throw AssertionError("Value argument description should be a string.")
                     }
                 }
                 else -> throw IllegalArgumentException("Invalid location: ${it.location}")

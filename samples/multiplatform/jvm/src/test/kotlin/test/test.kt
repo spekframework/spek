@@ -12,5 +12,9 @@ object CalculatorSpec: Spek({
         it("1 + 2 == 3") {
             assertEquals(3, calculator.add(1, 2))
         }
+
+        it("another 1 + 2 == 3") {
+            assertEquals(3, calculator.add(1, 2))
+        }
     }
 })
