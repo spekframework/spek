@@ -1,5 +1,6 @@
 package org.spekframework.intellij.domain
 
+import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
@@ -7,16 +8,36 @@ import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.lazy.data.KtClassInfoUtil
-import org.spekframework.intellij.PsiDescriptions
-import org.spekframework.intellij.PsiSynonym
-import org.spekframework.intellij.PsiSynonymType
-import org.spekframework.intellij.SynonymContext
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import java.util.concurrent.ConcurrentHashMap
 
 sealed class ScopeDescriptor(val path: Path, val element: KtElement) {
-    class Group(path: Path, element: KtElement, val children: List<ScopeDescriptor>): ScopeDescriptor(path, element)
+    class Group(path: Path, element: KtElement, val children: List<ScopeDescriptor>): ScopeDescriptor(path, element) {
+        fun findDescriptorForElement(element: PsiElement): ScopeDescriptor? {
+            if (element !is KtElement) {
+                return null
+            }
+            return findDescriptorForElement(element)
+        }
+        fun findDescriptorForElement(element: KtElement): ScopeDescriptor? {
+            return findMatching(this, element)
+        }
+
+        private fun findMatching(current: ScopeDescriptor, element: KtElement): ScopeDescriptor? {
+            if (current.element == element) {
+                return current
+            } else if (current is ScopeDescriptor.Group) {
+                for (child in current.children) {
+                    val descriptor = findMatching(child, element)
+                    if (descriptor != null) {
+                        return descriptor
+                    }
+                }
+            }
+            return null
+        }
+    }
     class Test(path: Path, element: KtElement): ScopeDescriptor(path, element)
 }
 
@@ -35,9 +56,20 @@ private val DESCRIPTIONS_CLASSES = listOf(
 
 object ScopeDescriptorCache {
     private val cache = ConcurrentHashMap<String, Pair<Long, ScopeDescriptor.Group>>()
+
+    fun toDescriptor(callExpression: KtCallExpression): ScopeDescriptor? {
+        val context = fetchSynonymContext(callExpression)
+        if (context != null) {
+            return PsiTreeUtil.getParentOfType(callExpression, KtClassOrObject::class.java)?.let {
+                toDescriptor(it)?.findDescriptorForElement(callExpression)
+            }
+        }
+        return null
+    }
+
     fun toDescriptor(clz: KtClassOrObject): ScopeDescriptor.Group? {
         // TODO(rr): check @Ignore
-        if (!isSpekSubclass(clz) && !clz.isAbstract()) {
+        if (!isSpekSubclass(clz) && clz.isAbstract()) {
             return null
         }
 
@@ -123,8 +155,8 @@ object ScopeDescriptorCache {
     }
 
     private fun fetchNamedFunction(callExpression: KtCallExpression): KtNamedFunction? {
-        val mainReference = callExpression.mainReference
-        val resolved = mainReference.resolve()
+        val mainReference = callExpression.calleeExpression?.mainReference
+        val resolved = mainReference?.resolve()
         if (resolved is KtNamedFunction) {
             return resolved
         }
@@ -154,7 +186,7 @@ object ScopeDescriptorCache {
     }
 
     private fun isSpekSubclass(element: KtClassOrObject): Boolean {
-        val superClass = org.spekframework.intellij.getSuperClass(element)
+        val superClass = getSuperClass(element)
         val fqName = superClass?.getKotlinFqName()
         if (fqName != null) {
             if (SPEK_CLASSES.contains(fqName.toString())) {

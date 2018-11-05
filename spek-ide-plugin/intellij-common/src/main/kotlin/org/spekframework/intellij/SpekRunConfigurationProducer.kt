@@ -6,12 +6,16 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiElement
+import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
 import org.jetbrains.kotlin.idea.caches.project.implementingModules
 import org.jetbrains.kotlin.platform.IdePlatformKind
 import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
 import org.jetbrains.kotlin.platform.impl.JvmIdePlatformKind
+import org.jetbrains.kotlin.psi.KtCallExpression
+import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.spekframework.intellij.domain.ScopeDescriptorCache
 
 enum class ProducerType {
     COMMON,
@@ -31,14 +35,44 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
 ) {
     override fun isConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
                                             context: ConfigurationContext): Boolean {
-        val path = context.psiLocation?.let { extractPath(it, true) }
-        return configuration.path == path
+        val descriptor = context.psiLocation?.let {
+            val elementContext = PsiTreeUtil.getContextOfType(it, KtClassOrObject::class.java, KtCallExpression::class.java)
+            if (elementContext != null) {
+                if (elementContext is KtClassOrObject) {
+                    ScopeDescriptorCache.toDescriptor(elementContext)
+                } else if (elementContext is KtCallExpression) {
+                    ScopeDescriptorCache.toDescriptor(elementContext)
+                } else {
+                    null
+                }
+            } else {
+                null
+            }
+        }
+
+        if (descriptor == null) {
+            return false
+        }
+        return configuration.path == descriptor.path
     }
 
     override fun setupConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
                                                context: ConfigurationContext,
                                                sourceElement: Ref<PsiElement>): Boolean {
-        val path = sourceElement.get().let { extractPath(it, true) }
+        val path = sourceElement.get().let {
+            val elementContext = PsiTreeUtil.getContextOfType(it, KtClassOrObject::class.java, KtCallExpression::class.java)
+            if (elementContext != null) {
+                if (elementContext is KtClassOrObject) {
+                    ScopeDescriptorCache.toDescriptor(elementContext)
+                } else if (elementContext is KtCallExpression) {
+                    ScopeDescriptorCache.toDescriptor(elementContext)
+                } else {
+                    null
+                }
+            } else {
+                null
+            }
+        }?.path
         return if (path != null) {
             configuration.path = path
             val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)

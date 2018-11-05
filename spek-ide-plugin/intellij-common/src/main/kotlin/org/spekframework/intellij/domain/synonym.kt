@@ -1,4 +1,4 @@
-package org.spekframework.intellij
+package org.spekframework.intellij.domain
 
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiArrayInitializerMemberValue
