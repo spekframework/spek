@@ -1,6 +1,5 @@
 package org.spekframework.intellij.domain
 
-import com.google.common.cache.CacheBuilder
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.kotlin.asJava.toLightMethods
 import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
@@ -10,7 +9,7 @@ import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.lazy.data.KtClassInfoUtil
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.ConcurrentHashMap
 
 sealed class ScopeDescriptor(val path: Path, val element: KtElement) {
     class Group(path: Path, element: KtElement, val children: List<ScopeDescriptor>): ScopeDescriptor(path, element) {
@@ -47,24 +46,12 @@ private val DESCRIPTIONS_CLASSES = listOf(
     "org.spekframework.spek2.meta.Descriptions"
 )
 
-
-private const val CACHE_EXPIRATION: Long = 10
-
-private const val CACHE_MAX_SIZE: Long = 500
-
 object ScopeDescriptorCache {
-    private val cache = CacheBuilder.newBuilder()
-        .maximumSize(CACHE_MAX_SIZE)
-        .expireAfterWrite(CACHE_EXPIRATION, TimeUnit.MINUTES)
-        .build<String, Pair<Long, ScopeDescriptor.Group>>()
-
-    private val index = CacheBuilder.newBuilder()
-        .maximumSize(CACHE_MAX_SIZE)
-        .expireAfterWrite(CACHE_EXPIRATION, TimeUnit.MINUTES)
-        .build<String, ScopeDescriptor>()
+    private val cache = ConcurrentHashMap<String, Pair<Long, ScopeDescriptor.Group>>()
+    private val index = ConcurrentHashMap<String, ScopeDescriptor>()
 
     fun findDescriptor(path: Path): ScopeDescriptor? {
-        return index.getIfPresent(path.serialize())
+        return index.getOrDefault(path.serialize(), null)
     }
 
     fun toDescriptor(callExpression: KtCallExpression): ScopeDescriptor? {
@@ -78,18 +65,18 @@ object ScopeDescriptorCache {
     }
 
     fun toDescriptor(clz: KtClassOrObject): ScopeDescriptor.Group? {
-        // TODO(rr): check @Ignore
         if (!isSpekSubclass(clz) || clz.isAbstract()) {
             return null
         }
+        val fqName = checkNotNull(clz.fqName).asString()
 
-        val cached = cache.asMap().compute(checkNotNull(clz.fqName).asString()) { _, value ->
-            if (value != null && value.first == clz.modificationStamp) {
-                value
-            } else {
-                clz.modificationStamp to buildDescriptor(clz)
-            }
+        var cached = cache.getOrDefault(fqName, null)
+
+        if (cached == null || cached.first < clz.modificationStamp) {
+            cached = clz.modificationStamp to buildDescriptor(clz)
+            cache[fqName] = cached
         }
+
         return checkNotNull(cached).second
     }
 
@@ -119,7 +106,7 @@ object ScopeDescriptorCache {
             }
         }
         return ScopeDescriptor.Group(path, clz, children.toList()).apply {
-            index.asMap()[path.serialize()] = this
+            index[path.serialize()] = this
         }
     }
 
@@ -131,33 +118,37 @@ object ScopeDescriptorCache {
             val synonymContext = fetchSynonymContext(callExpression)
 
             if (synonymContext != null) {
-                val description = synonymContext.constructDescription(callExpression)
+                try {
+                    val description = synonymContext.constructDescription(callExpression)
 
-                val path = PathBuilder(parent)
-                    .append(description)
-                    .build()
+                    val path = PathBuilder(parent)
+                        .append(description)
+                        .build()
 
-                val descriptor = when(synonymContext.synonym.type) {
-                    PsiSynonymType.GROUP -> {
-                        val lambdaArgument = callExpression.lambdaArguments.firstOrNull()
-                        val children = mutableListOf<ScopeDescriptor>()
-                        if (lambdaArgument != null) {
-                            val lambdaExpression = lambdaArgument.getLambdaExpression()
-                            if (lambdaExpression != null) {
-                                lambdaExpression.bodyExpression?.let { body ->
-                                    children.addAll(buildScopes(path, body))
+                    val descriptor = when (synonymContext.synonym.type) {
+                        PsiSynonymType.GROUP -> {
+                            val lambdaArgument = callExpression.lambdaArguments.firstOrNull()
+                            val children = mutableListOf<ScopeDescriptor>()
+                            if (lambdaArgument != null) {
+                                val lambdaExpression = lambdaArgument.getLambdaExpression()
+                                if (lambdaExpression != null) {
+                                    lambdaExpression.bodyExpression?.let { body ->
+                                        children.addAll(buildScopes(path, body))
+                                    }
                                 }
                             }
+
+                            ScopeDescriptor.Group(path, callExpression, children.toList())
                         }
-
-                        ScopeDescriptor.Group(path, callExpression, children.toList())
+                        PsiSynonymType.TEST -> ScopeDescriptor.Test(path, callExpression)
                     }
-                    PsiSynonymType.TEST -> ScopeDescriptor.Test(path, callExpression)
+
+                    index[path.serialize()] = descriptor
+
+                    scopes.add(descriptor)
+                } catch (e: UnsupportedFeatureException) {
+                    // avoid ide from throwing up
                 }
-
-                index.asMap()[path.serialize()] = descriptor
-
-                scopes.add(descriptor)
             }
         }
 

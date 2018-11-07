@@ -99,8 +99,8 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
             "($it)"
         } ?: ""
 
-        return if (path.name.isEmpty()) {
-            "$prefix Spek tests in <default>"
+        return if (path.name.isEmpty() && parent != null && parent.isRoot) {
+            "$prefix Spek tests in <default package>"
         } else if (parent != null && parent.isRoot) {
             "$prefix Spek tests ${path.name}"
         } else {
