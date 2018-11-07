@@ -1,9 +1,9 @@
 buildscript {
-    ext.kotlin_version = '1.2.60'
-    ext.spek_version = '2.0.0-alpha.1'
+    ext.kotlin_version = '1.2.71'
+    ext.spek_version = '2.0.0-rc.1'
 
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
@@ -12,14 +12,9 @@ buildscript {
 
 group 'org.spekframework.spek2'
 
-
 subprojects {
     repositories {
-        mavenCentral()
         jcenter()
-        maven {
-            url  "https://dl.bintray.com/spekframework/spek-dev"
-        }
     }
 }
 
