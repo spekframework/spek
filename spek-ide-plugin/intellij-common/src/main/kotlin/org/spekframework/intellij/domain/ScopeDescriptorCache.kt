@@ -78,12 +78,13 @@ class ScopeDescriptorCache: ProjectComponent {
 
     private fun buildScopes(parent: Path, block: KtBlockExpression): List<ScopeDescriptor> {
         val callExpressions = PsiTreeUtil.getChildrenOfTypeAsList(block, KtCallExpression::class.java)
-        val scopes = mutableListOf<ScopeDescriptor>()
-
-        callExpressions.forEach { callExpression ->
-            val synonymContext = fetchSynonymContext(callExpression)
-
-            if (synonymContext != null) {
+        return callExpressions.mapNotNull { callExpression ->
+                val synonymContext = fetchSynonymContext(callExpression)
+                when {
+                    synonymContext != null -> callExpression to synonymContext
+                    else -> null
+                }
+            }.mapNotNull { (callExpression, synonymContext) ->
                 try {
                     val description = synonymContext.constructDescription(callExpression)
 
@@ -111,14 +112,12 @@ class ScopeDescriptorCache: ProjectComponent {
 
                     index[path.serialize()] = descriptor
 
-                    scopes.add(descriptor)
+                    descriptor
                 } catch (e: UnsupportedFeatureException) {
                     // avoid ide from throwing up
+                    null
                 }
             }
-        }
-
-        return scopes.toList()
     }
 
     private fun fetchSynonymContext(callExpression: KtCallExpression): SynonymContext? {
