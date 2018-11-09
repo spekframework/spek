@@ -13,7 +13,10 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.JDOMExternalizerUtil
 import com.intellij.psi.PsiElement
 import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
 import org.jdom.Element
+import org.jetbrains.kotlin.psi.KtCallExpression
+import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.spekframework.intellij.domain.ScopeDescriptorCache
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -114,13 +117,24 @@ object SpekScopeLocator: SMTestLocator {
         if (protocol != "spek") {
             throw AssertionError("Unsupported protocol: $protocol.")
         }
-        val descriptor = ScopeDescriptorCache.findDescriptor(
+        val descriptorCache = checkNotNull(
+            project.getComponent(ScopeDescriptorCache::class.java)
+        )
+        val descriptor = descriptorCache.findDescriptor(
             PathBuilder.parse(path).build()
         )
         return if (descriptor != null) {
-            listOf<Location<PsiElement>>(PsiLocation(descriptor.element))
+            listOf<Location<PsiElement>>(PsiLocation(descriptor.element.navigationElement))
         } else {
             emptyList()
         }
+    }
+}
+
+fun maybeGetContext(element: PsiElement): PsiElement? {
+    return when (element) {
+        is KtClassOrObject -> element
+        is KtCallExpression -> element
+        else -> PsiTreeUtil.getContextOfType(element, false, KtClassOrObject::class.java, KtCallExpression::class.java)
     }
 }

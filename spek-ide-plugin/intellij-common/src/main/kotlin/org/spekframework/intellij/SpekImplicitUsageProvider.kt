@@ -17,8 +17,11 @@ class SpekImplicitUsageProvider: ImplicitUsageProvider {
             is KtLightClass -> element.kotlinOrigin
             else -> null
         }
+        val descriptorCache = checkNotNull(
+            element.project.getComponent(ScopeDescriptorCache::class.java)
+        )
         return clz?.let {
-            ScopeDescriptorCache.fromClassOrObject(it) != null
+            descriptorCache.fromClassOrObject(it) != null
         } ?: false
     }
 }

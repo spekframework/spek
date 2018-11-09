@@ -4,7 +4,6 @@ import com.intellij.execution.lineMarker.ExecutorAction
 import com.intellij.execution.lineMarker.RunLineMarkerContributor
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiElement
-import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.Function
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
@@ -18,10 +17,13 @@ class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
             return null
         }
 
-        val context = PsiTreeUtil.getContextOfType(element, false, KtClassOrObject::class.java, KtCallExpression::class.java)
+        val descriptorCache = checkNotNull(
+            element.project.getComponent(ScopeDescriptorCache::class.java)
+        )
+        val context = maybeGetContext(element)
         val path = when (context) {
-            is KtClassOrObject -> ScopeDescriptorCache.fromClassOrObject(context)
-            is KtCallExpression -> ScopeDescriptorCache.fromCallExpression(context)
+            is KtClassOrObject -> descriptorCache.fromClassOrObject(context)
+            is KtCallExpression -> descriptorCache.fromCallExpression(context)
             else -> null
         }?.path
 
