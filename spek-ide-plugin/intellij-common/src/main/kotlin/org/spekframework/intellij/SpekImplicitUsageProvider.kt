@@ -18,7 +18,7 @@ class SpekImplicitUsageProvider: ImplicitUsageProvider {
             else -> null
         }
         return clz?.let {
-            ScopeDescriptorCache.toDescriptor(it) != null
+            ScopeDescriptorCache.fromClassOrObject(it) != null
         } ?: false
     }
 }

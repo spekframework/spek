@@ -54,17 +54,17 @@ object ScopeDescriptorCache {
         return index.getOrDefault(path.serialize(), null)
     }
 
-    fun toDescriptor(callExpression: KtCallExpression): ScopeDescriptor? {
+    fun fromCallExpression(callExpression: KtCallExpression): ScopeDescriptor? {
         val context = fetchSynonymContext(callExpression)
         if (context != null) {
             return PsiTreeUtil.getParentOfType(callExpression, KtClassOrObject::class.java)?.let {
-                toDescriptor(it)?.findDescriptorForElement(callExpression)
+                fromClassOrObject(it)?.findDescriptorForElement(callExpression)
             }
         }
         return null
     }
 
-    fun toDescriptor(clz: KtClassOrObject): ScopeDescriptor.Group? {
+    fun fromClassOrObject(clz: KtClassOrObject): ScopeDescriptor.Group? {
         if (!isSpekSubclass(clz) || clz.isAbstract()) {
             return null
         }

@@ -37,23 +37,14 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
                                             context: ConfigurationContext): Boolean {
         val descriptor = context.psiLocation?.let {
             val elementContext = PsiTreeUtil.getContextOfType(it, KtClassOrObject::class.java, KtCallExpression::class.java)
-            if (elementContext != null) {
-                if (elementContext is KtClassOrObject) {
-                    ScopeDescriptorCache.toDescriptor(elementContext)
-                } else if (elementContext is KtCallExpression) {
-                    ScopeDescriptorCache.toDescriptor(elementContext)
-                } else {
-                    null
-                }
-            } else {
-                null
+            when (elementContext) {
+                is KtClassOrObject -> ScopeDescriptorCache.fromClassOrObject(elementContext)
+                is KtCallExpression -> ScopeDescriptorCache.fromCallExpression(elementContext)
+                else -> null
             }
         }
 
-        if (descriptor == null) {
-            return false
-        }
-        return configuration.path == descriptor.path
+        return configuration.path == descriptor?.path
     }
 
     override fun setupConfigurationFromContext(configuration: SpekBaseRunConfiguration<*>,
@@ -61,16 +52,10 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, conf
                                                sourceElement: Ref<PsiElement>): Boolean {
         val path = sourceElement.get().let {
             val elementContext = PsiTreeUtil.getContextOfType(it, KtClassOrObject::class.java, KtCallExpression::class.java)
-            if (elementContext != null) {
-                if (elementContext is KtClassOrObject) {
-                    ScopeDescriptorCache.toDescriptor(elementContext)
-                } else if (elementContext is KtCallExpression) {
-                    ScopeDescriptorCache.toDescriptor(elementContext)
-                } else {
-                    null
-                }
-            } else {
-                null
+            when (elementContext) {
+                is KtClassOrObject -> ScopeDescriptorCache.fromClassOrObject(elementContext)
+                is KtCallExpression -> ScopeDescriptorCache.fromCallExpression(elementContext)
+                else -> null
             }
         }?.path
         return if (path != null) {

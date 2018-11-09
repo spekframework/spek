@@ -110,18 +110,17 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
 }
 
 object SpekScopeLocator: SMTestLocator {
-    override fun getLocation(protocol: String, path: String, project: Project, scope: GlobalSearchScope): MutableList<Location<PsiElement>> {
+    override fun getLocation(protocol: String, path: String, project: Project, scope: GlobalSearchScope): List<Location<PsiElement>> {
         if (protocol != "spek") {
-            return mutableListOf()
+            throw AssertionError("Unsupported protocol: $protocol.")
         }
-        val locations = mutableListOf<Location<PsiElement>>()
-        val path = PathBuilder.parse(path).build()
-        val descriptor = ScopeDescriptorCache.findDescriptor(path)
-
-        if (descriptor != null) {
-            locations.add(PsiLocation(descriptor.element))
+        val descriptor = ScopeDescriptorCache.findDescriptor(
+            PathBuilder.parse(path).build()
+        )
+        return if (descriptor != null) {
+            listOf<Location<PsiElement>>(PsiLocation(descriptor.element))
+        } else {
+            emptyList()
         }
-        return locations
     }
-
 }
