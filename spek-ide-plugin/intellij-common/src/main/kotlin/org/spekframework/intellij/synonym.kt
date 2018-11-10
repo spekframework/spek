@@ -95,7 +95,7 @@ class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions)
             }
         }.fold(synonym.prefix) { prev, current ->
             if (prev.isNotEmpty()) {
-                "$prev $current"
+                "$prev$current"
             } else {
                 current
             }
