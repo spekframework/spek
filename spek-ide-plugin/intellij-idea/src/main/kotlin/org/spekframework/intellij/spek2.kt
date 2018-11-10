@@ -12,7 +12,7 @@ class Spek2JvmConfigurationFactory(type: ConfigurationType): ConfigurationFactor
 class Spek2JvmConfigurationType: SpekBaseConfigurationType(
     "org.spekframework.spek2-jvm",
     "Spek 2 - JVM",
-    KotlinIcons.SMALL_LOGO_13
+    KotlinIcons.MPP
 ) {
     init {
         addFactory(Spek2JvmConfigurationFactory(this))
