@@ -17,7 +17,7 @@ before_install:
 install: echo skip
 
 git:
-  depth: 150
+  depth: 200
 
 jobs:
   include:
