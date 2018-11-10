@@ -1,13 +1,23 @@
 package org.spekframework.intellij
 
 import com.intellij.execution.CommonProgramRunConfigurationParameters
+import com.intellij.execution.Location
+import com.intellij.execution.PsiLocation
 import com.intellij.execution.configuration.EnvironmentVariablesComponent
 import com.intellij.execution.configurations.ConfigurationFactory
 import com.intellij.execution.configurations.ConfigurationTypeBase
 import com.intellij.execution.configurations.ModuleBasedConfiguration
 import com.intellij.execution.configurations.RunConfigurationModule
+import com.intellij.execution.testframework.sm.runner.SMTestLocator
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.JDOMExternalizerUtil
+import com.intellij.psi.PsiElement
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.util.PsiTreeUtil
 import org.jdom.Element
+import org.jetbrains.kotlin.psi.KtCallExpression
+import org.jetbrains.kotlin.psi.KtClassOrObject
+import org.spekframework.intellij.domain.ScopeDescriptorCache
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.isRoot
@@ -92,12 +102,39 @@ abstract class SpekBaseRunConfiguration<T: RunConfigurationModule>(name: String,
             "($it)"
         } ?: ""
 
-        return if (path.name.isEmpty()) {
-            "$prefix Spek tests in <default>"
+        return if (path.name.isEmpty() && parent != null && parent.isRoot) {
+            "$prefix Spek tests in <default package>"
         } else if (parent != null && parent.isRoot) {
             "$prefix Spek tests ${path.name}"
         } else {
             "$prefix ${path.name}"
         }.trim()
+    }
+}
+
+object SpekScopeLocator: SMTestLocator {
+    override fun getLocation(protocol: String, path: String, project: Project, scope: GlobalSearchScope): List<Location<PsiElement>> {
+        if (protocol != "spek") {
+            throw AssertionError("Unsupported protocol: $protocol.")
+        }
+        val descriptorCache = checkNotNull(
+            project.getComponent(ScopeDescriptorCache::class.java)
+        )
+        val descriptor = descriptorCache.findDescriptor(
+            PathBuilder.parse(path).build()
+        )
+        return if (descriptor != null) {
+            listOf<Location<PsiElement>>(PsiLocation(descriptor.element.navigationElement))
+        } else {
+            emptyList()
+        }
+    }
+}
+
+fun maybeGetContext(element: PsiElement): PsiElement? {
+    return when (element) {
+        is KtClassOrObject -> element
+        is KtCallExpression -> element
+        else -> PsiTreeUtil.getContextOfType(element, false, KtClassOrObject::class.java, KtCallExpression::class.java)
     }
 }

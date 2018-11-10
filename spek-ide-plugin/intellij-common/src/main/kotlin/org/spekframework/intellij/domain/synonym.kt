@@ -1,4 +1,4 @@
-package org.spekframework.intellij
+package org.spekframework.intellij.domain
 
 import com.intellij.psi.PsiAnnotation
 import com.intellij.psi.PsiArrayInitializerMemberValue
@@ -66,6 +66,8 @@ class PsiDescriptions(val annotation: PsiAnnotation) {
         }
     }
 }
+
+class UnsupportedFeatureException(msg: String): Throwable(msg)
 
 class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions) {
     fun isExcluded(): Boolean = synonym.excluded

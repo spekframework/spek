@@ -20,6 +20,12 @@
         <extensionPoint name="jvmParameterPatcher" interface="org.spekframework.intellij.Spek2JvmParameterPatcher"/>
     </extensionPoints>
 
+    <project-components>
+        <component>
+            <implementation-class>org.spekframework.intellij.domain.ScopeDescriptorCache</implementation-class>
+        </component>
+    </project-components>
+
     <actions>
         <!-- Add your actions here -->
     </actions>
