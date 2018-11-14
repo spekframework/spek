@@ -25,6 +25,10 @@ include 'spek-ide-plugin:intellij-base'
 include 'spek-ide-plugin:intellij-base-jvm'
 include 'spek-ide-plugin:intellij-idea-new'
 
+if (hasProperty("localAndroidStudio")) {
+    include 'spek-ide-plugin:android-studio-new'
+}
+
 include 'spek-ide-plugin:intellij-common'
 include 'spek-ide-plugin:intellij-jvm'
 include 'spek-ide-plugin:intellij-idea'

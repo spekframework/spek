@@ -2,9 +2,6 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/idea-plugin.gradle"
 
 intellij {
-    updateSinceUntilBuild = false
-    downloadSources = true
-
     localPath = "$localAndroidStudio"
     plugins = ['kotlin', 'gradle']
     alternativeIdePath = "$localAndroidStudio"
