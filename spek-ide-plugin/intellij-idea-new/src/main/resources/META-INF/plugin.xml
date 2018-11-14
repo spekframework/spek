@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>org.spekframework</id>
+    <name>Spek Framework</name>
+    <vendor email="team@spekframework.org" url="http://spekframework.org">Spek Team</vendor>
+    <description><![CDATA[
+      Plugin for <a href="http://spekframework.org">Spek</a>.
+    ]]></description>
+
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <configurationType implementation="org.spekframework.intellij.SpekJvmConfigurationType"/>
+        <runConfigurationProducer implementation="org.spekframework.intellij.SpekJvmRunConfigurationProducer"/>
+        <implicitUsageProvider implementation="org.spekframework.intellij.SpekImplicitUsageProvider"/>
+        <runLineMarkerContributor language="kotlin" implementationClass="org.spekframework.intellij.SpekRunLineMarkerContributor"/>
+    </extensions>
+
+    <extensionPoints>
+        <extensionPoint name="jvmParameterPatcher" interface="org.spekframework.intellij.SpekJvmParameterPatcher"/>
+    </extensionPoints>
+
+    <project-components>
+        <component>
+            <implementation-class>org.spekframework.intellij.domain.ScopeDescriptorCache</implementation-class>
+        </component>
+    </project-components>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>

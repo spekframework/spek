@@ -1,0 +1,5 @@
+package org.spekframework.intellij
+
+import com.intellij.execution.configurations.ConfigurationType
+
+interface SpekConfigurationType: ConfigurationType

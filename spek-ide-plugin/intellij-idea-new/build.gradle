@@ -1,0 +1,33 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply plugin: 'org.jetbrains.intellij'
+apply plugin: 'kotlin-platform-jvm'
+
+intellij {
+    pluginName = 'Spek Framework'
+    plugins = ['org.jetbrains.kotlin:1.3.0-release-IJ2018.2-1']
+    version = '2018.2.5'
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDirs += 'src/IJ182/kotlin'
+        }
+    }
+}
+
+dependencies {
+    compile project(':spek-ide-plugin:intellij-base-jvm')
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+patchPluginXml {
+    sinceBuild = '182.1'
+    untilBuild = '182.*'
+}

@@ -21,6 +21,10 @@ include 'spek-runner:junit5'
 
 include 'spek-ide-plugin:interop-jvm'
 
+include 'spek-ide-plugin:intellij-base'
+include 'spek-ide-plugin:intellij-base-jvm'
+include 'spek-ide-plugin:intellij-idea-new'
+
 include 'spek-ide-plugin:intellij-common'
 include 'spek-ide-plugin:intellij-jvm'
 include 'spek-ide-plugin:intellij-idea'
