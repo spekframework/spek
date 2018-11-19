@@ -43,7 +43,6 @@ where T: RunConfigurationBase<RunConfigurationOptions>,
         params.classPath.addAll(jars)
         params.mainClass = "org.spekframework.ide.ConsoleKt"
 
-        // this will set the vm parameters
         setupJavaParameters(params)
 
         SpekJvmParameterPatcher.PARAMETER_PATCHER_EP.extensions.forEach {

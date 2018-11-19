@@ -18,13 +18,13 @@ import kotlin.properties.Delegates
  * @author Ranie Jade Ramiso
  */
 class SpekAndroidSettingsEditor(project: Project): SettingsEditor<SpekAndroidRunConfiguration>() {
-    lateinit var panel: JPanel
-    lateinit var mainPanel: JPanel
+    private lateinit var panel: JPanel
+    private lateinit var mainPanel: JPanel
 
-    lateinit var commonJavaParameters: CommonJavaParametersPanel
-    lateinit var module: LabeledComponent<ModulesComboBox>
-    lateinit var jrePathEditor: JrePathEditor
-    lateinit var path: LabeledComponent<TextFieldWithHistory>
+    private lateinit var commonJavaParameters: CommonJavaParametersPanel
+    private lateinit var module: LabeledComponent<ModulesComboBox>
+    private lateinit var jrePathEditor: JrePathEditor
+    private lateinit var path: LabeledComponent<TextFieldWithHistory>
 
     var moduleSelector: ConfigurationModuleSelector
 

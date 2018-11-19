@@ -24,7 +24,7 @@ class SpekJvmRunConfiguration(name: String, module: JavaRunConfigurationModule, 
     }
 
     override fun getValidModules(): MutableCollection<Module> {
-        return Arrays.asList(*ModuleManager.getInstance(project).modules)
+        return mutableListOf(*ModuleManager.getInstance(project).modules)
     }
 
     override val configurationModule: JavaRunConfigurationModule
