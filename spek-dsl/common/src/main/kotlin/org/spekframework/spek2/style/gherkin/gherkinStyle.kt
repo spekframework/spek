@@ -27,18 +27,26 @@ class FeatureBody(val delegate: GroupBody): LifecycleAware by delegate {
 
 @SpekDsl
 class ScenarioBody(val delegate: GroupBody): LifecycleAware by delegate {
+    @Synonym(SynonymType.TEST, prefix = "Given: ", runnable = false)
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Given(description: String, body: TestBody.() -> Unit) {
         delegate.test("Given: $description", body = body)
     }
 
+    @Synonym(SynonymType.TEST, prefix = "When: ", runnable = false)
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun When(description: String, body: TestBody.() -> Unit) {
         delegate.test("When: $description", body = body)
     }
 
+    @Synonym(SynonymType.TEST, prefix = "Then: ", runnable = false)
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Then(description: String, body: TestBody.() -> Unit) {
         delegate.test("Then: $description", body = body)
     }
 
+    @Synonym(SynonymType.TEST, prefix = "And: ", runnable = false)
+    @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun And(description: String, body: TestBody.() -> Unit) {
         delegate.test("And: $description", body = body)
     }
