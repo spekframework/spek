@@ -10,8 +10,8 @@
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <configurationType implementation="org.spekframework.intellij.SpekJvmConfigurationType"/>
-        <runConfigurationProducer implementation="org.spekframework.intellij.SpekJvmRunConfigurationProducer"/>
+        <configurationType implementation="org.spekframework.intellij.SpekAndroidConfigurationType"/>
+        <runConfigurationProducer implementation="org.spekframework.intellij.SpekAndroidRunConfigurationProducer"/>
         <implicitUsageProvider implementation="org.spekframework.intellij.SpekImplicitUsageProvider"/>
         <runLineMarkerContributor language="kotlin" implementationClass="org.spekframework.intellij.SpekRunLineMarkerContributor"/>
     </extensions>
@@ -19,6 +19,10 @@
     <extensionPoints>
         <extensionPoint name="jvmParameterPatcher" interface="org.spekframework.intellij.SpekJvmParameterPatcher"/>
     </extensionPoints>
+
+    <extensions defaultExtensionNs="org.spekframework">
+        <jvmParameterPatcher implementation="org.spekframework.intellij.SpekAndroidParameterPatcher"/>
+    </extensions>
 
     <project-components>
         <component>

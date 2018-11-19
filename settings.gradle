@@ -20,16 +20,12 @@ include 'spek-runtime:jvm'
 include 'spek-runner:junit5'
 
 include 'spek-ide-plugin:interop-jvm'
-
-include 'spek-ide-plugin:intellij-common'
-include 'spek-ide-plugin:intellij-jvm'
+include 'spek-ide-plugin:intellij-base'
+include 'spek-ide-plugin:intellij-base-jvm'
 include 'spek-ide-plugin:intellij-idea'
 
 if (hasProperty("localAndroidStudio")) {
     include 'spek-ide-plugin:android-studio'
-    include 'spek-ide-plugin:android-studio3.1'
-    include 'spek-ide-plugin:android-studio3.2'
-    include 'spek-ide-plugin:android-studio3.3'
 }
 
 include 'integration-test:common'
