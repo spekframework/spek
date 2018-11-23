@@ -14,13 +14,15 @@ enum class SynonymType {
  * @property type type of scope.
  * @property prefix prefix appended to the description (if applicable), this will appear in the test report.
  * @property excluded whether the synonym represents an ignored scope.
+ * @property runnable controls whether this scope is runnable from within the IDE.
  */
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Synonym(
     val type: SynonymType,
     val prefix: String = "",
-    val excluded: Boolean = false
+    val excluded: Boolean = false,
+    val runnable: Boolean = true
 )
 
 
