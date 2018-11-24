@@ -7,24 +7,17 @@ import com.intellij.psi.PsiElement
 import com.intellij.util.Function
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
-import org.jetbrains.kotlin.psi.KtNameReferenceExpression
 import org.spekframework.intellij.domain.ScopeDescriptorCache
-import org.spekframework.intellij.util.maybeGetContext
 
 class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
 
     override fun getInfo(element: PsiElement): Info? {
-        if (element !is KtNameReferenceExpression) {
-            return null
-        }
-
         val descriptorCache = checkNotNull(
             element.project.getComponent(ScopeDescriptorCache::class.java)
         )
-        val context = maybeGetContext(element)
-        val path = when (context) {
-            is KtClassOrObject -> descriptorCache.fromClassOrObject(context)
-            is KtCallExpression -> descriptorCache.fromCallExpression(context)
+        val path = when (element) {
+            is KtClassOrObject -> descriptorCache.fromClassOrObject(element)
+            is KtCallExpression -> descriptorCache.fromCallExpression(element)
             else -> null
         }?.path
 
