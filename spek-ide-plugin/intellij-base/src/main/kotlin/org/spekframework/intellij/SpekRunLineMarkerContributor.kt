@@ -22,18 +22,23 @@ class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
             element.project.getComponent(ScopeDescriptorCache::class.java)
         )
         val context = maybeGetContext(element)
-        val path = when (context) {
+        val descriptor = when (context) {
             is KtClassOrObject -> descriptorCache.fromClassOrObject(context)
             is KtCallExpression -> descriptorCache.fromCallExpression(context)
             else -> null
-        }?.path
+        }
 
-        return path?.let {
-            Info(
-                AllIcons.RunConfigurations.TestState.Run,
-                Function<PsiElement, String> { "[Spek] Run ${path.name}"},
-                *ExecutorAction.getActions(0)
-            )
+        return descriptor?.let {
+            if (!it.excluded && it.runnable) {
+                val path = it.path
+                Info(
+                    AllIcons.RunConfigurations.TestState.Run,
+                    Function<PsiElement, String> { "[Spek] Run ${path.name}"},
+                    *ExecutorAction.getActions(0)
+                )
+            } else {
+                null
+            }
         }
     }
 }

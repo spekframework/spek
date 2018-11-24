@@ -3,8 +3,10 @@ package org.spekframework.intellij.domain
 import org.jetbrains.kotlin.psi.KtElement
 import org.spekframework.spek2.runtime.scope.Path
 
-sealed class ScopeDescriptor(val path: Path, val element: KtElement) {
-    class Group(path: Path, element: KtElement, val children: List<ScopeDescriptor>): ScopeDescriptor(path, element) {
+sealed class ScopeDescriptor(val path: Path, val element: KtElement,
+                             val excluded: Boolean, val runnable: Boolean) {
+    class Group(path: Path, element: KtElement, excluded: Boolean, runnable: Boolean,
+                val children: List<ScopeDescriptor>): ScopeDescriptor(path, element, excluded, runnable) {
         fun findDescriptorForElement(element: KtElement): ScopeDescriptor? {
             return findMatching(this, element)
         }
@@ -23,5 +25,6 @@ sealed class ScopeDescriptor(val path: Path, val element: KtElement) {
             return null
         }
     }
-    class Test(path: Path, element: KtElement): ScopeDescriptor(path, element)
+    class Test(path: Path, element: KtElement,
+               excluded: Boolean, runnable: Boolean): ScopeDescriptor(path, element, excluded, runnable)
 }

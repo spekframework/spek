@@ -29,6 +29,15 @@ data class PsiSynonym(val annotation: PsiAnnotation) {
     val excluded: Boolean by lazy {
         annotation.findAttributeValue("excluded")!!.text.toBoolean()
     }
+
+    val runnable: Boolean by lazy {
+        // default matches default from the runtime, this is needed
+        // so the plugin will still work with old versions of spek2 that
+        // does not have the runnable flag.
+        annotation.findAttributeValue("runnable")?.let {
+            it.text.toBoolean()
+        } ?: true
+    }
 }
 
 enum class PsiDescriptionLocation {
@@ -70,7 +79,8 @@ class PsiDescriptions(val annotation: PsiAnnotation) {
 class UnsupportedFeatureException(msg: String): Throwable(msg)
 
 class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions) {
-    fun isExcluded(): Boolean = synonym.excluded
+    fun isExcluded() = synonym.excluded
+    fun isRunnable() = synonym.runnable
 
     fun constructDescription(callExpression: KtCallExpression): String {
         return descriptions.sources.map {
