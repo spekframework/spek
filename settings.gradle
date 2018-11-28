@@ -28,6 +28,8 @@ if (hasProperty("localAndroidStudio")) {
     include 'spek-ide-plugin:android-studio'
 }
 
+include 'spek-compat'
+
 include 'integration-test:common'
 include 'integration-test:jvm'
 

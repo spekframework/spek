@@ -1,0 +1,24 @@
+apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
+
+test {
+    useJUnitPlatform {
+        includeEngines 'spek2'
+    }
+}
+
+dependencies {
+    compile project(':spek-dsl:jvm')
+}
+
+dependencies {
+    testImplementation 'com.natpryce:hamkrest'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin'
+    testImplementation 'org.junit.platform:junit-platform-engine'
+    testImplementation 'org.junit.platform:junit-platform-launcher'
+
+    // enable final class mocking
+    testRuntimeOnly 'org.mockito:mockito-inline'
+    testRuntimeOnly project(':spek-runner:junit5')
+}
