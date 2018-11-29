@@ -14,17 +14,12 @@ import org.spekframework.intellij.util.maybeGetContext
 class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
 
     override fun getInfo(element: PsiElement): Info? {
-        if (element !is KtNameReferenceExpression) {
-            return null
-        }
-
         val descriptorCache = checkNotNull(
             element.project.getComponent(ScopeDescriptorCache::class.java)
         )
-        val context = maybeGetContext(element)
-        val descriptor = when (context) {
-            is KtClassOrObject -> descriptorCache.fromClassOrObject(context)
-            is KtCallExpression -> descriptorCache.fromCallExpression(context)
+        val descriptor = when (element) {
+            is KtClassOrObject -> descriptorCache.fromClassOrObject(element)
+            is KtCallExpression -> descriptorCache.fromCallExpression(element)
             else -> null
         }
 
