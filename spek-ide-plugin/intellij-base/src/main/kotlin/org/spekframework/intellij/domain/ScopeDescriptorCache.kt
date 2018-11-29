@@ -71,7 +71,7 @@ class ScopeDescriptorCache: ProjectComponent {
                 }
             }
         }
-        return ScopeDescriptor.Group(path, clz, children.toList()).apply {
+        return ScopeDescriptor.Group(path, clz, false, true, children.toList()).apply {
             index[path.serialize()] = this
         }
     }
@@ -105,9 +105,14 @@ class ScopeDescriptorCache: ProjectComponent {
                                 }
                             }
 
-                            ScopeDescriptor.Group(path, callExpression, children.toList())
+                            ScopeDescriptor.Group(
+                                    path, callExpression, synonymContext.isExcluded(),
+                                    synonymContext.isRunnable(), children.toList()
+                            )
                         }
-                        PsiSynonymType.TEST -> ScopeDescriptor.Test(path, callExpression)
+                        PsiSynonymType.TEST -> ScopeDescriptor.Test(
+                                path, callExpression, synonymContext.isExcluded(), synonymContext.isRunnable()
+                        )
                     }
 
                     index[path.serialize()] = descriptor

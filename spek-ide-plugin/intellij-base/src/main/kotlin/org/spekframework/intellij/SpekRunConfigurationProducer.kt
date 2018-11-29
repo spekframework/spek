@@ -32,7 +32,9 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
             }
         }
 
-        return configuration.data.path == descriptor?.path
+        return descriptor?.let {
+            (!it.excluded && it.runnable) && configuration.data.path == it.path
+        } ?: false
     }
 
     override fun setupConfigurationFromContext(configuration: SpekRunConfiguration<*>,
@@ -41,38 +43,41 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
         val descriptorCache = checkNotNull(
             context.project.getComponent(ScopeDescriptorCache::class.java)
         )
-        val path = sourceElement.get().let {
+        val descriptor = sourceElement.get().let {
             val elementContext = maybeGetContext(it)
             when (elementContext) {
                 is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
                 is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
                 else -> null
             }
-        }?.path
-        return if (path != null) {
-            configuration.data.path = path
-            val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
-                .getInitializedSettings(context.module)
-
-
-            var canRun = false
-            if (isPlatformSupported(kotlinFacetSettings.platform!!.kind)) {
-                configuration.configureForModule(context.module)
-                canRun = true
-            } else if (kotlinFacetSettings.platform!!.kind == CommonIdePlatformKind) {
-                val result = findSupportedModule(context.project, context.module)
-                if (result != null) {
-                    val (module, moduleKotlinFacetSettings) = result
-                    configuration.configureForModule(module)
-                    configuration.data.producerType = moduleKotlinFacetSettings.platform!!.kind.toProducerType()
-                    canRun = true
-                }
-            }
-
-            canRun
-        } else {
-            false
         }
+
+        return descriptor?.let {
+            if (it.excluded || !it.runnable) {
+                false
+            } else {
+                val path = it.path
+                configuration.data.path = path
+                val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
+                        .getInitializedSettings(context.module)
+
+
+                var canRun = false
+                if (isPlatformSupported(kotlinFacetSettings.platform!!.kind)) {
+                    configuration.configureForModule(context.module)
+                    canRun = true
+                } else if (kotlinFacetSettings.platform!!.kind == CommonIdePlatformKind) {
+                    val result = findSupportedModule(context.project, context.module)
+                    if (result != null) {
+                        val (module, moduleKotlinFacetSettings) = result
+                        configuration.configureForModule(module)
+                        configuration.data.producerType = moduleKotlinFacetSettings.platform!!.kind.toProducerType()
+                        canRun = true
+                    }
+                }
+                canRun
+            }
+        } ?: false
     }
 
     private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, KotlinFacetSettings>? {
