@@ -194,7 +194,45 @@ object SetFeature: Spek({
 
 ## Dropped extensions
 ### Subjects
-TBD
+For tests not using `include`, just replace `subject { ... }` to `memoized { ... }`.
+
+```kotlin
+object CalculatorTest: Spek({
+    val subject by memoized { Calculator() }
+    
+    ...
+})
+```
+
+If you do use `include`, you can now use `memoized` to reference scope values declared earlier.
+
+```kotlin
+object CalculatorSpecs: Spek({
+    fun Suite.behavesLikeACalculator() {
+        val calculator by memoized<Calculator>()
+
+        it("1 + 2 = 3") {
+            assertEquals(3, calculator.add(1, 2))
+        }
+    }
+
+    describe("Calculator") {
+        val calculator by memoized { Calculator() }
+
+        behavesLikeACalculator()
+    }
+
+    describe("AdvancedCalculator") {
+        val calculator by memoized { AdvancedCalculator() }
+
+        behavesLikeACalculator()
+
+        it("2 ^ 3 = 8") {
+            assertEquals(8, calculator.pow(2, 3))
+        }
+    }
+})
+```
 
 ### Table driven
 TBD

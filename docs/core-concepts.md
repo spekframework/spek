@@ -110,7 +110,7 @@ after each test
 after root
 ```
 
-## Memoized values
+## Scope values
 As a best practice you typically want test values to be unique for each test this can be done by using a `lateinit` variable
 and assigning it within a `beforeEachTest`.
 
