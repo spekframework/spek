@@ -29,7 +29,7 @@ dependencies {
 
 buildPlugin {
     baseName = ''
-    version = "${project.version}-Studio3.2"
+    version = "${project.version}-${settings['prefix']}"
 }
 
 patchPluginXml {
