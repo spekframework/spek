@@ -30,7 +30,7 @@ This style also provides aliases to the built-in fixtures.
 - *beforeEach* and *afterEach* is equivalent to *beforeEachTest* and *afterEachTest*, respectively.
 
 ## Best practices
-### Testing a side-effect
+### Validating a side-effect
 `describe` should be use to _describe_ the action and an `it` to check the expected side-effect.
  
 ```kotlin
@@ -67,7 +67,7 @@ describe("adding an item") {
 }
 ```
 
-### Testing a return value
+### Validating a return value
 Like the previous section, use `describe` to _describe_ the action, `it` check the expected value and a `lateinit` variable to store the
 result of the action.
 
