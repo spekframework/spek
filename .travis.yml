@@ -30,11 +30,6 @@ jobs:
         - ./gradlew --no-daemon --info --stacktrace bintrayUpload
         - curl -X POST -d '' $NETLIFY_DEPLOY_URL
 
-matrix:
-  fast_finish: true
-  allow_failures:
-    - jdk: openjdk11
-
 stages:
   - build
   - name: release
