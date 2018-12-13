@@ -18,15 +18,15 @@ theme:
   name: 'material'
   logo:
     icon: 'code'
-#  palette:
-#    primary: 'indigo'
-#    accent: 'indigo'
-
-#  social:
-#    - type: 'github'
-#      link: 'https://github.com/you'
-#    - type: 'twitter'
-#      link: 'https://twitter.com/you'
+  palette:
+    primary: 'teal'
+    accent: 'cyan'
+  social:
+    - type: 'github'
+      link: 'https://github.com/spekframework'
+  font:
+    text: 'Fira Sans'
+    code: 'Fira Mono'
 
 
 # Google Analytics
@@ -58,6 +58,7 @@ pages:
     - JVM: setup-jvm.md
     - Android: setup-android.md
   - Core Concepts: core-concepts.md
+  - Running tests: running.md
   - Styles:
     - Specification: specification.md
     - Gherkin: gherkin.md

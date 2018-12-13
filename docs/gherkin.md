@@ -51,22 +51,55 @@ object SetFeature: Spek({
 })
 
 ```
-
-## Feature
+## Concepts
+### Feature
 Purpose is to provide a high-level description of a software feature, and to group related scenarios.
 
-## Scenario
+### Scenario
 Describes a business rule, it consists of a list of steps.
+- `Given`: Describes the initial context or state of the scenario.
+- `When`: Describes an event or action.
+- `Then`: Describes the expected outcome or result.
+- `And`: Can be used as an alternative to additional `Given`, `When`, or `Then` steps.
 
-## Steps
-### Given
-Describes the initial context or state of the scenario.
+## Best practices
+### Validating a side-effect
+Use `Given` to setup a context or some pre conditions. `When` describes the action, and `Then`
+`Then` describes the side effect (use multiple `Then`s if necessary).
 
-### When
-Describes an event or action.
+```kotlin
+Scenario("adding items") {
+    When("adding foo") {
+        set.add("foo")
+    }
 
-### Then
-Describes the expected outcome or result.
+    Then("it should have a size of 1") {
+        assertEquals(1, set.size)
+    }
 
-### And
-Can be used as an alternative to `Given`, `When`, and `Then` when you have more than one of those steps.
+    Then("it should contain foo") {
+        assertTrue(set.contains("foo"))
+    }
+}
+```
+
+### Validating a return value
+In cases were a return value needs checking, use `lateinit` variable to store the value.
+```kotlin
+Scenario("getting the first item") {
+    val item = "foo"
+    Given("a non-empty set")  {
+        set.add(item)
+    }
+
+    lateinit var result: String
+
+    When("getting the first item") {
+        result = set.first()
+    }
+
+    Then("it should return the first item") {
+        assertEquals(item, result)
+    }
+}
+``` 
