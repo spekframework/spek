@@ -23,7 +23,7 @@ jobs:
     - stage: build
       script: ./gradlew --no-daemon --info --stacktrace clean build
     - stage: build-jdk11
-      script: ./gradlew --no-daemon --info --stacktrace clean build
+      script: ./gradlew --no-daemon --info --stacktrace clean build -Dorg.gradle.jvmargs=''
       jdk: openjdk11
     - stage: release
       script:
