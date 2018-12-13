@@ -2,9 +2,7 @@
 sudo: false
 
 language: java
-jdk:
-  - openjdk10
-  - openjdk11
+jdk: openjdk10
 
 branches:
   only:
@@ -24,10 +22,18 @@ jobs:
   include:
     - stage: build
       script: ./gradlew --no-daemon --info --stacktrace clean build
+    - stage: build-jdk11
+      script: ./gradlew --no-daemon --info --stacktrace clean build
+      jdk: openjdk11
     - stage: release
       script:
         - ./gradlew --no-daemon --info --stacktrace bintrayUpload
         - curl -X POST -d '' $NETLIFY_DEPLOY_URL
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - jdk: openjdk11
 
 stages:
   - build
