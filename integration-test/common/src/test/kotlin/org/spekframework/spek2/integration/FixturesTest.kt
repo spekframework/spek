@@ -56,11 +56,3 @@ object FixturesTest: Spek({
         }
     }
 })
-
-object LargeTest: Spek({
-    repeat(27000) {
-        test("test $it") {
-
-        }
-    }
-})
