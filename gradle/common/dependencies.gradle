@@ -30,7 +30,7 @@ dependencyManagement {
 
         dependency "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0"
 
-        dependencySet(group: 'org.mockito', version: '2.19.0') {
+        dependencySet(group: 'org.mockito', version: '2.23.4') {
             entry 'mockito-core'
             entry 'mockito-inline'
         }
