@@ -28,7 +28,7 @@ dependencyManagement {
 
         dependency 'com.xenomachina:kotlin-argparser:2.0.6'
 
-        dependency "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+        dependency "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0"
 
         dependencySet(group: 'org.mockito', version: '2.19.0') {
             entry 'mockito-core'
