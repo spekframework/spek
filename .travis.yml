@@ -2,8 +2,7 @@
 sudo: false
 
 language: java
-jdk:
-  - openjdk10
+jdk: openjdk10
 
 branches:
   only:
@@ -23,6 +22,9 @@ jobs:
   include:
     - stage: build
       script: ./gradlew --no-daemon --info --stacktrace clean build
+    - stage: build-jdk11
+      script: ./gradlew --no-daemon --info --stacktrace clean build
+      jdk: openjdk11
     - stage: release
       script:
         - ./gradlew --no-daemon --info --stacktrace bintrayUpload
