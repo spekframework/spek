@@ -8,6 +8,8 @@
 
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.modules.androidstudio</depends>
+    <depends>org.jetbrains.android</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="org.spekframework.intellij.SpekAndroidConfigurationType"/>

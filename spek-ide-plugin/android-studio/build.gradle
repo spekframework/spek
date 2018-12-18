@@ -7,7 +7,7 @@ def buildMatrix = [
     AS33: [prefix: 'Studio3.3', since: '182.5107', until: '182.5107.*', deps: ['org.jetbrains.kotlin:1.3.0-release-Studio3.3-1']],
 ]
 
-String sdkVersion = "AS32"
+String sdkVersion = "AS33"
 
 if (hasProperty('as.version')) {
     sdkVersion = getProperty('as.version')
@@ -15,16 +15,18 @@ if (hasProperty('as.version')) {
 
 def settings = buildMatrix[sdkVersion]
 
+String localIdePath = getProperty("local${sdkVersion}Path")
+
 intellij {
     pluginName = "Spek Framework"
-    localPath = "$localAndroidStudio"
+    localPath = "$localIdePath"
     plugins = ['gradle'] + settings['deps']
-    alternativeIdePath = "$localAndroidStudio"
+    alternativeIdePath = "$localIdePath"
 }
 
 dependencies {
     compile project(':spek-ide-plugin:intellij-base-jvm')
-    compileOnly fileTree(dir: "$localAndroidStudio/plugins/android/lib", include: ['*.jar'])
+    compileOnly fileTree(dir: "$localIdePath/plugins/android/lib", include: ['*.jar'])
 }
 
 buildPlugin {
