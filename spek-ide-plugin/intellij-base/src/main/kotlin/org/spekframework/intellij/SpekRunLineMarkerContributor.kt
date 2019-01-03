@@ -4,7 +4,10 @@ import com.intellij.execution.lineMarker.ExecutorAction
 import com.intellij.execution.lineMarker.RunLineMarkerContributor
 import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiIdentifier
+import com.intellij.psi.impl.source.tree.LeafPsiElement
 import com.intellij.util.Function
+import org.jetbrains.kotlin.lexer.KtTokens
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.jetbrains.kotlin.psi.KtNameReferenceExpression
@@ -17,9 +20,27 @@ class SpekRunLineMarkerContributor: RunLineMarkerContributor() {
         val descriptorCache = checkNotNull(
             element.project.getComponent(ScopeDescriptorCache::class.java)
         )
-        val descriptor = when (element) {
-            is KtClassOrObject -> descriptorCache.fromClassOrObject(element)
-            is KtCallExpression -> descriptorCache.fromCallExpression(element)
+
+        if (element !is LeafPsiElement) {
+            return null
+        }
+
+        if (element.elementType != KtTokens.IDENTIFIER) {
+            return null
+        }
+
+        val parent = element.parent
+
+        val descriptor = when (parent) {
+            is KtClassOrObject -> descriptorCache.fromClassOrObject(parent)
+            is KtNameReferenceExpression -> {
+                val nameRefParent = parent.parent
+                if (nameRefParent is KtCallExpression) {
+                    descriptorCache.fromCallExpression(nameRefParent)
+                } else {
+                    null
+                }
+            }
             else -> null
         }
 
