@@ -4,17 +4,26 @@ import com.intellij.execution.actions.ConfigurationContext
 import com.intellij.execution.actions.RunConfigurationProducer
 import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.roots.ModuleRootManager
 import com.intellij.openapi.util.Ref
+import com.intellij.openapi.vfs.VfsUtil
+import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
+import com.intellij.psi.PsiPackage
+import org.jetbrains.jps.model.java.JavaSourceRootType
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
+import org.jetbrains.kotlin.config.KotlinSourceRootType
 import org.jetbrains.kotlin.idea.caches.project.implementingModules
+import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.platform.IdePlatformKind
 import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.spekframework.intellij.domain.ScopeDescriptorCache
 import org.spekframework.intellij.util.maybeGetContext
+import org.spekframework.spek2.runtime.scope.Path
+import org.spekframework.spek2.runtime.scope.PathBuilder
 
 abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type: SpekConfigurationType)
     : RunConfigurationProducer<SpekRunConfiguration<*>>(type) {
@@ -23,17 +32,26 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
         val descriptorCache = checkNotNull(
             context.project.getComponent(ScopeDescriptorCache::class.java)
         )
-        val descriptor = context.psiLocation?.let {
-            val elementContext = maybeGetContext(it)
-            when (elementContext) {
-                is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
-                is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
-                else -> null
-            }
-        }
 
-        return descriptor?.let {
-            (!it.excluded && it.runnable) && configuration.data.path == it.path
+        return context.psiLocation?.let {
+            val path = if (it is PsiDirectory) {
+                getPackagePath(context, it)
+            } else {
+                val elementContext = maybeGetContext(it)
+                val descriptor = when (elementContext) {
+                    is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
+                    is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
+                    else -> null
+                }
+
+                if (descriptor != null && !descriptor.excluded && descriptor.runnable) {
+                    descriptor.path
+                } else {
+                    null
+                }
+            }
+
+            configuration.data.path == path
         } ?: false
     }
 
@@ -43,20 +61,26 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
         val descriptorCache = checkNotNull(
             context.project.getComponent(ScopeDescriptorCache::class.java)
         )
-        val descriptor = sourceElement.get().let {
-            val elementContext = maybeGetContext(it)
-            when (elementContext) {
-                is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
-                is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
-                else -> null
-            }
-        }
 
-        return descriptor?.let {
-            if (it.excluded || !it.runnable) {
-                false
+        return sourceElement.get().let {
+            val path = if (it is PsiDirectory) {
+                getPackagePath(context, it)
             } else {
-                val path = it.path
+                val elementContext = maybeGetContext(it)
+                val descriptor = when (elementContext) {
+                    is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
+                    is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
+                    else -> null
+                }
+
+                if (descriptor != null && !descriptor.excluded && descriptor.runnable) {
+                    descriptor.path
+                } else {
+                    null
+                }
+            }
+
+            if (path != null) {
                 configuration.data.path = path
                 val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
                         .getInitializedSettings(context.module)
@@ -76,8 +100,28 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
                     }
                 }
                 canRun
+            } else {
+                false
             }
-        } ?: false
+        }
+    }
+
+    private fun getPackagePath(context: ConfigurationContext, dir: PsiDirectory): Path? {
+        if (context.module != null) {
+            val moduleRootManager = ModuleRootManager.getInstance(context.module)
+            val roots = moduleRootManager.getSourceRoots(JavaSourceRootType.TEST_SOURCE)
+
+            if (VfsUtil.isUnder(dir.virtualFile, roots.toSet())) {
+                val psiPackage = dir.getPackage()
+
+                if (psiPackage != null) {
+                    return PathBuilder()
+                            .append(psiPackage.qualifiedName)
+                            .build()
+                }
+            }
+        }
+        return null
     }
 
     private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, KotlinFacetSettings>? {
