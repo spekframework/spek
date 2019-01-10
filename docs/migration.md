@@ -233,6 +233,3 @@ object CalculatorSpecs: Spek({
     }
 })
 ```
-
-### Table driven
-TBD
