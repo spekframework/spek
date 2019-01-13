@@ -1,5 +1,5 @@
+apply plugin: 'kotlin-platform-jvm'
 apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin-jvm.gradle"
 
 test {
     useJUnitPlatform {
@@ -8,8 +8,10 @@ test {
 }
 
 dependencies {
-    compile project(':spek-runtime:jvm')
-    compile 'org.junit.platform:junit-platform-engine'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    implementation project(':spek-dsl')
+    implementation project(':spek-runtime')
+    implementation 'org.junit.platform:junit-platform-engine'
 }
 
 dependencies {

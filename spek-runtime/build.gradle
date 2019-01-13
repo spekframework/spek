@@ -1,0 +1,26 @@
+apply plugin: 'kotlin-multiplatform'
+
+//apply from: "$rootDir/gradle/common/dependencies.gradle"
+
+kotlin {
+    targets {
+        fromPreset(presets.jvm, 'jvm')
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation project(':spek-dsl')
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation 'org.jetbrains.kotlin:kotlin-reflect'
+                implementation 'io.github.classgraph:classgraph:4.0.6'
+            }
+        }
+    }
+}

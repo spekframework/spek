@@ -5,30 +5,38 @@ pluginManagement {
         jcenter()
         gradlePluginPortal()
     }
+    resolutionStrategy {
+        eachPlugin {
+            if ( requested.id.id == 'org.jetbrains.kotlin.multiplatform' || requested.id.id == 'kotlin-jvm') {
+                useModule( "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion" )
+            }
+        }
+    }
 }
 
-enableFeaturePreview("STABLE_PUBLISHING")
+enableFeaturePreview('STABLE_PUBLISHING')
+enableFeaturePreview('GRADLE_METADATA')
 
 rootProject.name = 'spek'
 
-include 'spek-dsl:common'
-include 'spek-dsl:jvm'
+include 'spek-dsl'
+//include 'spek-dsl:common'
+//include 'spek-dsl:jvm'
 
-include 'spek-runtime:common'
-include 'spek-runtime:jvm'
+include 'spek-runtime'
+//include 'spek-runtime:common'
+//include 'spek-runtime:jvm'
 
 include 'spek-runner:junit5'
-
-include 'spek-ide-plugin:interop-jvm'
-include 'spek-ide-plugin:intellij-base'
-include 'spek-ide-plugin:intellij-base-jvm'
-include 'spek-ide-plugin:intellij-idea'
-
-if (hasProperty("localAndroidStudio")) {
-    include 'spek-ide-plugin:android-studio'
-}
-
-include 'integration-test:common'
-include 'integration-test:jvm'
-
-include 'distribution'
+//
+//include 'spek-ide-plugin:interop-jvm'
+//include 'spek-ide-plugin:intellij-base'
+//include 'spek-ide-plugin:intellij-base-jvm'
+//include 'spek-ide-plugin:intellij-idea'
+//
+//if (hasProperty("localAndroidStudio")) {
+//    include 'spek-ide-plugin:android-studio'
+//}
+//
+//include 'integration-test:common'
+//include 'integration-test:jvm'
