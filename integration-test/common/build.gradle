@@ -1,7 +1,0 @@
-apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/kotlin-common.gradle"
-
-dependencies {
-    testImplementation project(':spek-dsl:common')
-    testImplementation 'org.jetbrains.kotlin:kotlin-test-common'
-}
