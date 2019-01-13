@@ -6,7 +6,7 @@ is no way to run a specific test via Gradle.
    
 To run tests in IntelliJ IDEA or Android Studio you need to install [Spek Framework plugin](https://plugins.jetbrains.com/plugin/10915-spek-framework) (search for `Spek Framework`).
 
-!!! warning 
+!!! info 
     Running tests for Android projects in IntelliJ IDEA is not supported, please use Android Studio.
 
 The plugin will allow you to:
