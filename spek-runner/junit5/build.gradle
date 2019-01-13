@@ -52,6 +52,16 @@ publishing {
             from components.java
             artifact sourcesJar
             artifact stubJavadocJar
+
+            pom.withXml {
+                def root = asNode()
+                root.dependencies
+                    .dependency
+                    .findAll { dep -> dep.artifactId.get(0).text().equals("spek-runtime") }
+                    .collect { dep ->
+                        dep.artifactId.get(0).setValue('spek-runtime-jvm')
+                    }
+            }
         }
     }
 }

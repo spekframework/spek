@@ -1,6 +1,6 @@
 buildscript {
-    ext.kotlin_version = '1.3.0'
-    ext.spek_version = '2.0.0-rc.1'
+    ext.kotlin_version = '1.3.11'
+    ext.spek_version = '2.0.0-rc.1.181+20190113T062549Z'
 
     repositories {
         jcenter()
@@ -14,6 +14,7 @@ buildscript {
 apply plugin: 'kotlin'
 
 repositories {
+    mavenLocal()
     jcenter()
     // uncomment to use development build
     // maven { url "https://dl.bintray.com/spekframework/spek-dev" }
@@ -32,4 +33,5 @@ dependencies {
     //spek2
     testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
     testRuntimeOnly "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+    testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
