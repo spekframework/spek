@@ -1,4 +1,5 @@
 apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'maven-publish'
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 test {
@@ -8,8 +9,8 @@ test {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation project(':spek-runtime')
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.junit.platform:junit-platform-engine'
 }
 
@@ -23,5 +24,15 @@ dependencies {
     // enable final class mocking
     testRuntimeOnly 'org.mockito:mockito-inline'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
 
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'org.spekframework.spek2'
+            artifactId = 'spek-runner-junit5'
+
+            from components.java
+        }
+    }
 }

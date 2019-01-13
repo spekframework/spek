@@ -1,8 +1,13 @@
 apply plugin: 'kotlin-multiplatform'
+apply plugin: 'maven-publish'
 
 kotlin {
     targets {
-        fromPreset(presets.jvm, 'jvm')
+        fromPreset(presets.jvm, 'jvm') {
+            mavenPublication {
+                artifactId = "spek-dsl-jvm"
+            }
+        }
     }
 
     sourceSets {

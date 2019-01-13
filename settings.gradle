@@ -15,17 +15,12 @@ pluginManagement {
 }
 
 enableFeaturePreview('STABLE_PUBLISHING')
-enableFeaturePreview('GRADLE_METADATA')
 
 rootProject.name = 'spek'
 
 include 'spek-dsl'
-//include 'spek-dsl:common'
-//include 'spek-dsl:jvm'
 
 include 'spek-runtime'
-//include 'spek-runtime:common'
-//include 'spek-runtime:jvm'
 
 include 'spek-runner:junit5'
 

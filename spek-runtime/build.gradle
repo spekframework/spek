@@ -1,10 +1,14 @@
 apply plugin: 'kotlin-multiplatform'
-
-//apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply plugin: 'maven-publish'
+apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 kotlin {
     targets {
-        fromPreset(presets.jvm, 'jvm')
+        fromPreset(presets.jvm, 'jvm') {
+            mavenPublication {
+                artifactId = 'spek-runtime-jvm'
+            }
+        }
     }
 
     sourceSets {
@@ -19,7 +23,7 @@ kotlin {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
                 implementation 'org.jetbrains.kotlin:kotlin-reflect'
-                implementation 'io.github.classgraph:classgraph:4.0.6'
+                implementation 'io.github.classgraph:classgraph'
             }
         }
     }
