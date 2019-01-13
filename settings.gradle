@@ -19,15 +19,9 @@ enableFeaturePreview('STABLE_PUBLISHING')
 rootProject.name = 'spek'
 
 include 'spek-dsl'
-
 include 'spek-runtime'
-
 include 'spek-runner:junit5'
-
 include 'integration-test'
-//include 'integration-test:common'
-//include 'integration-test:jvm'
-
 
 include 'spek-ide-plugin:interop-jvm'
 include 'spek-ide-plugin:intellij-base'

@@ -32,8 +32,7 @@ afterEvaluate {
 
 
 allprojects {
-    // Previously, this causes a circular dependency for some reason.
-    // It now works.
+    // Previously this caused a circular dependency (for some reason), it now works.
      group = 'org.spekframework.spek2'
     repositories {
         jcenter()
