@@ -1,0 +1,48 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
+apply plugin: 'com.jfrog.bintray'
+
+if (Files.exists(Paths.get("$rootDir/local.properties"))) {
+    def localProperties = new Properties()
+    localProperties.load(new FileInputStream("$rootDir/local.properties"))
+    localProperties.each { prop -> project.ext.set(prop.key, prop.value) }
+}
+
+String propOrEnv(String name) {
+    String property = project.findProperty(name)
+    if (property == null) {
+        property = System.getenv(name)
+    }
+    return property
+}
+
+def bintrayUser = propOrEnv("BINTRAY_USER")
+def bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
+
+def bintrayRepo = 'spek-dev'
+if ("$version".matches("^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+)?")) {
+    bintrayRepo = 'spek'
+}
+
+def artifacts = publishing.publications.collect { it.name }
+bintray {
+    user = bintrayUser
+    key = bintrayApiKey
+    publish = false
+    pkg {
+        repo = bintrayRepo
+        desc = "Test framework for Kotlin"
+        name = 'spek2'
+        userOrg = 'spekframework'
+        licenses = ['BSD New']
+        labels = ['kotlin', 'testing']
+        vcsUrl = 'https://github.com/spekframework/spek.git'
+        githubRepo = 'spekframework/spek'
+        version {
+            name = rootProject.version
+        }
+    }
+
+    publications = artifacts
+}

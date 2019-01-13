@@ -1,6 +1,7 @@
 apply plugin: 'kotlin-multiplatform'
 apply plugin: 'maven-publish'
 apply from: "$rootDir/gradle/common/dependencies.gradle"
+apply from: "$rootDir/gradle/common/publish.gradle"
 
 kotlin {
     targets {
@@ -25,6 +26,19 @@ kotlin {
                 implementation 'org.jetbrains.kotlin:kotlin-reflect'
                 implementation 'io.github.classgraph:classgraph'
             }
+        }
+    }
+}
+
+task stubJavadocJar(type: Jar) {
+    classifier = 'javadoc'
+}
+
+publishing {
+    kotlin.targets.all { target ->
+        def targetPublication = publications.findByName(target.name)
+        if (targetPublication != null) {
+            targetPublication.artifact stubJavadocJar
         }
     }
 }

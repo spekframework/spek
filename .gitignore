@@ -36,3 +36,5 @@ lib/kotlin-runtime.jar
 */target/*
 .idea/
 *.iml
+
+/local.properties

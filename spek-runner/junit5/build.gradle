@@ -1,5 +1,4 @@
 apply plugin: 'kotlin-platform-jvm'
-apply plugin: 'maven-publish'
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 test {
@@ -26,6 +25,24 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
+def archiveBaseName = "spek-runner-junit5"
+jar {
+    baseName = archiveBaseName
+}
+
+task sourcesJar(type: Jar) {
+    baseName = archiveBaseName
+    from project.sourceSets.main.java
+    classifier "sources"
+}
+
+task stubJavadocJar(type: Jar) {
+    baseName = archiveBaseName
+    classifier = 'javadoc'
+}
+
+apply plugin: 'maven-publish'
+
 publishing {
     publications {
         maven(MavenPublication) {
@@ -33,6 +50,10 @@ publishing {
             artifactId = 'spek-runner-junit5'
 
             from components.java
+            artifact sourcesJar
+            artifact stubJavadocJar
         }
     }
 }
+
+apply from: "$rootDir/gradle/common/publish.gradle"
