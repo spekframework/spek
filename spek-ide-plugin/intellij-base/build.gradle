@@ -10,7 +10,7 @@ intellij {
 
 dependencies {
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    compile(project(':spek-runtime:jvm')) {
+    compile(project(':spek-runtime')) {
         exclude group: 'org.jetbrains.kotlin'
     }
 }

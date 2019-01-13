@@ -11,7 +11,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
-                implementation project(':spek-dsl')
+                api project(':spek-dsl')
             }
         }
 

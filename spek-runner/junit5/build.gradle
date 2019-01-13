@@ -9,7 +9,6 @@ test {
 
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation project(':spek-dsl')
     implementation project(':spek-runtime')
     implementation 'org.junit.platform:junit-platform-engine'
 }
