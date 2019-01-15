@@ -29,11 +29,15 @@ jobs:
       script:
         - ./gradlew --no-daemon --info --stacktrace bintrayUpload
         - curl -X POST -d '' $NETLIFY_DEPLOY_URL
+    - stage: release-dev
+      script: ./gradlew --no-daemon --info --stacktrace bintrayUpload
 
 stages:
   - build
   - name: release
     if: tag IS present
+  - name: release-dev
+    if: tag IS NOT present AND type IS NOT pull_request
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock

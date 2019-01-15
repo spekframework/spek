@@ -21,15 +21,17 @@ def bintrayUser = propOrEnv("BINTRAY_USER")
 def bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
 def bintrayRepo = 'spek-dev'
+def doPublish = true
 if ("$version".matches("^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+)?")) {
     bintrayRepo = 'spek'
+    doPublish = false
 }
 
 def artifacts = publishing.publications.collect { it.name }
 bintray {
     user = bintrayUser
     key = bintrayApiKey
-    publish = false
+    publish = doPublish
     pkg {
         repo = bintrayRepo
         desc = "Test framework for Kotlin"
