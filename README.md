@@ -1,5 +1,6 @@
-[ ![Download](https://api.bintray.com/packages/spekframework/spek/spek2/images/download.svg) ](https://bintray.com/spekframework/spek/spek2/_latestVersion)
-[![CI](https://travis-ci.org/spekframework/spek.svg?branch=2.x)](https://travis-ci.org/spekframework/spek)
+[ ![CI](https://travis-ci.org/spekframework/spek.svg?branch=2.x) ](https://travis-ci.org/spekframework/spek)
+[ ![Download](https://img.shields.io/bintray/v/spekframework/spek/spek2.svg?label=stable) ](https://bintray.com/spekframework/spek/spek2/_latestVersion)
+[ ![Download](https://img.shields.io/bintray/v/spekframework/spek-dev/spek2.svg?label=dev) ](https://bintray.com/spekframework/spek-dev/spek2/_latestVersion)
 
 ![Spek Logo](spek-logo.png)
 
