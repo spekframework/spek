@@ -3,7 +3,9 @@ apply plugin: 'kotlin-platform-jvm'
 apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
-    compileOnly project(':spek-runtime:jvm')
+    compile(project(':spek-runtime')) {
+        exclude group: 'org.jetbrains.kotlin'
+    }
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile 'com.xenomachina:kotlin-argparser'
 }

@@ -7,7 +7,7 @@ buildscript {
         classpath 'io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.16'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
         classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.3.12"
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.3"
@@ -32,8 +32,8 @@ afterEvaluate {
 
 
 allprojects {
-    // This causes a circular dependency for some reason.
-    // group = 'org.spekframework.spek2'
+    // Previously this caused a circular dependency (for some reason), it now works.
+     group = 'org.spekframework.spek2'
     repositories {
         jcenter()
     }
