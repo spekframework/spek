@@ -11,6 +11,7 @@ import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.ScopeId
 import org.spekframework.spek2.runtime.scope.ScopeType
+import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 abstract class AbstractRuntime {
     abstract fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult
@@ -22,9 +23,22 @@ abstract class AbstractRuntime {
         }
 
         val qualifiedName = (path.parent?.name ?: "") + ".${path.name}"
-        val classScope =
-            GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager, false)
-        instance.root.invoke(Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST))
+        val classScope = GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager, false)
+        val collector = Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST)
+
+        try {
+            instance.root.invoke(collector)
+        } catch (e: Exception) {
+            collector.beforeGroup { throw e }
+            classScope.addChild(TestScopeImpl(
+                ScopeId(ScopeType.Scope, "Discovery failure"),
+                path.resolve("Discovery failure"),
+                classScope,
+                {},
+                Skip.No,
+                lifecycleManager
+            ))
+        }
 
         return classScope
     }
