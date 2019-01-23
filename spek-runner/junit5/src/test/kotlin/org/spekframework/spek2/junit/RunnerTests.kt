@@ -50,4 +50,36 @@ class RunnerTests {
 
         assertThat(summary.testsSucceededCount, equalTo(1L))
     }
+
+    @Test
+    fun testFailDuringRootDiscoveryPhase() {
+        val listener = SummaryGeneratingListener()
+        launcher.execute(
+            LauncherDiscoveryRequestBuilder.request()
+                .filters(EngineFilter.includeEngines("spek2"))
+                .selectors(DiscoverySelectors.selectClass("testData.package1.SpekTestWithFailureDuringRootDiscoveryPhase"))
+                .build(),
+            listener
+        )
+
+        val summary = listener.summary
+
+        assertThat(summary.totalFailureCount, equalTo(1L))
+    }
+
+  @Test
+  fun testFailDuringGroupDiscoveryPhase() {
+    val listener = SummaryGeneratingListener()
+    launcher.execute(
+        LauncherDiscoveryRequestBuilder.request()
+            .filters(EngineFilter.includeEngines("spek2"))
+            .selectors(DiscoverySelectors.selectClass("testData.package1.SpekTestWithFailureDuringGroupDiscoveryPhase"))
+            .build(),
+        listener
+    )
+
+    val summary = listener.summary
+
+    assertThat(summary.totalFailureCount, equalTo(1L))
+  }
 }
