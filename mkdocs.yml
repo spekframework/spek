@@ -8,7 +8,7 @@ site_url: https://spekframework.org
 # Repository (add link to repository on each page)
 repo_name: Spek Framework
 repo_url: https://github.com/spekframework/spek
-#edit_uri: edit/master/src/doc
+edit_uri: edit/2.x/docs
 
 #Copyright (shown at the footer)
 copyright: 'Copyright &copy; 2018 Spek Team'
