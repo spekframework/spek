@@ -57,9 +57,12 @@ class SpekJvmSettingsEditor(project: Project): SettingsEditor<SpekJvmRunConfigur
         moduleSelector.reset(configuration)
         commonJavaParameters.reset(configuration)
         selectedPath = configuration.data.path
+        jrePathEditor.setPathOrName(configuration.alternativeJrePath, configuration.isAlternativeJrePathEnabled)
     }
 
     override fun applyEditorTo(configuration: SpekJvmRunConfiguration) {
+        configuration.alternativeJrePath = jrePathEditor.jrePathOrName
+        configuration.isAlternativeJrePathEnabled = jrePathEditor.isAlternativeJreSelected
         configuration.setModule(selectedModule)
         moduleSelector.applyTo(configuration)
         commonJavaParameters.applyTo(configuration)

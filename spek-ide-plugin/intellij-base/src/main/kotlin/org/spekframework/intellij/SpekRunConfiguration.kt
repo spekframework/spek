@@ -23,7 +23,7 @@ interface SpekRunConfiguration<T: SpekCommonProgramRunConfigurationParameters>: 
     }
 
     override fun setWorkingDirectory(value: String?) {
-        data.workingDirectory = workingDirectory
+        data.workingDirectory = value
     }
 
     override fun setEnvs(envs: MutableMap<String, String>) {
