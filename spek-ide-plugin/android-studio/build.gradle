@@ -3,8 +3,8 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'kotlin-platform-jvm'
 
 def buildMatrix = [
-    AS32: [prefix: 'Studio3.2', since: '181.5540', until: '181.5540.*', deps: ['org.jetbrains.kotlin:1.3.0-release-Studio3.2-1']],
-    AS33: [prefix: 'Studio3.3', since: '182.5107', until: '182.5107.*', deps: ['org.jetbrains.kotlin:1.3.0-release-Studio3.3-1']],
+    AS32: [sdk: '181.5540.23', prefix: 'Studio3.2', since: '181.5540', until: '181.5540.*', deps: ['org.jetbrains.kotlin:1.3.0-release-Studio3.2-1']],
+    AS33: [sdk: '182.5107.41', prefix: 'Studio3.3', since: '182.5107', until: '182.5107.*', deps: ['org.jetbrains.kotlin:1.3.0-release-Studio3.3-1']],
 ]
 
 String sdkVersion = "AS33"
@@ -15,18 +15,17 @@ if (hasProperty('as.version')) {
 
 def settings = buildMatrix[sdkVersion]
 
-String localIdePath = getProperty("local${sdkVersion}Path")
-
 intellij {
     pluginName = "Spek Framework"
-    localPath = "$localIdePath"
-    plugins = ['gradle'] + settings['deps']
-    alternativeIdePath = "$localIdePath"
+    version = settings['sdk']
+    plugins = ['gradle', 'android'] + settings['deps']
+    if (hasProperty("local${sdkVersion}Path")) {
+        alternativeIdePath = getProperty("local${sdkVersion}Path")
+    }
 }
 
 dependencies {
     compile project(':spek-ide-plugin:intellij-base-jvm')
-    compileOnly fileTree(dir: "$localIdePath/plugins/android/lib", include: ['*.jar'])
 }
 
 buildPlugin {
