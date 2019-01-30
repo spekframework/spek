@@ -3,8 +3,10 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'kotlin-platform-jvm'
 
 def buildMatrix = [
-        IJ182: [sdk: '2018.2.5', prefix: 'IJ2018.2', since: '182.1', until: '182.*', deps: ['org.jetbrains.kotlin:1.3.0-release-IJ2018.2-1']],
-        IJ183: [sdk: '183.4284.36', prefix: 'IJ2018.3', since: '183.1', until: '183.*', deps: ['org.jetbrains.kotlin:1.3.0-release-IJ2018.3-1']]
+        IJ182: [sdk: '2018.2.5', prefix: 'IJ2018.2', extraSource: 'IJ182', since: '182.1', until: '182.*', deps: ['org.jetbrains.kotlin:1.3.0-release-IJ2018.2-1']],
+        IJ183: [sdk: '183.4284.36', prefix: 'IJ2018.3', extraSource: 'IJ183', since: '183.1', until: '183.*', deps: ['org.jetbrains.kotlin:1.3.0-release-IJ2018.3-1']],
+        // todo: update deps when kotlin plugin for IJ191 is available
+        IJ191: [sdk: '191.4212.41', prefix: 'IJ2019.1', extraSource: 'IJ183', since: '191.1', until: '191.*', deps: ['org.jetbrains.kotlin:1.3.20-release-IJ2018.3-1']],
 ]
 
 String sdkVersion = "IJ183"
@@ -24,7 +26,7 @@ intellij {
 sourceSets {
     main {
         kotlin {
-            srcDirs += "src/$sdkVersion/kotlin"
+            srcDirs += "src/${settings['extraSource']}/kotlin"
         }
     }
 }
