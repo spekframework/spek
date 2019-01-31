@@ -1,3 +1,6 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 buildscript {
     repositories {
         jcenter()
@@ -9,7 +12,7 @@ buildscript {
         classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.16'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
-        classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.3.12"
+        classpath "gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.4.2"
         classpath "com.github.jengelman.gradle.plugins:shadow:2.0.3"
     }
 }
@@ -33,10 +36,24 @@ afterEvaluate {
 
 allprojects {
     // Previously this caused a circular dependency (for some reason), it now works.
-     group = 'org.spekframework.spek2'
+    group = 'org.spekframework.spek2'
+
     repositories {
         jcenter()
     }
+
+    if (Files.exists(Paths.get("$rootDir/local.properties"))) {
+        def localProperties = new Properties()
+        localProperties.load(new FileInputStream("$rootDir/local.properties"))
+        localProperties.each { prop -> project.ext.set(prop.key, prop.value) }
+    }
+
+    def releaseMode = false
+    if ("$version".matches("^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+)?")) {
+        releaseMode = true
+    }
+    project.ext.releaseMode = releaseMode
+
 
     apply plugin: 'idea'
 }

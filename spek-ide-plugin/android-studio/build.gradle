@@ -1,6 +1,7 @@
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'kotlin-platform-jvm'
+apply from: "$rootDir/gradle/common/publish-plugin.gradle"
 
 def buildMatrix = [
     AS32: [sdk: '181.5540.23', prefix: 'Studio3.2', since: '181.5540', until: '181.5540.*', deps: ['org.jetbrains.kotlin:1.3.0-release-Studio3.2-1']],

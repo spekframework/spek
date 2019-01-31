@@ -1,13 +1,4 @@
-import java.nio.file.Files
-import java.nio.file.Paths
-
 apply plugin: 'com.jfrog.bintray'
-
-if (Files.exists(Paths.get("$rootDir/local.properties"))) {
-    def localProperties = new Properties()
-    localProperties.load(new FileInputStream("$rootDir/local.properties"))
-    localProperties.each { prop -> project.ext.set(prop.key, prop.value) }
-}
 
 String propOrEnv(String name) {
     String property = project.findProperty(name)
@@ -22,7 +13,8 @@ def bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
 def bintrayRepo = 'spek-dev'
 def doPublish = true
-if ("$version".matches("^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+)?")) {
+
+if (project.ext.releaseMode) {
     bintrayRepo = 'spek'
     doPublish = false
 }
