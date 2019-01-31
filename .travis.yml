@@ -30,6 +30,7 @@ jobs:
         - ./gradlew --no-daemon --info --stacktrace bintrayUpload
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
+        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS32
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
         - curl -X POST -d '' $NETLIFY_DEPLOY_URL
@@ -38,6 +39,7 @@ jobs:
         - ./gradlew --no-daemon --info --stacktrace bintrayUpload
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
+        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS32
         - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
 
