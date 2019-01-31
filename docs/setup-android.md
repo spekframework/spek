@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // spek
     testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
@@ -62,16 +62,10 @@ repositories {
 // setup dependencies
 dependencies {
     // some version of Kotlin
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:$spek_version'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version'
 
-    testImplementation ('org.spekframework.spek2:spek-dsl-jvm:$spek_version')  {
-        exclude group: 'org.jetbrains.kotlin'
-    }
-    testImplementation ('org.spekframework.spek2:spek-runner-junit5:$spek_version') {
-        exclude group: 'org.junit.platform'
-        exclude group: 'org.jetbrains.kotlin'
-    }
-
+    testImplementation 'org.spekframework.spek2:spek-dsl-jvm:$spek_version'
+    testImplementation 'org.spekframework.spek2:spek-runner-junit5:$spek_version'
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }

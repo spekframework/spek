@@ -9,13 +9,8 @@ dependencies {
     // some version of Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    testImplementation ('org.spekframework.spek2:spek-dsl-jvm:${spek_version}')  {
-        exclude group: 'org.jetbrains.kotlin'
-    }
-    testRuntimeOnly ('org.spekframework.spek2:spek-runner-junit5:${spek_version}') {
-        exclude group: 'org.junit.platform'
-        exclude group: 'org.jetbrains.kotlin'
-    }
+    testImplementation 'org.spekframework.spek2:spek-dsl-jvm:${spek_version}'
+    testRuntimeOnly 'org.spekframework.spek2:spek-runner-junit5:${spek_version}'
 
     // spek requires kotlin-reflect, can be omitted if already in the classpath
     testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -57,7 +52,7 @@ in the main repository.
     ...
     <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
-        <artifactId>kotlin-stdlib</artifactId>
+        <artifactId>kotlin-stdlib-jdk8</artifactId>
         <version>${kotlin.version}</version>
         <scope>compile</scope>
     </dependency>
@@ -66,27 +61,11 @@ in the main repository.
         <artifactId>spek-dsl-jvm</artifactId>
         <version>${spek_version}</version>
         <scope>test</scope>
-        <exclusions>
-            <exclusion>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>*</artifactId>
-            </exclusion>
-        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.spekframework.spek2</groupId>
         <artifactId>spek-runner-junit5</artifactId>
         <version>${spek_version}</version>
-        <exclusions>
-            <exclusion>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>*</artifactId>
-            </exclusion>
-            <exclusion>
-                <groupId>org.junit.platform</groupId>
-                <artifactId>*</artifactId>
-            </exclusion>
-        </exclusions>
     </dependency>
     <dependency>
         <groupId>org.jetbrains.kotlin</groupId>
