@@ -1,0 +1,20 @@
+String propOrEnv(String name) {
+    String property = project.findProperty(name)
+    if (property == null) {
+        property = System.getenv(name)
+    }
+    return property
+}
+
+def channel = 'dev'
+
+if (project.ext.releaseMode) {
+    channel = 'default'
+}
+
+def publishToken = propOrEnv('HUB_API_TOKEN')
+
+publishPlugin {
+    token = publishToken
+    channels = [channel]
+}
