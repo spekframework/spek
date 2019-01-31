@@ -22,38 +22,38 @@ jobs:
   include:
     - stage: build
       script:
-        - ./gradlew --no-daemon --info --stacktrace clean build
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=182
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=183
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=191
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
+        - ./gradlew --stacktrace clean build
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
     - stage: build-jdk11
       script:
-        - ./gradlew --no-daemon --info --stacktrace clean build
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=182
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=183
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=191
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
+        - ./gradlew --stacktrace clean build
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
       jdk: openjdk11
     - stage: release
       script:
-        - ./gradlew --no-daemon --info --stacktrace bintrayUpload
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
+        - ./gradlew --stacktrace bintrayUpload
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
         - curl -X POST -d '' $NETLIFY_DEPLOY_URL
     - stage: release-dev
       script:
-        - ./gradlew --no-daemon --info --stacktrace bintrayUpload
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
-        - ./gradlew --no-daemon --info --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
+        - ./gradlew --stacktrace bintrayUpload
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
 
 stages:
   - build
