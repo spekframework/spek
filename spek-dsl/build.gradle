@@ -5,24 +5,22 @@ apply from: "$rootDir/gradle/common/publish.gradle"
 
 
 kotlin {
-    targets {
-        fromPreset(presets.jvm, 'jvm') {
-            mavenPublication {
-                artifactId = "spek-dsl-jvm"
-            }
+    jvm() {
+        mavenPublication {
+            artifactId = "spek-dsl-jvm"
         }
     }
 
     sourceSets {
         commonMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation kotlin('stdlib')
             }
         }
 
         jvmMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation kotlin('stdlib-jdk8')
             }
         }
     }

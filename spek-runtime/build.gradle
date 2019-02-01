@@ -4,26 +4,24 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 apply from: "$rootDir/gradle/common/publish.gradle"
 
 kotlin {
-    targets {
-        fromPreset(presets.jvm, 'jvm') {
-            mavenPublication {
-                artifactId = 'spek-runtime-jvm'
-            }
+    jvm() {
+        mavenPublication {
+            artifactId = 'spek-runtime-jvm'
         }
     }
 
     sourceSets {
         commonMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation kotlin('stdlib')
                 api project(':spek-dsl')
             }
         }
 
         jvmMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-                implementation 'org.jetbrains.kotlin:kotlin-reflect'
+                implementation kotlin('stdlib-jdk8')
+                implementation kotlin('reflect')
                 implementation 'io.github.classgraph:classgraph'
             }
         }
