@@ -2,34 +2,31 @@ apply plugin: 'kotlin-multiplatform'
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 kotlin {
-    targets {
-        fromPreset(presets.jvm, 'jvm')
-    }
+    jvm()
 
     sourceSets {
         commonMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                implementation kotlin('stdlib')
             }
         }
 
         commonTest {
             dependencies {
                 implementation project(':spek-dsl')
-                implementation 'org.jetbrains.kotlin:kotlin-test-common'
+                implementation kotlin('test')
             }
         }
 
         jvmMain {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+                implementation kotlin('stdlib-jdk8')
             }
         }
 
         jvmTest {
             dependencies {
-                implementation 'org.jetbrains.kotlin:kotlin-test'
-                runtimeOnly 'org.jetbrains.kotlin:kotlin-reflect'
+                runtimeOnly kotlin('reflect')
                 runtimeOnly project(':spek-runner:junit5')
             }
         }
