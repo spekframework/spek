@@ -26,7 +26,6 @@ kotlin {
 
         jvmTest {
             dependencies {
-//                implementation 'org.jetbrains.kotlin:kotlin-test'
                 runtimeOnly kotlin('reflect')
                 runtimeOnly project(':spek-runner:junit5')
             }
