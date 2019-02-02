@@ -1,38 +1,36 @@
-apply plugin: 'io.spring.dependency-management'
+allprojects {
+    afterEvaluate { project ->
+        // By applying the constraint to the implementation configuration, the contraint will filter down to
+        // all other configurations. See https://github.com/gradle/gradle/issues/7576 for details.
+        def mainConfigurationName = (project.configurations.names.contains("commonMainImplementation")) ? "commonMainImplementation" : "implementation"
 
-dependencyManagement {
-    dependencies {
-        dependency 'com.natpryce:hamkrest:1.1.0.0'
+        dependencies {
+            constraints {
+                add(mainConfigurationName, 'com.natpryce:hamkrest:1.1.0.0')
 
-        dependencySet(group: 'org.junit.platform', version: junitPlatformVersion) {
-            entry 'junit-platform-engine'
-            entry 'junit-platform-runner'
-            entry 'junit-platform-launcher'
-        }
+                add(mainConfigurationName, "org.junit.platform:junit-platform-engine:$junitPlatformVersion")
+                add(mainConfigurationName, "org.junit.platform:junit-platform-runner:$junitPlatformVersion")
+                add(mainConfigurationName, "org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
 
-        dependencySet(group: 'org.junit.jupiter', version: '5.0.1') {
-            entry 'junit-jupiter-api'
-            entry 'junit-jupiter-engine'
-            entry 'junit-jupiter-launcher'
-        }
+                add(mainConfigurationName, "org.junit.jupiter:junit-jupiter-api:5.0.1")
+                add(mainConfigurationName, "org.junit.jupiter:junit-jupiter-engine:5.0.1")
+                add(mainConfigurationName, "org.junit.jupiter:junit-jupiter-launcher:5.0.1")
 
-        dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {
-            entry 'kotlin-stdlib-common'
-            entry 'kotlin-stdlib-jre8'
-            entry 'kotlin-reflect'
-            entry 'kotlin-test'
-            entry 'kotlin-test-common'
-        }
+                add(mainConfigurationName, "org.jetbrains.kotlin:kotlin-stdlib-common:$kotlinVersion")
+                add(mainConfigurationName, "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlinVersion")
+                add(mainConfigurationName, "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+                add(mainConfigurationName, "org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
+                add(mainConfigurationName, "org.jetbrains.kotlin:kotlin-common:$kotlinVersion")
 
-        dependency 'io.github.classgraph:classgraph:4.0.6'
+                add(mainConfigurationName, 'io.github.classgraph:classgraph:4.0.6')
 
-        dependency 'com.xenomachina:kotlin-argparser:2.0.6'
+                add(mainConfigurationName, 'com.xenomachina:kotlin-argparser:2.0.6')
 
-        dependency "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0"
+                add(mainConfigurationName, 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0')
 
-        dependencySet(group: 'org.mockito', version: '2.23.4') {
-            entry 'mockito-core'
-            entry 'mockito-inline'
+                add(mainConfigurationName, 'org.mockito:mockito-core:2.23.4')
+                add(mainConfigurationName, 'org.mockito:mockito-inline:2.23.4')
+            }
         }
     }
 }
