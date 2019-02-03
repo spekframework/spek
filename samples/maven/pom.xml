@@ -11,8 +11,8 @@
 
     <properties>
         <jdk.version>1.8</jdk.version>
-        <kotlin.version>1.3.0</kotlin.version>
-        <spek.version>2.0.0-rc.1</spek.version>
+        <kotlin.version>1.3.20</kotlin.version>
+        <spek.version>2.0.0-rc.1.192+515f23f</spek.version>
     </properties>
 
     <dependencies>
