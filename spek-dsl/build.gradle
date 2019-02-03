@@ -1,7 +1,6 @@
 apply plugin: 'kotlin-multiplatform'
 apply plugin: 'maven-publish'
 apply from: "$rootDir/gradle/common/dependencies.gradle"
-apply from: "$rootDir/gradle/common/publish.gradle"
 
 
 kotlin {
@@ -29,6 +28,8 @@ kotlin {
 task stubJavadocJar(type: Jar) {
     classifier = 'javadoc'
 }
+
+apply from: "$rootDir/gradle/common/publish.gradle"
 
 publishing {
     kotlin.targets.all { target ->
