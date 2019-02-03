@@ -57,6 +57,7 @@ jobs:
 
 stages:
   - build
+  - build-jdk11
   - name: release
     if: tag IS present AND repo = "spekframework/spek"
   - name: release-dev
