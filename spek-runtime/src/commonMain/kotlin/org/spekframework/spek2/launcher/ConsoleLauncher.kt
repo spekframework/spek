@@ -116,7 +116,7 @@ abstract class AbstractConsoleLauncher {
     private fun parseArgs(args: List<String>): LauncherArgs {
         var rawReporterType: String? = null
         var rawConsoleReporterFormat: String? = null
-        var reportExitCode = false
+        var reportExitCode = true
 
         args.forEach { arg ->
             when {
@@ -128,7 +128,7 @@ abstract class AbstractConsoleLauncher {
                     rawConsoleReporterFormat = arg.split("=")[1]
                 }
 
-                arg == "--report-exit-code" -> reportExitCode = true
+                arg == "--dont-report-exit-code" -> reportExitCode = false
                 else -> throw AssertionError("Unsupported arg: $arg")
             }
         }
