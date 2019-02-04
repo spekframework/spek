@@ -15,7 +15,7 @@ Visit the [web site](http://spekframework.org/) for more documentation and infor
 
 ---
 
-Copyright (c) 2018, Spek Core Team and Contributors
+Copyright (c) 2019, Spek Core Team and Contributors
 
 Licensed under [Modified BSD](https://github.com/JetBrains/spek/blob/2.x/LICENSE.TXT)
 
