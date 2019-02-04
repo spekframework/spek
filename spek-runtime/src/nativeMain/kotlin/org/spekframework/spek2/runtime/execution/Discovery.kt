@@ -5,21 +5,23 @@ import kotlin.reflect.KClass
 
 typealias SpekProducer = () -> Spek
 
-actual data class DiscoveryRequest(val classes: Map<KClass<out Spek>, SpekProducer>) {
+data class DiscoveryContext(val classes: Map<KClass<out Spek>, SpekProducer>) {
     companion object {
-        fun builder(): DiscoveryRequestBuilder = DiscoveryRequestBuilder()
+        fun builder(): DiscoveryContextBuilder = DiscoveryContextBuilder()
     }
 }
 
-class DiscoveryRequestBuilder {
+class DiscoveryContextBuilder {
     private val classes = mutableMapOf<KClass<out Spek>, SpekProducer>()
 
-    fun <T : Spek> addClass(klass: KClass<T>, producer: () -> T): DiscoveryRequestBuilder {
+    fun <T : Spek> addClass(klass: KClass<T>, producer: () -> T): DiscoveryContextBuilder {
         classes.put(klass, producer)
         return this
     }
 
-    fun build(): DiscoveryRequest = DiscoveryRequest(classes)
+    fun build(): DiscoveryContext = DiscoveryContext(classes)
 }
 
-inline fun <reified T : Spek> DiscoveryRequestBuilder.addClass(noinline producer: () -> T): DiscoveryRequestBuilder = this.addClass(T::class, producer)
+inline fun <reified T : Spek> DiscoveryContextBuilder.addClass(noinline producer: () -> T): DiscoveryContextBuilder = this.addClass(T::class, producer)
+
+actual data class DiscoveryRequest(val context: DiscoveryContext)

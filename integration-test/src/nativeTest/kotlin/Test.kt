@@ -9,11 +9,12 @@ import org.spekframework.spek2.integration.SkipTest
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.addClass
 import org.spekframework.spek2.runtime.execution.ConsoleExecutionListener
+import org.spekframework.spek2.runtime.execution.DiscoveryContext
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 
 fun main() {
-    val discoveryRequest = DiscoveryRequest.builder()
+    val discoveryContext = DiscoveryContext.builder()
             .addClass { CalculatorSpecs }
             .addClass { EmptyGroupTest }
             .addClass { CalculatorSpecs }
@@ -25,6 +26,7 @@ fun main() {
             .build()
 
     val runtime = SpekRuntime()
+    val discoveryRequest = DiscoveryRequest(discoveryContext)
     val discoveryResult = runtime.discover(discoveryRequest)
 
     val listener = ConsoleExecutionListener()
