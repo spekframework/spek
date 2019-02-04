@@ -113,7 +113,51 @@ abstract class AbstractConsoleLauncher {
         }
     }
 
-    protected abstract fun parseArgs(args: List<String>): LauncherArgs
+    private fun parseArgs(args: List<String>): LauncherArgs {
+        var rawReporterType: String? = null
+        var rawConsoleReporterFormat: String? = null
+        var reportExitCode = false
+
+        args.forEach { arg ->
+            when {
+                arg.startsWith("--reporter=") -> {
+                    rawReporterType = arg.split("=")[1]
+                }
+
+                arg.startsWith("--console-reporter-format=") -> {
+                    rawConsoleReporterFormat = arg.split("=")[1]
+                }
+
+                arg == "--report-exit-code" -> reportExitCode = true
+                else -> throw AssertionError("Unsupported arg: $arg")
+            }
+        }
+
+        val reporterType = rawReporterType?.let {
+            when (it) {
+                "console" -> {
+                    val format = if (rawConsoleReporterFormat != null) {
+                        when (rawConsoleReporterFormat) {
+                            "basic" -> ConsoleReporterType.Format.BASIC
+                            "sm" -> ConsoleReporterType.Format.SERVICE_MESSAGE
+                            else -> throw AssertionError("Unsupported console reporter format: $rawConsoleReporterFormat")
+                        }
+                    } else {
+                        ConsoleReporterType.Format.BASIC
+                    }
+
+                    ConsoleReporterType(format)
+                }
+                else -> throw AssertionError("Unsupported reporter: $rawReporterType")
+            }
+        } ?: ConsoleReporterType(ConsoleReporterType.Format.BASIC)
+
+        return LauncherArgs(
+            listOf(reporterType),
+            emptyList(),
+            reportExitCode
+        )
+    }
 }
 
 expect class ConsoleLauncher(): AbstractConsoleLauncher
