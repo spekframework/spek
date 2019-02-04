@@ -49,7 +49,7 @@ class ConsoleExecutionListener : ExecutionListener {
         println("START: group: ${group.path}")
     }
 
-    override fun groupExecutionFinish(group: GroupScopeImpl, result: ExecutionResult)  =
+    override fun groupExecutionFinish(group: GroupScopeImpl, result: ExecutionResult) =
             when (result) {
                 is ExecutionResult.Success -> println("PASSED: group: ${group.path}")
                 is ExecutionResult.Failure -> println("FAILED: group: ${group.path}: ${result.cause}")
@@ -60,4 +60,7 @@ class ConsoleExecutionListener : ExecutionListener {
 
         println("IGNORED: group: ${group.path}: ${reason ?: "<no reason given>"}")
     }
+
+    val wasSuccessful: Boolean
+        get() = failedTests == 0
 }

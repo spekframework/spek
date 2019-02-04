@@ -1,3 +1,4 @@
+import kotlin.system.exitProcess
 import org.spekframework.spek2.integration.CalculatorSpecs
 import org.spekframework.spek2.integration.EmptyGroupTest
 import org.spekframework.spek2.integration.MemoizedTests
@@ -30,5 +31,7 @@ fun main() {
     val executionRequest = ExecutionRequest(discoveryResult.roots, listener)
     runtime.execute(executionRequest)
 
-    // TODO: return non-zero exit code if any of the tests fail
+    if (!listener.wasSuccessful) {
+        exitProcess(-1)
+    }
 }
