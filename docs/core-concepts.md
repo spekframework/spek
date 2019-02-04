@@ -37,14 +37,14 @@ object MyTest: Spek({
     println("this is the root")
     group("some group") {
         println("some group")
-        it("some test") {
+        test("some test") {
             println("some test")
         }
     }
 
     group("another group") {
         println("another group")
-        it("another test") {
+        test("another test") {
             println("another test")
         }
     }
@@ -78,11 +78,11 @@ object MyTest: Spek({
         beforeEachTest {
             println("before each test")
         }
-        it("some test") {
+        test("some test") {
             println("some test")
         }
 
-        it("another test") {
+        test("another test") {
             println("another test")
         }
 
