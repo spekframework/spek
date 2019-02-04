@@ -10,6 +10,24 @@ kotlin {
         }
     }
 
+    linuxX64("linux") {
+        mavenPublication {
+            artifactId = "spek-dsl-native-linux"
+        }
+    }
+
+    macosX64("macOS") {
+        mavenPublication {
+            artifactId = "spek-dsl-native-macos"
+        }
+    }
+
+    mingwX64("windows") {
+        mavenPublication {
+            artifactId = "spek-dsl-native-windows"
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {

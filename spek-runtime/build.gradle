@@ -9,6 +9,24 @@ kotlin {
         }
     }
 
+    linuxX64("linux") {
+        mavenPublication {
+            artifactId = "spek-dsl-native-linux"
+        }
+    }
+
+    macosX64("macOS") {
+        mavenPublication {
+            artifactId = "spek-dsl-native-macos"
+        }
+    }
+
+    mingwX64("windows") {
+        mavenPublication {
+            artifactId = "spek-dsl-native-windows"
+        }
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -23,6 +41,42 @@ kotlin {
                 implementation kotlin('reflect')
                 implementation 'io.github.classgraph:classgraph'
             }
+        }
+
+        nativeMain {
+            dependsOn commonMain
+        }
+
+        linuxMain {
+            dependsOn nativeMain
+        }
+
+        macOSMain {
+            dependsOn nativeMain
+        }
+
+        windowsMain {
+            dependsOn nativeMain
+        }
+
+        nativeTest {
+            dependsOn commonTest
+
+            dependencies {
+                implementation kotlin('test')
+            }
+        }
+
+        linuxTest {
+            dependsOn nativeTest
+        }
+
+        macOSTest {
+            dependsOn nativeTest
+        }
+
+        windowsTest {
+            dependsOn nativeTest
         }
     }
 }

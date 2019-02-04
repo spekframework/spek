@@ -4,6 +4,19 @@ apply from: "$rootDir/gradle/common/dependencies.gradle"
 kotlin {
     jvm()
 
+    // Setting isTestCompilation = false disables kotlin-test.
+    linuxX64("linux") {
+        compilations.test.isTestCompilation = false
+    }
+
+    macosX64("macOS") {
+        compilations.test.isTestCompilation = false
+    }
+
+    mingwX64("windows") {
+        compilations.test.isTestCompilation = false
+    }
+
     sourceSets {
         commonMain {
             dependencies {
@@ -29,6 +42,42 @@ kotlin {
                 runtimeOnly kotlin('reflect')
                 runtimeOnly project(':spek-runner:junit5')
             }
+        }
+
+        nativeMain {
+            dependsOn commonMain
+        }
+
+        nativeTest {
+            dependsOn commonTest
+
+            dependencies {
+                implementation project(':spek-runtime')
+            }
+        }
+
+        linuxMain {
+            dependsOn nativeMain
+        }
+
+        macOSMain {
+            dependsOn nativeMain
+        }
+
+        windowsMain {
+            dependsOn nativeMain
+        }
+
+        linuxTest {
+            dependsOn nativeTest
+        }
+
+        macOSTest {
+            dependsOn nativeTest
+        }
+
+        windowsTest {
+            dependsOn nativeTest
         }
     }
 }
