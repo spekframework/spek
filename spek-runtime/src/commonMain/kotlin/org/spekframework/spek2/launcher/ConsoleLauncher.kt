@@ -1,16 +1,19 @@
 package org.spekframework.spek2.launcher
 
+import org.spekframework.spek2.launcher.reporter.BasicConsoleReporter
 import org.spekframework.spek2.runtime.SpekRuntime
+import org.spekframework.spek2.runtime.discovery.DiscoveryContext
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
+import org.spekframework.spek2.runtime.scope.PathBuilder
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
-sealed class Reporter
-class ConsoleReporter(val format: Format): Reporter() {
+sealed class ReporterType
+class ConsoleReporterType(val format: Format): ReporterType() {
     enum class Format {
         BASIC,
         SERVICE_MESSAGE
@@ -18,7 +21,7 @@ class ConsoleReporter(val format: Format): Reporter() {
 }
 
 data class LauncherArgs(
-    val reporters: List<Reporter>,
+    val reporterTypes: List<ReporterType>,
     val paths: List<Path>,
     val reportExitCode: Boolean
 )
@@ -71,12 +74,20 @@ class CompoundExecutionListener(val listeners: List<ExecutionListener>): Executi
 }
 
 abstract class AbstractConsoleLauncher {
-    fun launch(args: List<String>): Int {
+    fun launch(context: DiscoveryContext, args: List<String>): Int {
         val parsedArgs = parseArgs(args)
-        val listeners = createListenersFor(parsedArgs.reporters)
+        val listeners = createListenersFor(parsedArgs.reporterTypes)
         val runtime = SpekRuntime()
 
-        val discoveryRequest = DiscoveryRequest(emptyList(), parsedArgs.paths)
+        val paths = mutableListOf<Path>()
+        paths.addAll(parsedArgs.paths)
+
+        // todo: empty paths implies run everything
+        if (paths.isEmpty()) {
+            paths.add(PathBuilder.ROOT)
+        }
+
+        val discoveryRequest = DiscoveryRequest(context, emptyList(), paths)
         val discoveryResult = runtime.discover(discoveryRequest)
 
         val listener = CompoundExecutionListener(listeners)
@@ -90,11 +101,19 @@ abstract class AbstractConsoleLauncher {
         }
     }
 
-    private fun createListenersFor(reporters: List<Reporter>): List<ExecutionListener> {
-        TODO()
+    private fun createListenersFor(reporterTypes: List<ReporterType>): List<ExecutionListener> {
+        return reporterTypes.map { reporter ->
+            when (reporter) {
+                is ConsoleReporterType -> when (reporter.format) {
+                    ConsoleReporterType.Format.BASIC -> BasicConsoleReporter()
+                    else -> throw AssertionError("Unsupported console reporter: ${reporter.format}")
+                }
+                else -> throw AssertionError("Unsupported reporter: $reporter")
+            }
+        }
     }
 
     protected abstract fun parseArgs(args: List<String>): LauncherArgs
 }
 
-expect class ConsoleLauncher: AbstractConsoleLauncher
+expect class ConsoleLauncher(): AbstractConsoleLauncher
