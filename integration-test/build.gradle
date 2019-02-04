@@ -28,7 +28,6 @@ kotlin {
             dependencies {
                 implementation project(':spek-dsl')
                 implementation kotlin('test')
-                implementation project(':spek-runtime')
             }
         }
 
