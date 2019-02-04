@@ -3,14 +3,23 @@ package org.spekframework.spek2.runtime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
 import org.spekframework.spek2.runtime.scope.PathBuilder
+import org.spekframework.spek2.runtime.scope.isRelated
 
 actual class SpekRuntime : AbstractRuntime() {
-    // TODO: support filtering list of scopes like the JVM runtime does
     override fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
-        val scopes =  discoveryRequest.context.classes
+        val scopes = discoveryRequest.context.classes
                 .mapKeys { (klass, _) -> PathBuilder.from(klass).build() }
-                .mapValues { (path, factory) -> resolveSpec(factory(), path) }
-                .map { (path, instance) -> instance.apply { filterBy(path) } }
+                .map { (path, factory) ->
+                    val matched = discoveryRequest.paths.firstOrNull { it.isRelated(path) }
+                    val root = matched?.let {
+                        resolveSpec(factory(), path)
+                    }
+                    matched to root
+                }
+                .filter { (path, root) -> path != null && root != null }
+                .map { (path, root) ->
+                    root!!.apply { filterBy(path!!) }
+                }
                 .filter { !it.isEmpty() }
 
         return DiscoveryResult(scopes)

@@ -1,6 +1,8 @@
 package org.spekframework.spek2.runtime.execution
 
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.runtime.scope.Path
+import org.spekframework.spek2.runtime.scope.PathBuilder
 import kotlin.reflect.KClass
 
 typealias SpekProducer = () -> Spek
@@ -24,4 +26,4 @@ class DiscoveryContextBuilder {
 
 inline fun <reified T : Spek> DiscoveryContextBuilder.addClass(noinline producer: () -> T): DiscoveryContextBuilder = this.addClass(T::class, producer)
 
-actual data class DiscoveryRequest(val context: DiscoveryContext)
+actual data class DiscoveryRequest(val context: DiscoveryContext, val paths: Set<Path> = setOf(PathBuilder.ROOT))
