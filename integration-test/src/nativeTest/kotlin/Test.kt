@@ -1,19 +1,10 @@
 import kotlin.system.exitProcess
-import org.spekframework.spek2.integration.CalculatorSpecs
-import org.spekframework.spek2.integration.EmptyGroupTest
-import org.spekframework.spek2.integration.MemoizedTests
-import org.spekframework.spek2.integration.NonUniquePathTest
-import org.spekframework.spek2.integration.SetFeature
-import org.spekframework.spek2.integration.SetSpec
-import org.spekframework.spek2.integration.SkipTest
-import org.spekframework.spek2.runtime.SpekRuntime
-import org.spekframework.spek2.runtime.execution.addClass
-import org.spekframework.spek2.runtime.execution.ConsoleExecutionListener
-import org.spekframework.spek2.runtime.execution.DiscoveryContext
-import org.spekframework.spek2.runtime.execution.DiscoveryRequest
-import org.spekframework.spek2.runtime.execution.ExecutionRequest
+import org.spekframework.spek2.integration.*
+import org.spekframework.spek2.launcher.ConsoleLauncher
+import org.spekframework.spek2.runtime.discovery.DiscoveryContext
+import org.spekframework.spek2.runtime.discovery.addClass
 
-fun main() {
+fun main(args: Array<String>) {
     val discoveryContext = DiscoveryContext.builder()
             .addClass { CalculatorSpecs }
             .addClass { EmptyGroupTest }
@@ -25,15 +16,7 @@ fun main() {
             .addClass { SkipTest }
             .build()
 
-    val runtime = SpekRuntime()
-    val discoveryRequest = DiscoveryRequest(discoveryContext)
-    val discoveryResult = runtime.discover(discoveryRequest)
-
-    val listener = ConsoleExecutionListener()
-    val executionRequest = ExecutionRequest(discoveryResult.roots, listener)
-    runtime.execute(executionRequest)
-
-    if (!listener.wasSuccessful) {
-        exitProcess(-1)
-    }
+    val launcher = ConsoleLauncher()
+    val exitCode = launcher.launch(discoveryContext, args.toList())
+    exitProcess(exitCode)
 }
