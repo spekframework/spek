@@ -64,6 +64,8 @@ stages:
     if: tag IS NOT present AND type != pull_request AND repo = "spekframework/spek"
 
 before_cache:
+  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
+  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
