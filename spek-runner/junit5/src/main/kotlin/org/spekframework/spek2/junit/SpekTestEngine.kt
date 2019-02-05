@@ -5,8 +5,8 @@ import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.discovery.*
+import org.spekframework.spek2.runtime.JvmDiscoveryContextFactory
 import org.spekframework.spek2.runtime.SpekRuntime
-import org.spekframework.spek2.runtime.discovery.DiscoveryContext
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.Path
@@ -74,7 +74,8 @@ class SpekTestEngine : TestEngine {
             filters.add(PathBuilder.ROOT)
         }
 
-        val discoveryResult = runtime.discover(DiscoveryRequest(DiscoveryContext(mapOf()), sourceDirs, filters.toList()))
+        val context = JvmDiscoveryContextFactory.create(sourceDirs)
+        val discoveryResult = runtime.discover(DiscoveryRequest(context, filters.toList()))
 
         discoveryResult.roots
             .map { descriptorFactory.create(it) }

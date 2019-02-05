@@ -87,7 +87,7 @@ abstract class AbstractConsoleLauncher {
             paths.add(PathBuilder.ROOT)
         }
 
-        val discoveryRequest = DiscoveryRequest(context, emptyList(), paths)
+        val discoveryRequest = DiscoveryRequest(context, paths)
         val discoveryResult = runtime.discover(discoveryRequest)
 
         val listener = CompoundExecutionListener(listeners)
