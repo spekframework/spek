@@ -83,7 +83,11 @@ actual class PathBuilder(private var parent: Path) {
         actual val ROOT: Path = Path("", null)
 
         actual fun from(clz: KClass<out Spek>): PathBuilder {
-            val packageName = clz.java.`package`.name
+            val pkg = clz.java.`package`
+            val packageName = pkg?.let {
+                pkg.name
+            } ?: ""
+
             val className = clz.java.name.removePrefix("$packageName.")
             return PathBuilder()
                 .append(packageName)
