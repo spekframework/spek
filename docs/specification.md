@@ -7,7 +7,7 @@ object CalculatorSpec: Spek({
 
         describe("addition") {
             it("returns the sum of its arguments") {
-                assertThat(3, calculator.add(1, 2))
+                assertEquals(3, calculator.add(1, 2))
             }
         }
     }
