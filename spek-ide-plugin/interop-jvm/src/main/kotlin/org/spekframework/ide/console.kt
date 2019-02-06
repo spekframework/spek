@@ -2,8 +2,8 @@ package org.spekframework.ide
 
 import com.xenomachina.argparser.ArgParser
 import com.xenomachina.argparser.mainBody
+import org.spekframework.spek2.runtime.JvmDiscoveryContextFactory
 import org.spekframework.spek2.runtime.SpekRuntime
-import org.spekframework.spek2.runtime.discovery.DiscoveryContext
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -14,8 +14,8 @@ class Spek2ConsoleLauncher {
             PathBuilder.parse(it)
                 .build()
         }
-
-        val discoveryRequest = DiscoveryRequest(DiscoveryContext(mapOf()), args.sourceDirs.toList(), paths)
+        val context = JvmDiscoveryContextFactory.create(args.sourceDirs.toList())
+        val discoveryRequest = DiscoveryRequest(context, paths)
 
         val runtime = SpekRuntime()
 

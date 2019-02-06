@@ -12,7 +12,6 @@ object CustomFactory: InstanceFactory {
     override fun <T : Spek> create(spek: KClass<T>): T {
         return spek.constructors.first().call(PARAM_VALUE)
     }
-
 }
 
 @CreateWith(CustomFactory::class)

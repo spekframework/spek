@@ -6,23 +6,35 @@ import org.spekframework.spek2.runtime.scope.PathBuilder
 import kotlin.reflect.KClass
 
 
-typealias SpekProducer = () -> Spek
+class TestInfo(val path: Path, private val factory: () -> Spek) {
+    fun createInstance(): Spek {
+        return factory()
+    }
+}
 
-data class DiscoveryContext(val classes: Map<KClass<out Spek>, SpekProducer>) {
+class DiscoveryContext(private val testInfos: List<TestInfo>) {
+    fun getTests(): List<TestInfo> {
+        return testInfos
+    }
+
     companion object {
         fun builder(): DiscoveryContextBuilder = DiscoveryContextBuilder()
     }
 }
 
 class DiscoveryContextBuilder {
-    private val classes = mutableMapOf<KClass<out Spek>, SpekProducer>()
+    private val classInfos = mutableListOf<TestInfo>()
 
-    fun <T : Spek> addClass(klass: KClass<T>, producer: () -> T): DiscoveryContextBuilder {
-        classes.put(klass, producer)
+    fun addTest(cls: KClass<out Spek>, factory: () -> Spek): DiscoveryContextBuilder {
+        val path = PathBuilder.from(cls)
+            .build()
+        classInfos.add(TestInfo(path, factory))
         return this
     }
 
-    fun build(): DiscoveryContext = DiscoveryContext(classes)
-}
+    inline fun<reified T: Spek> addTest(noinline factory: () -> T): DiscoveryContextBuilder {
+        return addTest(T::class, factory)
+    }
 
-inline fun <reified T : Spek> DiscoveryContextBuilder.addClass(noinline producer: () -> T): DiscoveryContextBuilder = this.addClass(T::class, producer)
+    fun build(): DiscoveryContext = DiscoveryContext(classInfos.toList())
+}
