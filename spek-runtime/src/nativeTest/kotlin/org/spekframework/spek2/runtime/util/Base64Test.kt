@@ -1,4 +1,4 @@
-package org.spekframework.spek2.runtime.scope
+package org.spekframework.spek2.runtime.util
 
 import kotlin.test.*
 

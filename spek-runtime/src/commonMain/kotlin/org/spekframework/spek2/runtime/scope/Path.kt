@@ -1,6 +1,7 @@
 package org.spekframework.spek2.runtime.scope
 
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.runtime.util.Base64
 import org.spekframework.spek2.runtime.util.ClassUtil
 import kotlin.reflect.KClass
 

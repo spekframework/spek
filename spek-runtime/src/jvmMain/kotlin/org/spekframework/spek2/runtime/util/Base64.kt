@@ -1,4 +1,4 @@
-package org.spekframework.spek2.runtime.scope
+package org.spekframework.spek2.runtime.util
 
 actual object Base64 {
     actual fun encodeToString(text: String): String {
