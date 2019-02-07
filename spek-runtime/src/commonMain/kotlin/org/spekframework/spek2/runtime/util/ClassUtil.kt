@@ -9,10 +9,6 @@ object ClassUtil {
         var packageName = qualifiedName.removeSuffix(className)
             .trimEnd('.')
 
-        if (packageName.isEmpty()) {
-            packageName = "<default>"
-        }
-
         return packageName to className
     }
 }
