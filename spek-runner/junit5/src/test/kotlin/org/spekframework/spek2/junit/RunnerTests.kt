@@ -36,6 +36,22 @@ class RunnerTests {
     }
 
     @Test
+    fun testSelectClassDefaultPackage() {
+        val listener = SummaryGeneratingListener()
+        launcher.execute(
+            LauncherDiscoveryRequestBuilder.request()
+                .filters(EngineFilter.includeEngines("spek2"))
+                .selectors(DiscoverySelectors.selectClass("DefaultPackageTest"))
+                .build(),
+            listener
+        )
+
+        val summary = listener.summary
+
+        assertThat(summary.testsSucceededCount, equalTo(1L))
+    }
+
+    @Test
     fun testSelectClass() {
         val listener = SummaryGeneratingListener()
         launcher.execute(
