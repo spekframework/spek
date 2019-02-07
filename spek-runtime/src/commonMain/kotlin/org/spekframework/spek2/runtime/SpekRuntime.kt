@@ -8,6 +8,7 @@ import org.spekframework.spek2.runtime.execution.DiscoveryResult
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.*
+import org.spekframework.spek2.runtime.util.ClassUtil
 
 class SpekRuntime {
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
@@ -37,7 +38,13 @@ class SpekRuntime {
             addListener(fixtures)
         }
 
-        val qualifiedName = (path.parent?.name ?: "") + ".${path.name}"
+        val (packageName, className) = ClassUtil.extractPackageAndClassNames(instance::class)
+
+        val qualifiedName = if (packageName.isNotEmpty()) {
+            "$packageName.$className"
+        } else {
+            className
+        }
         val classScope = GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager, false)
         val collector = Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST)
 
