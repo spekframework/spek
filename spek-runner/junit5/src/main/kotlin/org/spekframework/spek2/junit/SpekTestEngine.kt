@@ -5,7 +5,6 @@ import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.discovery.*
-import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.JvmDiscoveryContextFactory
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
@@ -13,7 +12,6 @@ import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 import java.nio.file.Paths
-import kotlin.reflect.KClass
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
 
 class SpekTestEngine : TestEngine {
@@ -52,7 +50,7 @@ class SpekTestEngine : TestEngine {
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
             .map {
                 PathBuilder
-                    .from(it.javaClass.kotlin as KClass<out Spek>)
+                    .from(it.javaClass.kotlin)
                     .build()
             }
 

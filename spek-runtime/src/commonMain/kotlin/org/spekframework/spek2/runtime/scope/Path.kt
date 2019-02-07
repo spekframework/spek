@@ -1,6 +1,5 @@
 package org.spekframework.spek2.runtime.scope
 
-import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.util.Base64
 import org.spekframework.spek2.runtime.util.ClassUtil
 import kotlin.reflect.KClass
@@ -90,7 +89,7 @@ class PathBuilder(private var parent: Path) {
     companion object {
         val ROOT: Path = Path("", null)
 
-        fun from(clz: KClass<out Spek>): PathBuilder {
+        fun from(clz: KClass<*>): PathBuilder {
             val (packageName, className) = ClassUtil.extractPackageAndClassNames(clz)
             return PathBuilder()
                 .append(packageName)
