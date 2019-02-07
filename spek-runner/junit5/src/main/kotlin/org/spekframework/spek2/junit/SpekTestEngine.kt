@@ -49,16 +49,8 @@ class SpekTestEngine : TestEngine {
 
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
             .map {
-                val pkg = it.javaClass.`package`
-                val packageName = pkg?.let {
-                    pkg.name
-                } ?: ""
-
-                val className = it.javaClass.name.removePrefix("$packageName.")
-
-                PathBuilder()
-                    .append(packageName)
-                    .append(className)
+                PathBuilder
+                    .from(it.javaClass.kotlin)
                     .build()
             }
 

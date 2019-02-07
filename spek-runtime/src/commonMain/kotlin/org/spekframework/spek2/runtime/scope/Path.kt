@@ -1,15 +1,8 @@
 package org.spekframework.spek2.runtime.scope
 
-import org.spekframework.spek2.Spek
+import org.spekframework.spek2.runtime.util.Base64
+import org.spekframework.spek2.runtime.util.ClassUtil
 import kotlin.reflect.KClass
-
-expect class Path {
-    val parent: Path?
-    val name: String
-    fun resolve(name: String): Path
-    fun serialize(): String
-    fun isParentOf(path: Path): Boolean
-}
 
 val Path.isRoot: Boolean
     get() {
@@ -20,16 +13,99 @@ val Path.isRoot: Boolean
 //    classToPath        -> discoveryRequest.path
 // 1: my.package/MyClass -> my.package/MyClass/description
 // 2: my.package/MyClass/description -> my.package/MyClass
-fun Path.isRelated(path: Path) = this.isParentOf(path) || path.isParentOf(this)
+fun Path.intersects(path: Path) = this.isParentOf(path) || path.isParentOf(this)
 
+data class Path(val name: String, val parent: Path?) {
+    private val serialized by lazy {
+        serialize(this)
+    }
 
-expect class PathBuilder {
-    fun append(name: String): PathBuilder
-    fun build(): Path
+    private val humanReadable by lazy {
+        serialize(this, false)
+    }
+
+    private val encoded by lazy {
+        encode(name)
+    }
+
+    fun resolve(name: String) = Path(name, this)
+
+    fun isParentOf(path: Path): Boolean {
+        var current: Path? = path
+
+        while (current != null) {
+            if (current == this) {
+                return true
+            }
+            current = current.parent
+        }
+
+        return false
+    }
+
+    fun serialize(): String = serialized
+
+    override fun toString(): String {
+        return humanReadable
+    }
 
     companion object {
-        val ROOT: Path
-        fun from(clz: KClass<out Spek>): PathBuilder
-        fun parse(path: String): PathBuilder
+        const val PATH_SEPARATOR = '/'
+
+        private fun serialize(path: Path, encoded: Boolean = true): String {
+            return if (path.parent == null) {
+                // this will be an empty string
+                path.name
+            } else {
+                val name = if (encoded) {
+                    path.encoded
+                } else {
+                    path.name
+                }
+                "${serialize(path.parent, encoded)}$PATH_SEPARATOR$name".trimStart(PATH_SEPARATOR)
+            }
+        }
+
+        fun encode(name: String): String {
+            return Base64.encodeToString(name)
+        }
+
+        fun decode(name: String): String {
+            return Base64.decodeToString(name)
+        }
+    }
+}
+
+class PathBuilder(private var parent: Path) {
+    constructor() : this(ROOT)
+
+    fun append(name: String): PathBuilder {
+        parent = Path(name, parent)
+        return this
+    }
+
+    fun build(): Path = parent
+
+    companion object {
+        val ROOT: Path = Path("", null)
+
+        fun from(clz: KClass<*>): PathBuilder {
+            val (packageName, className) = ClassUtil.extractPackageAndClassNames(clz)
+            return PathBuilder()
+                .append(packageName)
+                .append(className)
+        }
+
+        fun parse(path: String): PathBuilder {
+            var builder = PathBuilder()
+
+            // path string always starts with /
+            path.removePrefix("${Path.PATH_SEPARATOR}")
+                .split(Path.PATH_SEPARATOR)
+                .forEach { builder = builder.append(Path.decode(it)) }
+
+            return builder
+
+        }
     }
 }
