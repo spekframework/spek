@@ -1,4 +1,4 @@
-package org.spekframework.spek2.runtime.utils
+package org.spekframework.spek2.runtime.scope
 
 import kotlin.test.*
 
@@ -34,18 +34,18 @@ class Base64Test {
 
     @Test
     fun testDecodeInvalidStrings() {
-        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeString("a") }
-        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeString("aa") }
-        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeString("aaa") }
-        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeString("a===") }
-        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeString("aa&a") }
+        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeToString("a") }
+        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeToString("aa") }
+        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeToString("aaa") }
+        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeToString("a===") }
+        assertFailsWith<IllegalArgumentException>("Invalid Base64 encoded data.") { Base64.decodeToString("aa&a") }
     }
 
     private fun checkEncodeToString(input: String, expectedOutput: String) {
-        assertEquals(expectedOutput, Base64.encodeString(input))
+        assertEquals(expectedOutput, Base64.encodeToString(input))
     }
 
     private fun checkDecodeFromString(input: String, expectedOutput: String) {
-        assertEquals(expectedOutput, Base64.decodeString(input))
+        assertEquals(expectedOutput, Base64.decodeToString(input))
     }
 }

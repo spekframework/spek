@@ -1,4 +1,4 @@
-package org.spekframework.spek2.runtime.utils
+package org.spekframework.spek2.runtime.scope
 
 private val BASE64_ALPHABET: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 private val BASE64_MASK: Byte = 0x3f
@@ -11,9 +11,25 @@ private val BASE64_INVERSE_ALPHABET = IntArray(256) {
 
 private fun Int.toBase64(): Char = BASE64_ALPHABET[this]
 
-// Based on https://kotlinlang.org/docs/tutorials/multiplatform-library.html
-internal object Base64 {
-    fun encode(src: ByteArray): ByteArray {
+
+actual object Base64 {
+    actual fun encodeToString(text: String): String {
+        val encoded = encode(text.toByteArray())
+
+        return buildString(encoded.size) {
+            encoded.forEach { append(it.toChar()) }
+        }
+    }
+
+    actual fun decodeToString(encodedText: String): String {
+        val decoded = decode(encodedText.toByteArray())
+
+        return buildString(decoded.size) {
+            decoded.forEach { append(it.toChar()) }
+        }
+    }
+
+    private fun encode(src: ByteArray): ByteArray {
         fun ByteArray.getOrZero(index: Int): Int = if (index >= size) 0 else get(index).toInt()
         // 4n / 3 is expected Base64 payload
         val result = ArrayList<Byte>(4 * src.size / 3)
@@ -33,14 +49,6 @@ internal object Base64 {
         }
 
         return result.toByteArray()
-    }
-
-    fun encodeString(src: String): String {
-        val encoded = encode(src.toByteArray())
-
-        return buildString(encoded.size) {
-            encoded.forEach { append(it.toChar()) }
-        }
     }
 
     fun decode(src: ByteArray): ByteArray {
@@ -99,16 +107,8 @@ internal object Base64 {
 
         return inverse
     }
-
-    fun decodeString(src: String): String {
-        val decoded = decode(src.toByteArray())
-
-        return buildString(decoded.size) {
-            decoded.forEach { append(it.toChar()) }
-        }
-    }
 }
 
-fun String.toByteArray() = ByteArray(length) {
+private fun String.toByteArray() = ByteArray(length) {
     get(it).toByte()
 }
