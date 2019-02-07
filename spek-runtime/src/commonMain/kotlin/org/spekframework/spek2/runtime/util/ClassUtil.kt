@@ -6,8 +6,12 @@ object ClassUtil {
     fun extractPackageAndClassNames(clz: KClass<*>): Pair<String, String> {
         val qualifiedName = checkNotNull(clz.qualifiedName)
         val className = checkNotNull(clz.simpleName)
-        val packageName = qualifiedName.removeSuffix(className)
+        var packageName = qualifiedName.removeSuffix(className)
             .trimEnd('.')
+
+        if (packageName.isEmpty()) {
+            packageName = "<default>"
+        }
 
         return packageName to className
     }
