@@ -13,7 +13,7 @@ class SpekRuntime {
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = discoveryRequest.context.getTests()
             .map { testInfo ->
-                val matchingPath = discoveryRequest.paths.firstOrNull { it.isRelated(testInfo.path) }
+                val matchingPath = discoveryRequest.paths.firstOrNull { it.intersects(testInfo.path) }
                 testInfo to matchingPath
             }
             .filter { (_, matchingPath) -> matchingPath != null }

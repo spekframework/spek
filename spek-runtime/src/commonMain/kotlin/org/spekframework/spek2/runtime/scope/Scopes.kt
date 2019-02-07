@@ -57,7 +57,7 @@ open class GroupScopeImpl(
 
     fun filterBy(path: Path) {
         val filteredChildren = children
-            .filter { it.path.isRelated(path) }
+            .filter { it.path.intersects(path) }
             .map {
                 if (it is GroupScopeImpl) {
                     it.filterBy(path)

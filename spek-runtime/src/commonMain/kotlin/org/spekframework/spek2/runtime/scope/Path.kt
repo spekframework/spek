@@ -14,7 +14,7 @@ val Path.isRoot: Boolean
 //    classToPath        -> discoveryRequest.path
 // 1: my.package/MyClass -> my.package/MyClass/description
 // 2: my.package/MyClass/description -> my.package/MyClass
-fun Path.isRelated(path: Path) = this.isParentOf(path) || path.isParentOf(this)
+fun Path.intersects(path: Path) = this.isParentOf(path) || path.isParentOf(this)
 
 data class Path(val name: String, val parent: Path?) {
     private val serialized by lazy {
