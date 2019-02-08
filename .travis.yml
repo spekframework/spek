@@ -1,7 +1,5 @@
 language: java
-jdk:
-  - openjdk10
-  - opendjk11
+jdk: openjdk10
 
 os: linux
 dist: xenial
@@ -25,6 +23,9 @@ jobs:
     - stage: build
       name: Core
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
+      jdk:
+        - openjdk10
+        - openjdk11
     - name: JUnit 5 Runner
       script: ./gradlew --stacktrace spek-runner:junit5:build
       os: linux
