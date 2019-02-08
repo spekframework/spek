@@ -21,13 +21,13 @@ jobs:
     # Build
       # api and runtime (openjdk10)
     - stage: Build Core
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
+      script: ./gradlew --stacktrace --info spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build
 
-    - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
+    - script: ./gradlew --stacktrace --info spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build
       os: osx
 
       # api and runtime (openjdk11)
-    - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
+    - script: ./gradlew --stacktrace --info spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build
       jdk: openjdk11
 
     # Build IDE Plugins
