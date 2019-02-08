@@ -23,17 +23,12 @@ jobs:
     # Build
       # api and runtime (openjdk10)
     - stage: build
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
+      name: Core
+      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
 
       # api and runtime (openjdk11)
-    - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
-      jdk: openjdk11
-
-      # junit5-runner (openjdk10)
-    - script: ./gradlew --stacktrace spek-runner:junit5:build
-
-      # junit5-runner (openjdk11)
-    - script: ./gradlew --stacktrace spek-runner:junit5:build
+    - name: Core
+      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
       jdk: openjdk11
 
       # intellij-idea plugin (openjdk10)
@@ -42,19 +37,6 @@ jobs:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-
-      # intellij-idea plugin (openjdk11)
-    - name: IntelliJ IDEA Plugin
-      script:
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-
-      # android-studio plugin (openjdk10)
-    - name: Android Studio Plugin
-      script:
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
 
       # android-studio plugin (openjdk10)
     - name: Android Studio Plugin
