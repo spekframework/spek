@@ -1,9 +1,7 @@
 language: java
 jdk: openjdk10
 
-os:
-  - linux
-  - osx
+os: linux
 dist: xenial
 
 branches:
@@ -22,31 +20,49 @@ git:
 
 jobs:
   include:
-    - name: Core
+    # Build
+      # api and runtime (openjdk10)
+    - stage: build
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
-    - name: JUnit 5 Runner
-      script: ./gradlew --stacktrace spek-runner:junit5:build
-      os: linux
+
+      # api and runtime (openjdk11)
+    - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
+      jdk: openjdk11
+
+      # junit5-runner (openjdk10)
+    - script: ./gradlew --stacktrace spek-runner:junit5:build
+
+      # junit5-runner (openjdk11)
+    - script: ./gradlew --stacktrace spek-runner:junit5:build
+      jdk: openjdk11
+
+      # intellij-idea plugin (openjdk10)
     - name: IntelliJ IDEA Plugin
       script:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-      os: linux
+
+      # intellij-idea plugin (openjdk11)
+    - name: IntelliJ IDEA Plugin
+      script:
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
+
+      # android-studio plugin (openjdk10)
     - name: Android Studio Plugin
       script:
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-      os: linux
-#    - stage: build-jdk11
-#      script:
-#        - ./gradlew --stacktrace clean build
-#        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
-#        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
-#        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-#        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-#        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-#      jdk: openjdk11
+
+      # android-studio plugin (openjdk10)
+    - name: Android Studio Plugin
+      script:
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
+
+    # Release
     - stage: release
       script:
         - ./gradlew --stacktrace bintrayUpload
@@ -66,7 +82,7 @@ jobs:
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
 
 stages:
-  - test
+  - build
   - name: release
     if: tag IS present AND repo = "spekframework/spek"
   - name: release-dev
