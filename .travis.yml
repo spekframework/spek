@@ -22,8 +22,7 @@ git:
 
 jobs:
   include:
-    - stage: test
-      name: Core
+    - name: Core
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
     - name: JUnit 5 Runner
       script: ./gradlew --stacktrace spek-runner:junit5:build
