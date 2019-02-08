@@ -22,25 +22,20 @@ jobs:
   include:
     # Build
       # api and runtime (openjdk10)
-    - stage: build
-      name: Core
+    - stage: Build Core
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
 
-    - name: Core
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
+    - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
       os: osx
 
-    - name: Core
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
-      os: windows
-
       # api and runtime (openjdk11)
-    - name: Core (openjdk11)
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
+    - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
       jdk: openjdk11
 
+    # Build IDE Plugins
       # intellij-idea plugin (openjdk10)
-    - name: IntelliJ IDEA Plugin
+    - stage: Build IDE Plugins
+      name: IntelliJ IDEA Plugin
       script:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
@@ -72,7 +67,8 @@ jobs:
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
 
 stages:
-  - build
+  - Build Core
+  - Build IDE Plugins
   - name: release
     if: tag IS present AND repo = "spekframework/spek"
   - name: release-dev
