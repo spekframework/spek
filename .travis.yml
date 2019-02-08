@@ -1,10 +1,8 @@
-# Disabling sudo moves build to the Container Based Infrastructure on Travis CI.
-sudo: false
-
 language: java
 jdk: openjdk10
 
 os: linux
+dist: xenial
 
 branches:
   only:
@@ -22,23 +20,27 @@ git:
 
 jobs:
   include:
-    - stage: build
-      script: ./gradlew --stacktrace build
-    - script:
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-    - stage: build-jdk11
+    - name: Build Core
+      stage: build
+      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
+    - name: Build IntelliJ IDEA Plugin
       script:
-        - ./gradlew --stacktrace clean build
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
+    - name: Build Android Studio Plugin
+      script:
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-      jdk: openjdk11
+#    - stage: build-jdk11
+#      script:
+#        - ./gradlew --stacktrace clean build
+#        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
+#        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
+#        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
+#        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
+#        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
+#      jdk: openjdk11
     - stage: release
       script:
         - ./gradlew --stacktrace bintrayUpload
@@ -59,7 +61,7 @@ jobs:
 
 stages:
   - build
-  - build-jdk11
+#  - build-jdk11
   - name: release
     if: tag IS present AND repo = "spekframework/spek"
   - name: release-dev
