@@ -24,9 +24,6 @@ jobs:
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
 
     - script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
-      before_install:
-        - rm "${JAVA_HOME}/lib/security/cacerts"
-        - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
       os: osx
 
       # api and runtime (openjdk11)
