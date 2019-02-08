@@ -56,7 +56,8 @@ class SpekTestEngine : TestEngine {
 
         val packageSelectors = discoveryRequest.getSelectorsByType(PackageSelector::class.java)
             .map {
-                PathBuilder().append(it.packageName)
+                PathBuilder()
+                    .appendPackage(it.packageName)
                     .build()
             }
 

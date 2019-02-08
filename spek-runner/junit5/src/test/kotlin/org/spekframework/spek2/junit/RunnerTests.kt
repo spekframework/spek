@@ -36,6 +36,23 @@ class RunnerTests {
     }
 
     @Test
+    fun testSelectPackageWithSubpackages() {
+        val listener = SummaryGeneratingListener()
+        launcher.execute(
+            LauncherDiscoveryRequestBuilder.request()
+                .filters(EngineFilter.includeEngines("spek2"))
+                .selectors(DiscoverySelectors.selectPackage("testData.package2"))
+                .build(),
+            listener
+        )
+
+        val summary = listener.summary
+
+        assertThat(summary.testsSucceededCount, equalTo(2L))
+    }
+
+
+    @Test
     fun testSelectClassDefaultPackage() {
         val listener = SummaryGeneratingListener()
         launcher.execute(

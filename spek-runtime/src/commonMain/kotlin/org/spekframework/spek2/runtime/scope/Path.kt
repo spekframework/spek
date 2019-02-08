@@ -79,6 +79,12 @@ data class Path(val name: String, val parent: Path?) {
 class PathBuilder(private var parent: Path) {
     constructor() : this(ROOT)
 
+    fun appendPackage(packageName: String): PathBuilder {
+        packageName.split('.')
+            .forEach { part -> append(part) }
+        return this
+    }
+
     fun append(name: String): PathBuilder {
         parent = Path(name, parent)
         return this
@@ -93,7 +99,7 @@ class PathBuilder(private var parent: Path) {
             val (packageName, className) = ClassUtil.extractPackageAndClassNames(clz)
             val builder = PathBuilder()
             if (packageName.isNotEmpty()) {
-                builder.append(packageName)
+                builder.appendPackage(packageName)
             }
             return builder
                 .append(className)

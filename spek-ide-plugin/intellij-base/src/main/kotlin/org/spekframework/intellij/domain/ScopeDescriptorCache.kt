@@ -50,7 +50,7 @@ class ScopeDescriptorCache: ProjectComponent {
         val info = KtClassInfoUtil.createClassLikeInfo(clz)
         val builder = PathBuilder()
         if (info.containingPackageFqName.asString().isNotBlank()) {
-            builder.append(info.containingPackageFqName.asString())
+            builder.appendPackage(info.containingPackageFqName.asString())
         }
         val path = builder
             .append(checkNotNull(clz.fqName).shortName().asString())
