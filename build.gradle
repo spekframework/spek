@@ -25,9 +25,6 @@ reckon {
 }
 
 allprojects {
-    // Previously this caused a circular dependency (for some reason), it now works.
-    group = 'org.spekframework.spek2'
-
     repositories {
         jcenter()
     }
