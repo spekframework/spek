@@ -1,6 +1,6 @@
 package testData.timeoutTest
 
-expect fun getTimeMillis(): Long
+fun getTimeMillis(): Long = System.currentTimeMillis()
 
 fun sleep(time: Long) {
     val start = getTimeMillis()

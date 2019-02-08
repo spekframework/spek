@@ -1,21 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "${project.group}:spek-gradle-plugin"
+    }
+}
+
 apply plugin: 'kotlin-multiplatform'
+apply plugin: "${project.group}.gradle-plugin"
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 kotlin {
     jvm()
-
-    // Setting isTestCompilation = false disables kotlin-test.
-    linuxX64("linux") {
-        compilations.test.isTestCompilation = false
-    }
-
-    macosX64("macOS") {
-        compilations.test.isTestCompilation = false
-    }
-
-    mingwX64("windows") {
-        compilations.test.isTestCompilation = false
-    }
+    linuxX64("linux")
+    macosX64("macOS")
+    mingwX64("windows")
 
     sourceSets {
         commonMain {
@@ -51,10 +52,6 @@ kotlin {
 
         nativeTest {
             dependsOn commonTest
-
-            dependencies {
-                implementation project(':spek-runtime')
-            }
         }
 
         linuxMain {
@@ -90,5 +87,15 @@ jvmTest {
 
     filter {
         includeTestsMatching "org.spekframework.spek2.*"
+    }
+}
+
+// This is required to substitute the versions of spek-runtime and the compiler plugins applied automatically by spek-gradle-plugin with the version provided by
+// the spek-runtime and compiler plugin projects, rather than trying to download the not-yet-published version from a Maven repository.
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module("$group:spek-runtime") with project(":spek-runtime")
+        substitute module("$group:spek-kotlin-jvm-compiler-plugin") with project(":spek-kotlin-jvm-compiler-plugin")
+        substitute module("$group:spek-kotlin-native-compiler-plugin") with project(":spek-kotlin-native-compiler-plugin")
     }
 }

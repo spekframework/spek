@@ -1,0 +1,29 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply from: "../gradle/common/dependencies.gradle"
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    compileOnly "org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlinVersion"
+
+    implementation "com.google.auto.service:auto-service:1.0-rc4"
+    kapt "com.google.auto.service:auto-service:1.0-rc4"
+}
+
+kapt {
+    includeCompileClasspath = false
+}

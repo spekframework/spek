@@ -16,26 +16,12 @@ buildscript {
 }
 
 plugins {
-    id 'org.ajoberstar.reckon' version '0.9.0'
+    id 'org.ajoberstar.reckon' version '0.9.0' apply false
 }
 
-reckon {
-    scopeFromProp()
-    stageFromProp('alpha', 'rc', 'final')
-}
-
-afterEvaluate {
-    def v = version
-    allprojects {
-        version = v
-    }
-}
-
+apply from: 'gradle/common/versioning.gradle'
 
 allprojects {
-    // Previously this caused a circular dependency (for some reason), it now works.
-    group = 'org.spekframework.spek2'
-
     repositories {
         jcenter()
     }
@@ -54,4 +40,16 @@ allprojects {
 
 
     apply plugin: 'idea'
+}
+
+[
+    'check',
+    'build',
+    'clean'
+].forEach { taskName ->
+   task(taskName) {
+       gradle.includedBuilds.forEach { includedBuild ->
+           dependsOn gradle.includedBuild(includedBuild.name).task(":$taskName")
+       }
+   }
 }
