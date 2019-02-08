@@ -1,5 +1,7 @@
 language: java
-jdk: openjdk10
+jdk:
+  - openjdk10
+  - opendjk11
 
 os: linux
 dist: xenial
@@ -10,9 +12,9 @@ branches:
     - 2.x
     - /^\d+\.\d+\.\d+(-\S*)?$/
 
-before_install:
-  - rm "${JAVA_HOME}/lib/security/cacerts"
-  - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+#before_install:
+#  - rm "${JAVA_HOME}/lib/security/cacerts"
+#  - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
 install: echo skip
 
 git:
@@ -20,18 +22,23 @@ git:
 
 jobs:
   include:
-    - name: Build Core
-      stage: build
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
-    - name: Build IntelliJ IDEA Plugin
+    - stage: build
+      name: Core
+      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
+    - name: JUnit 5 Runner
+      script: ./gradlew --stacktrace spek-runner:junit5:build
+      os: linux
+    - name: IntelliJ IDEA Plugin
       script:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-    - name: Build Android Studio Plugin
+      os: linux
+    - name: Android Studio Plugin
       script:
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
+      os: linux
 #    - stage: build-jdk11
 #      script:
 #        - ./gradlew --stacktrace clean build
