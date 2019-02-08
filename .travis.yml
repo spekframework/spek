@@ -22,7 +22,7 @@ git:
 
 jobs:
   include:
-    - stage: build
+    - stage: test
       name: Core
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
     - name: JUnit 5 Runner
@@ -67,7 +67,7 @@ jobs:
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
 
 stages:
-  - build
+  - test
   - name: release
     if: tag IS present AND repo = "spekframework/spek"
   - name: release-dev
