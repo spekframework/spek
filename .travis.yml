@@ -4,6 +4,8 @@ sudo: false
 language: java
 jdk: openjdk10
 
+os: linux
+
 branches:
   only:
     - 1.x
@@ -21,8 +23,8 @@ git:
 jobs:
   include:
     - stage: build
+      script: ./gradlew --stacktrace build
       script:
-        - ./gradlew --stacktrace clean build
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
