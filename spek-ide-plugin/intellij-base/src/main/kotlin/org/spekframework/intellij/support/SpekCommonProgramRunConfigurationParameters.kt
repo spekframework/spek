@@ -14,7 +14,7 @@ abstract class SpekCommonProgramRunConfigurationParameters(private val _project:
     var producerType: ProducerType? = null
     private var workingDirectory: String? = null
     private var envs = mutableMapOf<String, String>()
-    private var passParentEnvs: Boolean = false
+    private var passParentEnvs: Boolean = true
     private var programParameters: String? = null
 
     override fun getWorkingDirectory(): String? {
