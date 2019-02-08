@@ -97,17 +97,18 @@ class PathBuilder(private var parent: Path) {
 
         fun from(clz: KClass<*>): PathBuilder {
             val (packageName, className) = ClassUtil.extractPackageAndClassNames(clz)
-            return PathBuilder()
-                .appendPackage(packageName)
+            val builder = PathBuilder()
+            if (packageName.isNotEmpty()) {
+                builder.appendPackage(packageName)
+            }
+            return builder
                 .append(className)
         }
 
         fun parse(path: String): PathBuilder {
             var builder = PathBuilder()
 
-            // path string always starts with /
-            path.removePrefix("${Path.PATH_SEPARATOR}")
-                .split(Path.PATH_SEPARATOR)
+            path.split(Path.PATH_SEPARATOR)
                 .forEach { builder = builder.append(Path.decode(it)) }
 
             return builder
