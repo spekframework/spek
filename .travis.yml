@@ -23,8 +23,8 @@ git:
 jobs:
   include:
     - stage: build
-      script: ./gradlew --stacktrace build
       script:
+        - ./gradlew --stacktrace build
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
