@@ -1,5 +1,4 @@
-# Disabling sudo moves build to the Container Based Infrastructure on Travis CI.
-sudo: false
+dist: xenial
 
 language: java
 jdk: openjdk10
