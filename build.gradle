@@ -24,14 +24,6 @@ reckon {
     stageFromProp('alpha', 'rc', 'final')
 }
 
-afterEvaluate {
-    def v = version
-    allprojects {
-        version = v
-    }
-}
-
-
 allprojects {
     // Previously this caused a circular dependency (for some reason), it now works.
     group = 'org.spekframework.spek2'
