@@ -31,7 +31,7 @@ jobs:
       os: osx
 
       # api and runtime (openjdk11)
-    - name: Core (openjdk)
+    - name: Core (openjdk11)
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build
       jdk: openjdk11
 
