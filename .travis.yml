@@ -1,7 +1,9 @@
 language: java
 jdk: openjdk10
 
-os: linux
+os:
+  - linux
+  - osx
 dist: xenial
 
 branches:
@@ -23,9 +25,6 @@ jobs:
     - stage: build
       name: Core
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build
-      jdk:
-        - openjdk10
-        - openjdk11
     - name: JUnit 5 Runner
       script: ./gradlew --stacktrace spek-runner:junit5:build
       os: linux
@@ -69,7 +68,6 @@ jobs:
 
 stages:
   - build
-#  - build-jdk11
   - name: release
     if: tag IS present AND repo = "spekframework/spek"
   - name: release-dev
