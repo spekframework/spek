@@ -57,6 +57,7 @@ before_cache:
   - rm -fr $HOME/.konan/dependencies
 
 cache:
+  timeout: 360
   directories:
     - $HOME/.gradle
     - $HOME/.konan
