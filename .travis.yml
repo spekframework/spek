@@ -1,7 +1,7 @@
 dist: xenial
 
 language: java
-jdk: openjdk10
+jdk: openjdk11
 
 branches:
   only:
@@ -16,58 +16,53 @@ git:
 
 jobs:
   include:
-    - stage: build
+    - stage: build core
+      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build -PexcludeIdePlugins
+
+    - stage: build ide plugins
       script:
-        - ./gradlew --stacktrace clean build
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-    - stage: build-jdk11
+
+    - stage: release core
+      script: ./gradlew --stacktrace spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner:junit5:bintrayUpload -PexcludeIdePlugins
+
+    - stage: release ide plugins
       script:
-        - ./gradlew --stacktrace clean build
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-      jdk: openjdk11
-    - stage: release
-      script:
-        - ./gradlew --stacktrace bintrayUpload
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
-        - curl -X POST -d '' $NETLIFY_DEPLOY_URL
-    - stage: release-dev
-      script:
-        - ./gradlew --stacktrace bintrayUpload
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
-        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:clean spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
-        - ./gradlew --stacktrace spek-ide-plugin:android-studio:clean spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
+
+    - stage: update docs
+      script: curl -X POST -d '' $NETLIFY_DEPLOY_URL
 
 stages:
-  - build
-  - build-jdk11
-  - name: release
+  - build core
+  - build ide plugins
+  - name: release core
+    if: type != pull_request AND repo = "spekframework/spek"
+  - name: release ide plugins
+    if: type != pull_request AND repo = "spekframework/spek"
+  - name: update docs
     if: tag IS present AND repo = "spekframework/spek"
-  - name: release-dev
-    if: tag IS NOT present AND type != pull_request AND repo = "spekframework/spek"
 
 before_cache:
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
+  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
+  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
+  - rm -fr $HOME/.konan/dependencies
 
 cache:
   directories:
     - $HOME/.gradle
+    - $HOME/.konan
 
 notifications:
   email:
