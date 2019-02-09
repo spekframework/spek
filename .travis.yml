@@ -20,11 +20,12 @@ jobs:
       script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build
 
     - stage: build ide plugins
-      script: ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
-    - script: ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
-    - script: ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
-    - script: ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
-    - script: ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
+      script:
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
+        - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
 
     - stage: release core
       script: ./gradlew --stacktrace spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner:junit5:bintrayUpload
