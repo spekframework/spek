@@ -17,7 +17,7 @@ git:
 jobs:
   include:
     - stage: build core
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build
+      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build -PexcludeIdePlugins
 
     - stage: build ide plugins
       script:
@@ -54,6 +54,8 @@ before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
   - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
+  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
+  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
   - rm -fr $HOME/.konan/dependencies
 
 cache:

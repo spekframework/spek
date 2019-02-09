@@ -23,8 +23,10 @@ include 'spek-runtime'
 include 'spek-runner:junit5'
 include 'integration-test'
 
-include 'spek-ide-plugin:interop-jvm'
-include 'spek-ide-plugin:intellij-base'
-include 'spek-ide-plugin:intellij-base-jvm'
-include 'spek-ide-plugin:intellij-idea'
-include 'spek-ide-plugin:android-studio'
+if (!hasProperty("excludeIdePlugins")) {
+    include 'spek-ide-plugin:interop-jvm'
+    include 'spek-ide-plugin:intellij-base'
+    include 'spek-ide-plugin:intellij-base-jvm'
+    include 'spek-ide-plugin:intellij-idea'
+    include 'spek-ide-plugin:android-studio'
+}
