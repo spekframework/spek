@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+plugins {
+    id 'org.ajoberstar.reckon' version '0.8.0' apply false
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply from: "../gradle/common/versioning.gradle"
+apply from: "../gradle/common/dependencies.gradle"
+apply plugin: 'kotlin-platform-jvm'
+apply plugin: 'kotlin-kapt'
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-compiler:$kotlinVersion"
+
+    implementation "com.google.auto.service:auto-service:1.0-rc4"
+    kapt "com.google.auto.service:auto-service:1.0-rc4"
+}
+
+kapt {
+    includeCompileClasspath = false
+}

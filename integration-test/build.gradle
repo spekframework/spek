@@ -1,21 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "${project.group}:spek-gradle-plugin"
+    }
+}
+
 apply plugin: 'kotlin-multiplatform'
+apply plugin: "${project.group}.gradle-plugin"
 apply from: "$rootDir/gradle/common/dependencies.gradle"
 
 kotlin {
     jvm()
-
-    // Setting isTestCompilation = false disables kotlin-test.
-    linuxX64("linux") {
-        compilations.test.isTestCompilation = false
-    }
-
-    macosX64("macOS") {
-        compilations.test.isTestCompilation = false
-    }
-
-    mingwX64("windows") {
-        compilations.test.isTestCompilation = false
-    }
+    linuxX64("linux")
+    macosX64("macOS")
+    mingwX64("windows")
 
     sourceSets {
         commonMain {

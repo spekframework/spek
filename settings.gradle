@@ -19,6 +19,8 @@ enableFeaturePreview('STABLE_PUBLISHING')
 rootProject.name = 'spek'
 
 include 'spek-dsl'
+includeBuild 'spek-gradle-plugin'
+includeBuild 'spek-kotlin-compiler-plugin'
 include 'spek-runtime'
 include 'spek-runner:junit5'
 include 'integration-test'
