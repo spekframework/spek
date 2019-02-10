@@ -16,10 +16,10 @@ git:
 
 jobs:
   include:
-    - stage: build core
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build -PexcludeIdePlugins
+    - stage: test core
+      script: ./gradlew --stacktrace spek-runner:junit5:check integration-test:check -PexcludeIdePlugins
 
-    - stage: build ide plugins
+    - stage: test ide plugins
       script:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
@@ -42,8 +42,8 @@ jobs:
       script: curl -X POST -d '' $NETLIFY_DEPLOY_URL
 
 stages:
-  - build core
-  - build ide plugins
+  - test core
+  - test ide plugins
   - name: release core
     if: type != pull_request AND repo = "spekframework/spek"
   - name: release ide plugins
@@ -51,18 +51,19 @@ stages:
   - name: update docs
     if: tag IS present AND repo = "spekframework/spek"
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
-  - rm -fr $HOME/.konan/dependencies
+cache: false
 
-cache:
-  directories:
-    - $HOME/.gradle
-    - $HOME/.konan
+#before_cache:
+#  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#  - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
+#  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
+#  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
+
+#cache:
+#  directories:
+#    - $HOME/.gradle
+#    - $HOME/.konan/cache
 
 notifications:
   email:
