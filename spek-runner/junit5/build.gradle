@@ -66,4 +66,6 @@ publishing {
     }
 }
 
+ext.artifacts = ['maven']
+
 apply from: "$rootDir/gradle/common/publish.gradle"

@@ -47,6 +47,8 @@ task stubJavadocJar(type: Jar) {
     classifier = 'javadoc'
 }
 
+ext.artifacts = ['metadata', 'jvm']
+
 apply from: "$rootDir/gradle/common/publish.gradle"
 
 publishing {

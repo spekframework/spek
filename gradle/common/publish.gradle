@@ -19,11 +19,12 @@ if (project.ext.releaseMode) {
     doPublish = false
 }
 
-def artifacts = publishing.publications.collect { it.name }
+def artifacts = ext.artifacts
 bintray {
     user = bintrayUser
     key = bintrayApiKey
     publish = doPublish
+    dryRun = true
     pkg {
         repo = bintrayRepo
         desc = "Test framework for Kotlin"
