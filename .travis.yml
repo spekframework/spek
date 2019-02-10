@@ -51,17 +51,19 @@ stages:
   - name: update docs
     if: tag IS present AND repo = "spekframework/spek"
 
-before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-  - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
+cache: false
 
-cache:
-  directories:
-    - $HOME/.gradle
-    - $HOME/.konan/cache
+#before_cache:
+#  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+#  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+#  - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
+#  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
+#  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
+
+#cache:
+#  directories:
+#    - $HOME/.gradle
+#    - $HOME/.konan/cache
 
 notifications:
   email:
