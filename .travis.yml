@@ -16,10 +16,10 @@ git:
 
 jobs:
   include:
-    - stage: build core
-      script: ./gradlew --stacktrace spek-dsl:build spek-runtime:build spek-runner:junit5:build integration-test:build -PexcludeIdePlugins
+    - stage: test core
+      script: ./gradlew --stacktrace spek-runner:junit5:check integration-test:check -PexcludeIdePlugins
 
-    - stage: build ide plugins
+    - stage: test ide plugins
       script:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ182
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ183
@@ -42,8 +42,8 @@ jobs:
       script: curl -X POST -d '' $NETLIFY_DEPLOY_URL
 
 stages:
-  - build core
-  - build ide plugins
+  - test core
+  - test ide plugins
   - name: release core
     if: type != pull_request AND repo = "spekframework/spek"
   - name: release ide plugins
