@@ -1,21 +1,16 @@
-import kotlin.system.exitProcess
 import org.spekframework.spek2.integration.*
-import org.spekframework.spek2.launcher.ConsoleLauncher
-import org.spekframework.spek2.runtime.discovery.DiscoveryContext
+import org.spekframework.spek2.launcher.registerSpek
+import org.spekframework.spek2.launcher.spekMain
 
 fun main(args: Array<String>) {
-    val discoveryContext = DiscoveryContext.builder()
-        .addTest { CalculatorSpecs }
-        .addTest { EmptyGroupTest }
-        .addTest { CalculatorSpecs }
-        .addTest { MemoizedTests }
-        .addTest { NonUniquePathTest }
-        .addTest { SetFeature }
-        .addTest { SetSpec }
-        .addTest { SkipTest }
-        .build()
+    registerSpek(CalculatorSpecs::class, { CalculatorSpecs })
+    registerSpek(EmptyGroupTest::class, { EmptyGroupTest })
+    registerSpek(CalculatorSpecs::class, { CalculatorSpecs })
+    registerSpek(MemoizedTests::class, { MemoizedTests })
+    registerSpek(NonUniquePathTest::class, { NonUniquePathTest })
+    registerSpek(SetFeature::class, { SetFeature })
+    registerSpek(SetSpec::class, { SetSpec })
+    registerSpek(SkipTest::class, { SkipTest })
 
-    val launcher = ConsoleLauncher()
-    val exitCode = launcher.launch(discoveryContext, args.toList())
-    exitProcess(exitCode)
+    spekMain(args)
 }
