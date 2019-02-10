@@ -57,12 +57,11 @@ before_cache:
   - rm -fr $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea/unzipped.com.jetbrains.plugins
   - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains/jbre
   - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/com.jetbrains.intellij.idea
-  - rm -fr $HOME/.konan/dependencies
 
 cache:
   directories:
     - $HOME/.gradle
-    - $HOME/.konan
+    - $HOME/.konan/cache
 
 notifications:
   email:
