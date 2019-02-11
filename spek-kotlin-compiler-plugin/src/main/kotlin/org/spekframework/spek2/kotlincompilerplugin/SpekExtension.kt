@@ -96,8 +96,6 @@ private class SpekCollector(
     // All of this is trying to create a call that looks like this:
     // registerSpek(SpecObject::class, { SpecObject })
     private fun generateRegistration(declaration: IrClass) {
-        println("In plugin: generating registration for ${declaration.name}")
-
         // TODO: is this the correct way to find the package? This works, but it feels wrong.
         val launcherPackage = backendContext.builtIns.builtInsModule.getPackage(FqName.fromSegments(listOf("org", "spekframework", "spek2", "launcher")))
         val registrationFunction = launcherPackage.memberScope.getContributedFunctions(Name.identifier("registerSpek"), NoLookupLocation.FROM_BACKEND)
