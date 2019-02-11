@@ -3,6 +3,7 @@ package org.spekframework.spek2.kotlincompilerplugin
 import org.jetbrains.kotlin.backend.common.BackendContext
 import org.jetbrains.kotlin.backend.common.CommonBackendContext
 import org.jetbrains.kotlin.backend.common.descriptors.WrappedPropertyDescriptor
+import org.jetbrains.kotlin.backend.common.descriptors.WrappedSimpleFunctionDescriptor
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.ir.addChild
 import org.jetbrains.kotlin.backend.common.lower.createIrBuilder
@@ -16,16 +17,31 @@ import org.jetbrains.kotlin.descriptors.annotations.Annotations
 import org.jetbrains.kotlin.descriptors.findClassAcrossModuleDependencies
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.ir.IrElement
+import org.jetbrains.kotlin.ir.builders.irBlockBody
 import org.jetbrains.kotlin.ir.builders.irCall
-import org.jetbrains.kotlin.ir.builders.irString
+import org.jetbrains.kotlin.ir.builders.irGetObject
+import org.jetbrains.kotlin.ir.builders.irReturn
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFile
+import org.jetbrains.kotlin.ir.declarations.IrFunction
 import org.jetbrains.kotlin.ir.declarations.impl.IrFieldImpl
+import org.jetbrains.kotlin.ir.declarations.impl.IrFunctionImpl
+import org.jetbrains.kotlin.ir.expressions.IrBlock
 import org.jetbrains.kotlin.ir.expressions.IrExpression
+import org.jetbrains.kotlin.ir.expressions.IrStatementOrigin
+import org.jetbrains.kotlin.ir.expressions.impl.IrBlockImpl
+import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrExpressionBodyImpl
+import org.jetbrains.kotlin.ir.expressions.impl.IrFunctionReferenceImpl
 import org.jetbrains.kotlin.ir.symbols.impl.IrFieldSymbolImpl
+import org.jetbrains.kotlin.ir.symbols.impl.IrSimpleFunctionSymbolImpl
+import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.classifierOrFail
+import org.jetbrains.kotlin.ir.types.getClass
+import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.dump
+import org.jetbrains.kotlin.ir.util.getArguments
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.name.ClassId
@@ -77,22 +93,84 @@ private class SpekCollector(
         collectedSpeks.forEach { generateRegistration(it) }
     }
 
+    // All of this is trying to create a call that looks like this:
+    // registerSpek(SpecObject::class, { SpecObject })
     private fun generateRegistration(declaration: IrClass) {
         println("In plugin: generating registration for ${declaration.name}")
 
-        val kotlinIoPackage = backendContext.builtIns.builtInsModule.getPackage(FqName.fromSegments(listOf("kotlin", "io")))
-        val function = kotlinIoPackage.memberScope.getContributedFunctions(Name.identifier("println"), NoLookupLocation.FROM_BACKEND)
-                .single { it.valueParameters.singleOrNull()?.type == backendContext.builtIns.stringType }
+        // TODO: is this the correct way to find the package? This works, but it feels wrong.
+        val launcherPackage = backendContext.builtIns.builtInsModule.getPackage(FqName.fromSegments(listOf("org", "spekframework", "spek2", "launcher")))
+        val registrationFunction = launcherPackage.memberScope.getContributedFunctions(Name.identifier("registerSpek"), NoLookupLocation.FROM_BACKEND)
+                .single()
 
-        val functionSymbol = backendContext.ir.symbols
-                .externalSymbolTable.referenceSimpleFunction(function)
+        val registrationFunctionSymbol = backendContext.ir.symbols
+                .externalSymbolTable.referenceSimpleFunction(registrationFunction)
+
+        val classSymbol = declaration.symbol
 
         commonContext.createIrBuilder(file.symbol, file.startOffset, file.endOffset).run {
-            val call = irCall(functionSymbol).apply {
-                putValueArgument(0, irString("In application: hello from ${declaration.name}"))
+            val call = irCall(registrationFunctionSymbol).apply {
+                // TODO: should both of the IrType parameters below be declaration.defaultType?
+                // Should one be the equivalent of KClass<Spek> or KClass<DerivedSpek>?
+                val classReference = IrClassReferenceImpl(startOffset, endOffset, declaration.defaultType, classSymbol, declaration.defaultType)
+                putValueArgument(0, classReference)
+
+                val factoryType = registrationFunctionSymbol.owner.valueParameters[1].type
+                val factoryBlock = createFactoryLambdaBlock(declaration, factoryType)
+
+                putValueArgument(1, factoryBlock)
             }
 
             file.addTopLevelInitializer(call, backendContext)
+        }
+    }
+
+    private fun createFactoryLambdaBlock(declaration: IrClass, factoryType: IrType): IrBlock {
+        return IrBlockImpl(
+                declaration.startOffset,
+                declaration.endOffset,
+                factoryType,
+                IrStatementOrigin.LAMBDA
+        ).apply {
+            val factory = createFactoryLambda(declaration)
+
+            val factoryReference = IrFunctionReferenceImpl(
+                    factory.startOffset,
+                    factory.endOffset,
+                    factoryType,
+                    factory.symbol,
+                    factory.descriptor,
+                    0,
+                    0,
+                    IrStatementOrigin.LAMBDA
+            )
+
+            statements.add(factory)
+            statements.add(factoryReference)
+        }
+    }
+
+    private fun createFactoryLambda(declaration: IrClass): IrFunction = WrappedSimpleFunctionDescriptor().let { descriptor ->
+        IrFunctionImpl(
+                declaration.startOffset,
+                declaration.endOffset,
+                IrDeclarationOrigin.LOCAL_FUNCTION_FOR_LAMBDA,
+                IrSimpleFunctionSymbolImpl(descriptor),
+                Name.special("<anonymous>"),
+                Visibilities.LOCAL,
+                Modality.FINAL,
+                declaration.defaultType,
+                isInline = false,
+                isExternal = false,
+                isTailrec = false,
+                isSuspend = false
+        ).apply {
+            descriptor.bind(this)
+            parent = file
+
+            body = backendContext.createIrBuilder(symbol, symbol.owner.startOffset, symbol.owner.endOffset).irBlockBody {
+                +irReturn(irGetObject(declaration.symbol))
+            }
         }
     }
 
