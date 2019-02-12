@@ -41,3 +41,15 @@ allprojects {
 
     apply plugin: 'idea'
 }
+
+[
+    'check',
+    'build',
+    'clean'
+].forEach { taskName ->
+   task(taskName) {
+       gradle.ext.includedBuilds.forEach { includedBuild ->
+           dependsOn gradle.includedBuild(includedBuild).task(":$taskName")
+       }
+   }
+}
