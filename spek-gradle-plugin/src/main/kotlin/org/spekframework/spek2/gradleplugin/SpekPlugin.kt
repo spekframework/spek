@@ -3,7 +3,10 @@ package org.spekframework.spek2.gradleplugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.Executable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 class SpekPlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -28,7 +31,7 @@ class SpekPlugin : Plugin<Project> {
                         .filter { it.isTestCompilation }
                         .forEach {
                             it.disableKotlinTest()
-                            it.configureSpekRunner()
+                            it.configureSpekRunner(target)
                         }
             }
         }
@@ -38,7 +41,15 @@ class SpekPlugin : Plugin<Project> {
         this.isTestCompilation = false
     }
 
-    private fun KotlinNativeCompilation.configureSpekRunner() {
-        // TODO: set entrypoint
+    private fun KotlinNativeCompilation.configureSpekRunner(target: KotlinTarget) {
+        if (target !is KotlinNativeTarget) {
+            throw UnsupportedOperationException("Expected target ${target.name} to be a KotlinNativeTarget")
+        }
+
+        target.binaries
+                .filterIsInstance<Executable>()
+                .forEach { binary ->
+                    binary.entryPoint = "org.spekframework.spek2.launcher.spekMain"
+                }
     }
 }
