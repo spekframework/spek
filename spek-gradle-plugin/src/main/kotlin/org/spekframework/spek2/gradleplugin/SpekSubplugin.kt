@@ -24,7 +24,7 @@ class SpekSubplugin: KotlinGradleSubplugin<AbstractCompile> {
 
     override fun getPluginArtifact(): SubpluginArtifact {
         return SubpluginArtifact(
-                "org.spekframework.spek2",
+                SpekPlugin.spekMavenGroup,
                 "spek-kotlin-compiler-plugin",
                 SpekPlugin.spekVersion
         )

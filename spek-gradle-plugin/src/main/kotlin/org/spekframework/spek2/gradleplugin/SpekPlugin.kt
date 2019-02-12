@@ -29,19 +29,20 @@ class SpekPlugin : Plugin<Project> {
                 target.compilations
                         .filterIsInstance(KotlinNativeCompilation::class.java)
                         .filter { it.isTestCompilation }
-                        .forEach {
-                            it.disableKotlinTest()
-                            it.configureSpekRunner(target)
+                        .forEach { compilation ->
+                            disableKotlinTest(compilation)
+                            configureSpekRunner(target)
+                            addSpekRuntimeDependency(project, compilation)
                         }
             }
         }
     }
 
-    private fun KotlinNativeCompilation.disableKotlinTest() {
-        this.isTestCompilation = false
+    private fun disableKotlinTest(compilation: KotlinNativeCompilation) {
+        compilation.isTestCompilation = false
     }
 
-    private fun KotlinNativeCompilation.configureSpekRunner(target: KotlinTarget) {
+    private fun configureSpekRunner(target: KotlinTarget) {
         if (target !is KotlinNativeTarget) {
             throw UnsupportedOperationException("Expected target ${target.name} to be a KotlinNativeTarget")
         }
@@ -53,7 +54,14 @@ class SpekPlugin : Plugin<Project> {
                 }
     }
 
+    private fun addSpekRuntimeDependency(project: Project, compilation: KotlinNativeCompilation) {
+        compilation.defaultSourceSet.dependencies {
+            implementation("$spekMavenGroup:spek-runtime:$spekVersion")
+        }
+    }
+
     companion object {
+        val spekMavenGroup = "org.spekframework.spek2"
         val spekVersion = SpekPlugin::class.java.`package`.implementationVersion
     }
 }
