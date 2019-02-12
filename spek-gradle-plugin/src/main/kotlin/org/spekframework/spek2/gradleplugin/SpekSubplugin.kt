@@ -4,14 +4,13 @@ import com.google.auto.service.AutoService
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.AbstractCompile
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonOptions
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinGradleSubplugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
 
 @AutoService(KotlinGradleSubplugin::class)
-class SpekSubplugin: KotlinGradleSubplugin<AbstractCompile> {
+class SpekSubplugin : KotlinGradleSubplugin<AbstractCompile> {
     override fun apply(project: Project, kotlinCompile: AbstractCompile, javaCompile: AbstractCompile?, variantData: Any?, androidProjectHandler: Any?, kotlinCompilation: KotlinCompilation<KotlinCommonOptions>?): List<SubpluginOption> {
         val extension = project.extensions.findByType(SpekExtension::class.java) ?: SpekExtension()
 

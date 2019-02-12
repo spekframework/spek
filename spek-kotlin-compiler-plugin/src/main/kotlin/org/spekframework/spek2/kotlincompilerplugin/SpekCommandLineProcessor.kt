@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.config.CompilerConfigurationKey
 internal val KEY_ENABLED = CompilerConfigurationKey<Boolean>("enabled")
 
 @AutoService(CommandLineProcessor::class)
-class SpekCommandLineProcessor: CommandLineProcessor {
+class SpekCommandLineProcessor : CommandLineProcessor {
     override val pluginId: String = "spek"
     override val pluginOptions: Collection<AbstractCliOption> = listOf(
             CliOption("enabled", "<true|false>", "whether plugin is enabled")
