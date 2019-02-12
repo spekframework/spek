@@ -48,8 +48,8 @@ allprojects {
     'clean'
 ].forEach { taskName ->
    task(taskName) {
-       gradle.ext.includedBuilds.forEach { includedBuild ->
-           dependsOn gradle.includedBuild(includedBuild).task(":$taskName")
+       gradle.includedBuilds.forEach { includedBuild ->
+           dependsOn gradle.includedBuild(includedBuild.name).task(":$taskName")
        }
    }
 }

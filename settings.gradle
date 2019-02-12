@@ -18,17 +18,12 @@ enableFeaturePreview('STABLE_PUBLISHING')
 
 rootProject.name = 'spek'
 
-gradle.ext.includedBuilds = [
-    'spek-gradle-plugin'
-]
-
 include 'spek-dsl'
+includeBuild 'spek-gradle-plugin'
 include 'spek-kotlin-compiler-plugin'
 include 'spek-runtime'
 include 'spek-runner:junit5'
 include 'integration-test'
-
-gradle.ext.includedBuilds.forEach { includeBuild it }
 
 if (!hasProperty("excludeIdePlugins")) {
     include 'spek-ide-plugin:interop-jvm'
