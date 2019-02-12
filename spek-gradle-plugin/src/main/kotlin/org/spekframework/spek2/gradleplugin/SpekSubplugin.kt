@@ -26,7 +26,7 @@ class SpekSubplugin: KotlinGradleSubplugin<AbstractCompile> {
         return SubpluginArtifact(
                 "org.spekframework.spek2",
                 "spek-kotlin-compiler-plugin",
-                "0.1.0" // TODO
+                SpekPlugin.spekVersion
         )
     }
 

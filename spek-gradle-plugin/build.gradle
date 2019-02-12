@@ -43,3 +43,9 @@ dependencies {
 kapt {
     includeCompileClasspath = false
 }
+
+jar {
+    manifest {
+        attributes('Implementation-Version': version)
+    }
+}

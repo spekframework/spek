@@ -52,4 +52,8 @@ class SpekPlugin : Plugin<Project> {
                     binary.entryPoint = "org.spekframework.spek2.launcher.spekMain"
                 }
     }
+
+    companion object {
+        val spekVersion = SpekPlugin::class.java.`package`.implementationVersion
+    }
 }
