@@ -19,11 +19,11 @@ enableFeaturePreview('STABLE_PUBLISHING')
 rootProject.name = 'spek'
 
 gradle.ext.includedBuilds = [
-    'spek-gradle-plugin',
-    'spek-kotlin-compiler-plugin'
+    'spek-gradle-plugin'
 ]
 
 include 'spek-dsl'
+include 'spek-kotlin-compiler-plugin'
 include 'spek-runtime'
 include 'spek-runner:junit5'
 include 'integration-test'

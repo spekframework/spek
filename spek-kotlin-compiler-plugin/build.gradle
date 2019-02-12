@@ -8,15 +8,10 @@ buildscript {
     }
 }
 
-plugins {
-    id 'org.ajoberstar.reckon' version '0.8.0' apply false
-}
-
 repositories {
     mavenCentral()
 }
 
-apply from: "../gradle/common/versioning.gradle"
 apply from: "../gradle/common/dependencies.gradle"
 apply plugin: 'kotlin-platform-jvm'
 apply plugin: 'kotlin-kapt'
