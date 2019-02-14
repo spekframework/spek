@@ -8,6 +8,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinGradleSubplugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
 
 @AutoService(KotlinGradleSubplugin::class)
 class SpekSubplugin : KotlinGradleSubplugin<AbstractCompile> {
@@ -31,7 +32,6 @@ class SpekSubplugin : KotlinGradleSubplugin<AbstractCompile> {
 
     override fun getNativeCompilerPluginArtifact(): SubpluginArtifact? = getPluginArtifact()
 
-    override fun isApplicable(project: Project, task: AbstractCompile): Boolean {
-        return project.plugins.hasPlugin(SpekPlugin::class.java)
-    }
+    override fun isApplicable(project: Project, task: AbstractCompile): Boolean
+            = project.plugins.hasPlugin(SpekPlugin::class.java) && task is KotlinNativeCompile
 }
