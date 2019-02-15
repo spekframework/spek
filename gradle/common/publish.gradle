@@ -24,7 +24,6 @@ bintray {
     user = bintrayUser
     key = bintrayApiKey
     publish = doPublish
-    dryRun = true
     pkg {
         repo = bintrayRepo
         desc = "Test framework for Kotlin"
