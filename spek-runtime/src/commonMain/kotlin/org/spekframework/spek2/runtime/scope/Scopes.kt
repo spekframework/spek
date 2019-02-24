@@ -32,6 +32,10 @@ sealed class ScopeImpl(
         parent != null -> (parent as ScopeImpl).getValue(name)
         else -> throw IllegalArgumentException("No value for '$name'")
     }
+
+    fun id(): String {
+        return path.toString()
+    }
 }
 
 open class GroupScopeImpl(
@@ -92,6 +96,10 @@ class TestScopeImpl(
         body.invoke(object : TestBody {
             override fun <T> memoized(): MemoizedValue<T> {
                 return MemoizedValueReader(this@TestScopeImpl)
+            }
+
+            override fun testName(): String {
+                return this@TestScopeImpl.path.toString()
             }
         })
     }

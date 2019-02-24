@@ -3,7 +3,12 @@ package org.spekframework.spek2.dsl
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.MemoizedValue
-import org.spekframework.spek2.meta.*
+import org.spekframework.spek2.meta.Description
+import org.spekframework.spek2.meta.DescriptionLocation
+import org.spekframework.spek2.meta.Descriptions
+import org.spekframework.spek2.meta.SpekDsl
+import org.spekframework.spek2.meta.Synonym
+import org.spekframework.spek2.meta.SynonymType
 
 sealed class Skip {
     class Yes(val reason: String? = null) : Skip()
@@ -48,4 +53,6 @@ interface TestContainer {
 }
 
 @SpekDsl
-interface TestBody : ScopeBody
+interface TestBody : ScopeBody {
+    fun testName(): String
+}
