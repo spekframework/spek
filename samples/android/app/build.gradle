@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'jacoco'
 
 // junit5 doesn't support android projects out of the box
-apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'de.mannodermaus.android-junit5'
 
 android {
     compileSdkVersion 27
