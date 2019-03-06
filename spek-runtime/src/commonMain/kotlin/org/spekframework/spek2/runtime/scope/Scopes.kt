@@ -81,6 +81,7 @@ class TestScopeImpl(
     id: ScopeId,
     path: Path,
     override val parent: GroupScope,
+    val timeout: Long,
     private val body: TestBody.() -> Unit,
     skip: Skip,
     lifecycleManager: LifecycleManager

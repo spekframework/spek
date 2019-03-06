@@ -10,6 +10,7 @@ import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.*
 import org.spekframework.spek2.runtime.util.ClassUtil
 
+private const val DEFAULT_TIMEOUT = 10000L
 class SpekRuntime {
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = discoveryRequest.context.getTests()
@@ -46,7 +47,7 @@ class SpekRuntime {
             className
         }
         val classScope = GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager, false)
-        val collector = Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST)
+        val collector = Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST, DEFAULT_TIMEOUT)
 
         try {
             instance.root.invoke(collector)
@@ -56,6 +57,7 @@ class SpekRuntime {
                 ScopeId(ScopeType.Scope, "Discovery failure"),
                 path.resolve("Discovery failure"),
                 classScope,
+                DEFAULT_TIMEOUT,
                 {},
                 Skip.No,
                 lifecycleManager

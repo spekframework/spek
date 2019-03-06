@@ -13,7 +13,8 @@ class Collector(
     val root: GroupScopeImpl,
     private val lifecycleManager: LifecycleManager,
     private val fixtures: FixturesAdapter,
-    override val defaultCachingMode: CachingMode
+    override val defaultCachingMode: CachingMode,
+    override val defaultTimeout: Long
 ) : Root {
 
     private val ids = linkedMapOf<String, Int>()
@@ -52,7 +53,7 @@ class Collector(
         } else {
             defaultCachingMode
         }
-        val collector = Collector(group, lifecycleManager, fixtures, cachingMode)
+        val collector = Collector(group, lifecycleManager, fixtures, cachingMode, defaultTimeout)
         try {
             body.invoke(collector)
         } catch (e: Throwable) {
@@ -62,6 +63,7 @@ class Collector(
                     idFor("Group Failure"),
                     root.path.resolve("Group Failure"),
                     root,
+                    defaultTimeout,
                     {},
                     skip,
                     lifecycleManager
@@ -71,11 +73,12 @@ class Collector(
 
     }
 
-    override fun test(description: String, skip: Skip, body: TestBody.() -> Unit) {
+    override fun test(description: String, skip: Skip, timeout: Long, body: TestBody.() -> Unit) {
         val test = TestScopeImpl(
             idFor(description),
             root.path.resolve(description),
             root,
+            defaultTimeout,
             body,
             skip,
             lifecycleManager
