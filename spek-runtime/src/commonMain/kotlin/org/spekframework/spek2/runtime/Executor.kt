@@ -24,11 +24,15 @@ class Executor {
 
             val result = executeSafely {
                 try {
-                    scope.before()
-                    scope.execute()
-
-                    if (scope is GroupScopeImpl) {
-                        scope.getChildren().forEach { execute(it, listener) }
+                    when (scope) {
+                        is GroupScopeImpl -> {
+                            scope.before()
+                            scope.getChildren().forEach { execute(it, listener) }
+                        }
+                        is TestScopeImpl -> {
+                            scope.before()
+                            scope.execute()
+                        }
                     }
                 } finally {
                     scope.after()
