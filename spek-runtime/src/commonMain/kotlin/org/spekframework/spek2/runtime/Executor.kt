@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime
 
+import kotlinx.coroutines.*
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -7,13 +8,19 @@ import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
+import kotlin.coroutines.CoroutineContext
 
-class Executor {
+class Executor: CoroutineScope {
+    private val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = job
 
     fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
         request.roots.forEach { execute(it, request.executionListener) }
         request.executionListener.executionFinish()
+        job.cancel()
     }
 
     private fun execute(scope: ScopeImpl, listener: ExecutionListener) {
@@ -30,8 +37,16 @@ class Executor {
                             scope.getChildren().forEach { execute(it, listener) }
                         }
                         is TestScopeImpl -> {
-                            scope.before()
-                            scope.execute()
+                            doRunBlocking {
+                                val job = launch {
+                                    scope.before()
+                                    scope.execute()
+                                }
+
+                                withTimeout(scope.timeout) {
+                                    job.join()
+                                }
+                            }
                         }
                     }
                 } finally {
@@ -68,3 +83,5 @@ class Executor {
             is TestScopeImpl -> listener.testIgnored(scope, reason)
         }
 }
+
+expect fun doRunBlocking(block: suspend CoroutineScope.() -> Unit)
