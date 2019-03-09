@@ -127,3 +127,19 @@ To make it more concise, Spek provides `memoized` to do the same thing:
 ```kotlin
 val calculator by memoized { Calculator() }
 ```
+
+`memoized` should not be used to hold the result of an action, use a fixture instead.
+
+```kotlin
+// BAD
+val item by memoized { 1 }
+val added by memoized { list.add(item) }
+
+// GOOD
+val item by memoized { 1 }
+
+lateinit var added: Boolean
+beforeEachTest {
+    added = list.add(item)
+}
+```
