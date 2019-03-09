@@ -53,6 +53,7 @@ object JvmDiscoveryContextFactory {
         return cg.scan().use {
             it.getSubclasses(Spek::class.qualifiedName!!).stream()
                 .map { it.loadClass() as Class<out Spek> }
+                .filter { !it.isAnonymousClass }
                 .map { it.kotlin }
                 .toList()
         }
