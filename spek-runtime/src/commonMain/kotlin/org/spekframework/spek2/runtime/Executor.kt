@@ -1,6 +1,8 @@
 package org.spekframework.spek2.runtime
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeout
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -31,7 +33,7 @@ class Executor {
                         }
                         is TestScopeImpl -> {
                             doRunBlocking {
-                                val job = GlobalScope.launch {
+                                val job = launch {
                                     scope.before()
                                     scope.execute()
                                 }
