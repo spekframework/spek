@@ -36,12 +36,15 @@ class Executor: CoroutineScope {
                             scope.getChildren().forEach { execute(it, listener) }
                         }
                         is TestScopeImpl -> {
-                            val job = launch {
-                                scope.before()
-                                scope.execute()
-                            }
-
                             doRunBlocking {
+                                // this needs to be here, in K/N the event loop
+                                // is started during a runBlocking call. Calling
+                                // any builders outside that will throw an exception.
+                                val job = this@Executor.launch {
+                                    scope.before()
+                                    scope.execute()
+                                }
+
                                 withTimeout(scope.timeout) {
                                     job.join()
                                 }
