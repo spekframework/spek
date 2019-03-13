@@ -8,5 +8,7 @@ if [[ ! -d "$VIRTUALENV_DIR" ]]; then
     virtualenv -p python3 "$VIRTUALENV_DIR"
     source "$VIRTUALENV_DIR/bin/activate"
     pip3 install -r requirements.txt
+else
+    source "$VIRTUALENV_DIR/bin/activate"
 fi
 mkdocs serve

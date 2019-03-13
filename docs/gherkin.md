@@ -62,6 +62,9 @@ Describes a business rule, it consists of a list of steps.
 - `Then`: Describes the expected outcome or result.
 - `And`: Can be used as an alternative to additional `Given`, `When`, or `Then` steps.
 
+## Scope values
+The default caching mode for `memoized` is `CachingMode.GROUP`, which means that every scenario will have a unique instance.
+
 ## Best practices
 ### Validating a side-effect
 Use `Given` to setup a context or some pre conditions. `When` describes the action, and `Then`
