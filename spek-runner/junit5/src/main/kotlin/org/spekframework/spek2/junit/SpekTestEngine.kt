@@ -48,7 +48,9 @@ class SpekTestEngine : TestEngine {
             .map { it.toString() }
 
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
-            .map {
+            .filter {
+                it.javaClass.isLocalClass.not()
+            }.map {
                 PathBuilder
                     .from(it.javaClass.kotlin)
                     .build()
