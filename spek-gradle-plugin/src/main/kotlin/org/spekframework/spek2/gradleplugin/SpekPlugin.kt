@@ -32,7 +32,7 @@ class SpekPlugin : Plugin<Project> {
                         .forEach { compilation ->
                             disableKotlinTest(compilation)
                             configureSpekRunner(target)
-                            addSpekRuntimeDependency(project, compilation)
+                            addSpekRuntimeDependency(compilation)
                         }
             }
         }
@@ -54,7 +54,7 @@ class SpekPlugin : Plugin<Project> {
                 }
     }
 
-    private fun addSpekRuntimeDependency(project: Project, compilation: KotlinNativeCompilation) {
+    private fun addSpekRuntimeDependency(compilation: KotlinNativeCompilation) {
         compilation.defaultSourceSet.dependencies {
             implementation("$spekMavenGroup:spek-runtime:$spekVersion")
         }
