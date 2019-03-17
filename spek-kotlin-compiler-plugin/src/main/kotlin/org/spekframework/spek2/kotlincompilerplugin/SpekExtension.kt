@@ -49,7 +49,7 @@ import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 
 class SpekExtension : IrGenerationExtension {
     override fun generate(file: IrFile, backendContext: BackendContext, bindingContext: BindingContext) {
-        val spekCollector = SpekCollector(file, backendContext, bindingContext)
+        val spekCollector = SpekCollector(file, backendContext)
         file.acceptChildrenVoid(spekCollector)
         spekCollector.generateRegistrations()
     }
@@ -57,8 +57,7 @@ class SpekExtension : IrGenerationExtension {
 
 private class SpekCollector(
         private val file: IrFile,
-        private val backendContext: BackendContext,
-        private val bindingContext: BindingContext
+        private val backendContext: BackendContext
 ) : IrElementVisitorVoid {
     private val spekClassName = "org.spekframework.spek2.Spek"
     private val commonContext: CommonBackendContext = backendContext.ir.context
