@@ -20,6 +20,7 @@ rootProject.name = 'spek'
 
 include 'spek-dsl'
 includeBuild 'spek-gradle-plugin'
+include 'spek-kotlin-jvm-compiler-plugin'
 include 'spek-kotlin-native-compiler-plugin'
 include 'spek-runtime'
 include 'spek-runner:junit5'

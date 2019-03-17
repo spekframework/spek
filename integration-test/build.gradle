@@ -85,11 +85,12 @@ jvmTest {
     }
 }
 
-// This is required to substitute the versions of spek-runtime and spek-kotlin-compiler-plugin applied automatically by spek-gradle-plugin with the version provided by
-// the spek-runtime and spek-kotlin-compiler-plugin projects, rather than trying to download the not-yet-published version from a Maven repository.
+// This is required to substitute the versions of spek-runtime and the compiler plugins applied automatically by spek-gradle-plugin with the version provided by
+// the spek-runtime and compiler plugin projects, rather than trying to download the not-yet-published version from a Maven repository.
 configurations.all {
     resolutionStrategy.dependencySubstitution {
         substitute module("$group:spek-runtime") with project(":spek-runtime")
+        substitute module("$group:spek-kotlin-jvm-compiler-plugin") with project(":spek-kotlin-jvm-compiler-plugin")
         substitute module("$group:spek-kotlin-native-compiler-plugin") with project(":spek-kotlin-native-compiler-plugin")
     }
 }

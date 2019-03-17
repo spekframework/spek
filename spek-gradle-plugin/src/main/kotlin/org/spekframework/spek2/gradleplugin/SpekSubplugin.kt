@@ -24,14 +24,23 @@ class SpekSubplugin : KotlinGradleSubplugin<AbstractCompile> {
     }
 
     override fun getPluginArtifact(): SubpluginArtifact {
+        // HACK: This is a temporary workaround for https://youtrack.jetbrains.com/issue/KT-29901.
+        // This plugin does nothing.
+
+        return SubpluginArtifact(
+                SpekPlugin.spekMavenGroup,
+                "spek-kotlin-jvm-compiler-plugin",
+                SpekPlugin.spekVersion
+        )
+    }
+
+    override fun getNativeCompilerPluginArtifact(): SubpluginArtifact? {
         return SubpluginArtifact(
                 SpekPlugin.spekMavenGroup,
                 "spek-kotlin-native-compiler-plugin",
                 SpekPlugin.spekVersion
         )
     }
-
-    override fun getNativeCompilerPluginArtifact(): SubpluginArtifact? = getPluginArtifact()
 
     override fun isApplicable(project: Project, task: AbstractCompile): Boolean
             = project.plugins.hasPlugin(SpekPlugin::class.java) && (task is KotlinNativeCompile || task is KotlinNativeLink)
