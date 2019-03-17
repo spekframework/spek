@@ -90,6 +90,6 @@ jvmTest {
 configurations.all {
     resolutionStrategy.dependencySubstitution {
         substitute module("$group:spek-runtime") with project(":spek-runtime")
-        substitute module("$group:spek-kotlin-compiler-plugin") with project(":spek-kotlin-compiler-plugin")
+        substitute module("$group:spek-kotlin-native-compiler-plugin") with project(":spek-kotlin-native-compiler-plugin")
     }
 }
