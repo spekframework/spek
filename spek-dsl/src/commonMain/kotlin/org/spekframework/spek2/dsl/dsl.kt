@@ -29,6 +29,9 @@ interface LifecycleAware : ScopeBody {
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T): MemoizedValue<T>
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
 
+    fun <T> eagerMemoized(mode: CachingMode = defaultCachingMode, factory: () -> T): MemoizedValue<T>
+    fun <T> eagerMemoized(mode: CachingMode = defaultCachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
+
     fun beforeEachTest(callback: () -> Unit)
     fun afterEachTest(callback: () -> Unit)
 

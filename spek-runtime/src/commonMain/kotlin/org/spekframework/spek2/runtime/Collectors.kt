@@ -18,14 +18,27 @@ class Collector(
 
     private val ids = linkedMapOf<String, Int>()
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
+    override fun <T> memoized(mode: CachingMode, factory: () -> T) = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
         return MemoizedValueCreator(
             root,
             mode,
             factory,
-            destructor
+            destructor,
+            eager = false
+        )
+    }
+
+    override fun <T> eagerMemoized(mode: CachingMode, factory: () -> T) = eagerMemoized(mode, factory) {  }
+
+    override fun <T> eagerMemoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+        return MemoizedValueCreator(
+            root,
+            mode,
+            factory,
+            destructor,
+            eager = true
         )
     }
 

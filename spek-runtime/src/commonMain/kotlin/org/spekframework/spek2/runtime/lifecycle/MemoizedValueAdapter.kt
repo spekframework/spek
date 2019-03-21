@@ -9,7 +9,8 @@ import kotlin.reflect.KProperty
 
 sealed class MemoizedValueAdapter<T>(
     val factory: () -> T,
-    val destructor: (T) -> Unit
+    val destructor: (T) -> Unit,
+    val eager: Boolean
 ) : ReadOnlyProperty<Any?, T>, LifecycleListener {
 
     protected sealed class Cached<out T> {
@@ -34,15 +35,21 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class GroupCachingModeAdapter<T>(
-        factory: () -> T,
-        destructor: (T) -> Unit
-    ) : MemoizedValueAdapter<T>(factory, destructor) {
+            factory: () -> T,
+            destructor: (T) -> Unit,
+            eager: Boolean
+    ) : MemoizedValueAdapter<T>(factory, destructor, eager) {
 
         private val stack = mutableListOf<Cached<T>>()
 
         override fun beforeExecuteGroup(group: GroupScope) {
             stack.add(0, cached)
-            cached = Cached.Empty
+
+            if (eager) {
+                cached = Cached.Value(factory())
+            } else {
+                cached = Cached.Empty
+            }
         }
 
         override fun afterExecuteGroup(group: GroupScope) {
@@ -57,9 +64,17 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class ScopeCachingModeAdapter<T>(
-        val scope: ScopeImpl,
-        factory: () -> T, destructor: (T) -> Unit
-    ) : MemoizedValueAdapter<T>(factory, destructor) {
+            val scope: ScopeImpl,
+            factory: () -> T, destructor: (T) -> Unit, eager: Boolean
+    ) : MemoizedValueAdapter<T>(factory, destructor, eager) {
+
+        override fun beforeExecuteGroup(group: GroupScope) {
+            if (eager) {
+                if (this.scope == group) {
+                    this.cached = Cached.Value(factory())
+                }
+            }
+        }
 
         override fun afterExecuteGroup(group: GroupScope) {
             if (this.scope == group) {
@@ -73,9 +88,16 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class TestCachingModeAdapter<T>(
-        factory: () -> T,
-        destructor: (T) -> Unit
-    ) : MemoizedValueAdapter<T>(factory, destructor) {
+            factory: () -> T,
+            destructor: (T) -> Unit,
+            eager: Boolean
+    ) : MemoizedValueAdapter<T>(factory, destructor, eager) {
+
+        override fun beforeExecuteTest(test: TestScope) {
+            if (eager) {
+                this.cached = Cached.Value(factory())
+            }
+        }
 
         override fun afterExecuteTest(test: TestScope) {
             val cached = this.cached
