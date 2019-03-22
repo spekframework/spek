@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime.lifecycle
 
+import org.spekframework.spek2.dsl.Root
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
@@ -9,8 +10,7 @@ import kotlin.reflect.KProperty
 
 sealed class MemoizedValueAdapter<T>(
     val factory: () -> T,
-    val destructor: (T) -> Unit,
-    val eager: Boolean
+    val destructor: (T) -> Unit
 ) : ReadOnlyProperty<Any?, T>, LifecycleListener {
 
     protected sealed class Cached<out T> {
@@ -34,77 +34,77 @@ sealed class MemoizedValueAdapter<T>(
         }
     }
 
-    class GroupCachingModeAdapter<T>(
-            factory: () -> T,
-            destructor: (T) -> Unit,
-            eager: Boolean
-    ) : MemoizedValueAdapter<T>(factory, destructor, eager) {
+    internal abstract fun registerEagerInitializer(root: Root)
+}
 
-        private val stack = mutableListOf<Cached<T>>()
+class GroupCachingModeAdapter<T>(
+    factory: () -> T,
+    destructor: (T) -> Unit
+) : MemoizedValueAdapter<T>(factory, destructor) {
 
-        override fun beforeExecuteGroup(group: GroupScope) {
-            stack.add(0, cached)
+    private val stack = mutableListOf<Cached<T>>()
 
-            if (eager) {
-                cached = Cached.Value(factory())
-            } else {
-                cached = Cached.Empty
-            }
-        }
-
-        override fun afterExecuteGroup(group: GroupScope) {
-            val cached = this.cached
-            if (cached is Cached.Value<T>) {
-                destructor(cached.value)
-            }
-            if (stack.isNotEmpty()) {
-                this.cached = stack.removeAt(0)
-            }
+    override fun registerEagerInitializer(root: Root) {
+        root.beforeGroup {
+            cached = Cached.Value(factory())
         }
     }
 
-    class ScopeCachingModeAdapter<T>(
-            val scope: ScopeImpl,
-            factory: () -> T, destructor: (T) -> Unit, eager: Boolean
-    ) : MemoizedValueAdapter<T>(factory, destructor, eager) {
+    override fun beforeExecuteGroup(group: GroupScope) {
+        stack.add(0, cached)
 
-        override fun beforeExecuteGroup(group: GroupScope) {
-            if (eager) {
-                if (this.scope == group) {
-                    this.cached = Cached.Value(factory())
-                }
-            }
+        cached = Cached.Empty
+    }
+
+    override fun afterExecuteGroup(group: GroupScope) {
+        val cached = this.cached
+        if (cached is Cached.Value<T>) {
+            destructor(cached.value)
         }
+        if (stack.isNotEmpty()) {
+            this.cached = stack.removeAt(0)
+        }
+    }
+}
 
-        override fun afterExecuteGroup(group: GroupScope) {
-            if (this.scope == group) {
-                val cached = this.cached
-                when (cached) {
-                    is Cached.Value<T> -> destructor(cached.value)
-                }
-                this.cached = Cached.Empty
-            }
+class ScopeCachingModeAdapter<T>(
+    val scope: ScopeImpl,
+    factory: () -> T, destructor: (T) -> Unit
+) : MemoizedValueAdapter<T>(factory, destructor) {
+
+    override fun registerEagerInitializer(root: Root) {
+        root.beforeGroup {
+            this.cached = Cached.Value(factory())
         }
     }
 
-    class TestCachingModeAdapter<T>(
-            factory: () -> T,
-            destructor: (T) -> Unit,
-            eager: Boolean
-    ) : MemoizedValueAdapter<T>(factory, destructor, eager) {
-
-        override fun beforeExecuteTest(test: TestScope) {
-            if (eager) {
-                this.cached = Cached.Value(factory())
-            }
-        }
-
-        override fun afterExecuteTest(test: TestScope) {
+    override fun afterExecuteGroup(group: GroupScope) {
+        if (this.scope == group) {
             val cached = this.cached
             when (cached) {
                 is Cached.Value<T> -> destructor(cached.value)
             }
             this.cached = Cached.Empty
         }
+    }
+}
+
+class TestCachingModeAdapter<T>(
+    factory: () -> T,
+    destructor: (T) -> Unit
+) : MemoizedValueAdapter<T>(factory, destructor) {
+
+    override fun registerEagerInitializer(root: Root) {
+        root.beforeEachTest {
+            this.cached = Cached.Value(factory())
+        }
+    }
+
+    override fun afterExecuteTest(test: TestScope) {
+        val cached = this.cached
+        when (cached) {
+            is Cached.Value<T> -> destructor(cached.value)
+        }
+        this.cached = Cached.Empty
     }
 }
