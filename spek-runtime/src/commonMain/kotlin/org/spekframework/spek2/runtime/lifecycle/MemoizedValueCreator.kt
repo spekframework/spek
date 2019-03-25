@@ -12,8 +12,7 @@ class MemoizedValueCreator<out T>(
     val scope: ScopeImpl,
     private val mode: CachingMode,
     val factory: () -> T,
-    private val destructor: (T) -> Unit,
-    val eager: Boolean
+    private val destructor: (T) -> Unit
 ) : MemoizedValue<T> {
 
     override operator fun provideDelegate(
@@ -32,10 +31,7 @@ class MemoizedValueCreator<out T>(
         scope.registerValue(property.name, adapter)
 
         return adapter.apply {
-            if (eager) {
-                registerEagerInitializer(root)
-            }
-
+            registerEagerInitializer(root)
             scope.lifecycleManager.addListener(this)
         }
     }

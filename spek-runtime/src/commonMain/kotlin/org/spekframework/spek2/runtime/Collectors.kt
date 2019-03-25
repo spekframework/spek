@@ -21,23 +21,12 @@ class Collector(
     override fun <T> memoized(mode: CachingMode, factory: () -> T) = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
-        return createMemoized(mode, factory, destructor, eager = false)
-    }
-
-    override fun <T> eagerMemoized(mode: CachingMode, factory: () -> T) = eagerMemoized(mode, factory) {  }
-
-    override fun <T> eagerMemoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
-        return createMemoized(mode, factory, destructor, eager = true)
-    }
-
-    private fun <T> createMemoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit, eager: Boolean): MemoizedValue<T> {
         return MemoizedValueCreator(
             root = this,
             scope = root,
             mode = mode,
             factory = factory,
-            destructor = destructor,
-            eager = eager
+            destructor = destructor
         )
     }
 
