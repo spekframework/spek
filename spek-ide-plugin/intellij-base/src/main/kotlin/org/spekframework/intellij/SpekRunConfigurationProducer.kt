@@ -114,10 +114,16 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
             if (VfsUtil.isUnder(dir.virtualFile, roots.toSet())) {
                 val psiPackage = dir.getPackage()
 
-                if (psiPackage != null) {
-                    return PathBuilder()
-                            .append(psiPackage.qualifiedName)
-                            .build()
+                if (psiPackage != null && psiPackage.qualifiedName.isNotEmpty()) {
+                    val parts = psiPackage.qualifiedName.split(".")
+                    val builder = PathBuilder()
+
+                    parts.forEach {
+                        builder.append(it)
+                    }
+                    return builder.build()
+                } else {
+                    return PathBuilder().build()
                 }
             }
         }
