@@ -9,7 +9,7 @@ import org.spekframework.spek2.meta.*
 @Synonym(SynonymType.GROUP, prefix = "Feature: ")
 @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
 fun GroupBody.Feature(description: String, body: FeatureBody.() -> Unit) {
-    group("Feature: $description", defaultCachingMode = CachingMode.GROUP) {
+    group("Feature: $description", defaultCachingMode = CachingMode.EACH_GROUP) {
         body(FeatureBody(this))
     }
 }

@@ -35,9 +35,9 @@ object MemoizedTests: Spek({
         }
     }
 
-    group("Using CachingMode.GROUP, each group will have a unique instance") {
+    group("Using CachingMode.EACH_GROUP, each group will have a unique instance") {
         lateinit var previousValue: Set<String>
-        val value by memoized(CachingMode.GROUP) { setOf("") }
+        val value by memoized(CachingMode.EACH_GROUP) { setOf("") }
 
         group("first") {
             beforeGroup {
