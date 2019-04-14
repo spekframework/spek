@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime
 
+import kotlinx.coroutines.*
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -7,13 +8,18 @@ import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
+import kotlin.coroutines.CoroutineContext
 
-class Executor {
+class Executor: CoroutineScope {
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Default + job
 
     fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
         request.roots.forEach { execute(it, request.executionListener) }
         request.executionListener.executionFinish()
+        job.cancel()
     }
 
     private fun execute(scope: ScopeImpl, listener: ExecutionListener) {
@@ -24,11 +30,26 @@ class Executor {
 
             val result = executeSafely {
                 try {
-                    scope.before()
-                    scope.execute()
+                    when (scope) {
+                        is GroupScopeImpl -> {
+                            scope.before()
+                            scope.getChildren().forEach { execute(it, listener) }
+                        }
+                        is TestScopeImpl -> {
+                            doRunBlocking {
+                                // this needs to be here, in K/N the event loop
+                                // is started during a runBlocking call. Calling
+                                // any builders outside that will throw an exception.
+                                val job = this@Executor.launch {
+                                    scope.before()
+                                    scope.execute()
+                                }
 
-                    if (scope is GroupScopeImpl) {
-                        scope.getChildren().forEach { execute(it, listener) }
+                                withTimeout(scope.timeout) {
+                                    job.join()
+                                }
+                            }
+                        }
                     }
                 } finally {
                     scope.after()
@@ -64,3 +85,5 @@ class Executor {
             is TestScopeImpl -> listener.testIgnored(scope, reason)
         }
 }
+
+expect fun doRunBlocking(block: suspend CoroutineScope.() -> Unit)

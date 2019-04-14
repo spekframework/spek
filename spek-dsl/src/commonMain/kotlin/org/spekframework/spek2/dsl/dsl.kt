@@ -42,9 +42,11 @@ interface ScopeBody {
 
 @SpekDsl
 interface TestContainer {
+    val defaultTimeout: Long
+
     @Synonym(type = SynonymType.TEST)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun test(description: String, skip: Skip = Skip.No, body: TestBody.() -> Unit)
+    fun test(description: String, skip: Skip = Skip.No, timeout: Long = defaultTimeout, body: TestBody.() -> Unit)
 }
 
 @SpekDsl

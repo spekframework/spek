@@ -36,14 +36,14 @@ class Suite(val delegate: GroupBody) : LifecycleAware by delegate {
 
     @Synonym(SynonymType.TEST)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun it(description: String, skip: Skip = Skip.No, body: TestBody.() -> Unit) {
-        delegate.createTest(description, skip, body)
+    fun it(description: String, skip: Skip = Skip.No, timeout: Long = delegate.defaultTimeout, body: TestBody.() -> Unit) {
+        delegate.createTest(description, skip, timeout, body)
     }
 
     @Synonym(SynonymType.TEST, excluded = true)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun xit(description: String, reason: String = "", body: TestBody.() -> Unit) {
-        delegate.createTest(description, Skip.Yes(reason), body)
+    fun xit(description: String, reason: String = "", timeout: Long = delegate.defaultTimeout, body: TestBody.() -> Unit) {
+        delegate.createTest(description, Skip.Yes(reason), timeout, body)
     }
 
     fun before(cb: () -> Unit) {
@@ -81,6 +81,6 @@ private fun GroupBody.createSuite(description: String, skip: Skip, body: Suite.(
     }
 }
 
-private fun GroupBody.createTest(description: String, skip: Skip, body: TestBody.() -> Unit) {
-    test(description, skip, body)
+private fun GroupBody.createTest(description: String, skip: Skip, timeout: Long, body: TestBody.() -> Unit) {
+    test(description, skip, timeout, body)
 }
