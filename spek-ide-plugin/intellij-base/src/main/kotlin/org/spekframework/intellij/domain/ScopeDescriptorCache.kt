@@ -47,7 +47,7 @@ class ScopeDescriptorCache: ProjectComponent {
     }
 
     private fun buildDescriptor(clz: KtClassOrObject): ScopeDescriptor.Group {
-        val info = KtClassInfoUtil.createClassLikeInfo(clz)
+        val info = KtClassInfoUtil.createClassOrObjectInfo(clz)
         val builder = PathBuilder()
         if (info.containingPackageFqName.asString().isNotBlank()) {
             builder.appendPackage(info.containingPackageFqName.asString())
