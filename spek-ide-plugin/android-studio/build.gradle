@@ -29,8 +29,8 @@ intellij {
     pluginName = "Spek Framework"
     version = settings['sdk']
     plugins = ['gradle', 'android'] + settings['deps']
-    if (hasProperty("local${sdkVersion}Path")) {
-        alternativeIdePath = getProperty("local${sdkVersion}Path")
+    if (project.hasProperty("local${sdkVersion}Path")) {
+        localPath = getProperty("local${sdkVersion}Path")
     }
 }
 
