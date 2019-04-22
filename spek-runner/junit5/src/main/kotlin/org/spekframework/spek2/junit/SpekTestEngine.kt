@@ -5,6 +5,7 @@ import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.discovery.*
+import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.JvmDiscoveryContextFactory
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
@@ -48,8 +49,14 @@ class SpekTestEngine : TestEngine {
             .map { it.toString() }
 
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
+            .filter { it.javaClass.isAssignableFrom(Spek::class.java) }
             .filter {
-                !(it.javaClass.isLocalClass || it.javaClass.isAnonymousClass)
+                !(it.javaClass.kotlin.isCompanion
+                    || it.javaClass.kotlin.isAbstract
+                    || it.javaClass.kotlin.isInner
+                    || it.javaClass.isAnonymousClass
+                    || it.javaClass.isLocalClass
+                    || it.javaClass.isSynthetic)
             }.map {
                 PathBuilder
                     .from(it.javaClass.kotlin)
