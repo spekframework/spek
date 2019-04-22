@@ -5,7 +5,6 @@ import org.junit.platform.engine.TestDescriptor
 import org.junit.platform.engine.TestEngine
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.discovery.*
-import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.JvmDiscoveryContextFactory
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
