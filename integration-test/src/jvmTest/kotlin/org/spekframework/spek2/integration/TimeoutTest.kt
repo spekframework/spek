@@ -13,7 +13,4 @@ object TimeoutTest: Spek({
     test("custom timeout", timeout = 2000) {
         while (true) {}
     }
-
-    data class Bar(val a: Int)
-    val a = Bar(1)
 })
