@@ -49,7 +49,6 @@ class SpekTestEngine : TestEngine {
             .map { it.toString() }
 
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
-            .filter { it.javaClass.isAssignableFrom(Spek::class.java) }
             .filter {
                 !(it.javaClass.kotlin.isCompanion
                     || it.javaClass.kotlin.isAbstract
