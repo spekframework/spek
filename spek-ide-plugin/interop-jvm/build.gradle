@@ -14,6 +14,6 @@ shadowJar {
     relocate 'com.xenomachina', 'shadow.com.xenomachina'
 
     dependencies {
-        exclude(dependency('org.jetbrains.*:.*:.*'))
+        exclude(dependency('org.jetbrains.kotlin:.*:.*'))
     }
 }
