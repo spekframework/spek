@@ -11,6 +11,7 @@ import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
+import java.lang.reflect.Modifier
 import java.nio.file.Paths
 import org.junit.platform.engine.ExecutionRequest as JUnitExecutionRequest
 
@@ -49,12 +50,10 @@ class SpekTestEngine : TestEngine {
 
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
             .filter {
-                !(it.javaClass.kotlin.isCompanion
-                    || it.javaClass.kotlin.isAbstract
-                    || it.javaClass.kotlin.isInner
-                    || it.javaClass.isAnonymousClass
+                !(it.javaClass.isAnonymousClass
                     || it.javaClass.isLocalClass
-                    || it.javaClass.isSynthetic)
+                    || it.javaClass.isSynthetic
+                    || Modifier.isAbstract(it.javaClass.modifiers))
             }.map {
                 PathBuilder
                     .from(it.javaClass.kotlin)
