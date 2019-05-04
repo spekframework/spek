@@ -8,18 +8,12 @@ import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
-import kotlin.coroutines.CoroutineContext
 
-class Executor: CoroutineScope {
-    private val job = Job()
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + job
-
+class Executor {
     fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
         request.roots.forEach { execute(it, request.executionListener) }
         request.executionListener.executionFinish()
-        job.cancel()
     }
 
     private fun execute(scope: ScopeImpl, listener: ExecutionListener) {
@@ -40,13 +34,22 @@ class Executor: CoroutineScope {
                                 // this needs to be here, in K/N the event loop
                                 // is started during a runBlocking call. Calling
                                 // any builders outside that will throw an exception.
-                                val job = this@Executor.launch {
+                                val job = GlobalScope.async {
                                     scope.before()
                                     scope.execute()
                                 }
 
-                                withTimeout(scope.timeout) {
-                                    job.join()
+                                val exception = withTimeout(scope.timeout) {
+                                    try {
+                                        job.await()
+                                        null
+                                    } catch (e: Throwable) {
+                                        e
+                                    }
+                                }
+
+                                if (exception != null) {
+                                    throw exception
                                 }
                             }
                         }

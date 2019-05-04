@@ -100,8 +100,8 @@ class RunnerTests {
         assertThat(summary.totalFailureCount, equalTo(1L))
     }
 
-  @Test
-  fun testFailDuringGroupDiscoveryPhase() {
+    @Test
+    fun testFailDuringGroupDiscoveryPhase() {
     val listener = SummaryGeneratingListener()
     launcher.execute(
         LauncherDiscoveryRequestBuilder.request()
@@ -114,5 +114,21 @@ class RunnerTests {
     val summary = listener.summary
 
     assertThat(summary.totalFailureCount, equalTo(1L))
-  }
+    }
+
+    @Test
+    fun testWithFailure() {
+        val listener = SummaryGeneratingListener()
+        launcher.execute(
+                LauncherDiscoveryRequestBuilder.request()
+                        .filters(EngineFilter.includeEngines("spek2"))
+                        .selectors(DiscoverySelectors.selectClass("testData.TestWithFailure"))
+                        .build(),
+                listener
+        )
+
+        val summary = listener.summary
+
+        assertThat(summary.totalFailureCount, equalTo(1L))
+    }
 }
