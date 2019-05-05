@@ -50,6 +50,17 @@ class SpekTestEngine : TestEngine {
 
         val classSelectors = discoveryRequest.getSelectorsByType(ClassSelector::class.java)
             .filter {
+                // get all super classes
+                val superClasses = mutableListOf<String>()
+                var current = it.javaClass.superclass
+                while (current != null) {
+                    superClasses.add(current.name)
+                    current = current.superclass
+                }
+
+                superClasses.contains("org.spekframework.spek2.Spek")
+            }
+            .filter {
                 !(it.javaClass.isAnonymousClass
                     || it.javaClass.isLocalClass
                     || it.javaClass.isSynthetic
