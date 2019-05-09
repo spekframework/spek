@@ -42,7 +42,7 @@ interface ScopeBody {
 
 @SpekDsl
 interface TestContainer {
-    val defaultTimeout: Long
+    var defaultTimeout: Long
 
     @Synonym(type = SynonymType.TEST)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
