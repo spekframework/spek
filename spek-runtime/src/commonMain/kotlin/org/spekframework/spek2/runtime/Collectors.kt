@@ -14,7 +14,7 @@ class Collector(
     private val lifecycleManager: LifecycleManager,
     private val fixtures: FixturesAdapter,
     override val defaultCachingMode: CachingMode,
-    override val defaultTimeout: Long
+    override var defaultTimeout: Long
 ) : Root {
 
     private val ids = linkedMapOf<String, Int>()
@@ -78,7 +78,7 @@ class Collector(
             idFor(description),
             root.path.resolve(description),
             root,
-            defaultTimeout,
+            timeout,
             body,
             skip,
             lifecycleManager

@@ -16,6 +16,10 @@ fun GroupBody.Feature(description: String, body: FeatureBody.() -> Unit) {
 
 @SpekDsl
 class FeatureBody(val delegate: GroupBody): LifecycleAware by delegate {
+    var defaultTimeout: Long
+        get() = delegate.defaultTimeout
+        set(value) { delegate.defaultTimeout = value }
+
     @Synonym(SynonymType.GROUP, prefix = "Scenario: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Scenario(description: String, body: ScenarioBody.() -> Unit) {
@@ -27,6 +31,10 @@ class FeatureBody(val delegate: GroupBody): LifecycleAware by delegate {
 
 @SpekDsl
 class ScenarioBody(val delegate: GroupBody): LifecycleAware by delegate {
+    var defaultTimeout: Long
+        get() = delegate.defaultTimeout
+        set(value) { delegate.defaultTimeout = value }
+
     @Synonym(SynonymType.TEST, prefix = "Given: ", runnable = false)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Given(description: String, body: TestBody.() -> Unit) {

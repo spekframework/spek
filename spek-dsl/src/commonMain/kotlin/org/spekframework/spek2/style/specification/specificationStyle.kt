@@ -10,6 +10,10 @@ import org.spekframework.spek2.meta.*
 @SpekDsl
 class Suite(val delegate: GroupBody) : LifecycleAware by delegate {
 
+    var defaultTimeout: Long
+        get() = delegate.defaultTimeout
+        set(value) { delegate.defaultTimeout = value }
+
     @Synonym(SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun describe(description: String, skip: Skip = Skip.No, body: Suite.() -> Unit) {
