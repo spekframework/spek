@@ -27,6 +27,7 @@ kotlin {
         commonTest {
             dependencies {
                 implementation project(':spek-dsl')
+                implementation project(':spek-runtime')
                 implementation kotlin('test')
             }
         }
@@ -85,5 +86,9 @@ kotlin {
 jvmTest {
     useJUnitPlatform {
         includeEngines 'spek2'
+    }
+
+    filter {
+        includeTestsMatching "org.spekframework.spek2.*"
     }
 }
