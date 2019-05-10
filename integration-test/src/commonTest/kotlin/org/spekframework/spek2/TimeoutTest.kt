@@ -25,4 +25,26 @@ object TimeoutTest: AbstractSpekTest({ helper ->
             }
         }
     }
+
+    describe("custom timeouts") {
+        it("should timeout using specified settings") {
+            val recorder = helper.executeTest(testData.timeoutTest.CustomTimeoutTest)
+
+            helper.assertExecutionEquals(
+                recorder.events()
+            ) {
+                group("CustomTimeoutTest") {
+                    test("should timeout", false)
+                    group("timeout specification style") {
+                        test("should timeout", false)
+                    }
+                    group("Feature: timeout gherkin style") {
+                        group("Scenario: some scenario") {
+                            test("Then: should timeout", false)
+                        }
+                    }
+                }
+            }
+        }
+    }
 })
