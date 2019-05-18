@@ -54,7 +54,7 @@ object SetSpec: Spek({
 For example, the `2.x` equivalent for the test above is:
 
 ```kotlin
-import org.spekframework.spek2.style.specifcation.describe
+import org.spekframework.spek2.style.specification.describe
 import org.spekframework.spek2.Spek
 
 object SetSpec: Spek({
