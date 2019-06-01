@@ -15,6 +15,7 @@ class SpekRuntime {
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = discoveryRequest.context.getTests()
             .map { testInfo ->
+                println(testInfo.path)
                 val matchingPath = discoveryRequest.paths.firstOrNull { it.intersects(testInfo.path) }
                 testInfo to matchingPath
             }
