@@ -26,6 +26,7 @@ object JvmDiscoveryContextFactory {
         classes.filter { !it.isAbstract }
             .filter { it.findAnnotation<Ignore>() == null }
             .map { cls ->
+                println(cls)
                 val instanceFactory = instanceFactoryFor(cls)
                 cls to { instanceFactory.create(cls) }
             }.forEach { (cls, factory) ->
