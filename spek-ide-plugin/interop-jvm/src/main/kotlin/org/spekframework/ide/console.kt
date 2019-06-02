@@ -14,10 +14,7 @@ class Spek2ConsoleLauncher {
             PathBuilder.parse(it)
                 .build()
         }
-        println("woot")
-        println(paths)
         val context = JvmDiscoveryContextFactory.create(args.sourceDirs.toList())
-        println(context.getTests())
         val discoveryRequest = DiscoveryRequest(context, paths)
 
         val runtime = SpekRuntime()
