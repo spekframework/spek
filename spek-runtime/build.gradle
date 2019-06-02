@@ -42,7 +42,7 @@ kotlin {
                 implementation kotlin('stdlib-jdk8')
                 implementation kotlin('reflect')
                 // TODO: explicitly set for now until dependencies.gradle is fixed.
-                implementation 'io.github.classgraph:classgraph:4.0.6'
+                implementation 'io.github.classgraph:classgraph:4.8.37'
                 implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0'
             }
         }
