@@ -22,7 +22,6 @@ object JvmDiscoveryContextFactory {
     fun create(testDirs: List<String>): DiscoveryContext {
         val classes = scanClasses(testDirs)
         val builder = DiscoveryContext.builder()
-
         classes.filter { !it.isAbstract }
             .filter { it.findAnnotation<Ignore>() == null }
             .map { cls ->
@@ -47,7 +46,7 @@ object JvmDiscoveryContextFactory {
             .enableClassInfo()
 
         if (testDirs.isNotEmpty()) {
-            cg.overrideClasspath(testDirs)
+            cg.overrideClasspath(System.getProperty("java.class.path"), testDirs)
         }
 
         return cg.scan().use {
