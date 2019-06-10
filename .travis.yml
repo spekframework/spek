@@ -26,7 +26,7 @@ jobs:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:buildPlugin -Pij.version=IJ191
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS33
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS34
-        - - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS35
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:buildPlugin -Pas.version=AS35
 
     - stage: release core
       script: ./gradlew --stacktrace spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner:junit5:bintrayUpload -PexcludeIdePlugins
@@ -38,7 +38,7 @@ jobs:
         - ./gradlew --stacktrace spek-ide-plugin:intellij-idea:publishPlugin -Pij.version=IJ191
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS33
         - ./gradlew --stacktrace spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS34
-        - - ./gradlew --stacktrace spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS35
+        - ./gradlew --stacktrace spek-ide-plugin:android-studio:publishPlugin -Pas.version=AS35
 
     - stage: update docs
       script: curl -X POST -d '' $NETLIFY_DEPLOY_URL
