@@ -11,7 +11,7 @@ trigger:
 stages:
   - stage: Test
     jobs:
-      - job: Test Linux
+      - job: linux
         pool:
           vmImage: 'ubuntu-16.04'
         steps:
