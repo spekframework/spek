@@ -1,8 +1,8 @@
 steps:
-  - step: |
+  - script: |
       [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
       Invoke-Expression (
         Invoke-WebRequest https://github.com/shyiko/jabba/raw/master/install.ps1 -UseBasicParsing
       ).Content
-  - step: jabba install zulu@1.10.0-2
-  - step: jabba use zulu@1.10.0-2
+  - script: jabba install zulu@1.10.0-2
+  - script: jabba use zulu@1.10.0-2
