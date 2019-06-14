@@ -5,4 +5,4 @@ Invoke-Expression (
 . $profile
 jabba install zulu@1.10.0-2
 jabba use zulu@1.10.0-2
-echo "##vso[task.setvariable variable=JAVA_HOME]" "$(jabba which)"
+Write-Host "##vso[task.setvariable variable=JAVA_HOME]$(jabba which)"
