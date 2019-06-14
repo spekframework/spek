@@ -4,5 +4,6 @@ steps:
       Invoke-Expression (
         Invoke-WebRequest https://github.com/shyiko/jabba/raw/master/install.ps1 -UseBasicParsing
       ).Content
+  - powershell: . $profile
   - powershell: jabba install zulu@1.10.0-2
   - powershell: jabba use zulu@1.10.0-2
