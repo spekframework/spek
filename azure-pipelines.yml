@@ -11,11 +11,29 @@ trigger:
 stages:
   - stage: Test
     jobs:
-      - job: linux
+      - job: Linux
         pool:
           vmImage: 'ubuntu-16.04'
         steps:
           - task: Gradle@2
             inputs:
               tasks: 'spek-runner:junit5:check integration-test:check'
+              options: '--stacktrace -PexcludeIdePlugins'
+    jobs:
+      - job: MacOS
+        pool:
+          vmImage: 'macOS-10.14'
+        steps:
+          - task: Gradle@2
+            inputs:
+              tasks: 'integration-test:check'
+              options: '--stacktrace -PexcludeIdePlugins'
+    jobs:
+      - job: Windows
+        pool:
+          vmImage: 'win1803'
+        steps:
+          - task: Gradle@2
+            inputs:
+              tasks: 'integration-test:check'
               options: '--stacktrace -PexcludeIdePlugins'
