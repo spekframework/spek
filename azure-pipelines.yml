@@ -31,7 +31,7 @@ stages:
         pool:
           vmImage: 'windows-2019'
         steps:
-          - task: Powershell@2
+          - task: PowerShell@2
             inputs:
               filePath: '.\ci\install-jdk10.ps1'
           - task: Gradle@2
