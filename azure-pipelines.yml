@@ -4,16 +4,18 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  branches:
+    include:
+      - 2.x
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+stages:
+  - stage: Test
+    jobs:
+      - job: Test Linux
+        pool:
+          vmImage: 'ubuntu-16.04'
+        steps:
+          - task: Gradle@2
+            inputs:
+              tasks: 'spek-runner:junit5:check integration-test:check'
+              options: '--stacktrace -PexcludeIdePlugins'
