@@ -34,7 +34,6 @@ stages:
           - task: PowerShell@2
             inputs:
               filePath: '.\ci\install-jdk10.ps1'
-          - pwsh: echo $env:JAVA_HOME
           - task: Gradle@2
             inputs:
               tasks: 'integration-test:check'
