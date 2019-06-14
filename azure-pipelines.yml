@@ -29,7 +29,7 @@ stages:
               options: '--stacktrace -PexcludeIdePlugins'
       - job: Windows
         pool:
-          vmImage: 'windows-2019'
+          vmImage: 'windows-1803'
         steps:
           - task: PowerShell@2
             inputs:
