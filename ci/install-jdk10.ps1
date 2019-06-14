@@ -5,6 +5,4 @@ Invoke-Expression (
 . $profile
 jabba install zulu@1.10.0-2
 jabba use zulu@1.10.0-2
-$envRegKey = [Microsoft.Win32.Registry]::LocalMachine.OpenSubKey('SYSTEM\CurrentControlSet\Control\Session Manager\Environment', $true)
-$envPath=$envRegKey.GetValue('Path', $null, "DoNotExpandEnvironmentNames").replace('%JAVA_HOME%\bin;', '')
-[Environment]::SetEnvironmentVariable('JAVA_HOME', "$(jabba which $(jabba current))", 'Machine')
+echo '##vso[task.setvariable variable=JAVA_HOME]$(jabba which $(jabba current))'
