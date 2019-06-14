@@ -1,0 +1,9 @@
+steps:
+  - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: "10"
+        jdkArchitectureOption: x64
+        jdkSourceOption: localDirectory
+        jdkFile: "/builds/openjdk-10.0.2_linux-x64_bin.tar.gz"
+        jdkDestinationDirectory: "/builds/binaries/externals"
+        cleanDestinationDirectory: true

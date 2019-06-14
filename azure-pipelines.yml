@@ -31,6 +31,7 @@ stages:
         pool:
           vmImage: 'windows-2019'
         steps:
+          - template: 'azure-templates/install-jdk10.yml'
           - task: Gradle@2
             inputs:
               tasks: 'integration-test:check'
