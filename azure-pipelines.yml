@@ -29,7 +29,7 @@ stages:
               options: '--stacktrace -PexcludeIdePlugins'
       - job: Windows
         pool:
-          vmImage: 'win1803'
+          vmImage: 'windows-2019'
         steps:
           - task: Gradle@2
             inputs:
