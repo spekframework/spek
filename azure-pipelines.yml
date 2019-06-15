@@ -9,7 +9,7 @@ trigger:
       - 2.x
 
 stages:
-  - stage: test-core
+  - stage: test_core
     jobs:
       - job: linux
         pool:
@@ -41,9 +41,9 @@ stages:
               tasks: 'integration-test:check'
               options: '--stacktrace -PexcludeIdePlugins'
 
-  - stage: test-ide-plugins
+  - stage: test_ide_plugins
     jobs:
-      - job: intellij-idea
+      - job: intellij_idea
         strategy:
           matrix:
             ij182:
