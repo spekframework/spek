@@ -9,9 +9,9 @@ trigger:
       - 2.x
 
 stages:
-  - stage: Test
+  - stage: test-core
     jobs:
-      - job: Linux
+      - job: linux
         pool:
           vmImage: 'ubuntu-16.04'
         steps:
@@ -20,7 +20,7 @@ stages:
             inputs:
               tasks: 'spek-runner:junit5:check integration-test:check'
               options: '--stacktrace -PexcludeIdePlugins'
-      - job: MacOS
+      - job: macos
         pool:
           vmImage: 'macOS-10.14'
         steps:
@@ -29,7 +29,7 @@ stages:
             inputs:
               tasks: 'integration-test:check'
               options: '--stacktrace -PexcludeIdePlugins'
-      - job: Windows
+      - job: windows
         pool:
           vmImage: 'win1803'
         steps:
@@ -40,3 +40,18 @@ stages:
             inputs:
               tasks: 'integration-test:check'
               options: '--stacktrace -PexcludeIdePlugins'
+
+  - stage: test-ide-plugins
+    jobs:
+      - job: intellij-idea
+      strategy:
+        matrix:
+          ij182:
+            ij_sdk: IJ182
+      steps:
+        - script: './ci/install-jdk10.sh'
+        - task: Gradle@2
+          inputs:
+            tasks: 'spek-ide-plugin:intellij-idea:buildPlugin'
+            options: '--stacktrace -Pij.version=$(ij_sdk)'
+
