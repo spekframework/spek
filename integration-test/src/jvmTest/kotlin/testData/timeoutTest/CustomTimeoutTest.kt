@@ -11,8 +11,8 @@ object CustomTimeoutTest: Spek({
 
     describe("timeout specification style") {
         it("should timeout", timeout = 100) {
-            // we want this test to fail, sleep should be > 100ms otherwise it's flaky.
-            sleep(300)
+            // we want this test to fail, sleep should be > 500ms otherwise it's flaky.
+            sleep(500)
         }
     }
 
