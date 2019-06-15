@@ -6,19 +6,19 @@ import org.spekframework.spek2.style.specification.describe
 
 object DefaultTimeoutTest: Spek({
     test("should timeout") {
-        sleep(10100)
+        sleep(10600)
     }
 
     describe("timeout specification style") {
         it("should timeout") {
-            sleep(10100)
+            sleep(10600)
         }
     }
 
     Feature("timeout gherkin style") {
         Scenario("some scenario") {
             Then("should timeout") {
-                sleep(10100)
+                sleep(10600)
             }
         }
     }
