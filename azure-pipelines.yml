@@ -6,7 +6,7 @@ trigger:
     include:
       - '*'
 
-#stages:
+stages:
 #  - stage: test_core
 #    jobs:
 #      - job: jvm_and_linux
