@@ -19,8 +19,9 @@ enableFeaturePreview('GRADLE_METADATA')
 
 rootProject.name = 'spek'
 
-include 'spek-dsl'
 includeBuild 'spek-gradle-plugin'
+
+include 'spek-dsl'
 include 'spek-kotlin-jvm-compiler-plugin'
 include 'spek-kotlin-native-compiler-plugin'
 include 'spek-runtime'

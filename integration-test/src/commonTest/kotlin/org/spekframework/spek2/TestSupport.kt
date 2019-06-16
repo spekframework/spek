@@ -124,12 +124,12 @@ class SpekTestHelper {
         }, path)
     }
 
-    fun assertExecutionEquals(expected: List<ExecutionEvent>, block: ExecutionTreeBuilder.() -> Unit) {
+    fun assertExecutionEquals(actual: List<ExecutionEvent>, block: ExecutionTreeBuilder.() -> Unit) {
         val builder = ExecutionTreeBuilder()
         builder.block()
-        val actual = builder.build()
+        val expected = builder.build()
 
-        assertEquals(executionToString(expected), executionToString(actual))
+        assertEquals(executionToString(actual), executionToString(expected))
     }
 
     /**

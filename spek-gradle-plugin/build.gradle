@@ -4,7 +4,9 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        // keep in-sync with gradle.properties kotlinVersion
+        // weirdly, this fails on windows.
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.30"
     }
 }
 

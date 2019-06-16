@@ -33,7 +33,7 @@ kotlin {
                 api project(':spek-dsl')
                 implementation kotlin('stdlib')
                 // TODO: explicitly set for now until dependencies.gradle is fixed.
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.1'
             }
         }
 
@@ -43,7 +43,7 @@ kotlin {
                 implementation kotlin('reflect')
                 // TODO: explicitly set for now until dependencies.gradle is fixed.
                 implementation 'io.github.classgraph:classgraph:4.8.37'
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1'
             }
         }
 
@@ -55,7 +55,7 @@ kotlin {
             dependsOn nativeMain
             dependencies {
                 // TODO: explicitly set for now until dependencies.gradle is fixed.
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.1'
             }
         }
 
@@ -63,7 +63,7 @@ kotlin {
             dependsOn nativeMain
             dependencies {
                 // TODO: explicitly set for now until dependencies.gradle is fixed.
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.0'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.1'
             }
         }
 
@@ -71,7 +71,7 @@ kotlin {
             dependsOn nativeMain
             dependencies {
                 // TODO: explicitly set for now until dependencies.gradle is fixed.
-                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.1.1'
+                implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.1'
             }
         }
 
