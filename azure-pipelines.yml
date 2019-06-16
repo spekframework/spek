@@ -40,6 +40,8 @@ stages:
               options: '--stacktrace -PexcludeIdePlugins'
 
   - stage: test_ide_plugins
+    dependsOn: test_core
+    condition: succeeded()
     jobs:
       - job: intellij_idea
         pool:
@@ -77,7 +79,8 @@ stages:
               options: '--stacktrace -Pas.version=$(as_sdk)'
 
   - stage: release
-    condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/2.x'))
+    dependsOn: test_ide_plugins
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/2.x'))
     jobs:
       - job: jvm_and_linux
         pool:
@@ -131,7 +134,8 @@ stages:
               options: '--stacktrace -Pas.version=$(as_sdk)'
 
   - stage: update
-    condition: and(ne(variables['Build.Reason'], 'PullRequest'), startsWith('refs/tags/', variables['Build.SourceBranch']))
+    dependsOn: release
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), startsWith('refs/tags/', variables['Build.SourceBranch']))
     jobs:
       - job: docs
         pool:
