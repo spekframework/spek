@@ -6,75 +6,75 @@ trigger:
     include:
       - '*'
 
-stages:
-  - stage: test_core
-    jobs:
-      - job: jvm_and_linux
-        pool:
-          vmImage: 'ubuntu-16.04'
-        steps:
-          - script: './ci/install-jdk10.sh'
-          - task: Gradle@2
-            inputs:
-              tasks: 'spek-runner:junit5:check integration-test:check'
-              options: '--stacktrace -PexcludeIdePlugins'
-      - job: macos
-        pool:
-          vmImage: 'macOS-10.14'
-        steps:
-          - script: './ci/install-jdk10.sh'
-          - task: Gradle@2
-            inputs:
-              tasks: 'integration-test:check'
-              options: '--stacktrace -PexcludeIdePlugins'
-      - job: windows
-        pool:
-          vmImage: 'win1803'
-        steps:
-          - task: PowerShell@2
-            inputs:
-              filePath: '.\ci\install-jdk10.ps1'
-          - task: Gradle@2
-            inputs:
-              tasks: 'integration-test:check'
-              options: '--stacktrace -PexcludeIdePlugins'
-
-  - stage: test_ide_plugins
-    jobs:
-      - job: intellij_idea
-        pool:
-          vmImage: 'ubuntu-16.04'
-        strategy:
-          matrix:
-            ij182:
-              ij_sdk: IJ182
-            ij183:
-              ij_sdk: IJ183
-            ij191:
-              ij_sdk: IJ191
-        steps:
-          - script: './ci/install-jdk10.sh'
-          - task: Gradle@2
-            inputs:
-              tasks: 'spek-ide-plugin:intellij-idea:buildPlugin'
-              options: '--stacktrace -Pij.version=$(ij_sdk)'
-      - job: android_studio
-        pool:
-          vmImage: 'ubuntu-16.04'
-        strategy:
-          matrix:
-            as33:
-              as_sdk: AS33
-            as34:
-              as_sdk: AS34
-            as35:
-              as_sdk: AS35
-        steps:
-          - script: './ci/install-jdk10.sh'
-          - task: Gradle@2
-            inputs:
-              tasks: 'spek-ide-plugin:android-studio:buildPlugin'
-              options: '--stacktrace -Pas.version=$(as_sdk)'
+#stages:
+#  - stage: test_core
+#    jobs:
+#      - job: jvm_and_linux
+#        pool:
+#          vmImage: 'ubuntu-16.04'
+#        steps:
+#          - script: './ci/install-jdk10.sh'
+#          - task: Gradle@2
+#            inputs:
+#              tasks: 'spek-runner:junit5:check integration-test:check'
+#              options: '--stacktrace -PexcludeIdePlugins'
+#      - job: macos
+#        pool:
+#          vmImage: 'macOS-10.14'
+#        steps:
+#          - script: './ci/install-jdk10.sh'
+#          - task: Gradle@2
+#            inputs:
+#              tasks: 'integration-test:check'
+#              options: '--stacktrace -PexcludeIdePlugins'
+#      - job: windows
+#        pool:
+#          vmImage: 'win1803'
+#        steps:
+#          - task: PowerShell@2
+#            inputs:
+#              filePath: '.\ci\install-jdk10.ps1'
+#          - task: Gradle@2
+#            inputs:
+#              tasks: 'integration-test:check'
+#              options: '--stacktrace -PexcludeIdePlugins'
+#
+#  - stage: test_ide_plugins
+#    jobs:
+#      - job: intellij_idea
+#        pool:
+#          vmImage: 'ubuntu-16.04'
+#        strategy:
+#          matrix:
+#            ij182:
+#              ij_sdk: IJ182
+#            ij183:
+#              ij_sdk: IJ183
+#            ij191:
+#              ij_sdk: IJ191
+#        steps:
+#          - script: './ci/install-jdk10.sh'
+#          - task: Gradle@2
+#            inputs:
+#              tasks: 'spek-ide-plugin:intellij-idea:buildPlugin'
+#              options: '--stacktrace -Pij.version=$(ij_sdk)'
+#      - job: android_studio
+#        pool:
+#          vmImage: 'ubuntu-16.04'
+#        strategy:
+#          matrix:
+#            as33:
+#              as_sdk: AS33
+#            as34:
+#              as_sdk: AS34
+#            as35:
+#              as_sdk: AS35
+#        steps:
+#          - script: './ci/install-jdk10.sh'
+#          - task: Gradle@2
+#            inputs:
+#              tasks: 'spek-ide-plugin:android-studio:buildPlugin'
+#              options: '--stacktrace -Pas.version=$(as_sdk)'
 
   - stage: release
     condition: and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/2.x'))
