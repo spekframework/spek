@@ -1,4 +1,4 @@
-[ ![CI](https://travis-ci.com/spekframework/spek.svg?branch=2.x) ](https://travis-ci.com/spekframework/spek)
+[ ![Build Status](https://dev.azure.com/spekframework/spek/_apis/build/status/spekframework.spek?branchName=2.x) ](https://dev.azure.com/spekframework/spek/_build/latest?definitionId=1&branchName=2.x)
 [ ![Download](https://img.shields.io/badge/dynamic/json.svg?label=stable&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fspekframework%2Fspek%2Fspek2%2Fversions%2F_latest&query=name&colorB=blue) ](https://bintray.com/spekframework/spek/spek2/_latestVersion)
 [ ![Download](https://img.shields.io/badge/dynamic/json.svg?label=dev&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fspekframework%2Fspek-dev%2Fspek2%2Fversions%2F_latest&query=name&colorB=blue) ](https://bintray.com/spekframework/spek-dev/spek2/_latestVersion)
 
