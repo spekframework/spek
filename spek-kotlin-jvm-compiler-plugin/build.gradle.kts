@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("sdtlib-jdk8"))
+    implementation(kotlin("stdlib-jdk8"))
     compileOnly(kotlin("compiler-embeddable"))
 
     implementation(Dependencies.autoService)

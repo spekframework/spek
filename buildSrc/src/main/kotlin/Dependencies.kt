@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-
 object Dependencies {
     val hamkrest = "com.natpryce:hamkrest:1.1.0.0"
 
