@@ -7,9 +7,8 @@ object Dependencies {
     val junitPlatformRunner = "org.junit.platform:junit-platform-runner:1.1.1"
     val junitPlatformLauncher = "org.junit.platform:junit-platform-launcher:1.1.1"
 
-    val junitJupiterEngine = "org.junit.platform:junit-jupiter-engine:5.0.1"
-    val junitJupiterRunner = "org.junit.platform:junit-jupiter-runner:5.0.1"
-    val junitJupiterLauncher = "org.junit.platform:junit-jupiter-launcher:5.0.1"
+    val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:5.1.1"
+    val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:5.1.1"
 
     val classgraph = "io.github.classgraph:classgraph:4.8.37"
 

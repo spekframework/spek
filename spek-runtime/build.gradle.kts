@@ -76,7 +76,7 @@ kotlin {
     }
 }
 
-val stubJavaDocJar by tasks.creating(Jar::class) {
+val stubJavaDocJar by tasks.registering(Jar::class) {
     archiveClassifier.value("javadoc")
 }
 
@@ -86,7 +86,7 @@ publishing {
     kotlin.targets.forEach { target ->
         val targetPublication: Publication? = publications.findByName(target.name)
         if (targetPublication is MavenPublication) {
-            targetPublication.artifact(stubJavaDocJar)
+            targetPublication.artifact(stubJavaDocJar.get())
         }
     }
 }
