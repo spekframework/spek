@@ -14,7 +14,7 @@ include("integration-test")
 
 val excludeIdePlugins: String? by settings
 
-if (excludeIdePlugins != null) {
+if (excludeIdePlugins == null) {
     include("spek-ide-plugin:interop-jvm")
     include("spek-ide-plugin:intellij-base")
     include("spek-ide-plugin:intellij-base-jvm")
