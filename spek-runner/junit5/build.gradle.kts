@@ -17,7 +17,7 @@ dependencies {
     testRuntimeOnly(Dependencies.junitJupiterEngine)
 }
 
-val baseName = "spek-runner-junit5"
+val archiveName = "spek-runner-junit5"
 
 tasks {
     test {
@@ -27,12 +27,12 @@ tasks {
     }
 
     jar {
-        archiveBaseName.value(baseName)
+        archiveBaseName.value(archiveName)
     }
 }
 
 val sourceJar by tasks.registering(Jar::class) {
-    archiveBaseName.value(baseName)
+    archiveBaseName.value(archiveName)
     archiveClassifier.value("sources")
     from(sourceSets.main.get().java)
 }

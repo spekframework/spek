@@ -21,4 +21,6 @@ object Dependencies {
     val kotlinCoroutinesCoreCommon = "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.2.1"
     val kotlinCoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.2.1"
     val kotlinCoroutinesNative = "org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.1"
+
+    val autoService = "com.google.auto.service:auto-service:1.0-rc4"
 }
