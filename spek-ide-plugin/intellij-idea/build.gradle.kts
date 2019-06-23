@@ -68,5 +68,8 @@ tasks {
         setSinceBuild(settings.version.since)
         setUntilBuild(settings.version.until)
     }
+}
 
+apply {
+    plugin("publish-plugin")
 }

@@ -2,14 +2,6 @@ plugins {
     id("com.jfrog.bintray")
 }
 
-fun propOrEnv(name: String): String {
-    var property: String? = project.findProperty(name) as String?
-    if (property == null) {
-        property = System.getenv(name)
-    }
-    return checkNotNull(property)
-}
-
 val bintrayUser = propOrEnv("BINTRAY_USER")
 val bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
