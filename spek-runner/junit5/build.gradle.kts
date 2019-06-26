@@ -52,3 +52,9 @@ publishing {
         }
     }
 }
+
+project.extra["artifacts"] = arrayOf("maven")
+
+apply {
+    plugin("publish")
+}
