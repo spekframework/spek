@@ -82,6 +82,10 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
 
 project.extra["artifacts"] = arrayOf("metadata", "jvm")
 
+apply {
+    plugin("publish")
+}
+
 publishing {
     kotlin.targets.forEach { target ->
         val targetPublication: Publication? = publications.findByName(target.name)
