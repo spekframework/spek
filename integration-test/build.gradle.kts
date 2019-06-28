@@ -4,13 +4,17 @@ buildscript {
     }
 
     dependencies {
-        classpath("${project.group}:spek-gradle-plugin")
+        classpath("org.spekframework.spek2:spek-gradle-plugin")
     }
 }
 
 plugins {
     kotlin("multiplatform")
-    id("org.spekframework.spek2.gradle-plugin")
+}
+
+apply {
+    // plugins block does not supported included projects (composite build)
+    plugin("org.spekframework.spek2.gradle")
 }
 
 kotlin {
@@ -44,7 +48,7 @@ kotlin {
             compilations["test"].defaultSourceSet {
                 dependencies {
                     runtimeOnly(kotlin("reflect"))
-                    runtimeOnly(project(":spek-runner:junit5"))
+                    runtimeOnly(project(":spek-runner-junit5"))
                 }
             }
         }
@@ -131,8 +135,8 @@ tasks {
 // the spek-runtime and compiler plugin projects, rather than trying to download the not-yet-published version from a Maven repository.
 configurations.forEach {
     it.resolutionStrategy.dependencySubstitution {
-        substitute(module("$group:spek-runtime")).with(project(":spek-runtime"))
-        substitute(module("$group:spek-kotlin-jvm-compiler-plugin")).with(project(":spek-kotlin-jvm-compiler-plugin"))
-        substitute(module("$group:spek-kotlin-native-compiler-plugin")).with(project(":spek-kotlin-native-compiler-plugin"))
+        substitute(module("org.spekframework.spek2:spek-runtime")).with(project(":spek-runtime"))
+        substitute(module("org.spekframework.spek2:spek-kotlin-compiler-plugin-jvm")).with(project(":spek-kotlin-compiler-plugin-jvm"))
+        substitute(module("org.spekframework.spek2:spek-kotlin-compiler-plugin-native")).with(project(":spek-kotlin-compiler-plugin-native"))
     }
 }

@@ -74,7 +74,7 @@ class RunnerTests {
         launcher.execute(
             LauncherDiscoveryRequestBuilder.request()
                 .filters(EngineFilter.includeEngines("spek2"))
-                .selectors(DiscoverySelectors.selectClass("testData.package1.SpekTest1"))
+                .selectors(DiscoverySelectors.selectClass("SpekTest1"))
                 .build(),
             listener
         )
@@ -90,7 +90,7 @@ class RunnerTests {
         launcher.execute(
             LauncherDiscoveryRequestBuilder.request()
                 .filters(EngineFilter.includeEngines("spek2"))
-                .selectors(DiscoverySelectors.selectClass("testData.package1.SpekTestWithFailureDuringRootDiscoveryPhase"))
+                .selectors(DiscoverySelectors.selectClass("SpekTestWithFailureDuringRootDiscoveryPhase"))
                 .build(),
             listener
         )
@@ -106,7 +106,7 @@ class RunnerTests {
     launcher.execute(
         LauncherDiscoveryRequestBuilder.request()
             .filters(EngineFilter.includeEngines("spek2"))
-            .selectors(DiscoverySelectors.selectClass("testData.package1.SpekTestWithFailureDuringGroupDiscoveryPhase"))
+            .selectors(DiscoverySelectors.selectClass("SpekTestWithFailureDuringGroupDiscoveryPhase"))
             .build(),
         listener
     )
@@ -122,7 +122,7 @@ class RunnerTests {
         launcher.execute(
                 LauncherDiscoveryRequestBuilder.request()
                         .filters(EngineFilter.includeEngines("spek2"))
-                        .selectors(DiscoverySelectors.selectClass("testData.TestWithFailure"))
+                        .selectors(DiscoverySelectors.selectClass("TestWithFailure"))
                         .build(),
                 listener
         )

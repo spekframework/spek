@@ -6,6 +6,7 @@ plugins {
 kotlin {
     jvm {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-jvm"
         }
 
@@ -13,18 +14,21 @@ kotlin {
 
     linuxX64("linux") {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-linux"
         }
     }
 
     macosX64("macOS") {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-macos"
         }
     }
 
     mingwX64("windows") {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-windows"
         }
     }

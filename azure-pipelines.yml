@@ -16,7 +16,7 @@ stages:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
             inputs:
-              tasks: 'spek-runner:junit5:check integration-test:check'
+              tasks: 'spek-runner-junit5:check integration-test:check'
               options: '--stacktrace -PexcludeIdePlugins'
       - job: macos
         pool:
@@ -58,7 +58,7 @@ stages:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
             inputs:
-              tasks: 'spek-ide-plugin:intellij-idea:buildPlugin'
+              tasks: 'spek-ide-plugin-intellij-idea:buildPlugin'
               options: '--stacktrace -Pij.version=$(ij_sdk)'
       - job: android_studio
         pool:
@@ -75,7 +75,7 @@ stages:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
             inputs:
-              tasks: 'spek-ide-plugin:android-studio:buildPlugin'
+              tasks: 'spek-ide-plugin-android-studio:buildPlugin'
               options: '--stacktrace -Pas.version=$(as_sdk)'
 
   - stage: release
@@ -92,7 +92,7 @@ stages:
               BINTRAY_USER: $(BINTRAY_USER)
               BINTRAY_API_KEY: $(BINTRAY_API_KEY)
             inputs:
-              tasks: 'spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner:junit5:bintrayUpload'
+              tasks: 'spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner-junit5:bintrayUpload'
               options: '--stacktrace -PexcludeIdePlugins'
       - job: intellij_idea_plugins
         pool:
@@ -111,7 +111,7 @@ stages:
             env:
               HUB_API_TOKEN: $(HUB_API_TOKEN)
             inputs:
-              tasks: 'spek-ide-plugin:intellij-idea:publishPlugin'
+              tasks: 'spek-ide-plugin-intellij-idea:publishPlugin'
               options: '--stacktrace -Pij.version=$(ij_sdk)'
       - job: android_studio_plugins
         pool:
@@ -130,7 +130,7 @@ stages:
             env:
               HUB_API_TOKEN: $(HUB_API_TOKEN)
             inputs:
-              tasks: 'spek-ide-plugin:android-studio:publishPlugin'
+              tasks: 'spek-ide-plugin-android-studio:publishPlugin'
               options: '--stacktrace -Pas.version=$(as_sdk)'
 
   - stage: update

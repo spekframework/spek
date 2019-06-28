@@ -6,35 +6,36 @@ plugins {
 }
 
 val buildMatrix = mapOf(
-    "IJ182" to ij.BuildConfig(
-        "2018.2.5",
-        "IJ2018.2",
-        "IJ182",
-        ij.VersionRange("182.1", "182.*"),
-        arrayOf("org.jetbrains.kotlin:1.3.30-release-IJ2018.2-1")
+    "AS33" to ij.BuildConfig(
+        "182.5107.16",
+        "Studio3.3",
+        "AS33",
+        ij.VersionRange("182.5107", "182.5107.*"),
+        arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.3-1")
     ),
-    "IJ183" to ij.BuildConfig(
-        "183.4284.36",
-        "IJ2018.3",
-        "IJ183",
-        ij.VersionRange("183.1", "183.*"),
-        arrayOf("org.jetbrains.kotlin:1.3.30-release-IJ2018.3-1")
+    "AS34" to ij.BuildConfig(
+        "183.6156.11",
+        "Studio3.4",
+        "AS34",
+        ij.VersionRange("183.6156", "183.6156.*"),
+        arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.4-1")
     ),
-    "IJ191" to ij.BuildConfig(
-        "2019.1",
-        "IJ2019.1",
-        "IJ183",
-        ij.VersionRange("191.1", "191.*"),
-        arrayOf("org.jetbrains.kotlin:1.3.30-release-IJ2019.1-1")
+    "AS35" to ij.BuildConfig(
+        "191.7141.44",
+        "Studio3.5",
+        "AS34",
+        ij.VersionRange("191.7141", "191.7141.*"),
+        arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.5-1")
     )
 )
 
-val sdkVersion = project.properties["ij.version"] ?: "IJ191"
+val sdkVersion = project.properties["as.version"] ?: "AS34"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {
     pluginName = "Spek Framework"
-    setPlugins(*settings.deps)
+    val plugins = arrayOf("gradle", "android") + settings.deps
+    setPlugins(*plugins)
     version = settings.sdk
 }
 
@@ -47,7 +48,7 @@ sourceSets {
 }
 
 dependencies {
-    compile(project(":spek-ide-plugin:intellij-base-jvm"))
+    compile(project(":spek-ide-plugin-intellij-base-jvm"))
     compileOnly(kotlin("stdlib"))
 }
 
