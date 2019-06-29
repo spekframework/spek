@@ -37,7 +37,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":spek-dsl"))
-                implementation(kotlin("stdlib"))
+                implementation(kotlin("stdlib-common"))
                 implementation(Dependencies.kotlinCoroutinesCoreCommon)
             }
         }

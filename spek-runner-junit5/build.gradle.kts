@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib-jdk8"))
     implementation(project(":spek-runtime"))
     implementation(Dependencies.junitPlatformEngine)
 
