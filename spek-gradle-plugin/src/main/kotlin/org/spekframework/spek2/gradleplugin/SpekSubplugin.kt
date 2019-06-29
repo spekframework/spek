@@ -29,7 +29,7 @@ class SpekSubplugin : KotlinGradleSubplugin<AbstractCompile> {
 
         return SubpluginArtifact(
                 SpekPlugin.spekMavenGroup,
-                "spek-kotlin-jvm-compiler-plugin",
+                "spek-kotlin-compiler-plugin-jvm",
                 SpekPlugin.spekVersion
         )
     }
@@ -37,7 +37,7 @@ class SpekSubplugin : KotlinGradleSubplugin<AbstractCompile> {
     override fun getNativeCompilerPluginArtifact(): SubpluginArtifact? {
         return SubpluginArtifact(
                 SpekPlugin.spekMavenGroup,
-                "spek-kotlin-native-compiler-plugin",
+                "spek-kotlin-compiler-plugin-native",
                 SpekPlugin.spekVersion
         )
     }

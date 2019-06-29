@@ -17,7 +17,7 @@ reckon {
 gradlePlugin {
     plugins {
         create("spekPlugin") {
-            id = "${project.group}.gradle-plugin"
+            id = "org.spekframework.spek2.gradle"
             implementationClass = "org.spekframework.spek2.gradleplugin.SpekPlugin"
         }
     }

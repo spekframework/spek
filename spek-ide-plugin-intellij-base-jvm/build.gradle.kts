@@ -10,8 +10,8 @@ intellij {
 }
 
 dependencies {
-    compile(project(":spek-ide-plugin:intellij-base"))
-    compile(project(path = ":spek-ide-plugin:interop-jvm", configuration = "shadow"))
+    compile(project(":spek-ide-plugin-intellij-base"))
+    compile(project(path = ":spek-ide-plugin-interop-jvm", configuration = "shadow"))
     compileOnly(kotlin("stdlib"))
 }
 

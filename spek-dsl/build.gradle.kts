@@ -6,24 +6,28 @@ plugins {
 kotlin {
     jvm {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-jvm"
         }
     }
 
     linuxX64("linux") {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-linux"
         }
     }
 
     macosX64("macOS") {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-macos"
         }
     }
 
     mingwX64("windows") {
         mavenPublication {
+            groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-windows"
         }
     }
@@ -31,7 +35,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
+                implementation(kotlin("stdlib-common"))
             }
         }
         
@@ -40,24 +44,6 @@ kotlin {
                 dependencies {
                     implementation(kotlin("stdlib-jdk8"))
                 }
-            }
-        }
-
-        linuxX64("linux") {
-            mavenPublication {
-                artifactId = "spek-dsl-native-linux"
-            }
-        }
-
-        macosX64("macOS") {
-            mavenPublication {
-                artifactId = "spek-dsl-native-macos"
-            }
-        }
-
-        mingwX64("windows") {
-            mavenPublication {
-                artifactId = "spek-dsl-native-windows"
             }
         }
     }

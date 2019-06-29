@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":spek-runtime"))
     implementation(kotlin("stdlib-jdk8"))
+    implementation(project(":spek-runtime"))
     implementation(Dependencies.junitPlatformEngine)
 
     testImplementation(Dependencies.hamkrest)
@@ -17,7 +17,7 @@ dependencies {
     testRuntimeOnly(Dependencies.junitJupiterEngine)
 }
 
-val archiveName = "spek-runner-junit5"
+val archive = "spek-runner-junit5"
 
 tasks {
     test {
@@ -27,12 +27,12 @@ tasks {
     }
 
     jar {
-        archiveBaseName.value(archiveName)
+        archiveBaseName.value(archive)
     }
 }
 
 val sourceJar by tasks.registering(Jar::class) {
-    archiveBaseName.value(archiveName)
+    archiveBaseName.value(archive)
     archiveClassifier.value("sources")
     from(sourceSets.main.get().java)
 }
