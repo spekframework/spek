@@ -19,7 +19,7 @@ kotlin {
         }
     }
 
-    macosX64("macOS") {
+    macosX64("macos") {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-macos"
@@ -66,7 +66,7 @@ kotlin {
             }
         }
 
-        macosX64("macOS") {
+        macosX64("macos") {
             compilations["main"].defaultSourceSet {
                 dependsOn(nativeMain)
             }

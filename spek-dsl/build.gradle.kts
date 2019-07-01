@@ -18,7 +18,7 @@ kotlin {
         }
     }
 
-    macosX64("macOS") {
+    macosX64("macos") {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-macos"
@@ -53,7 +53,11 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
     archiveClassifier.value("javadoc")
 }
 
-project.extra["artifacts"] = arrayOf("metadata", "jvm")
+project.extra["artifacts"] = when (currentOS) {
+    OS.LINUX -> arrayOf("metadata", "jvm", "linux")
+    OS.WINDOWS -> arrayOf("windows")
+    OS.MACOS -> arrayOf("macos")
+}
 
 apply {
     plugin("publish")

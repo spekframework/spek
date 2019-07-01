@@ -94,6 +94,30 @@ stages:
             inputs:
               tasks: 'spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner-junit5:bintrayUpload'
               options: '--stacktrace -PexcludeIdePlugins'
+      - job: macos
+        pool:
+          vmImage: 'macOS-10.14'
+        steps:
+          - script: './ci/install-jdk10.sh'
+          - task: Gradle@2
+            env:
+              BINTRAY_USER: $(BINTRAY_USER)
+              BINTRAY_API_KEY: $(BINTRAY_API_KEY)
+            inputs:
+              tasks: 'spek-dsl:bintrayUpload'
+              options: '--stacktrace -PexcludeIdePlugins'
+      - job: windows
+        pool:
+          vmImage: 'win1803'
+        steps:
+          - script: './ci/install-jdk10.sh'
+          - task: Gradle@2
+            env:
+              BINTRAY_USER: $(BINTRAY_USER)
+              BINTRAY_API_KEY: $(BINTRAY_API_KEY)
+            inputs:
+              tasks: 'spek-dsl:bintrayUpload'
+              options: '--stacktrace -PexcludeIdePlugins'
       - job: intellij_idea_plugins
         pool:
           vmImage: 'ubuntu-16.04'
