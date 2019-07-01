@@ -11,6 +11,13 @@ kotlin {
         }
     }
 
+    js {
+        mavenPublication {
+            groupId = "org.spekframework.spek2"
+            artifactId = "spek-dsl-js"
+        }
+    }
+
     linuxX64("linux") {
         mavenPublication {
             groupId = "org.spekframework.spek2"
@@ -46,6 +53,14 @@ kotlin {
                 }
             }
         }
+
+        js {
+            compilations["main"].defaultSourceSet {
+                dependencies {
+                    implementation(kotlin("stdlib-js"))
+                }
+            }
+        }
     }
 }
 
@@ -54,7 +69,7 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
 }
 
 project.extra["artifacts"] = when (currentOS) {
-    OS.LINUX -> arrayOf("metadata", "jvm", "linux")
+    OS.LINUX -> arrayOf("metadata", "jvm", "js", "linux")
     OS.WINDOWS -> arrayOf("windows")
     OS.MACOS -> arrayOf("macos")
 }
