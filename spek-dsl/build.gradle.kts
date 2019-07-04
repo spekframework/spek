@@ -4,6 +4,13 @@ plugins {
 }
 
 kotlin {
+    metadata {
+        mavenPublication {
+            groupId = "org.spekframework.spek2"
+            artifactId = "spek-dsl-metadata"
+        }
+    }
+
     jvm {
         mavenPublication {
             groupId = "org.spekframework.spek2"
