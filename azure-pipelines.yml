@@ -110,7 +110,9 @@ stages:
         pool:
           vmImage: 'win1803'
         steps:
-          - script: './ci/install-jdk10.sh'
+          - task: PowerShell@2
+            inputs:
+              filePath: '.\ci\install-jdk10.ps1'
           - task: Gradle@2
             env:
               BINTRAY_USER: $(BINTRAY_USER)
