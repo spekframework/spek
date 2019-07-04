@@ -82,7 +82,7 @@ stages:
     dependsOn: test_ide_plugins
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/2.x'))
     jobs:
-      - job: jvm_and_linux
+      - job: jvm_js_and_linux
         pool:
           vmImage: 'ubuntu-16.04'
         steps:
