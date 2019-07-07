@@ -31,7 +31,7 @@ class ScopeDescriptorCache: ProjectComponent {
     }
 
     fun fromClassOrObject(clz: KtClassOrObject): ScopeDescriptor.Group? {
-        if (!isSpekSubclass(clz) || clz.isAbstract()) {
+        if (clz.isAbstract() || !isSpekSubclass(clz)) {
             return null
         }
         val fqName = checkNotNull(clz.fqName).asString()
@@ -182,10 +182,13 @@ class ScopeDescriptorCache: ProjectComponent {
                 val ref = entry.calleeExpression.constructorReferenceExpression
                     ?.mainReference
                     ?.resolve()
+                superClass = when (ref) {
+                    is KtPrimaryConstructor -> ref.getContainingClassOrObject()
+                    is KtClass -> ref
+                    else -> null
+                }
 
-                entry.lambdaArguments
-                if (ref is KtPrimaryConstructor) {
-                    superClass = ref.getContainingClassOrObject()
+                if (superClass != null) {
                     break
                 }
             }
