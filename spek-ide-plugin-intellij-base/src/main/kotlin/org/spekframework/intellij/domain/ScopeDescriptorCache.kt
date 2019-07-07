@@ -7,6 +7,7 @@ import org.jetbrains.kotlin.idea.refactoring.fqName.getKotlinFqName
 import org.jetbrains.kotlin.idea.refactoring.isAbstract
 import org.jetbrains.kotlin.idea.references.mainReference
 import org.jetbrains.kotlin.psi.*
+import org.jetbrains.kotlin.psi.psiUtil.isObjectLiteral
 import org.jetbrains.kotlin.resolve.lazy.data.KtClassInfoUtil
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -31,7 +32,7 @@ class ScopeDescriptorCache: ProjectComponent {
     }
 
     fun fromClassOrObject(clz: KtClassOrObject): ScopeDescriptor.Group? {
-        if (!isSpekSubclass(clz) || clz.isAbstract()) {
+        if (!isSpekSubclass(clz) || clz.isAbstract() || clz.isObjectLiteral()) {
             return null
         }
         val fqName = checkNotNull(clz.fqName).asString()
