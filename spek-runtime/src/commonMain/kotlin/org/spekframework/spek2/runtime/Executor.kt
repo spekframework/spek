@@ -16,9 +16,10 @@ class Executor {
         request.executionListener.executionFinish()
     }
 
-    private fun execute(scope: ScopeImpl, listener: ExecutionListener) {
+    private fun execute(scope: ScopeImpl, listener: ExecutionListener): ExecutionResult? {
         if (scope.skip is Skip.Yes) {
             scopeIgnored(scope, scope.skip.reason, listener)
+            return null
         } else {
             scopeExecutionStarted(scope, listener)
 
@@ -27,7 +28,12 @@ class Executor {
                     when (scope) {
                         is GroupScopeImpl -> {
                             scope.before()
-                            scope.getChildren().forEach { execute(it, listener) }
+                            for (it in scope.getChildren()) {
+                                val result = execute(it, listener)
+                                if (scope.failFast && it is TestScopeImpl && result is ExecutionResult.Failure) {
+                                    break
+                                }
+                            }
                         }
                         is TestScopeImpl -> {
                             doRunBlocking {
@@ -60,6 +66,8 @@ class Executor {
             }
 
             scopeExecutionFinished(scope, result, listener)
+
+            return result
         }
     }
 

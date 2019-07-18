@@ -40,7 +40,8 @@ open class GroupScopeImpl(
     override val parent: GroupScope?,
     skip: Skip,
     lifecycleManager: LifecycleManager,
-    preserveExecutionOrder: Boolean
+    preserveExecutionOrder: Boolean,
+    val failFast: Boolean = false
 ) : ScopeImpl(id, path, skip, lifecycleManager), GroupScope {
 
     private val children = mutableListOf<ScopeImpl>()

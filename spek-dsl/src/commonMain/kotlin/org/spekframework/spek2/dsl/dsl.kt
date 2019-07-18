@@ -19,7 +19,7 @@ interface Root : GroupBody {
 interface GroupBody : LifecycleAware, TestContainer {
     @Synonym(type = SynonymType.GROUP)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun group(description: String, skip: Skip = Skip.No, defaultCachingMode: CachingMode = CachingMode.INHERIT, preserveExecutionOrder: Boolean = false, body: GroupBody.() -> Unit)
+    fun group(description: String, skip: Skip = Skip.No, defaultCachingMode: CachingMode = CachingMode.INHERIT, preserveExecutionOrder: Boolean = false, failFast: Boolean = false, body: GroupBody.() -> Unit)
 }
 
 @SpekDsl
