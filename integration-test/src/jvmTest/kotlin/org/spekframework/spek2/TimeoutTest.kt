@@ -9,7 +9,7 @@ object TimeoutTest: AbstractSpekTest({ helper ->
             val recorder = helper.executeTest(testData.timeoutTest.DefaultTimeoutTest)
 
             helper.assertExecutionEquals(
-                recorder.events().also { println(it) }
+                recorder.events()
             ) {
                 group("DefaultTimeoutTest") {
                     test("should timeout", false)
@@ -31,7 +31,7 @@ object TimeoutTest: AbstractSpekTest({ helper ->
             val recorder = helper.executeTest(testData.timeoutTest.CustomTimeoutTest)
 
             helper.assertExecutionEquals(
-                recorder.events().also { println(it) }
+                recorder.events()
             ) {
                 group("CustomTimeoutTest") {
                     test("should timeout", false)
