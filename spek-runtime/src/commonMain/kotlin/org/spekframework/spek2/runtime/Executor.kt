@@ -28,10 +28,17 @@ class Executor {
                     when (scope) {
                         is GroupScopeImpl -> {
                             scope.before()
+                            var failed = false
                             for (it in scope.getChildren()) {
+
+                                if (failed) {
+                                    scopeIgnored(it, "Previous failure detected, skipping.", listener)
+                                    continue
+                                }
+
                                 val result = execute(it, listener)
                                 if (scope.failFast && it is TestScopeImpl && result is ExecutionResult.Failure) {
-                                    break
+                                    failed = true
                                 }
                             }
                         }
