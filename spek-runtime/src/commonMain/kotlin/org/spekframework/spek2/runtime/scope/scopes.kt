@@ -4,6 +4,7 @@ import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.*
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
+import org.spekframework.spek2.runtime.lifecycle.MemoizedValueAdapter2
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import kotlin.properties.ReadOnlyProperty
 
@@ -14,13 +15,13 @@ sealed class ScopeImpl(
     val lifecycleManager: LifecycleManager
 ) : Scope {
 
-    private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
+    private val values = mutableMapOf<String, MemoizedValueAdapter2<*>>()
 
     abstract fun before()
     abstract fun execute()
     abstract fun after()
 
-    fun registerValue(name: String, value: ReadOnlyProperty<Any?, Any?>) {
+    protected fun registerValue(name: String, value: MemoizedValueAdapter2<*>) {
         values[name] = value
     }
 
@@ -42,7 +43,7 @@ open class GroupScopeImpl(
 ) : ScopeImpl(id, path, skip, lifecycleManager), GroupScope {
 
     private val children = mutableListOf<ScopeImpl>()
-    private val actions = mutableListOf<ScopeAction>()
+    private val declarations = mutableListOf<ScopeDeclaration>()
 
     fun addChild(child: ScopeImpl) {
         children.add(child)
@@ -75,11 +76,15 @@ open class GroupScopeImpl(
     override fun execute() = Unit
     override fun after() = lifecycleManager.afterExecuteGroup(this)
 
-    fun registerAction(action: ScopeAction) {
-        actions.add(action)
+    fun registerDeclaration(declaration: ScopeDeclaration) {
+        declarations.add(declaration)
+
+        if (declaration is ScopeDeclaration.Memoized<*>) {
+            registerValue(declaration.name, declaration.adapter)
+        }
     }
 
-    fun getActions(): List<ScopeAction> = actions.toList()
+    fun getDeclarations(): List<ScopeDeclaration> = declarations.toList()
 }
 
 class TestScopeImpl(

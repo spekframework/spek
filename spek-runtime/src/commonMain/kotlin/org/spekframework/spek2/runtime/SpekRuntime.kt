@@ -31,12 +31,12 @@ class SpekRuntime {
         return DiscoveryResult(scopes)
     }
 
-    fun execute(request: ExecutionRequest) = Executor().execute(request)
+    fun execute(request: ExecutionRequest) = Executor2().execute(request)
 
     private fun resolveSpec(instance: Spek, path: Path): GroupScopeImpl {
         val fixtures = FixturesAdapter()
         val lifecycleManager = LifecycleManager().apply {
-            addListener(fixtures)
+            //addListener(fixtures)
         }
 
         val (packageName, className) = ClassUtil.extractPackageAndClassNames(instance::class)

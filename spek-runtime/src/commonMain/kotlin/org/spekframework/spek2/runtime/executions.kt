@@ -5,17 +5,17 @@ import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
-import org.spekframework.spek2.runtime.scope.ScopeAction
+import org.spekframework.spek2.runtime.scope.ScopeDeclaration
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 interface ExecutionContext
 
 class ExecutionUnit(
-    private val beforeGroup: MutableList<ScopeAction>,
-    private val afterGroup: MutableList<ScopeAction>,
-    private val beforeEachTest: MutableList<ScopeAction>,
-    private val afterEachTest: MutableList<ScopeAction>,
+    private val beforeGroup: MutableList<ScopeDeclaration>,
+    private val afterGroup: MutableList<ScopeDeclaration>,
+    private val beforeEachTest: MutableList<ScopeDeclaration>,
+    private val afterEachTest: MutableList<ScopeDeclaration>,
     private val tests: MutableList<TestBody.() -> Unit>
 ) {
     fun execute(context: ExecutionContext) {
@@ -23,8 +23,8 @@ class ExecutionUnit(
             // before group fixtures and declare scope values (group & scope caching modes) in order
             beforeGroup.forEach {
                 when (it) {
-                    is ScopeAction.Fixture -> it.cb()
-                    is ScopeAction.Value<*> -> {
+                    is ScopeDeclaration.Fixture -> it.cb()
+                    is ScopeDeclaration.Memoized<*> -> {
                         // re-init scope value
                         when (it.cachingMode) {
                             CachingMode.GROUP, CachingMode.EACH_GROUP -> {
@@ -46,8 +46,8 @@ class ExecutionUnit(
                     // before each test fixtures and declare scope values (test caching mode) in order
                     beforeEachTest.forEach {
                         when (it) {
-                            is ScopeAction.Fixture -> it.cb()
-                            is ScopeAction.Value<*> -> {
+                            is ScopeDeclaration.Fixture -> it.cb()
+                            is ScopeDeclaration.Memoized<*> -> {
                                 // re-init scope value
                                 when (it.cachingMode) {
                                     CachingMode.TEST -> {
@@ -69,8 +69,8 @@ class ExecutionUnit(
                     // after each test fixtures and destruct scope values (test caching mode) in order
                     afterEachTest.forEach {
                         when (it) {
-                            is ScopeAction.Fixture -> it.cb()
-                            is ScopeAction.Value<*> -> {
+                            is ScopeDeclaration.Fixture -> it.cb()
+                            is ScopeDeclaration.Memoized<*> -> {
                                 // re-init scope value
                                 when (it.cachingMode) {
                                     CachingMode.TEST -> {
@@ -87,8 +87,8 @@ class ExecutionUnit(
             // after group fixtures and destruct scope values (group & scope caching modes) in order
             afterGroup.forEach {
                 when (it) {
-                    is ScopeAction.Fixture -> it.cb()
-                    is ScopeAction.Value<*> -> {
+                    is ScopeDeclaration.Fixture -> it.cb()
+                    is ScopeDeclaration.Memoized<*> -> {
                         // re-init scope value
                         when (it.cachingMode) {
                             CachingMode.GROUP, CachingMode.EACH_GROUP -> {
@@ -110,36 +110,36 @@ typealias Fixture = () -> Unit
 class ScopeValue<T>(val cachingMode: CachingMode, val factory: () -> T, val destructor: (T) -> Unit)
 
 class ExecutionUnitTemplate {
-    private val actions = mutableListOf<ScopeAction>()
+    private val actions = mutableListOf<ScopeDeclaration>()
     private val tests = mutableListOf<TestBody.() -> Unit>()
 
-    fun addAction(action: ScopeAction): ExecutionUnitTemplate {
-        this.actions.add(action)
+    fun addAction(declaration: ScopeDeclaration): ExecutionUnitTemplate {
+        this.actions.add(declaration)
         return this
     }
 
-    fun addActions(actions: List<ScopeAction>): ExecutionUnitTemplate {
-        this.actions.addAll(actions)
+    fun addActions(declarations: List<ScopeDeclaration>): ExecutionUnitTemplate {
+        this.actions.addAll(declarations)
         return this
     }
 
     fun build(): ExecutionUnit {
-        val beforeGroup = mutableListOf<ScopeAction>()
-        val afterGroup = mutableListOf<ScopeAction>()
-        val beforeEachTest = mutableListOf<ScopeAction>()
-        val afterEachTest = mutableListOf<ScopeAction>()
+        val beforeGroup = mutableListOf<ScopeDeclaration>()
+        val afterGroup = mutableListOf<ScopeDeclaration>()
+        val beforeEachTest = mutableListOf<ScopeDeclaration>()
+        val afterEachTest = mutableListOf<ScopeDeclaration>()
 
         actions.forEach {
             when (it) {
-                is ScopeAction.Fixture -> {
+                is ScopeDeclaration.Fixture -> {
                     when (it.type) {
-                        ScopeAction.FixtureType.BEFORE_GROUP -> beforeGroup.add(it)
-                        ScopeAction.FixtureType.AFTER_GROUP -> afterGroup.add(it)
-                        ScopeAction.FixtureType.BEFORE_EACH_TEST -> beforeEachTest.add(it)
-                        ScopeAction.FixtureType.AFTER_EACH_TEST -> afterEachTest.add(it)
+                        ScopeDeclaration.FixtureType.BEFORE_GROUP -> beforeGroup.add(it)
+                        ScopeDeclaration.FixtureType.AFTER_GROUP -> afterGroup.add(it)
+                        ScopeDeclaration.FixtureType.BEFORE_EACH_TEST -> beforeEachTest.add(it)
+                        ScopeDeclaration.FixtureType.AFTER_EACH_TEST -> afterEachTest.add(it)
                     }
                 }
-                is ScopeAction.Value<*> -> {
+                is ScopeDeclaration.Memoized<*> -> {
                     when (it.cachingMode) {
                         CachingMode.GROUP, CachingMode.EACH_GROUP, CachingMode.SCOPE -> {
                             beforeGroup.add(it)
@@ -183,8 +183,7 @@ class ExecutionPlanner(private val fixturesAdapter: FixturesAdapter) {
                 if (isFailFast) {
                     // yield unit, fail fast should only contain test scopes as children
                 } else {
-                    template.addAction(ScopeAction.GroupStart(scope))
-                    template.addActions(scope.getActions())
+                    template.addActions(scope.getDeclarations())
 
                     scope.getChildren().forEach { doPlan(it, template) }
                 }

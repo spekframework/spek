@@ -1,6 +1,9 @@
 package org.spekframework.spek2.runtime
 
-import org.spekframework.spek2.dsl.*
+import org.spekframework.spek2.dsl.GroupBody
+import org.spekframework.spek2.dsl.Root
+import org.spekframework.spek2.dsl.Skip
+import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.MemoizedValue
@@ -22,7 +25,6 @@ class Collector(
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
-        root.registerAction(ScopeAction.value(mode, factory, destructor))
         return MemoizedValueCreator(
             root,
             mode,
@@ -89,23 +91,23 @@ class Collector(
     }
 
     override fun beforeEachTest(callback: () -> Unit) {
-        root.registerAction(ScopeAction.beforeEachTest(callback))
-        fixtures.registerBeforeEachTest(root, callback)
+        root.registerDeclaration(ScopeDeclaration.beforeEachTest(callback))
+//        fixtures.registerBeforeEachTest(root, callback)
     }
 
     override fun afterEachTest(callback: () -> Unit) {
-        root.registerAction(ScopeAction.afterEachTest(callback))
-        fixtures.registerAfterEachTest(root, callback)
+        root.registerDeclaration(ScopeDeclaration.afterEachTest(callback))
+//        fixtures.registerAfterEachTest(root, callback)
     }
 
     override fun beforeGroup(callback: () -> Unit) {
-        root.registerAction(ScopeAction.beforeGroup(callback))
-        fixtures.registerBeforeGroup(root, callback)
+        root.registerDeclaration(ScopeDeclaration.beforeGroup(callback))
+//        fixtures.registerBeforeGroup(root, callback)
     }
 
     override fun afterGroup(callback: () -> Unit) {
-        root.registerAction(ScopeAction.afterGroup(callback))
-        fixtures.registerAfterGroup(root, callback)
+        root.registerDeclaration(ScopeDeclaration.afterGroup(callback))
+//        fixtures.registerAfterGroup(root, callback)
     }
 
     private fun idFor(description: String): ScopeId {
