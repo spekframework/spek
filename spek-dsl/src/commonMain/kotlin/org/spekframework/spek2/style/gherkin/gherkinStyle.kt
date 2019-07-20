@@ -23,7 +23,7 @@ class FeatureBody(val delegate: GroupBody): LifecycleAware by delegate {
     @Synonym(SynonymType.GROUP, prefix = "Scenario: ")
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
     fun Scenario(description: String, body: ScenarioBody.() -> Unit) {
-        delegate.group("Scenario: $description", defaultCachingMode = CachingMode.SCOPE, preserveExecutionOrder = true) {
+        delegate.group("Scenario: $description", defaultCachingMode = CachingMode.SCOPE, preserveExecutionOrder = true, failFast = true) {
             body(ScenarioBody(this))
         }
     }

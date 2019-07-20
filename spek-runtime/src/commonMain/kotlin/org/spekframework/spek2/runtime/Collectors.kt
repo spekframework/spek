@@ -38,14 +38,15 @@ class Collector(
         lifecycleManager.addListener(listener)
     }
 
-    override fun group(description: String, skip: Skip, defaultCachingMode: CachingMode, preserveExecutionOrder: Boolean, body: GroupBody.() -> Unit) {
+    override fun group(description: String, skip: Skip, defaultCachingMode: CachingMode, preserveExecutionOrder: Boolean, failFast: Boolean, body: GroupBody.() -> Unit) {
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
             root,
             skip,
             lifecycleManager,
-            preserveExecutionOrder
+            preserveExecutionOrder,
+            failFast
         )
         root.addChild(group)
         val cachingMode = if (defaultCachingMode == CachingMode.INHERIT) {
