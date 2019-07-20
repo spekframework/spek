@@ -40,15 +40,19 @@ class Executor2 {
         }
 
         scopeExecutionStarted(group, listener)
-        val phases = extractPhases(group.getDeclarations())
-        val combinedBeforeEachGroup = beforeEachGroup + phases.beforeEachGroup
-        val combinedAfterEachGroup = phases.afterEachGroup + afterEachGroup
-        val combinedBeforeEachTest = beforeEachTest + phases.beforeEachTest
-        val combinedAfterEachTest = phases.afterEachTest + afterEachTest
+        val currentScopePhases = extractPhases(group.getDeclarations())
         val result = executeSafely {
             try {
-                executeBeforeGroup(phases.beforeGroup)
+                // run before each groups from parent
                 executeBeforeEachGroup(beforeEachGroup)
+                executeBeforeGroup(currentScopePhases.beforeGroup)
+
+                // accumulate declarations needed by descendants
+                val combinedBeforeEachGroup = beforeEachGroup + currentScopePhases.beforeEachGroup
+                val combinedAfterEachGroup = currentScopePhases.afterEachGroup + afterEachGroup
+                val combinedBeforeEachTest = beforeEachTest + currentScopePhases.beforeEachTest
+                val combinedAfterEachTest = currentScopePhases.afterEachTest + afterEachTest
+
                 if (group.failFast) {
                     // fail fast group should only contain tests
                     val tests = group.getChildren().map { it as TestScopeImpl }
@@ -74,8 +78,9 @@ class Executor2 {
                     }
                 }
             } finally {
+                executeAfterGroup(currentScopePhases.afterGroup)
+                // run after each groups from parent
                 executeAfterEachGroup(afterEachGroup)
-                executeAfterGroup(phases.afterGroup)
             }
         }
 
@@ -150,25 +155,6 @@ class Executor2 {
         }
     }
 
-    private fun doBeforeFixtures(before: List<ScopeDeclaration>) {
-        before.filterIsInstance<ScopeDeclaration.Fixture>()
-            .forEach { it.cb() }
-    }
-
-    private fun doAfterFixtures(after: List<ScopeDeclaration>) {
-        after.filterIsInstance<ScopeDeclaration.Fixture>()
-            .forEach { it.cb }
-    }
-
-    private fun doBeforeMemoized(before: List<ScopeDeclaration>) {
-        before.filterIsInstance<ScopeDeclaration.Memoized<*>>()
-            .forEach { it.adapter.init() }
-    }
-
-    private fun doAfterMemoized(after: List<ScopeDeclaration>) {
-        after.filterIsInstance<ScopeDeclaration.Memoized<*>>()
-            .forEach { it.adapter.destroy() }
-    }
 
     private fun executeBeforeGroup(beforeGroup: List<ScopeDeclaration>) {
         beforeGroup.forEach {
@@ -197,6 +183,7 @@ class Executor2 {
             when (it) {
                 is ScopeDeclaration.Fixture -> it.cb()
                 is ScopeDeclaration.Memoized<*> -> {
+                    // TODO: need a stack here for nested groups
                     it.adapter.init()
                 }
             }
@@ -227,11 +214,17 @@ class Executor2 {
                 is ScopeDeclaration.Fixture -> {
                     when (it.type) {
                         ScopeDeclaration.FixtureType.BEFORE_GROUP -> beforeGroup.add(it)
-                        ScopeDeclaration.FixtureType.AFTER_GROUP -> afterGroup.add(it)
-                        ScopeDeclaration.FixtureType.BEFORE_EACH_GROUP -> beforeEachGroup.add(it)
-                        ScopeDeclaration.FixtureType.AFTER_EACH_GROUP -> afterEachGroup.add(it)
+                        ScopeDeclaration.FixtureType.AFTER_GROUP -> afterGroup.add(0, it)
+                        ScopeDeclaration.FixtureType.BEFORE_EACH_GROUP -> {
+                            beforeGroup.add(it)
+                            beforeEachGroup.add(it)
+                        }
+                        ScopeDeclaration.FixtureType.AFTER_EACH_GROUP -> {
+                            afterGroup.add(0, it)
+                            afterEachGroup.add(0, it)
+                        }
                         ScopeDeclaration.FixtureType.BEFORE_EACH_TEST -> beforeEachTest.add(it)
-                        ScopeDeclaration.FixtureType.AFTER_EACH_TEST -> afterEachTest.add(it)
+                        ScopeDeclaration.FixtureType.AFTER_EACH_TEST -> afterEachTest.add(0, it)
                         else -> throw IllegalArgumentException("Invalid fixture type: ${it.type}")
                     }
                 }
@@ -239,15 +232,18 @@ class Executor2 {
                     when (it.cachingMode) {
                         CachingMode.GROUP, CachingMode.EACH_GROUP -> {
                             beforeGroup.add(it)
-                            afterGroup.add(it)
+                            afterGroup.add(0, it)
+
+                            beforeEachGroup.add(it)
+                            afterEachGroup.add(0, it)
                         }
                         CachingMode.SCOPE -> {
-                            beforeEachGroup.add(it)
-                            afterEachGroup.add(it)
+                            beforeGroup.add(it)
+                            afterGroup.add(0, it)
                         }
                         CachingMode.TEST -> {
                             beforeEachTest.add(it)
-                            afterEachTest.add(it)
+                            afterEachTest.add(0, it)
                         }
                         else -> throw IllegalArgumentException("Invalid caching mode: ${it.cachingMode}")
                     }
