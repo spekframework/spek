@@ -1,5 +1,8 @@
 package org.spekframework.spek2.runtime
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withTimeout
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.CachingMode
@@ -45,7 +48,7 @@ class Executor2 {
         val result = executeSafely {
             try {
                 executeBeforeGroup(phases.beforeGroup)
-                executeBeforeEachGroup(combinedBeforeEachGroup)
+                executeBeforeEachGroup(beforeEachGroup)
                 if (group.failFast) {
                     // fail fast group should only contain tests
                     val tests = group.getChildren().map { it as TestScopeImpl }
@@ -71,7 +74,7 @@ class Executor2 {
                     }
                 }
             } finally {
-                executeAfterEachGroup(combinedAfterEachGroup)
+                executeAfterEachGroup(afterEachGroup)
                 executeAfterGroup(phases.afterGroup)
             }
         }
@@ -89,13 +92,34 @@ class Executor2 {
         scopeExecutionStarted(test, listener)
         val result = executeSafely {
             try {
-                executeBeforeEachTest(beforeEachTest)
-                test.body(object: TestBody {
-                    override fun <T> memoized(): MemoizedValue<T> {
-                        return MemoizedValueReader(test)
+                doRunBlocking {
+                    // this needs to be here, in K/N the event loop
+                    // is started during a runBlocking call. Calling
+                    // any builders outside that will throw an exception.
+                    val job = GlobalScope.async {
+                        executeBeforeEachTest(beforeEachTest)
+                        test.body(object: TestBody {
+                            override fun <T> memoized(): MemoizedValue<T> {
+                                return MemoizedValueReader(test)
+                            }
+
+                        })
                     }
 
-                })
+                    val exception = withTimeout(test.timeout) {
+                        try {
+                            job.await()
+                            null
+                        } catch (e: Throwable) {
+                            e
+                        }
+                    }
+
+                    if (exception != null) {
+                        throw exception
+                    }
+                }
+
             } finally {
                 executeAfterEachTest(afterEachTest)
             }
@@ -124,6 +148,26 @@ class Executor2 {
                 }
             }
         }
+    }
+
+    private fun doBeforeFixtures(before: List<ScopeDeclaration>) {
+        before.filterIsInstance<ScopeDeclaration.Fixture>()
+            .forEach { it.cb() }
+    }
+
+    private fun doAfterFixtures(after: List<ScopeDeclaration>) {
+        after.filterIsInstance<ScopeDeclaration.Fixture>()
+            .forEach { it.cb }
+    }
+
+    private fun doBeforeMemoized(before: List<ScopeDeclaration>) {
+        before.filterIsInstance<ScopeDeclaration.Memoized<*>>()
+            .forEach { it.adapter.init() }
+    }
+
+    private fun doAfterMemoized(after: List<ScopeDeclaration>) {
+        after.filterIsInstance<ScopeDeclaration.Memoized<*>>()
+            .forEach { it.adapter.destroy() }
     }
 
     private fun executeBeforeGroup(beforeGroup: List<ScopeDeclaration>) {
