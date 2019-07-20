@@ -44,6 +44,14 @@ class FixturesAdapter : LifecycleListener {
         afterGroup.getOrPut(group, { mutableListOf() }).add(callback)
     }
 
+    fun getBeforeGroupFixtures(group: GroupScope): List<() -> Unit> {
+        return beforeGroup[group]?.toList() ?: emptyList()
+    }
+
+    fun getAfterGroupFixtures(group: GroupScope): List<() -> Unit> {
+        return afterGroup[group]?.toList() ?: emptyList()
+    }
+
     private fun invokeAllBeforeEachTest(group: GroupScope) {
         group.parent?.let {
             invokeAllBeforeEachTest(it)

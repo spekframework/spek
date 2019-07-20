@@ -22,6 +22,7 @@ class Collector(
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+        root.registerAction(ScopeAction.value(mode, factory, destructor))
         return MemoizedValueCreator(
             root,
             mode,
@@ -88,18 +89,22 @@ class Collector(
     }
 
     override fun beforeEachTest(callback: () -> Unit) {
+        root.registerAction(ScopeAction.beforeEachTest(callback))
         fixtures.registerBeforeEachTest(root, callback)
     }
 
     override fun afterEachTest(callback: () -> Unit) {
+        root.registerAction(ScopeAction.afterEachTest(callback))
         fixtures.registerAfterEachTest(root, callback)
     }
 
     override fun beforeGroup(callback: () -> Unit) {
+        root.registerAction(ScopeAction.beforeGroup(callback))
         fixtures.registerBeforeGroup(root, callback)
     }
 
     override fun afterGroup(callback: () -> Unit) {
+        root.registerAction(ScopeAction.afterGroup(callback))
         fixtures.registerAfterGroup(root, callback)
     }
 

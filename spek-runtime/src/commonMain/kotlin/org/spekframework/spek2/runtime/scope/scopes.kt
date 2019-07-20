@@ -2,10 +2,7 @@ package org.spekframework.spek2.runtime.scope
 
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
-import org.spekframework.spek2.lifecycle.GroupScope
-import org.spekframework.spek2.lifecycle.MemoizedValue
-import org.spekframework.spek2.lifecycle.Scope
-import org.spekframework.spek2.lifecycle.TestScope
+import org.spekframework.spek2.lifecycle.*
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import kotlin.properties.ReadOnlyProperty
@@ -45,6 +42,7 @@ open class GroupScopeImpl(
 ) : ScopeImpl(id, path, skip, lifecycleManager), GroupScope {
 
     private val children = mutableListOf<ScopeImpl>()
+    private val actions = mutableListOf<ScopeAction>()
 
     fun addChild(child: ScopeImpl) {
         children.add(child)
@@ -76,6 +74,12 @@ open class GroupScopeImpl(
     override fun before() = lifecycleManager.beforeExecuteGroup(this)
     override fun execute() = Unit
     override fun after() = lifecycleManager.afterExecuteGroup(this)
+
+    fun registerAction(action: ScopeAction) {
+        actions.add(action)
+    }
+
+    fun getActions(): List<ScopeAction> = actions.toList()
 }
 
 class TestScopeImpl(
@@ -83,7 +87,7 @@ class TestScopeImpl(
     path: Path,
     override val parent: GroupScope,
     val timeout: Long,
-    private val body: TestBody.() -> Unit,
+    val body: TestBody.() -> Unit,
     skip: Skip,
     lifecycleManager: LifecycleManager
 ) : ScopeImpl(id, path, skip, lifecycleManager), TestScope {
@@ -100,3 +104,4 @@ class TestScopeImpl(
 
     override fun after() = lifecycleManager.afterExecuteTest(this)
 }
+
