@@ -18,12 +18,78 @@ import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 
 class Executor2 {
-    private class ExecutionPhases(val beforeGroup: List<ScopeDeclaration>,
-                                  val afterGroup: List<ScopeDeclaration>,
-                                  val beforeEachGroup: List<ScopeDeclaration>,
-                                  val afterEachGroup: List<ScopeDeclaration>,
-                                  val beforeEachTest: List<ScopeDeclaration>,
-                                  val afterEachTest: List<ScopeDeclaration>)
+    /**
+     * beforeGroup and afterGroup contains declarations that needs to be invoked when the group is being executed.
+     * beforeEachGroup, afterEachGroup, beforeEachTest and afterEachTests are passed further down to the children
+     * of this group.
+     */
+    private class ScopeDeclarations(val beforeGroup: List<ScopeDeclaration>,
+                                    val afterGroup: List<ScopeDeclaration>,
+                                    val beforeEachGroup: List<ScopeDeclaration>,
+                                    val afterEachGroup: List<ScopeDeclaration>,
+                                    val beforeEachTest: List<ScopeDeclaration>,
+                                    val afterEachTest: List<ScopeDeclaration>) {
+        companion object {
+            fun from(scope: GroupScopeImpl): ScopeDeclarations {
+                return extractPhases(scope.getDeclarations())
+            }
+
+            private fun extractPhases(declarations: List<ScopeDeclaration>): ScopeDeclarations {
+                val beforeGroup = mutableListOf<ScopeDeclaration>()
+                val afterGroup = mutableListOf<ScopeDeclaration>()
+                val beforeEachGroup = mutableListOf<ScopeDeclaration>()
+                val afterEachGroup = mutableListOf<ScopeDeclaration>()
+                val beforeEachTest = mutableListOf<ScopeDeclaration>()
+                val afterEachTest = mutableListOf<ScopeDeclaration>()
+
+                declarations.forEach {
+                    when (it) {
+                        is ScopeDeclaration.Fixture -> {
+                            when (it.type) {
+                                ScopeDeclaration.FixtureType.BEFORE_GROUP -> beforeGroup.add(it)
+                                ScopeDeclaration.FixtureType.AFTER_GROUP -> afterGroup.add(0, it)
+                                ScopeDeclaration.FixtureType.BEFORE_EACH_GROUP -> {
+                                    beforeGroup.add(it)
+                                    beforeEachGroup.add(it)
+                                }
+                                ScopeDeclaration.FixtureType.AFTER_EACH_GROUP -> {
+                                    afterGroup.add(0, it)
+                                    afterEachGroup.add(0, it)
+                                }
+                                ScopeDeclaration.FixtureType.BEFORE_EACH_TEST -> beforeEachTest.add(it)
+                                ScopeDeclaration.FixtureType.AFTER_EACH_TEST -> afterEachTest.add(0, it)
+                                else -> throw IllegalArgumentException("Invalid fixture type: ${it.type}")
+                            }
+                        }
+                        is ScopeDeclaration.Memoized<*> -> {
+                            when (it.cachingMode) {
+                                CachingMode.GROUP, CachingMode.EACH_GROUP -> {
+                                    beforeGroup.add(it)
+                                    afterGroup.add(0, it)
+
+                                    beforeEachGroup.add(it)
+                                    afterEachGroup.add(0, it)
+                                }
+                                CachingMode.SCOPE -> {
+                                    beforeGroup.add(it)
+                                    afterGroup.add(0, it)
+                                }
+                                CachingMode.TEST -> {
+                                    beforeEachTest.add(it)
+                                    afterEachTest.add(0, it)
+                                }
+                                else -> throw IllegalArgumentException("Invalid caching mode: ${it.cachingMode}")
+                            }
+                        }
+                    }
+                }
+
+                return ScopeDeclarations(
+                    beforeGroup, afterGroup, beforeEachGroup, afterEachGroup, beforeEachTest, afterEachTest
+                )
+            }
+        }
+    }
 
     fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
@@ -40,18 +106,19 @@ class Executor2 {
         }
 
         scopeExecutionStarted(group, listener)
-        val currentScopePhases = extractPhases(group.getDeclarations())
+        val scopeDeclarations = ScopeDeclarations.from(group)
         val result = executeSafely {
             try {
                 // run before each groups from parent
                 executeBeforeEachGroup(beforeEachGroup)
-                executeBeforeGroup(currentScopePhases.beforeGroup)
+                // run before group for current scope (including before each group declared in this scope)
+                executeBeforeGroup(scopeDeclarations.beforeGroup)
 
                 // accumulate declarations needed by descendants
-                val combinedBeforeEachGroup = beforeEachGroup + currentScopePhases.beforeEachGroup
-                val combinedAfterEachGroup = currentScopePhases.afterEachGroup + afterEachGroup
-                val combinedBeforeEachTest = beforeEachTest + currentScopePhases.beforeEachTest
-                val combinedAfterEachTest = currentScopePhases.afterEachTest + afterEachTest
+                val combinedBeforeEachGroup = beforeEachGroup + scopeDeclarations.beforeEachGroup
+                val combinedAfterEachGroup = scopeDeclarations.afterEachGroup + afterEachGroup
+                val combinedBeforeEachTest = beforeEachTest + scopeDeclarations.beforeEachTest
+                val combinedAfterEachTest = scopeDeclarations.afterEachTest + afterEachTest
 
                 if (group.failFast) {
                     // fail fast group should only contain tests
@@ -78,7 +145,8 @@ class Executor2 {
                     }
                 }
             } finally {
-                executeAfterGroup(currentScopePhases.afterGroup)
+                // run after group for current scope (including after each group declared in this scope)
+                executeAfterGroup(scopeDeclarations.afterGroup)
                 // run after each groups from parent
                 executeAfterEachGroup(afterEachGroup)
             }
@@ -199,61 +267,6 @@ class Executor2 {
                 }
             }
         }
-    }
-
-    private fun extractPhases(declarations: List<ScopeDeclaration>): ExecutionPhases {
-        val beforeGroup = mutableListOf<ScopeDeclaration>()
-        val afterGroup = mutableListOf<ScopeDeclaration>()
-        val beforeEachGroup = mutableListOf<ScopeDeclaration>()
-        val afterEachGroup = mutableListOf<ScopeDeclaration>()
-        val beforeEachTest = mutableListOf<ScopeDeclaration>()
-        val afterEachTest = mutableListOf<ScopeDeclaration>()
-
-        declarations.forEach {
-            when (it) {
-                is ScopeDeclaration.Fixture -> {
-                    when (it.type) {
-                        ScopeDeclaration.FixtureType.BEFORE_GROUP -> beforeGroup.add(it)
-                        ScopeDeclaration.FixtureType.AFTER_GROUP -> afterGroup.add(0, it)
-                        ScopeDeclaration.FixtureType.BEFORE_EACH_GROUP -> {
-                            beforeGroup.add(it)
-                            beforeEachGroup.add(it)
-                        }
-                        ScopeDeclaration.FixtureType.AFTER_EACH_GROUP -> {
-                            afterGroup.add(0, it)
-                            afterEachGroup.add(0, it)
-                        }
-                        ScopeDeclaration.FixtureType.BEFORE_EACH_TEST -> beforeEachTest.add(it)
-                        ScopeDeclaration.FixtureType.AFTER_EACH_TEST -> afterEachTest.add(0, it)
-                        else -> throw IllegalArgumentException("Invalid fixture type: ${it.type}")
-                    }
-                }
-                is ScopeDeclaration.Memoized<*> -> {
-                    when (it.cachingMode) {
-                        CachingMode.GROUP, CachingMode.EACH_GROUP -> {
-                            beforeGroup.add(it)
-                            afterGroup.add(0, it)
-
-                            beforeEachGroup.add(it)
-                            afterEachGroup.add(0, it)
-                        }
-                        CachingMode.SCOPE -> {
-                            beforeGroup.add(it)
-                            afterGroup.add(0, it)
-                        }
-                        CachingMode.TEST -> {
-                            beforeEachTest.add(it)
-                            afterEachTest.add(0, it)
-                        }
-                        else -> throw IllegalArgumentException("Invalid caching mode: ${it.cachingMode}")
-                    }
-                }
-            }
-        }
-
-        return ExecutionPhases(
-            beforeGroup, afterGroup, beforeEachGroup, afterEachGroup, beforeEachTest, afterEachTest
-        )
     }
 
     private inline fun executeSafely(block: () -> Unit): ExecutionResult = try {
