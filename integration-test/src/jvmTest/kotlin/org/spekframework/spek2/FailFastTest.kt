@@ -12,6 +12,12 @@ object FailFastTest : AbstractSpekTest({ helper ->
       assertEquals(1, recorder.events().count { it is ExecutionEvent.Test })
     }
 
+    it("should ignore subsequent tests") {
+      val recorder = helper.executeTest(testData.failureTest.FailingGherkinTest)
+
+      assertEquals(1, recorder.events().count { it is ExecutionEvent.TestIgnored })
+    }
+
     it("should fail") {
       val recorder = helper.executeTest(testData.failureTest.FailingGherkinTest)
 
