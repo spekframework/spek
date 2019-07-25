@@ -80,7 +80,7 @@ stages:
 
   - stage: release
     dependsOn: test_ide_plugins
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/2.x'))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/2.x'), startsWith('refs/tags/', variables['Build.SourceBranch'])))
     jobs:
       - job: jvm_js_and_linux
         pool:
