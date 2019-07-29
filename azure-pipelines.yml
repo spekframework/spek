@@ -54,6 +54,8 @@ stages:
               ij_sdk: IJ183
             ij191:
               ij_sdk: IJ191
+            ij192:
+              ij_sdk: IJ192
         steps:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
@@ -80,7 +82,7 @@ stages:
 
   - stage: release
     dependsOn: test_ide_plugins
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/2.x'))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), or(eq(variables['Build.SourceBranch'], 'refs/heads/2.x'), startsWith(variables['Build.SourceBranch'], 'refs/tags/')))
     jobs:
       - job: jvm_js_and_linux
         pool:
@@ -131,6 +133,8 @@ stages:
               ij_sdk: IJ183
             ij191:
               ij_sdk: IJ191
+            ij192:
+              ij_sdk: IJ192
         steps:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
@@ -161,7 +165,7 @@ stages:
 
   - stage: update
     dependsOn: release
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), startsWith('refs/tags/', variables['Build.SourceBranch']))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
     jobs:
       - job: docs
         pool:

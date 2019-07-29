@@ -11,6 +11,7 @@ enum class PsiSynonymType {
     TEST
 }
 
+// Keep the defaults in sync with org.spekframework.spek2.meta.Synonym
 data class PsiSynonym(val annotation: PsiAnnotation) {
     val type: PsiSynonymType by lazy {
         val type = annotation.findAttributeValue("type")!!.text
@@ -23,20 +24,15 @@ data class PsiSynonym(val annotation: PsiAnnotation) {
     }
 
     val prefix: String by lazy {
-        annotation.findAttributeValue("prefix")!!.text.removeSurrounding("\"")
+        annotation.findAttributeValue("prefix")?.text?.removeSurrounding("\"") ?: ""
     }
 
     val excluded: Boolean by lazy {
-        annotation.findAttributeValue("excluded")!!.text.toBoolean()
+        annotation.findAttributeValue("excluded")?.text?.toBoolean() ?: false
     }
 
     val runnable: Boolean by lazy {
-        // default matches default from the runtime, this is needed
-        // so the plugin will still work with old versions of spek2 that
-        // does not have the runnable flag.
-        annotation.findAttributeValue("runnable")?.let {
-            it.text.toBoolean()
-        } ?: true
+        annotation.findAttributeValue("runnable")?.text?.toBoolean() ?: true
     }
 }
 
@@ -45,6 +41,7 @@ enum class PsiDescriptionLocation {
     VALUE_PARAMETER
 }
 
+// Keep the defaults in sync with org.spekframework.spek2.meta.Description
 class PsiDescription(val annotation: PsiAnnotation) {
     val index: Int by lazy {
         annotation.findAttributeValue("index")!!.text.toInt()
