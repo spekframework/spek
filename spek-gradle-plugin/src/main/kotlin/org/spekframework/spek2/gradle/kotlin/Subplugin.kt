@@ -16,7 +16,7 @@ import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 @AutoService(KotlinGradleSubplugin::class)
 class Subplugin : KotlinGradleSubplugin<AbstractCompile> {
     override fun apply(project: Project, kotlinCompile: AbstractCompile, javaCompile: AbstractCompile?, variantData: Any?, androidProjectHandler: Any?, kotlinCompilation: KotlinCompilation<KotlinCommonOptions>?): List<SubpluginOption> {
-        val extension = project.extensions.findByType(MultiplatformExtension::class.java) ?: MultiplatformExtension()
+        val extension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))
 
         return listOf(SubpluginOption("enabled", extension.enabled.toString()))
     }

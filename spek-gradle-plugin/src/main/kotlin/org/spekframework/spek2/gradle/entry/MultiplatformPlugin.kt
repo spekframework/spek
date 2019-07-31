@@ -4,7 +4,6 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.Executable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
@@ -16,10 +15,10 @@ class MultiplatformPlugin : Plugin<Project> {
             throw GradleException("Kotlin multiplatform plugin needs to be applied first!")
         }
         project.extensions.create("spek2", MultiplatformExtension::class.java)
-        project.afterEvaluate { project.configureSpek() }
+        project.afterEvaluate(this::doApply)
     }
 
-    private fun Project.configureSpek() {
+    private fun doApply(project: Project) {
         val spekExtension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))
         val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java))
 
@@ -28,34 +27,24 @@ class MultiplatformPlugin : Plugin<Project> {
         }
 
         kotlinMppExtension.targets.forEach { target ->
-            target.compilations
-                    .filterIsInstance(KotlinNativeCompilation::class.java)
-                    .filter { it.isTestCompilation }
-                    .forEach { compilation ->
-                        disableKotlinTest(compilation)
-                        configureSpekRunner(target)
-                        addSpekRuntimeDependency(compilation)
-                    }
+            when (target) {
+                is KotlinNativeTarget -> configureNativeTarget(target)
+            }
         }
     }
 
-    private fun disableKotlinTest(compilation: KotlinNativeCompilation) {
+    private fun configureNativeTarget(target: KotlinNativeTarget) {
+        target.compilations.filter { it.isTestCompilation }
+            .forEach(this::configureNativeCompilation)
+    }
+
+    private fun configureNativeCompilation(compilation: KotlinNativeCompilation) {
         compilation.isTestCompilation = false
-    }
-
-    private fun configureSpekRunner(target: KotlinTarget) {
-        if (target !is KotlinNativeTarget) {
-            throw UnsupportedOperationException("Expected target ${target.name} to be a KotlinNativeTarget")
-        }
-
-        target.binaries
-                .filterIsInstance<Executable>()
-                .forEach { binary ->
-                    binary.entryPoint = "org.spekframework.spek2.launcher.spekMain"
-                }
-    }
-
-    private fun addSpekRuntimeDependency(compilation: KotlinNativeCompilation) {
+        compilation.target.binaries
+            .filterIsInstance<Executable>()
+            .forEach { binary ->
+                binary.entryPoint = "org.spekframework.spek2.launcher.spekMain"
+            }
         compilation.defaultSourceSet.dependencies {
             implementation("$spekMavenGroup:spek-runtime:$spekVersion")
         }
