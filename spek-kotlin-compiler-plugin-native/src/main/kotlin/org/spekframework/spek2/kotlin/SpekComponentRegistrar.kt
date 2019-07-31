@@ -1,4 +1,4 @@
-package org.spekframework.spek2.kotlincompilerplugin
+package org.spekframework.spek2.kotlin
 
 import com.google.auto.service.AutoService
 import com.intellij.mock.MockProject

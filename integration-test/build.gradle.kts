@@ -14,7 +14,7 @@ plugins {
 
 apply {
     // plugins block does not supported included projects (composite build)
-    plugin("org.spekframework.spek2.gradle")
+    plugin("org.spekframework.spek2.multiplatform")
 }
 
 kotlin {

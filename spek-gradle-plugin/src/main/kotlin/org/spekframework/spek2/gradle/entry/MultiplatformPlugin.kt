@@ -1,5 +1,6 @@
-package org.spekframework.spek2.gradleplugin
+package org.spekframework.spek2.gradle.entry
 
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -7,34 +8,34 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.Executable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 
-class SpekPlugin : Plugin<Project> {
+class MultiplatformPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        project.extensions.create("spek", SpekExtension::class.java)
-
+        if (project.extensions.findByType(KotlinMultiplatformExtension::class.java) == null) {
+            throw GradleException("Kotlin multiplatform plugin needs to be applied first!")
+        }
+        project.extensions.create("spek2", MultiplatformExtension::class.java)
         project.afterEvaluate { project.configureSpek() }
     }
 
     private fun Project.configureSpek() {
-        val spekExtension = project.extensions.findByType(SpekExtension::class.java)
+        val spekExtension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))
+        val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java))
 
-        if (spekExtension != null && spekExtension.enabled == false) {
+        if (!spekExtension.enabled) {
             return
         }
 
-        val kotlinExtension = project.extensions.findByType(KotlinMultiplatformExtension::class.java)
-
-        if (kotlinExtension != null) {
-            kotlinExtension.targets.forEach { target ->
-                target.compilations
-                        .filterIsInstance(KotlinNativeCompilation::class.java)
-                        .filter { it.isTestCompilation }
-                        .forEach { compilation ->
-                            disableKotlinTest(compilation)
-                            configureSpekRunner(target)
-                            addSpekRuntimeDependency(compilation)
-                        }
-            }
+        kotlinMppExtension.targets.forEach { target ->
+            target.compilations
+                    .filterIsInstance(KotlinNativeCompilation::class.java)
+                    .filter { it.isTestCompilation }
+                    .forEach { compilation ->
+                        disableKotlinTest(compilation)
+                        configureSpekRunner(target)
+                        addSpekRuntimeDependency(compilation)
+                    }
         }
     }
 
@@ -62,6 +63,6 @@ class SpekPlugin : Plugin<Project> {
 
     companion object {
         val spekMavenGroup = "org.spekframework.spek2"
-        val spekVersion = SpekPlugin::class.java.`package`.implementationVersion
+        val spekVersion = MultiplatformPlugin::class.java.`package`.implementationVersion
     }
 }
