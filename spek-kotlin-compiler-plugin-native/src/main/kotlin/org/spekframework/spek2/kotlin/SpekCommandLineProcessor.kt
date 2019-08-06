@@ -1,4 +1,4 @@
-package org.spekframework.spek2.kotlincompilerplugin
+package org.spekframework.spek2.kotlin
 
 import com.google.auto.service.AutoService
 import org.jetbrains.kotlin.compiler.plugin.AbstractCliOption
@@ -11,7 +11,7 @@ internal val KEY_ENABLED = CompilerConfigurationKey<Boolean>("enabled")
 
 @AutoService(CommandLineProcessor::class)
 class SpekCommandLineProcessor : CommandLineProcessor {
-    override val pluginId: String = "spek"
+    override val pluginId: String = "spek2"
     override val pluginOptions: Collection<AbstractCliOption> = listOf(
             CliOption("enabled", "<true|false>", "whether plugin is enabled")
     )
