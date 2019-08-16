@@ -13,6 +13,7 @@ sealed class Skip {
 @SpekDsl
 interface Root : GroupBody {
     fun registerListener(listener: LifecycleListener)
+    fun include(spek: Spek) = spek.root(this)
 }
 
 @SpekDsl
