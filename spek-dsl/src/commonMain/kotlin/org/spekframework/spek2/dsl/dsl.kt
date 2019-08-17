@@ -4,6 +4,7 @@ import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.meta.*
+import org.spekframework.spek2.Spek
 
 sealed class Skip {
     class Yes(val reason: String? = null) : Skip()
@@ -13,6 +14,7 @@ sealed class Skip {
 @SpekDsl
 interface Root : GroupBody {
     fun registerListener(listener: LifecycleListener)
+    fun include(spek: Spek) = spek.root(this)
 }
 
 @SpekDsl
