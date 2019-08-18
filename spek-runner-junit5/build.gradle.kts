@@ -49,6 +49,11 @@ publishing {
             from(components["java"])
             artifact(sourceJar.get())
             artifact(stubJavaDocJar.get())
+
+            pom {
+                name.set("Spek Runner Junit 5")
+                description.set("Spek runner for JUnit 5")
+            }
         }
     }
 }

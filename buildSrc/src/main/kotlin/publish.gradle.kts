@@ -1,5 +1,6 @@
 plugins {
     id("com.jfrog.bintray")
+    `maven-publish` apply false
 }
 
 val bintrayUser = propOrEnv("BINTRAY_USER")
@@ -33,4 +34,29 @@ bintray {
     }
 
     setPublications(*artifacts)
+}
+
+publishing {
+    publications {
+        all {
+            if (this is MavenPublication) {
+                pom {
+                    url.set("https://github.com/spekframework/spek")
+                    licenses {
+                        license {
+                            name.set("Modified BSD")
+                            url.set("https://github.com/spekframework/spek/blob/2.x/LICENSE.TXT")
+                            distribution.set("repo")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:https://github.com/spekframework/spek")
+                        developerConnection.set("scm:git:github.com:spekframework/spek.git")
+                        tag.set("2.x")
+                        url.set("https://github.com/spekframework/spek")
+                    }
+                }
+            }
+        }
+    }
 }
