@@ -18,10 +18,11 @@ apply {
 }
 
 kotlin {
-    jvm()
-    linuxX64("linux")
-    macosX64("macos")
-    mingwX64("windows")
+    metadata {}
+    jvm {}
+    linuxX64("linux") {}
+    macosX64("macos") {}
+    mingwX64("windows") {}
 
     sourceSets {
         val commonMain by getting {
