@@ -8,6 +8,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-metadata"
+            pom {
+                name.set("Spek DSL Metadata")
+                description.set("Kotlin metadata module for spek-dsl")
+            }
         }
     }
 
@@ -15,6 +19,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-jvm"
+            pom {
+                name.set("Spek DSL JVM")
+                description.set("Kotlin JVM module for spek-dsl")
+            }
         }
     }
 
@@ -22,6 +30,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-js"
+            pom {
+                name.set("Spek DSL JS")
+                description.set("Kotlin JS module for spek-dsl")
+            }
         }
     }
 
@@ -29,6 +41,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-linux"
+            pom {
+                name.set("Spek DSL Native Linux")
+                description.set("Kotlin Native linux module for spek-dsl")
+            }
         }
     }
 
@@ -36,6 +52,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-macos"
+            pom {
+                name.set("Spek DSL Native MacOS")
+                description.set("Kotlin Native macos module for spek-dsl")
+            }
         }
     }
 
@@ -43,6 +63,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-dsl-native-windows"
+            pom {
+                name.set("Spek DSL Native Windows")
+                description.set("Kotlin Native windows module for spek-dsl")
+            }
         }
     }
 

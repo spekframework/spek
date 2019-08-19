@@ -8,6 +8,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-metadata"
+            pom {
+                name.set("Spek Runtime Metadata")
+                description.set("Kotlin metadata module for spek-runtime")
+            }
         }
     }
 
@@ -15,6 +19,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-jvm"
+            pom {
+                name.set("Spek Runtime JVM")
+                description.set("Kotlin JVM module for spek-runtime")
+            }
         }
 
     }
@@ -23,6 +31,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-linux"
+            pom {
+                name.set("Spek Runtime Native Linux")
+                description.set("Kotlin Native linux module for spek-runtime")
+            }
         }
     }
 
@@ -30,6 +42,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-macos"
+            pom {
+                name.set("Spek Runtime Native MacOS")
+                description.set("Kotlin Native macos module for spek-runtime")
+            }
         }
     }
 
@@ -37,6 +53,10 @@ kotlin {
         mavenPublication {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime-native-windows"
+            pom {
+                name.set("Spek Runtime Native Windows")
+                description.set("Kotlin Native windows module for spek-runtime")
+            }
         }
     }
 
