@@ -55,6 +55,15 @@ publishing {
                         tag.set("2.x")
                         url.set("https://github.com/spekframework/spek")
                     }
+
+                    developers {
+                        developer {
+                            id.set("spek")
+                            name.set("Spek Team")
+                            url.set("https://spekframework.org")
+                            email.set("team@spekframwork.org")
+                        }
+                    }
                 }
             }
         }
