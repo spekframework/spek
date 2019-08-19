@@ -7,6 +7,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.Executable
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
+import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable
+import org.jetbrains.kotlin.konan.util.visibleName
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 
 class MultiplatformPlugin : Plugin<Project> {
@@ -26,32 +29,56 @@ class MultiplatformPlugin : Plugin<Project> {
             return
         }
 
+
         kotlinMppExtension.targets.forEach { target ->
             when (target) {
-                is KotlinNativeTarget -> configureNativeTarget(target)
+                is KotlinNativeTarget -> configureNativeTarget(project, target)
             }
         }
     }
 
-    private fun configureNativeTarget(target: KotlinNativeTarget) {
-        target.compilations.filter { it.isTestCompilation }
-            .forEach(this::configureNativeCompilation)
-    }
+    private fun configureNativeTarget(project: Project, target: KotlinNativeTarget) {
+        val targetCheckTask = project.tasks.create("${target.name}SpekTest") { task ->
+            task.group = VERIFICATION_GROUP
+            task.description = "Run Spek tests for target ${target.name}"
+            // prevents gradle from skipping this task
+            task.onlyIf { true }
+            task.doLast {  }
+        }
 
-    private fun configureNativeCompilation(compilation: KotlinNativeCompilation) {
-        compilation.isTestCompilation = false
-        compilation.target.binaries
-            .filterIsInstance<Executable>()
-            .forEach { binary ->
-                binary.entryPoint = "org.spekframework.spek2.launcher.spekMain"
+        project.tasks.named("allTests") { allTestTask ->
+            allTestTask.dependsOn(targetCheckTask)
+        }
+
+        target.binaries {
+            executable("spek", listOf(DEBUG)) {
+                compilation = target.compilations.getByName("test")
+                entryPoint = "org.spekframework.spek2.launcher.spekMain"
+                runTask?.let { runTask ->
+                    runTask.group = SPEK_GROUP
+                    project.tasks.create("testSpekDebug${target.name.capitalize()}") { task ->
+                        task.group = SPEK_GROUP
+                        task.dependsOn(runTask)
+                        // prevents gradle from skipping this task
+                        task.onlyIf { true }
+                        task.doLast {  }
+                        targetCheckTask.dependsOn(task)
+                    }
+                }
             }
-        compilation.defaultSourceSet.dependencies {
-            implementation("$spekMavenGroup:spek-runtime:$spekVersion")
+        }
+
+        target.compilations.forEach { compilation ->
+            compilation.defaultSourceSet.dependencies {
+                implementation("$spekMavenGroup:spek-runtime:$spekVersion")
+            }
         }
     }
 
     companion object {
         val spekMavenGroup = "org.spekframework.spek2"
         val spekVersion = MultiplatformPlugin::class.java.`package`.implementationVersion
+        private const val SPEK_GROUP = "Spek"
+        private const val VERIFICATION_GROUP = "Verification"
     }
 }

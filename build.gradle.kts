@@ -34,5 +34,5 @@ listOf("check", "build", "clean").forEach { taskName ->
        gradle.includedBuilds.forEach { includedBuild ->
            dependsOn(gradle.includedBuild(includedBuild.name).task(":$taskName"))
        }
-}
+    }
 }
