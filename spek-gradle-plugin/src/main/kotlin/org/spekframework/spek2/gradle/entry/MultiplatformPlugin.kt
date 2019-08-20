@@ -1,79 +1,89 @@
 package org.spekframework.spek2.gradle.entry
 
-import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.Executable
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable
-import org.jetbrains.kotlin.konan.util.visibleName
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 
 class MultiplatformPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        if (project.extensions.findByType(KotlinMultiplatformExtension::class.java) == null) {
-            throw GradleException("Kotlin multiplatform plugin needs to be applied first!")
-        }
-        project.extensions.create("spek2", MultiplatformExtension::class.java)
-        project.afterEvaluate(this::doApply)
+        val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java)) { "Kotlin multiplatform plugin not applied!" }
+        val mppExtension = project.extensions.create("spek2", MultiplatformExtension::class.java, project)
+        configureTestsContainer(project, mppExtension)
+        configureDefaults(project, mppExtension, kotlinMppExtension)
     }
 
-    private fun doApply(project: Project) {
-        val spekExtension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))
-        val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java))
-
-        if (!spekExtension.enabled) {
-            return
-        }
-
-
-        kotlinMppExtension.targets.forEach { target ->
-            when (target) {
-                is KotlinNativeTarget -> configureNativeTarget(project, target)
+    private fun configureTestsContainer(project: Project, mppExtension: MultiplatformExtension) {
+        project.afterEvaluate {
+            mppExtension.tests.all { spekTest ->
+                val compilation = spekTest.compilation.get()
+                val target = compilation.target
+                val targetCheckTask = project.tasks.named("${target.name}SpekTest")
+                when (compilation) {
+                    is KotlinNativeCompilation -> configureNativeCompilation(project, compilation, targetCheckTask.get())
+                    is KotlinJvmCompilation -> configureJvmCompilation(project, compilation, targetCheckTask.get())
+                }
             }
         }
     }
 
-    private fun configureNativeTarget(project: Project, target: KotlinNativeTarget) {
-        val targetCheckTask = project.tasks.create("${target.name}SpekTest") { task ->
+    private fun configureNativeCompilation(project: Project, compilation: KotlinNativeCompilation, targetCheckTask: Task) {
+        compilation.target.binaries {
+            executable("spekTest", listOf(DEBUG)) {
+                this.compilation = compilation
+                entryPoint = "org.spekframework.spek2.launcher.spekMain"
+                runTask?.let { runTask ->
+                    runTask.group = SPEK_GROUP
+                    targetCheckTask.dependsOn(runTask)
+                }
+            }
+        }
+    }
+
+    private fun configureJvmCompilation(project: Project, compilation: KotlinJvmCompilation, targetCheckTask: Task) {
+    }
+
+    private fun configureDefaults(project: Project, mppExtension: MultiplatformExtension, kotlinMppExtension: KotlinMultiplatformExtension) {
+        if (!mppExtension.enabled) {
+            return
+        }
+
+        val allSpekTestsTask = project.tasks.register("allSpekTests") { task ->
             task.group = VERIFICATION_GROUP
-            task.description = "Run Spek tests for target ${target.name}"
+            task.description = "Run all Spek tests."
             // prevents gradle from skipping this task
             task.onlyIf { true }
             task.doLast {  }
         }
 
-        project.tasks.named("allTests") { allTestTask ->
-            allTestTask.dependsOn(targetCheckTask)
-        }
+        kotlinMppExtension.targets.all { target ->
+            val task = project.tasks.register("${target.name}SpekTest") { task ->
+                task.group = VERIFICATION_GROUP
+                task.description = "Run Spek tests for target ${target.name}."
+                // prevents gradle from skipping this task
+                task.onlyIf { true }
+                task.doLast {  }
 
-        target.binaries {
-            executable("spek", listOf(DEBUG)) {
-                compilation = target.compilations.getByName("test")
-                entryPoint = "org.spekframework.spek2.launcher.spekMain"
-                runTask?.let { runTask ->
-                    runTask.group = SPEK_GROUP
-                    project.tasks.create("testSpekDebug${target.name.capitalize()}") { task ->
-                        task.group = SPEK_GROUP
-                        task.dependsOn(runTask)
-                        // prevents gradle from skipping this task
-                        task.onlyIf { true }
-                        task.doLast {  }
-                        targetCheckTask.dependsOn(task)
+                allSpekTestsTask.get().dependsOn(task)
+            }
+
+            when (target) {
+                is KotlinNativeTarget, is KotlinJvmTarget -> {
+                    target.compilations.named("test") { compilation ->
+                        mppExtension.tests.create("${target.name}${compilation.name.capitalize()}") { spekTest ->
+                            spekTest.compilation.set(compilation)
+                        }
                     }
                 }
             }
         }
-
-        target.compilations.forEach { compilation ->
-            compilation.defaultSourceSet.dependencies {
-                implementation("$spekMavenGroup:spek-runtime:$spekVersion")
-            }
-        }
     }
+
 
     companion object {
         val spekMavenGroup = "org.spekframework.spek2"
