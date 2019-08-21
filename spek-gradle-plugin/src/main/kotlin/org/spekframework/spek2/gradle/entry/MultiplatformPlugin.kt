@@ -77,7 +77,7 @@ class MultiplatformPlugin : Plugin<Project> {
         kotlinMppExtension.targets.all { target ->
             when (target) {
                 is KotlinNativeTarget, is KotlinJvmTarget -> {
-                    project.tasks.register("${target.name}SpekTest") { task ->
+                    project.tasks.register("${target.name}SpekTests") { task ->
                         task.group = VERIFICATION_GROUP
                         task.description = "Run Spek tests for target ${target.name}."
                         // prevents gradle from skipping this task
