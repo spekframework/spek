@@ -121,11 +121,7 @@ kotlin {
 }
 
 tasks {
-    val jvmTest by getting(Test::class) {
-        useJUnitPlatform {
-            includeEngines("spek2")
-        }
-
+    val spekJvmTest by getting(Test::class) {
         filter {
             includeTestsMatching("org.spekframework.spek2.*")
         }
