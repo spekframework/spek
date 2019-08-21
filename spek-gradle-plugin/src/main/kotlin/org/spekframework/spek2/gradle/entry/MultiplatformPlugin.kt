@@ -10,7 +10,6 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
-import java.lang.AssertionError
 
 class MultiplatformPlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -25,33 +24,38 @@ class MultiplatformPlugin : Plugin<Project> {
             spekTest.configurer = {
                 val compilation = spekTest.compilation
                 val target = compilation.target
-                val targetCheckTask = project.tasks.named("${target.name}SpekTest")
+                val targetCheckTask = project.tasks.named("${target.name}SpekTests")
                 when (compilation) {
-                    is KotlinNativeCompilation -> configureNativeCompilation(project, compilation, targetCheckTask.get())
-                    is KotlinJvmCompilation -> configureJvmCompilation(project, compilation, targetCheckTask.get())
+                    is KotlinNativeCompilation -> configureNativeCompilation(project, compilation, targetCheckTask.get(), spekTest.name)
+                    is KotlinJvmCompilation -> configureJvmCompilation(project, compilation, targetCheckTask.get(), spekTest.name)
                 }
             }
-
         }
     }
 
-    private fun configureNativeCompilation(project: Project, compilation: KotlinNativeCompilation, targetCheckTask: Task) {
+    private fun configureNativeCompilation(project: Project, compilation: KotlinNativeCompilation, targetCheckTask: Task, testName: String) {
+        val spekTask = project.tasks.create("spek${testName.capitalize()}") { task ->
+            task.group = SPEK_GROUP
+            task.description = "Run Spek tests for $testName"
+            task.onlyIf { true }
+            task.doLast {  }
+            targetCheckTask.dependsOn(task)
+        }
         compilation.target.binaries {
             executable("spek", listOf(DEBUG)) {
                 this.compilation = compilation
                 entryPoint = "org.spekframework.spek2.launcher.spekMain"
                 runTask?.let { runTask ->
-                    runTask.group = SPEK_GROUP
-                    runTask.description = ""
-                    targetCheckTask.dependsOn(runTask)
+                    spekTask.dependsOn(runTask)
                 }
             }
         }
     }
 
-    private fun configureJvmCompilation(project: Project, compilation: KotlinJvmCompilation, targetCheckTask: Task) {
-        project.tasks.create("spek${compilation.target.name.capitalize()}${compilation.compilationName.capitalize()}", Test::class.java) { testTask ->
+    private fun configureJvmCompilation(project: Project, compilation: KotlinJvmCompilation, targetCheckTask: Task, testName: String) {
+        project.tasks.create("spek${testName.capitalize()}", Test::class.java) { testTask ->
             testTask.group = SPEK_GROUP
+            testTask.description = "Run Spek tests for $testName"
             testTask.testClassesDirs = compilation.output.classesDirs
             testTask.classpath = compilation.compileDependencyFiles + compilation.runtimeDependencyFiles
             testTask.useJUnitPlatform {
@@ -77,7 +81,7 @@ class MultiplatformPlugin : Plugin<Project> {
         kotlinMppExtension.targets.all { target ->
             when (target) {
                 is KotlinNativeTarget, is KotlinJvmTarget -> {
-                    project.tasks.register("${target.name}SpekTests") { task ->
+                    project.tasks.create("${target.name}SpekTests") { task ->
                         task.group = VERIFICATION_GROUP
                         task.description = "Run Spek tests for target ${target.name}."
                         // prevents gradle from skipping this task
