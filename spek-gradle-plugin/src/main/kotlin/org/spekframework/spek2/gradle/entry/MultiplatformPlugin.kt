@@ -6,7 +6,6 @@ import org.gradle.api.Task
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
@@ -16,7 +15,7 @@ class MultiplatformPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         project.pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
             val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java)) { "Kotlin multiplatform plugin not applied!" }
-            val mppExtension = project.extensions.create("spek2", MultiplatformExtension::class.java, project)
+            val mppExtension = project.extensions.create("spek2", MultiplatformExtension::class.java, project.objects)
             configureTestsContainer(project, mppExtension)
             configureDefaults(project, mppExtension, kotlinMppExtension)
         }

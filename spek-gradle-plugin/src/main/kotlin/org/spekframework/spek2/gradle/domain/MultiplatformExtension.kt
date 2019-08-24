@@ -1,8 +1,8 @@
 package org.spekframework.spek2.gradle.domain
 
-import org.gradle.api.Project
+import org.gradle.api.model.ObjectFactory
 
-open class MultiplatformExtension(project: Project) {
+open class MultiplatformExtension(objects: ObjectFactory) {
     var enabled = true
-    val tests = project.container(SpekTest::class.java)
+    val tests = objects.domainObjectContainer(SpekTest::class.java)
 }
