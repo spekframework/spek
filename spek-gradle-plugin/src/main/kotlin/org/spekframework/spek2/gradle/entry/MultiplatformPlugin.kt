@@ -2,7 +2,6 @@ package org.spekframework.spek2.gradle.entry
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
@@ -10,6 +9,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
+import org.spekframework.spek2.gradle.task.ExecSpekTests
 
 class MultiplatformPlugin : Plugin<Project> {
     override fun apply(project: Project) {
@@ -23,26 +23,27 @@ class MultiplatformPlugin : Plugin<Project> {
 
     private fun configureTestsContainer(project: Project, mppExtension: MultiplatformExtension) {
         mppExtension.tests.all {
-            configurer = {
-                val compilation = this@all.compilation
-                val target = compilation.target
-                val targetCheckTask = project.tasks.named("${target.name}SpekTests")
-                when (compilation) {
-                    is KotlinNativeCompilation -> configureNativeCompilation(project, compilation, targetCheckTask.get(), this@all.name)
-                    is KotlinJvmCompilation -> configureJvmCompilation(project, compilation, targetCheckTask.get(), this@all.name)
+            val spekTest = this
+            project.tasks.create("spek${spekTest.name.capitalize()}", ExecSpekTests::class.java) {
+                group = SPEK_GROUP
+                description = "Run Spek tests for ${spekTest.name}"
+                target.set(spekTest.target)
+                compilation.set(spekTest.compilation)
+                project.afterEvaluate {
+                    val target = spekTest.target.get()
+                    project.tasks.named("${target.name}SpekTests").configure {
+                        dependsOn(this@create)
+                    }
+                    when (val compilation = spekTest.compilation.orElse(target.compilations.named("test")).get()) {
+                        is KotlinNativeCompilation -> configureNativeCompilation(project, compilation, this@create, this@all.name)
+                        is KotlinJvmCompilation -> configureJvmCompilation(project, compilation, this@create, this@all.name)
+                    }
                 }
             }
         }
     }
 
-    private fun configureNativeCompilation(project: Project, compilation: KotlinNativeCompilation, targetCheckTask: Task, testName: String) {
-        val spekTask = project.tasks.create("spek${testName.capitalize()}") {
-            group = SPEK_GROUP
-            description = "Run Spek tests for $testName"
-            onlyIf { true }
-            doLast {  }
-            targetCheckTask.dependsOn(this)
-        }
+    private fun configureNativeCompilation(project: Project, compilation: KotlinNativeCompilation, spekTask: ExecSpekTests, testName: String) {
         compilation.target.binaries {
             executable("spek", listOf(DEBUG)) {
                 this.compilation = compilation
@@ -54,16 +55,14 @@ class MultiplatformPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureJvmCompilation(project: Project, compilation: KotlinJvmCompilation, targetCheckTask: Task, testName: String) {
-        project.tasks.create("spek${testName.capitalize()}", Test::class.java) {
-            group = SPEK_GROUP
-            description = "Run Spek tests for $testName"
+    private fun configureJvmCompilation(project: Project, compilation: KotlinJvmCompilation, spekTask: ExecSpekTests, testName: String) {
+        project.tasks.create("runSpek${testName.capitalize()}", Test::class.java) {
             testClassesDirs = compilation.output.classesDirs
             classpath = compilation.compileDependencyFiles + compilation.runtimeDependencyFiles
             useJUnitPlatform {
                 includeEngines("spek2")
             }
-            targetCheckTask.dependsOn(this)
+            spekTask.dependsOn(this)
         }
     }
 
@@ -93,12 +92,17 @@ class MultiplatformPlugin : Plugin<Project> {
                         allSpekTestsTask.get().dependsOn(this)
                     }
 
-                    this.compilations.named("test") {
-                        val kotlinCompilation = this
-                        mppExtension.tests.create("${this@all.name}${kotlinCompilation.name.capitalize()}") {
-                            compilation = kotlinCompilation
-                        }
+                    mppExtension.tests.create("${name}Test") {
+                        target.set(this@all)
                     }
+
+//                    this.compilations.named("test") {
+//                        val kotlinCompilation = this
+//                        mppExtension.tests.create("${this@all.name}${kotlinCompilation.name.capitalize()}") {
+//                            target.set(this@all)
+//                            compilation.set(kotlinCompilation)
+//                        }
+//                    }
                 }
             }
         }

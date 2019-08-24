@@ -106,15 +106,17 @@ kotlin {
     }
 }
 
-tasks {
-    val spekJvmTest by getting(Test::class) {
-        filter {
-            includeTestsMatching("org.spekframework.spek2.*")
-        }
-    }
+spek2 {
 }
 
-spek2 {
+tasks {
+    afterEvaluate {
+        val runSpekJvmTest by getting(Test::class) {
+            filter {
+                includeTestsMatching("org.spekframework.spek2.*")
+            }
+        }
+    }
 }
 
 // This is required to substitute the versions of spek-runtime and the compiler plugins applied automatically by spek-gradle-plugin with the version provided by
