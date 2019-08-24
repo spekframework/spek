@@ -1,20 +1,6 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath("org.spekframework.spek2:spek-gradle-plugin")
-    }
-}
-
 plugins {
     kotlin("multiplatform")
-}
-
-apply {
-    // plugins block does not supported included projects (composite build)
-    plugin("org.spekframework.spek2.multiplatform")
+    id("org.spekframework.spek2.multiplatform")
 }
 
 kotlin {
@@ -126,6 +112,9 @@ tasks {
             includeTestsMatching("org.spekframework.spek2.*")
         }
     }
+}
+
+spek2 {
 }
 
 // This is required to substitute the versions of spek-runtime and the compiler plugins applied automatically by spek-gradle-plugin with the version provided by
