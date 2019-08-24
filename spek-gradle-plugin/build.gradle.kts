@@ -1,8 +1,8 @@
 plugins {
     id("org.ajoberstar.reckon") version "0.8.0"
     `java-gradle-plugin`
-    kotlin("jvm") version "1.3.41"
-    kotlin("kapt") version "1.3.41"
+    kotlin("jvm") version "1.3.50"
+    kotlin("kapt") version "1.3.50"
 }
 
 repositories {
