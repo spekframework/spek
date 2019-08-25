@@ -31,10 +31,10 @@ android {
                 html.enabled = true
                 xml.enabled = false
                 csv.enabled = false
-                unitTests.all {
-                    testLogging.events = ["passed", "skipped", "failed"]
-                }
             }
+        }
+        unitTests.all {
+            testLogging.events = ["passed", "skipped", "failed"]
         }
     }
 }
