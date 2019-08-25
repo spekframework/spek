@@ -107,6 +107,11 @@ kotlin {
 }
 
 spek2 {
+    tests {
+        val jvmTest by getting {
+            useJUnitPlatform()
+        }
+    }
 }
 
 tasks {

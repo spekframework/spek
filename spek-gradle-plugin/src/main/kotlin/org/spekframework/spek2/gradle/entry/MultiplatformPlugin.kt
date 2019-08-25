@@ -1,5 +1,6 @@
 package org.spekframework.spek2.gradle.entry
 
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
@@ -9,6 +10,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
+import org.spekframework.spek2.gradle.domain.SpekTest
 import org.spekframework.spek2.gradle.task.ExecSpekTests
 
 class MultiplatformPlugin : Plugin<Project> {
@@ -35,15 +37,21 @@ class MultiplatformPlugin : Plugin<Project> {
                         dependsOn(this@create)
                     }
                     when (val compilation = spekTest.compilation.orElse(target.compilations.named("test")).get()) {
-                        is KotlinNativeCompilation -> configureNativeCompilation(project, compilation, this@create, this@all.name)
-                        is KotlinJvmCompilation -> configureJvmCompilation(project, compilation, this@create, this@all.name)
+                        is KotlinNativeCompilation -> configureNativeTest(project, compilation, this@create, spekTest.name)
+                        is KotlinJvmCompilation -> {
+                            if (spekTest.useJUnitPlatform) {
+                                configureJvmJUnitPlatformTest(project, compilation, this@create, spekTest)
+                            } else {
+                                throw GradleException("First class jvm test runner not supported yet.")
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    private fun configureNativeCompilation(project: Project, compilation: KotlinNativeCompilation, spekTask: ExecSpekTests, testName: String) {
+    private fun configureNativeTest(project: Project, compilation: KotlinNativeCompilation, spekTask: ExecSpekTests, testName: String) {
         compilation.target.binaries {
             executable("spek", listOf(DEBUG)) {
                 this.compilation = compilation
@@ -55,10 +63,11 @@ class MultiplatformPlugin : Plugin<Project> {
         }
     }
 
-    private fun configureJvmCompilation(project: Project, compilation: KotlinJvmCompilation, spekTask: ExecSpekTests, testName: String) {
-        project.tasks.create("runSpek${testName.capitalize()}", Test::class.java) {
+    private fun configureJvmJUnitPlatformTest(project: Project, compilation: KotlinJvmCompilation, spekTask: ExecSpekTests, test: SpekTest) {
+        project.tasks.create("runSpek${test.name.capitalize()}", Test::class.java) {
             testClassesDirs = compilation.output.classesDirs
             classpath = compilation.compileDependencyFiles + compilation.runtimeDependencyFiles
+            useJUnitPlatform(test.junitPlatformConfigure)
             useJUnitPlatform {
                 includeEngines("spek2")
             }
@@ -95,14 +104,6 @@ class MultiplatformPlugin : Plugin<Project> {
                     mppExtension.tests.create("${name}Test") {
                         target.set(this@all)
                     }
-
-//                    this.compilations.named("test") {
-//                        val kotlinCompilation = this
-//                        mppExtension.tests.create("${this@all.name}${kotlinCompilation.name.capitalize()}") {
-//                            target.set(this@all)
-//                            compilation.set(kotlinCompilation)
-//                        }
-//                    }
                 }
             }
         }
