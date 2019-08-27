@@ -1,20 +1,6 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath("org.spekframework.spek2:spek-gradle-plugin")
-    }
-}
-
 plugins {
     kotlin("multiplatform")
-}
-
-apply {
-    // plugins block does not supported included projects (composite build)
-    plugin("org.spekframework.spek2.multiplatform")
+    id("org.spekframework.spek2.multiplatform")
 }
 
 kotlin {
@@ -120,14 +106,20 @@ kotlin {
     }
 }
 
-tasks {
-    val jvmTest by getting(Test::class) {
-        useJUnitPlatform {
-            includeEngines("spek2")
+spek2 {
+    tests {
+        val jvmTest by getting {
+            useJUnitPlatform()
         }
+    }
+}
 
-        filter {
-            includeTestsMatching("org.spekframework.spek2.*")
+tasks {
+    afterEvaluate {
+        val runSpekJvmTest by getting(Test::class) {
+            filter {
+                includeTestsMatching("org.spekframework.spek2.*")
+            }
         }
     }
 }

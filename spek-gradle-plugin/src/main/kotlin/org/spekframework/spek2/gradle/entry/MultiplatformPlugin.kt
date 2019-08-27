@@ -3,77 +3,112 @@ package org.spekframework.spek2.gradle.entry
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.plugin.mpp.Executable
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBinary
-import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable
-import org.jetbrains.kotlin.konan.util.visibleName
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
+import org.spekframework.spek2.gradle.domain.SpekTest
+import org.spekframework.spek2.gradle.task.ExecSpekTests
 
 class MultiplatformPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        if (project.extensions.findByType(KotlinMultiplatformExtension::class.java) == null) {
-            throw GradleException("Kotlin multiplatform plugin needs to be applied first!")
-        }
-        project.extensions.create("spek2", MultiplatformExtension::class.java)
-        project.afterEvaluate(this::doApply)
-    }
-
-    private fun doApply(project: Project) {
-        val spekExtension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))
-        val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java))
-
-        if (!spekExtension.enabled) {
-            return
-        }
-
-
-        kotlinMppExtension.targets.forEach { target ->
-            when (target) {
-                is KotlinNativeTarget -> configureNativeTarget(project, target)
-            }
+        project.pluginManager.withPlugin("org.jetbrains.kotlin.multiplatform") {
+            val kotlinMppExtension = checkNotNull(project.extensions.findByType(KotlinMultiplatformExtension::class.java)) { "Kotlin multiplatform plugin not applied!" }
+            val mppExtension = project.extensions.create("spek2", MultiplatformExtension::class.java, project.objects)
+            configureTestsContainer(project, mppExtension)
+            configureDefaults(project, mppExtension, kotlinMppExtension)
         }
     }
 
-    private fun configureNativeTarget(project: Project, target: KotlinNativeTarget) {
-        val targetCheckTask = project.tasks.create("${target.name}SpekTest") { task ->
-            task.group = VERIFICATION_GROUP
-            task.description = "Run Spek tests for target ${target.name}"
-            // prevents gradle from skipping this task
-            task.onlyIf { true }
-            task.doLast {  }
-        }
-
-        project.tasks.named("allTests") { allTestTask ->
-            allTestTask.dependsOn(targetCheckTask)
-        }
-
-        target.binaries {
-            executable("spek", listOf(DEBUG)) {
-                compilation = target.compilations.getByName("test")
-                entryPoint = "org.spekframework.spek2.launcher.spekMain"
-                runTask?.let { runTask ->
-                    runTask.group = SPEK_GROUP
-                    project.tasks.create("testSpekDebug${target.name.capitalize()}") { task ->
-                        task.group = SPEK_GROUP
-                        task.dependsOn(runTask)
-                        // prevents gradle from skipping this task
-                        task.onlyIf { true }
-                        task.doLast {  }
-                        targetCheckTask.dependsOn(task)
+    private fun configureTestsContainer(project: Project, mppExtension: MultiplatformExtension) {
+        mppExtension.tests.all {
+            val spekTest = this
+            project.tasks.create("spek${spekTest.name.capitalize()}", ExecSpekTests::class.java) {
+                group = SPEK_GROUP
+                description = "Run Spek tests for ${spekTest.name}"
+                target.set(spekTest.target)
+                compilation.set(spekTest.compilation)
+                project.afterEvaluate {
+                    val target = spekTest.target.get()
+                    project.tasks.named("${target.name}SpekTests").configure {
+                        dependsOn(this@create)
+                    }
+                    when (val compilation = spekTest.compilation.orElse(target.compilations.named("test")).get()) {
+                        is KotlinNativeCompilation -> configureNativeTest(project, compilation, this@create, spekTest.name)
+                        is KotlinJvmCompilation -> {
+                            if (spekTest.useJUnitPlatform) {
+                                configureJvmJUnitPlatformTest(project, compilation, this@create, spekTest)
+                            } else {
+                                throw GradleException("First class jvm test runner not supported yet.")
+                            }
+                        }
                     }
                 }
             }
         }
+    }
 
-        target.compilations.forEach { compilation ->
-            compilation.defaultSourceSet.dependencies {
-                implementation("$spekMavenGroup:spek-runtime:$spekVersion")
+    private fun configureNativeTest(project: Project, compilation: KotlinNativeCompilation, spekTask: ExecSpekTests, testName: String) {
+        compilation.target.binaries {
+            executable("spek", listOf(DEBUG)) {
+                this.compilation = compilation
+                entryPoint = "org.spekframework.spek2.launcher.spekMain"
+                runTask?.let { runTask ->
+                    spekTask.dependsOn(runTask)
+                }
             }
         }
     }
+
+    private fun configureJvmJUnitPlatformTest(project: Project, compilation: KotlinJvmCompilation, spekTask: ExecSpekTests, test: SpekTest) {
+        project.tasks.create("runSpek${test.name.capitalize()}", Test::class.java) {
+            testClassesDirs = compilation.output.classesDirs
+            classpath = compilation.compileDependencyFiles + compilation.runtimeDependencyFiles
+            useJUnitPlatform(test.junitPlatformConfigure)
+            useJUnitPlatform {
+                includeEngines("spek2")
+            }
+            spekTask.dependsOn(this)
+        }
+    }
+
+    private fun configureDefaults(project: Project, mppExtension: MultiplatformExtension, kotlinMppExtension: KotlinMultiplatformExtension) {
+        if (!mppExtension.enabled) {
+            return
+        }
+
+        val allSpekTestsTask = project.tasks.register("allSpekTests") {
+            group = VERIFICATION_GROUP
+            description = "Run all Spek tests."
+            // prevents gradle from skipping this task
+            onlyIf { true }
+            doLast {  }
+        }
+
+        kotlinMppExtension.targets.all {
+            when (this) {
+                is KotlinNativeTarget, is KotlinJvmTarget -> {
+                    project.tasks.create("${this.name}SpekTests") {
+                        group = VERIFICATION_GROUP
+                        description = "Run Spek tests for target ${this@all.name}."
+                        // prevents gradle from skipping this task
+                        onlyIf { true }
+                        doLast { }
+
+                        allSpekTestsTask.get().dependsOn(this)
+                    }
+
+                    mppExtension.tests.create("${name}Test") {
+                        target.set(this@all)
+                    }
+                }
+            }
+        }
+    }
+
 
     companion object {
         val spekMavenGroup = "org.spekframework.spek2"

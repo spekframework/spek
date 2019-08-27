@@ -4,7 +4,15 @@ rootProject.name = "spek"
 
 includeBuild("./spek-gradle-plugin") {
     dependencySubstitution {
-        substitute(module("org.spekframework.spek2:spek-gradle-plugin")).with(project(":"))
+        substitute(module("org.spekframework.spek2:spek-gradle-plugin:0.1.0")).with(project(":"))
+    }
+}
+
+pluginManagement {
+    resolutionStrategy.eachPlugin {
+        if (requested.id.id == "org.spekframework.spek2.multiplatform") {
+            useModule("org.spekframework.spek2:spek-gradle-plugin:0.1.0")
+        }
     }
 }
 
