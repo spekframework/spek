@@ -21,15 +21,15 @@ val buildMatrix = mapOf(
         arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.4-1")
     ),
     "AS35" to ij.BuildConfig(
-        "191.7141.44",
+        "191.8026.42",
         "Studio3.5",
         "AS34",
-        ij.VersionRange("191.7141", "191.7141.*"),
+        ij.VersionRange("191.8026", "191.8026.*"),
         arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.5-1")
     )
 )
 
-val sdkVersion = project.properties["as.version"] ?: "AS34"
+val sdkVersion = project.properties["as.version"] ?: "AS35"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {
