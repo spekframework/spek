@@ -153,3 +153,28 @@ You can pass in an optional parameter to `memoized` which controls how the value
 - `CachingMode.INHERIT`: internal use only.
 
 If you are using the [gherkin](gherkin.md) style note that the default caching mode is `CachingMode.GROUP`.
+
+### Share common logic between tests
+Often there is some code, which needs to be called repeatedly before and after tests.
+To have code not duplicated through the code base, Spek allows sharing common logic through the use of Kotlin's extension functions. 
+Shared setup code can be implemented by declaring an extension function on the `Root` interface.
+This function is accessible in every test class or object, which derives from `Spek`.
+The call to the `setup()` function is typically placed at the top.
+The created objects can then be referenced by name.
+
+```kotlin
+// Put the common logic here
+fun Root.setup() {
+    val obj by memoized(
+        factory = { createObj() }
+        destructor = { it.dispose() }
+    )
+}
+
+objects Test: Spek({
+   setup()
+   
+   // Fetches the object keyed by name 'obj'
+   val obj: Object by memoized()
+})
+```
