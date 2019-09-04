@@ -12,7 +12,7 @@
     <properties>
         <jdk.version>1.8</jdk.version>
         <kotlin.version>1.3.31</kotlin.version>
-        <spek.version>2.1.0-alpha.0.18+85a26f6</spek.version>
+        <spek.version>2.1.0-alpha.0.13+397dc38</spek.version>
     </properties>
 
     <dependencies>
