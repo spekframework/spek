@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime.scope
 
+import org.spekframework.spek2.dsl.Fixture
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.GroupScope
@@ -20,7 +21,6 @@ sealed class ScopeImpl(
     private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
 
     abstract fun before()
-    abstract fun execute()
     abstract fun after()
 
     fun registerValue(name: String, value: ReadOnlyProperty<Any?, Any?>) {
@@ -34,7 +34,7 @@ sealed class ScopeImpl(
     }
 }
 
-open class GroupScopeImpl(
+class GroupScopeImpl(
     id: ScopeId,
     path: Path,
     override val parent: GroupScope?,
@@ -43,7 +43,7 @@ open class GroupScopeImpl(
     preserveExecutionOrder: Boolean,
     val failFast: Boolean = false
 ) : ScopeImpl(id, path, skip, lifecycleManager), GroupScope {
-
+    private val fixtures = Fixtures()
     private val children = mutableListOf<ScopeImpl>()
 
     fun addChild(child: ScopeImpl) {
@@ -74,8 +74,45 @@ open class GroupScopeImpl(
     fun isEmpty() = children.isEmpty()
 
     override fun before() = lifecycleManager.beforeExecuteGroup(this)
-    override fun execute() = Unit
     override fun after() = lifecycleManager.afterExecuteGroup(this)
+
+    fun beforeEachTest(fixture: Fixture) {
+        fixtures.beforeEachTest(fixture)
+    }
+
+    fun afterEachTest(fixture: Fixture) {
+        fixtures.afterEachTest(fixture)
+    }
+
+    fun beforeGroup(fixture: Fixture) {
+        fixtures.beforeGroup(fixture)
+    }
+
+    fun afterGroup(fixture: Fixture) {
+        fixtures.afterEachTest(fixture)
+    }
+
+    fun invokeBeforeTestFixtures() {
+        (parent as? GroupScopeImpl)?.invokeBeforeTestFixtures()
+        fixtures.invokeBeforeTestFixtures()
+    }
+
+    fun invokeAfterTestFixtures() {
+        fixtures.invokeAfterTestFixtures()
+        (parent as? GroupScopeImpl)?.invokeAfterTestFixtures()
+    }
+
+    fun invokeBeforeGroupFixtures(inheritableOnly: Boolean) {
+        // we only want to execute fixtures that we inherit aka beforeEachGroup
+        (parent as? GroupScopeImpl)?.invokeBeforeGroupFixtures(true)
+        fixtures.invokeBeforeGroupFixtures(inheritableOnly)
+    }
+
+    fun invokeAfterGroupFixtures(inheritableOnly: Boolean) {
+        // we only want to execute fixtures that we inherit aka afterEachGroup
+        fixtures.invokeAfterGroupFixtures(inheritableOnly)
+        (parent as? GroupScopeImpl)?.invokeAfterGroupFixtures(true)
+    }
 }
 
 class TestScopeImpl(
@@ -90,7 +127,7 @@ class TestScopeImpl(
 
     override fun before() = lifecycleManager.beforeExecuteTest(this)
 
-    override fun execute() {
+    fun execute() {
         body.invoke(object : TestBody {
             override fun <T> memoized(): MemoizedValue<T> {
                 return MemoizedValueReader(this@TestScopeImpl)
@@ -99,4 +136,12 @@ class TestScopeImpl(
     }
 
     override fun after() = lifecycleManager.afterExecuteTest(this)
+
+    fun invokeBeforeTestFixtures() {
+        (parent as? GroupScopeImpl)?.invokeBeforeTestFixtures()
+    }
+
+    fun invokeAfterTestFixtures() {
+        (parent as? GroupScopeImpl)?.invokeAfterTestFixtures()
+    }
 }

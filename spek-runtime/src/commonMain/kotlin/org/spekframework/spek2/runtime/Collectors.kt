@@ -12,7 +12,6 @@ import org.spekframework.spek2.runtime.scope.*
 class Collector(
     val root: GroupScopeImpl,
     private val lifecycleManager: LifecycleManager,
-    private val fixtures: FixturesAdapter,
     override val defaultCachingMode: CachingMode,
     override var defaultTimeout: Long
 ) : Root {
@@ -54,7 +53,7 @@ class Collector(
         } else {
             defaultCachingMode
         }
-        val collector = Collector(group, lifecycleManager, fixtures, cachingMode, defaultTimeout)
+        val collector = Collector(group, lifecycleManager, cachingMode, defaultTimeout)
         try {
             body.invoke(collector)
         } catch (e: Throwable) {
@@ -87,20 +86,20 @@ class Collector(
         root.addChild(test)
     }
 
-    override fun beforeEachTest(callback: () -> Unit) {
-        fixtures.registerBeforeEachTest(root, callback)
+    override fun beforeEachTest(fixture: Fixture) {
+        root.beforeEachTest(fixture)
     }
 
-    override fun afterEachTest(callback: () -> Unit) {
-        fixtures.registerAfterEachTest(root, callback)
+    override fun afterEachTest(fixture: Fixture) {
+        root.afterEachTest(fixture)
     }
 
-    override fun beforeGroup(callback: () -> Unit) {
-        fixtures.registerBeforeGroup(root, callback)
+    override fun beforeGroup(fixture: Fixture) {
+        root.beforeGroup(fixture)
     }
 
-    override fun afterGroup(callback: () -> Unit) {
-        fixtures.registerAfterGroup(root, callback)
+    override fun afterGroup(fixture: Fixture) {
+        root.afterGroup(fixture)
     }
 
     private fun idFor(description: String): ScopeId {

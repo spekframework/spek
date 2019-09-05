@@ -1,6 +1,9 @@
 package org.spekframework.spek2.runtime
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withTimeout
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -27,6 +30,7 @@ class Executor {
                 try {
                     when (scope) {
                         is GroupScopeImpl -> {
+                            scope.invokeBeforeGroupFixtures(false)
                             scope.before()
                             var failed = false
                             for (it in scope.getChildren()) {
@@ -48,6 +52,7 @@ class Executor {
                                 // is started during a runBlocking call. Calling
                                 // any builders outside that will throw an exception.
                                 val job = GlobalScope.async {
+                                    scope.invokeBeforeTestFixtures()
                                     scope.before()
                                     scope.execute()
                                 }
@@ -69,6 +74,11 @@ class Executor {
                     }
                 } finally {
                     scope.after()
+
+                    when (scope) {
+                        is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
+                        is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                    }
                 }
             }
 
