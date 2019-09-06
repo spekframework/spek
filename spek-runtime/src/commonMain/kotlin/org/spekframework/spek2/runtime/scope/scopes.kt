@@ -89,7 +89,7 @@ class GroupScopeImpl(
     }
 
     fun afterGroup(fixture: Fixture) {
-        fixtures.afterEachTest(fixture)
+        fixtures.afterGroup(fixture)
     }
 
     fun invokeBeforeTestFixtures() {
