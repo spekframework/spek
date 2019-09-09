@@ -46,12 +46,10 @@ interface SpekRunConfiguration<T: SpekCommonProgramRunConfigurationParameters>: 
             "($it)"
         } ?: ""
 
-        return if (path.name.isEmpty() && parent != null && parent.isRoot) {
-            "$prefix Spek tests in <default package>"
-        } else if (parent != null && parent.isRoot) {
-            "$prefix Spek tests in ${path.name}"
+        return if (path.isRoot) {
+            "$prefix Speks in <default package>"
         } else {
-            "$prefix ${path.name}"
+            "Spek(s): ${path.toString()}"
         }.trim()
     }
 }

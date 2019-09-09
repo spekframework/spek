@@ -10,12 +10,12 @@ import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiPackage
-import org.jetbrains.jps.model.java.JavaSourceRootType
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
-import org.jetbrains.kotlin.config.KotlinSourceRootType
+import org.jetbrains.kotlin.config.TestSourceKotlinRootType
 import org.jetbrains.kotlin.idea.caches.project.implementingModules
 import org.jetbrains.kotlin.idea.core.getPackage
+import org.jetbrains.kotlin.idea.util.module
 import org.jetbrains.kotlin.platform.IdePlatformKind
 import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
 import org.jetbrains.kotlin.psi.KtCallExpression
@@ -35,7 +35,9 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
 
         return context.psiLocation?.let {
             val path = if (it is PsiDirectory) {
-                getPackagePath(context, it)
+                getPathFromDir(context, it)
+            } else if (it is PsiPackage) {
+                getPathFromPackage(it)
             } else {
                 val elementContext = maybeGetContext(it)
                 val descriptor = when (elementContext) {
@@ -64,7 +66,9 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
 
         return sourceElement.get().let {
             val path = if (it is PsiDirectory) {
-                getPackagePath(context, it)
+                getPathFromDir(context, it)
+            } else if (it is PsiPackage) {
+                getPathFromPackage(it)
             } else {
                 val elementContext = maybeGetContext(it)
                 val descriptor = when (elementContext) {
@@ -90,6 +94,7 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
                 if (isPlatformSupported(kotlinFacetSettings.platform!!.kind)) {
                     configuration.configureForModule(context.module)
                     canRun = true
+                    configuration.data.producerType = producerType
                 } else if (kotlinFacetSettings.platform!!.kind == CommonIdePlatformKind) {
                     val result = findSupportedModule(context.project, context.module)
                     if (result != null) {
@@ -106,28 +111,27 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
         }
     }
 
-    private fun getPackagePath(context: ConfigurationContext, dir: PsiDirectory): Path? {
+    private fun getPathFromDir(context: ConfigurationContext, dir: PsiDirectory): Path? {
         if (context.module != null) {
             val moduleRootManager = ModuleRootManager.getInstance(context.module)
-            val roots = moduleRootManager.getSourceRoots(JavaSourceRootType.TEST_SOURCE)
-
-            if (VfsUtil.isUnder(dir.virtualFile, roots.toSet())) {
+            if (context.module == dir.module || moduleRootManager.isDependsOn(dir.module)) {
                 val psiPackage = dir.getPackage()
 
-                if (psiPackage != null && psiPackage.qualifiedName.isNotEmpty()) {
-                    val parts = psiPackage.qualifiedName.split(".")
-                    val builder = PathBuilder()
-
-                    parts.forEach {
-                        builder.append(it)
-                    }
-                    return builder.build()
-                } else {
-                    return PathBuilder().build()
+                if (psiPackage != null) {
+                    return getPathFromPackage(psiPackage)
                 }
             }
         }
         return null
+    }
+
+    private fun getPathFromPackage(pkg: PsiPackage): Path {
+        if (pkg.qualifiedName.isEmpty()) {
+            return PathBuilder().build()
+        }
+        return PathBuilder()
+            .appendPackage(pkg.qualifiedName)
+            .build()
     }
 
     private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, KotlinFacetSettings>? {
