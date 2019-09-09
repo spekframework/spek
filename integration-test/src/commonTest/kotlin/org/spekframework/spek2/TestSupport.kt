@@ -129,7 +129,7 @@ class SpekTestHelper {
         builder.block()
         val expected = builder.build()
 
-        assertEquals(executionToString(actual), executionToString(expected))
+        assertEquals(executionToString(expected), executionToString(actual))
     }
 
     /**
