@@ -33,10 +33,7 @@ class SpekRuntime {
     fun execute(request: ExecutionRequest) = Executor().execute(request)
 
     private fun resolveSpec(instance: Spek, path: Path): GroupScopeImpl {
-        val fixtures = FixturesAdapter()
-        val lifecycleManager = LifecycleManager().apply {
-            addListener(fixtures)
-        }
+        val lifecycleManager = LifecycleManager()
 
         val (packageName, className) = ClassUtil.extractPackageAndClassNames(instance::class)
 
@@ -46,7 +43,7 @@ class SpekRuntime {
             className
         }
         val classScope = GroupScopeImpl(ScopeId(ScopeType.Class, qualifiedName), path, null, Skip.No, lifecycleManager, false)
-        val collector = Collector(classScope, lifecycleManager, fixtures, CachingMode.TEST, getGlobalTimeoutSetting(DEFAULT_TIMEOUT))
+        val collector = Collector(classScope, lifecycleManager, CachingMode.TEST, getGlobalTimeoutSetting(DEFAULT_TIMEOUT))
 
         try {
             instance.root.invoke(collector)
