@@ -24,6 +24,8 @@ interface GroupBody : LifecycleAware, TestContainer {
     fun group(description: String, skip: Skip = Skip.No, defaultCachingMode: CachingMode = CachingMode.INHERIT, preserveExecutionOrder: Boolean = false, failFast: Boolean = false, body: GroupBody.() -> Unit)
 }
 
+typealias Fixture = () -> Unit
+
 @SpekDsl
 interface LifecycleAware : ScopeBody {
     val defaultCachingMode: CachingMode
@@ -31,11 +33,11 @@ interface LifecycleAware : ScopeBody {
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T): MemoizedValue<T>
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
 
-    fun beforeEachTest(callback: () -> Unit)
-    fun afterEachTest(callback: () -> Unit)
+    fun beforeEachTest(fixture: Fixture)
+    fun afterEachTest(fixture: Fixture)
 
-    fun beforeGroup(callback: () -> Unit)
-    fun afterGroup(callback: () -> Unit)
+    fun beforeGroup(fixture: Fixture)
+    fun afterGroup(fixture: Fixture)
 }
 
 interface ScopeBody {

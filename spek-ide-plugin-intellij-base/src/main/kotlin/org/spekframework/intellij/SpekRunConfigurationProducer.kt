@@ -89,6 +89,7 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
                 var canRun = false
                 if (isPlatformSupported(kotlinFacetSettings.platform!!.kind)) {
                     configuration.configureForModule(context.module)
+                    configuration.data.producerType = producerType
                     canRun = true
                 } else if (kotlinFacetSettings.platform!!.kind == CommonIdePlatformKind) {
                     val result = findSupportedModule(context.project, context.module)

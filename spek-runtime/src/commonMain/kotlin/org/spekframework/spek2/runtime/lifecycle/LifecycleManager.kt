@@ -9,12 +9,8 @@ class LifecycleManager {
     private val listeners = mutableListOf<LifecycleListener>()
 
     fun addListener(listener: LifecycleListener) {
-        if (listeners.contains(listener)) {
-            throw IllegalArgumentException("You can only register a listener once.")
-
-        }
-
-        listeners.add(0, listener)
+        require(!listeners.contains(listener)) { "You can only register a listener once." }
+        listeners.add(listener)
     }
 
     fun beforeExecuteTest(test: TestScope) {
