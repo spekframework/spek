@@ -1,7 +1,7 @@
 package org.spekframework.ide
 
 import org.spekframework.spek2.runtime.execution.ExecutionListener
-import org.spekframework.spek2.lifecycle.ExecutionResult
+import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.TestScopeImpl

@@ -5,9 +5,9 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withTimeout
 import org.spekframework.spek2.dsl.Skip
-import org.spekframework.spek2.lifecycle.ExecutionResult
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
+import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
@@ -27,7 +27,7 @@ class Executor {
             scopeExecutionStarted(scope, listener)
 
             fun finalize(result: ExecutionResult) {
-                scope.after(result)
+                scope.after(result.toPublicExecutionResult())
 
                 when (scope) {
                     is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)

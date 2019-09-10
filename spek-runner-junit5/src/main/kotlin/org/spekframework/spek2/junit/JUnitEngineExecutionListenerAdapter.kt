@@ -3,7 +3,7 @@ package org.spekframework.spek2.junit
 import org.junit.platform.engine.EngineExecutionListener
 import org.junit.platform.engine.TestExecutionResult
 import org.spekframework.spek2.runtime.execution.ExecutionListener
-import org.spekframework.spek2.lifecycle.ExecutionResult
+import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
