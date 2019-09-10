@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime.lifecycle
 
+import org.spekframework.spek2.lifecycle.ExecutionResult
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.TestScope
@@ -45,7 +46,7 @@ sealed class MemoizedValueAdapter<T>(
             cached = Cached.Empty
         }
 
-        override fun afterExecuteGroup(group: GroupScope) {
+        override fun afterExecuteGroup(group: GroupScope, result: ExecutionResult) {
             val cached = this.cached
             if (cached is Cached.Value<T>) {
                 destructor(cached.value)
@@ -61,7 +62,7 @@ sealed class MemoizedValueAdapter<T>(
         factory: () -> T, destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
-        override fun afterExecuteGroup(group: GroupScope) {
+        override fun afterExecuteGroup(group: GroupScope, result: ExecutionResult) {
             if (this.scope == group) {
                 val cached = this.cached
                 when (cached) {
@@ -77,7 +78,7 @@ sealed class MemoizedValueAdapter<T>(
         destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
-        override fun afterExecuteTest(test: TestScope) {
+        override fun afterExecuteTest(test: TestScope, result: ExecutionResult) {
             val cached = this.cached
             when (cached) {
                 is Cached.Value<T> -> destructor(cached.value)

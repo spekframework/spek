@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime.execution
 
+import org.spekframework.spek2.lifecycle.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
