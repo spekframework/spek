@@ -94,6 +94,14 @@ class Collector(
         root.afterEachTest(fixture)
     }
 
+    override fun beforeEachGroup(fixture: Fixture) {
+        root.beforeEachGroup(fixture)
+    }
+
+    override fun afterEachGroup(fixture: Fixture) {
+        root.afterEachGroup(fixture)
+    }
+
     override fun beforeGroup(fixture: Fixture) {
         root.beforeGroup(fixture)
     }
