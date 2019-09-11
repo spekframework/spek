@@ -96,6 +96,9 @@ class ExecutionRecorder: ExecutionListener {
     fun events(): List<ExecutionEvent> {
         return treeBuilder.build()
     }
+
+    fun successfulTestCount() = events().count { it is ExecutionEvent.Test && it.success }
+    fun failedTestCount() = events().count { it is ExecutionEvent.Test && !it.success }
 }
 
 class SpekTestHelper {

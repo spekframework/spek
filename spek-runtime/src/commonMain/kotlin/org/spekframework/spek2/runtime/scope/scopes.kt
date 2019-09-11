@@ -81,6 +81,14 @@ class GroupScopeImpl(
         fixtures.afterEachTest(fixture)
     }
 
+    fun beforeEachGroup(fixture: Fixture) {
+        fixtures.beforeEachGroup(fixture)
+    }
+
+    fun afterEachGroup(fixture: Fixture) {
+        fixtures.afterEachGroup(fixture)
+    }
+
     fun beforeGroup(fixture: Fixture) {
         fixtures.beforeGroup(fixture)
     }

@@ -36,6 +36,9 @@ interface LifecycleAware : ScopeBody {
     fun beforeEachTest(fixture: Fixture)
     fun afterEachTest(fixture: Fixture)
 
+    fun beforeEachGroup(fixture: Fixture)
+    fun afterEachGroup(fixture: Fixture)
+
     fun beforeGroup(fixture: Fixture)
     fun afterGroup(fixture: Fixture)
 }
