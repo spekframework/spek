@@ -27,6 +27,13 @@ class Collector(
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+        // scope values automatically register an afterXXX fixture
+        // when de-initializing - this means that any afterXXX fixture
+        // declared after the memoized can't access it.
+        // this custom lifecycle aware object delays the registration
+        // of the afterXXX fixtures called by MemoizedValueAdapter.
+        // The fixtures are only registered when Collector.finalize() is invoked,
+        // which happens after a group have been discovered.
         val lifecycleAware = object: LifecycleAware by this {
             override fun afterEachTest(fixture: Fixture) {
                 with(this@Collector) {

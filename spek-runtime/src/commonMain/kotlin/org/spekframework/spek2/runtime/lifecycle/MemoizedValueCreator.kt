@@ -32,9 +32,7 @@ class MemoizedValueCreator<out T>(
 
         adapter.setup(lifecycleAware)
 
-        return adapter.apply {
-            //scope.lifecycleManager.addListener(this)
-        }
+        return adapter
     }
 }
 
