@@ -1,10 +1,10 @@
-package testData.scopeValueAccessTest.scope
+package testData.scopeValueAccessTest
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode
 
-object ScopeCachedAccessedInTest: Spek({
-    val a by memoized(CachingMode.SCOPE) { 1 }
+class CachedAccessedInTest(mode: CachingMode): Spek({
+    val a by memoized(mode) { 1 }
 
     test("empty test") {
         println(a)

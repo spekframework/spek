@@ -1,10 +1,10 @@
-package testData.scopeValueAccessTest.scope
+package testData.scopeValueAccessTest
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode
 
-object ScopeCachedAccessedInBeforeGroup: Spek({
-    val a by memoized(CachingMode.SCOPE) { 1 }
+class CachedAccessedInBeforeGroup(mode: CachingMode): Spek({
+    val a by memoized(mode) { 1 }
 
     beforeGroup { println(a) }
 
