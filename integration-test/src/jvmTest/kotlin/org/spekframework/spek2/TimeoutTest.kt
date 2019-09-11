@@ -49,7 +49,7 @@ object TimeoutTest: AbstractSpekTest({ helper ->
     }
 
     describe("global timeouts") {
-        it("should use specified global timeout", timeout = 30000) {
+        it("should use specified global timeout", timeout = 50000) {
             System.setProperty("SPEK_TIMEOUT", 20000L.toString())
             val recorder = helper.executeTest(testData.timeoutTest.GlobalTimeoutTest)
 
