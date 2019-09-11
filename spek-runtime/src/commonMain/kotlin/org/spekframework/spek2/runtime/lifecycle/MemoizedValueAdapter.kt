@@ -14,11 +14,12 @@ sealed class MemoizedValueAdapter<T>(
 ) : ReadOnlyProperty<Any?, T>, LifecycleListener {
 
     protected sealed class Cached<out T> {
+        object Invalid: Cached<Nothing>()
         object Empty : Cached<Nothing>()
         data class Value<out T>(val value: T) : Cached<T>()
     }
 
-    protected var cached: Cached<T> = Cached.Empty
+    protected var cached: Cached<T> = Cached.Invalid
 
     override fun getValue(thisRef: Any?, property: KProperty<*>) = get()
 
@@ -31,6 +32,7 @@ sealed class MemoizedValueAdapter<T>(
                 newCached.value
             }
             is Cached.Value<T> -> cached.value
+            is Cached.Invalid -> throw AssertionError("Value can't be access in this context.")
         }
     }
 
@@ -51,8 +53,10 @@ sealed class MemoizedValueAdapter<T>(
             if (cached is Cached.Value<T>) {
                 destructor(cached.value)
             }
-            if (stack.isNotEmpty()) {
-                this.cached = stack.removeAt(0)
+            this.cached = if (stack.isNotEmpty()) {
+                stack.removeAt(0)
+            } else {
+                Cached.Invalid
             }
         }
     }
@@ -62,13 +66,19 @@ sealed class MemoizedValueAdapter<T>(
         factory: () -> T, destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
+        override fun beforeExecuteGroup(group: GroupScope) {
+            if (scope == group) {
+                cached = Cached.Empty
+            }
+        }
+
         override fun afterExecuteGroup(group: GroupScope, result: ExecutionResult) {
-            if (this.scope == group) {
+            if (scope == group) {
                 val cached = this.cached
                 when (cached) {
                     is Cached.Value<T> -> destructor(cached.value)
                 }
-                this.cached = Cached.Empty
+                this.cached = Cached.Invalid
             }
         }
     }
@@ -78,12 +88,16 @@ sealed class MemoizedValueAdapter<T>(
         destructor: (T) -> Unit
     ) : MemoizedValueAdapter<T>(factory, destructor) {
 
+        override fun beforeExecuteTest(test: TestScope) {
+            cached = Cached.Empty
+        }
+
         override fun afterExecuteTest(test: TestScope, result: ExecutionResult) {
             val cached = this.cached
             when (cached) {
                 is Cached.Value<T> -> destructor(cached.value)
             }
-            this.cached = Cached.Empty
+            this.cached = Cached.Invalid
         }
     }
 }
