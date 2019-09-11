@@ -16,7 +16,7 @@ object NonUniquePathTest: Spek({
             list.add(2)
         }
 
-        test("list size must be 2") {
+        afterGroup {
             assertEquals(2, list.size)
         }
     }

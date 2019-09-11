@@ -27,18 +27,22 @@ class Executor {
             scopeExecutionStarted(scope, listener)
 
             fun finalize(result: ExecutionResult) {
-                scope.after(result.toPublicExecutionResult())
-
-                when (scope) {
-                    is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
-                    is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                val actualResult = try {
+                    when (scope) {
+                        is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
+                        is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                    }
+                    result
+                } catch (e: Throwable) {
+                    ExecutionResult.Failure(e)
                 }
+
+                scope.after(actualResult.toPublicExecutionResult())
             }
 
             val result = executeSafely(::finalize) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        // todo: swap this back when memoized is implemented with fixtures
                         scope.before()
                         scope.invokeBeforeGroupFixtures(false)
                         var failed = false
@@ -61,8 +65,8 @@ class Executor {
                             // is started during a runBlocking call. Calling
                             // any builders outside that will throw an exception.
                             val job = GlobalScope.async {
-                                scope.invokeBeforeTestFixtures()
                                 scope.before()
+                                scope.invokeBeforeTestFixtures()
                                 scope.execute()
                             }
 
