@@ -2,6 +2,8 @@ package org.spekframework.spek2.integration
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.CachingMode
+import kotlin.test.assertNotSame
+import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 object MemoizedTests: Spek({
@@ -45,17 +47,17 @@ object MemoizedTests: Spek({
             }
 
             test("should be equal to previous value") {
-                assertTrue(previousValue === value)
+                assertSame(previousValue, value)
             }
 
             test("should be equal to previous value") {
-                assertTrue(previousValue === value)
+                assertSame(previousValue, value)
             }
         }
 
         group("second") {
             test("should not be equal to previous value") {
-                assertTrue(previousValue !== value)
+                assertNotSame(previousValue, value)
             }
         }
     }

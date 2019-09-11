@@ -123,6 +123,12 @@ tasks {
                 includeTestsMatching("org.spekframework.spek2.*")
             }
         }
+
+        // TODO: make sure plugin does this
+        val allSpekTests by getting {}
+        val check by getting {
+            dependsOn(allSpekTests)
+        }
     }
 }
 

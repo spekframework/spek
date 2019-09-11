@@ -38,8 +38,9 @@ class Executor {
             val result = executeSafely(::finalize) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        scope.invokeBeforeGroupFixtures(false)
+                        // todo: swap this back when memoized is implemented with fixtures
                         scope.before()
+                        scope.invokeBeforeGroupFixtures(false)
                         var failed = false
                         for (it in scope.getChildren()) {
 
