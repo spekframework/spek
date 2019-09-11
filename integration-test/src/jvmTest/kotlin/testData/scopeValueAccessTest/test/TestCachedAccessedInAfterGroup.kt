@@ -1,4 +1,4 @@
-package testData.scopeValueAccessTest
+package testData.scopeValueAccessTest.test
 
 import org.spekframework.spek2.Spek
 
