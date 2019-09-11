@@ -38,6 +38,10 @@ class Executor {
                 }
 
                 scope.after(actualResult.toPublicExecutionResult())
+
+                if (actualResult is ExecutionResult.Failure) {
+                    throw actualResult.cause
+                }
             }
 
             val result = executeSafely(::finalize) {
