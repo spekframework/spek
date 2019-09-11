@@ -26,58 +26,58 @@ class Executor {
         } else {
             scopeExecutionStarted(scope, listener)
 
-            val result = executeSafely {
-                try {
-                    when (scope) {
-                        is GroupScopeImpl -> {
-                            scope.invokeBeforeGroupFixtures(false)
-                            scope.before()
-                            var failed = false
-                            for (it in scope.getChildren()) {
+            fun finalize(result: ExecutionResult) {
+                scope.after(result.toPublicExecutionResult())
 
-                                if (failed) {
-                                    scopeIgnored(it, "Previous failure detected, skipping.", listener)
-                                    continue
-                                }
+                when (scope) {
+                    is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
+                    is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                }
+            }
 
-                                val result = execute(it, listener)
-                                if (scope.failFast && it is TestScopeImpl && result is ExecutionResult.Failure) {
-                                    failed = true
-                                }
+            val result = executeSafely(::finalize) {
+                when (scope) {
+                    is GroupScopeImpl -> {
+                        scope.invokeBeforeGroupFixtures(false)
+                        scope.before()
+                        var failed = false
+                        for (it in scope.getChildren()) {
+
+                            if (failed) {
+                                scopeIgnored(it, "Previous failure detected, skipping.", listener)
+                                continue
                             }
-                        }
-                        is TestScopeImpl -> {
-                            doRunBlocking {
-                                // this needs to be here, in K/N the event loop
-                                // is started during a runBlocking call. Calling
-                                // any builders outside that will throw an exception.
-                                val job = GlobalScope.async {
-                                    scope.invokeBeforeTestFixtures()
-                                    scope.before()
-                                    scope.execute()
-                                }
 
-                                val exception = withTimeout(scope.timeout) {
-                                    try {
-                                        job.await()
-                                        null
-                                    } catch (e: Throwable) {
-                                        e
-                                    }
-                                }
-
-                                if (exception != null) {
-                                    throw exception
-                                }
+                            val result = execute(it, listener)
+                            if (scope.failFast && it is TestScopeImpl && result is ExecutionResult.Failure) {
+                                failed = true
                             }
                         }
                     }
-                } finally {
-                    scope.after()
+                    is TestScopeImpl -> {
+                        doRunBlocking {
+                            // this needs to be here, in K/N the event loop
+                            // is started during a runBlocking call. Calling
+                            // any builders outside that will throw an exception.
+                            val job = GlobalScope.async {
+                                scope.invokeBeforeTestFixtures()
+                                scope.before()
+                                scope.execute()
+                            }
 
-                    when (scope) {
-                        is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
-                        is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                            val exception = withTimeout(scope.timeout) {
+                                try {
+                                    job.await()
+                                    null
+                                } catch (e: Throwable) {
+                                    e
+                                }
+                            }
+
+                            if (exception != null) {
+                                throw exception
+                            }
+                        }
                     }
                 }
             }
@@ -88,11 +88,21 @@ class Executor {
         }
     }
 
-    private inline fun executeSafely(block: () -> Unit): ExecutionResult = try {
-        block()
-        ExecutionResult.Success
-    } catch (e: Throwable) {
-        ExecutionResult.Failure(e)
+    private fun executeSafely(finalize: (ExecutionResult) -> Unit, block: () -> Unit): ExecutionResult {
+        val result = try {
+            block()
+            ExecutionResult.Success
+        } catch (e: Throwable) {
+            ExecutionResult.Failure(e)
+        }
+
+        // failures here will replace execution result
+        return try {
+            finalize(result)
+            result
+        } catch (e: Throwable) {
+            ExecutionResult.Failure(e)
+        }
     }
 
     private fun scopeExecutionStarted(scope: ScopeImpl, listener: ExecutionListener) =

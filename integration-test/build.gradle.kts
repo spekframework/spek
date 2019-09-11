@@ -34,6 +34,8 @@ kotlin {
 
             compilations["test"].defaultSourceSet {
                 dependencies {
+                    implementation(Dependencies.mockitoKotlin)
+                    implementation(Dependencies.mockitoCore)
                     runtimeOnly(kotlin("reflect"))
                     runtimeOnly(project(":spek-runner-junit5"))
                 }

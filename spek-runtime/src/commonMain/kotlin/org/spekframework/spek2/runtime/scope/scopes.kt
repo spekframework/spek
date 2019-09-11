@@ -3,10 +3,7 @@ package org.spekframework.spek2.runtime.scope
 import org.spekframework.spek2.dsl.Fixture
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
-import org.spekframework.spek2.lifecycle.GroupScope
-import org.spekframework.spek2.lifecycle.MemoizedValue
-import org.spekframework.spek2.lifecycle.Scope
-import org.spekframework.spek2.lifecycle.TestScope
+import org.spekframework.spek2.lifecycle.*
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
 import kotlin.properties.ReadOnlyProperty
@@ -21,7 +18,7 @@ sealed class ScopeImpl(
     private val values = mutableMapOf<String, ReadOnlyProperty<Any?, Any?>>()
 
     abstract fun before()
-    abstract fun after()
+    abstract fun after(result: ExecutionResult)
 
     fun registerValue(name: String, value: ReadOnlyProperty<Any?, Any?>) {
         values[name] = value
@@ -74,7 +71,7 @@ class GroupScopeImpl(
     fun isEmpty() = children.isEmpty()
 
     override fun before() = lifecycleManager.beforeExecuteGroup(this)
-    override fun after() = lifecycleManager.afterExecuteGroup(this)
+    override fun after(result: ExecutionResult) = lifecycleManager.afterExecuteGroup(this, result)
 
     fun beforeEachTest(fixture: Fixture) {
         fixtures.beforeEachTest(fixture)
@@ -135,7 +132,7 @@ class TestScopeImpl(
         })
     }
 
-    override fun after() = lifecycleManager.afterExecuteTest(this)
+    override fun after(result: ExecutionResult) = lifecycleManager.afterExecuteTest(this, result)
 
     fun invokeBeforeTestFixtures() {
         (parent as? GroupScopeImpl)?.invokeBeforeTestFixtures()
