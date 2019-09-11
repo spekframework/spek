@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime.lifecycle
 
+import org.spekframework.spek2.dsl.LifecycleAware
 import org.spekframework.spek2.lifecycle.ExecutionResult
 import org.spekframework.spek2.lifecycle.GroupScope
 import org.spekframework.spek2.lifecycle.LifecycleListener
@@ -36,6 +37,8 @@ sealed class MemoizedValueAdapter<T>(
         }
     }
 
+    abstract fun setup(lifecycleAware: LifecycleAware)
+
     class GroupCachingModeAdapter<T>(
         factory: () -> T,
         destructor: (T) -> Unit
@@ -57,6 +60,27 @@ sealed class MemoizedValueAdapter<T>(
                 stack.removeAt(0)
             } else {
                 Cached.Invalid
+            }
+        }
+
+        override fun setup(lifecycleAware: LifecycleAware) {
+            with(lifecycleAware) {
+                beforeEachGroup {
+                    stack.add(0, cached)
+                    cached = Cached.Empty
+                }
+
+                afterEachGroup {
+                    val cached = this@GroupCachingModeAdapter.cached
+                    if (cached is Cached.Value<T>) {
+                        destructor(cached.value)
+                    }
+                    this@GroupCachingModeAdapter.cached = if (stack.isNotEmpty()) {
+                        stack.removeAt(0)
+                    } else {
+                        Cached.Invalid
+                    }
+                }
             }
         }
     }
@@ -81,6 +105,22 @@ sealed class MemoizedValueAdapter<T>(
                 this.cached = Cached.Invalid
             }
         }
+
+        override fun setup(lifecycleAware: LifecycleAware) {
+            with(lifecycleAware) {
+                beforeGroup {
+                    cached = Cached.Empty
+                }
+
+                afterGroup {
+                    val cached = this@ScopeCachingModeAdapter.cached
+                    when (cached) {
+                        is Cached.Value<T> -> destructor(cached.value)
+                    }
+                    this@ScopeCachingModeAdapter.cached = Cached.Invalid
+                }
+            }
+        }
     }
 
     class TestCachingModeAdapter<T>(
@@ -98,6 +138,22 @@ sealed class MemoizedValueAdapter<T>(
                 is Cached.Value<T> -> destructor(cached.value)
             }
             this.cached = Cached.Invalid
+        }
+
+        override fun setup(lifecycleAware: LifecycleAware) {
+            with(lifecycleAware) {
+                beforeEachTest {
+                    cached = Cached.Empty
+                }
+
+                afterEachTest {
+                    val cached = this@TestCachingModeAdapter.cached
+                    when (cached) {
+                        is Cached.Value<T> -> destructor(cached.value)
+                    }
+                    this@TestCachingModeAdapter.cached = Cached.Invalid
+                }
+            }
         }
     }
 }

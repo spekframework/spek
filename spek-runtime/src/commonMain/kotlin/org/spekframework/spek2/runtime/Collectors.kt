@@ -16,14 +16,41 @@ class Collector(
     override var defaultTimeout: Long
 ) : Root {
 
+    private val finalizers = mutableListOf<() -> Unit>()
     private val ids = linkedMapOf<String, Int>()
+
+    fun finalize() {
+        finalizers.forEach { it.invoke() }
+        finalizers.clear()
+    }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+        val lifecycleAware = object: LifecycleAware by this {
+            override fun afterEachTest(fixture: Fixture) {
+                with(this@Collector) {
+                    finalizers.add { afterEachTest(fixture) }
+                }
+            }
+
+            override fun afterEachGroup(fixture: Fixture) {
+                with(this@Collector) {
+                    finalizers.add { afterEachGroup(fixture) }
+                }
+            }
+
+            override fun afterGroup(fixture: Fixture) {
+                with(this@Collector) {
+                    finalizers.add { afterGroup(fixture) }
+                }
+            }
+        }
+
         return MemoizedValueCreator(
             root,
             mode,
+            lifecycleAware,
             factory,
             destructor
         )
@@ -56,6 +83,7 @@ class Collector(
         val collector = Collector(group, lifecycleManager, cachingMode, defaultTimeout)
         try {
             body.invoke(collector)
+            collector.finalize()
         } catch (e: Throwable) {
             collector.beforeGroup { throw e }
             group.addChild(
@@ -70,7 +98,6 @@ class Collector(
                 )
             )
         }
-
     }
 
     override fun test(description: String, skip: Skip, timeout: Long, body: TestBody.() -> Unit) {

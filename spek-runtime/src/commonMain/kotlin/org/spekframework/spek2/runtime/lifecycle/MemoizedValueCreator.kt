@@ -1,5 +1,6 @@
 package org.spekframework.spek2.runtime.lifecycle
 
+import org.spekframework.spek2.dsl.LifecycleAware
 import org.spekframework.spek2.lifecycle.CachingMode
 import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.runtime.scope.ScopeImpl
@@ -9,6 +10,7 @@ import kotlin.reflect.KProperty
 class MemoizedValueCreator<out T>(
     val scope: ScopeImpl,
     private val mode: CachingMode,
+    private val lifecycleAware: LifecycleAware,
     val factory: () -> T,
     private val destructor: (T) -> Unit
 ) : MemoizedValue<T> {
@@ -28,8 +30,10 @@ class MemoizedValueCreator<out T>(
         // reserve name
         scope.registerValue(property.name, adapter)
 
+        adapter.setup(lifecycleAware)
+
         return adapter.apply {
-            scope.lifecycleManager.addListener(this)
+            //scope.lifecycleManager.addListener(this)
         }
     }
 }
