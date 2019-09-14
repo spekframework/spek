@@ -27,19 +27,28 @@ class Executor {
             scopeExecutionStarted(scope, listener)
 
             fun finalize(result: ExecutionResult) {
-                scope.after(result.toPublicExecutionResult())
+                val actualResult = try {
+                    when (scope) {
+                        is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
+                        is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                    }
+                    result
+                } catch (e: Throwable) {
+                    ExecutionResult.Failure(e)
+                }
 
-                when (scope) {
-                    is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
-                    is TestScopeImpl -> scope.invokeAfterTestFixtures()
+                scope.after(actualResult.toPublicExecutionResult())
+
+                if (actualResult is ExecutionResult.Failure) {
+                    throw actualResult.cause
                 }
             }
 
             val result = executeSafely(::finalize) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        scope.invokeBeforeGroupFixtures(false)
                         scope.before()
+                        scope.invokeBeforeGroupFixtures(false)
                         var failed = false
                         for (it in scope.getChildren()) {
 
@@ -60,8 +69,8 @@ class Executor {
                             // is started during a runBlocking call. Calling
                             // any builders outside that will throw an exception.
                             val job = GlobalScope.async {
-                                scope.invokeBeforeTestFixtures()
                                 scope.before()
+                                scope.invokeBeforeTestFixtures()
                                 scope.execute()
                             }
 

@@ -20,11 +20,11 @@ object LifecycleListenerTest: AbstractSpekTest({ helper ->
             verify(listener).afterExecuteTest(any(), argThat { this is ExecutionResult.Failure && this.cause is RuntimeException})
         }
 
-        it("should notify success to listener when after each test throws exception") {
+        it("should notify to listener when after each test throws exception") {
             // afterExecuteTest is executed right before after each tests fixtures, so any failures in those
             // fixtures are not reported.
             helper.executeTest(testData.lifecycleListenerTest.AfterEachTestFailureTest(listener))
-            verify(listener).afterExecuteTest(any(), eq(ExecutionResult.Success))
+            verify(listener).afterExecuteTest(any(), argThat { this is ExecutionResult.Failure && this.cause is RuntimeException})
         }
     }
 
@@ -34,11 +34,11 @@ object LifecycleListenerTest: AbstractSpekTest({ helper ->
             verify(listener).afterExecuteGroup(any(), argThat { this is ExecutionResult.Failure && this.cause is RuntimeException})
         }
 
-        it("should notify success to listener when after group throws exception") {
+        it("should notify to listener when after group throws exception") {
             // afterExecuteGroup is executed right before after group fixtures, so any failures in those
             // fixtures are not reported.
             helper.executeTest(testData.lifecycleListenerTest.AfterGroupFailureTest(listener))
-            verify(listener).afterExecuteGroup(any(), eq(ExecutionResult.Success))
+            verify(listener).afterExecuteGroup(any(), argThat { this is ExecutionResult.Failure && this.cause is RuntimeException})
         }
     }
 })
