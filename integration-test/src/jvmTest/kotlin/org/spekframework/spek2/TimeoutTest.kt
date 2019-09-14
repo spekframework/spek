@@ -49,7 +49,7 @@ object TimeoutTest: AbstractSpekTest({ helper ->
     }
 
     describe("global timeouts") {
-        it("should use specified global timeout", timeout = 50000) {
+        it("should use specified global timeout", timeout = 120000) {
             System.setProperty("SPEK_TIMEOUT", 20000L.toString())
             val recorder = helper.executeTest(testData.timeoutTest.GlobalTimeoutTest)
 
@@ -57,7 +57,7 @@ object TimeoutTest: AbstractSpekTest({ helper ->
                 recorder.events()
             ) {
                 group("GlobalTimeoutTest") {
-                    test("this should run for 15 seconds and pass since global timeout is 20")
+                    test("this should run for 10 seconds and pass since global timeout is 20")
                 }
             }
             System.clearProperty("SPEK_TIMEOUT")
