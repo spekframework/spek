@@ -21,9 +21,9 @@ class MemoizedValueCreator<out T>(
     ): ReadOnlyProperty<Any?, T> {
 
         val adapter = when (mode) {
-            CachingMode.GROUP, CachingMode.EACH_GROUP -> MemoizedValueAdapter.GroupCachingModeAdapter(factory, destructor)
-            CachingMode.TEST -> MemoizedValueAdapter.TestCachingModeAdapter(factory, destructor)
-            CachingMode.SCOPE -> MemoizedValueAdapter.ScopeCachingModeAdapter(scope, factory, destructor)
+            CachingMode.GROUP, CachingMode.EACH_GROUP -> MemoizedValueAdapter.GroupCachingModeAdapter(property.name, factory, destructor)
+            CachingMode.TEST -> MemoizedValueAdapter.TestCachingModeAdapter(property.name, factory, destructor)
+            CachingMode.SCOPE -> MemoizedValueAdapter.ScopeCachingModeAdapter(scope, property.name, factory, destructor)
             CachingMode.INHERIT -> throw AssertionError("Not allowed.")
         }
 

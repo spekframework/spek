@@ -6,6 +6,7 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 sealed class MemoizedValueAdapter<T>(
+    val name: String,
     val factory: () -> T,
     val destructor: (T) -> Unit
 ) : ReadOnlyProperty<Any?, T> {
@@ -29,16 +30,17 @@ sealed class MemoizedValueAdapter<T>(
                 newCached.value
             }
             is Cached.Value<T> -> cached.value
-            is Cached.Invalid -> throw AssertionError("Value can't be access in this context.")
+            is Cached.Invalid -> throw AssertionError("'$name' can not be accessed in this context.")
         }
     }
 
     abstract fun setup(lifecycleAware: LifecycleAware)
 
     class GroupCachingModeAdapter<T>(
+        name: String,
         factory: () -> T,
         destructor: (T) -> Unit
-    ) : MemoizedValueAdapter<T>(factory, destructor) {
+    ) : MemoizedValueAdapter<T>(name, factory, destructor) {
 
         private val stack = mutableListOf<Cached<T>>()
 
@@ -66,8 +68,10 @@ sealed class MemoizedValueAdapter<T>(
 
     class ScopeCachingModeAdapter<T>(
         val scope: ScopeImpl,
-        factory: () -> T, destructor: (T) -> Unit
-    ) : MemoizedValueAdapter<T>(factory, destructor) {
+        name: String,
+        factory: () -> T,
+        destructor: (T) -> Unit
+    ) : MemoizedValueAdapter<T>(name, factory, destructor) {
 
         override fun setup(lifecycleAware: LifecycleAware) {
             with(lifecycleAware) {
@@ -87,9 +91,10 @@ sealed class MemoizedValueAdapter<T>(
     }
 
     class TestCachingModeAdapter<T>(
+        name: String,
         factory: () -> T,
         destructor: (T) -> Unit
-    ) : MemoizedValueAdapter<T>(factory, destructor) {
+    ) : MemoizedValueAdapter<T>(name, factory, destructor) {
 
         override fun setup(lifecycleAware: LifecycleAware) {
             with(lifecycleAware) {
