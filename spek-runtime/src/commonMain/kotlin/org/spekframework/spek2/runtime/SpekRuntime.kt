@@ -47,6 +47,7 @@ class SpekRuntime {
 
         try {
             instance.root.invoke(collector)
+            collector.finalize()
         } catch (e: Exception) {
             collector.beforeGroup { throw e }
             classScope.addChild(TestScopeImpl(

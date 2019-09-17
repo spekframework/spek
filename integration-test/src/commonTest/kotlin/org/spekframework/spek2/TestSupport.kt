@@ -99,6 +99,12 @@ class ExecutionRecorder: ExecutionListener {
 
     fun successfulTestCount() = events().count { it is ExecutionEvent.Test && it.success }
     fun failedTestCount() = events().count { it is ExecutionEvent.Test && !it.success }
+
+    fun hasNoSuccessfulTests() = successfulTestCount() == 0
+    fun hasNoFailedTests() = failedTestCount() == 0
+
+    fun successfulGroupCount() = events().count { it is ExecutionEvent.GroupEnd && it.success }
+    fun failedGroupCount() = events().count { it is ExecutionEvent.GroupEnd && !it.success }
 }
 
 class SpekTestHelper {
