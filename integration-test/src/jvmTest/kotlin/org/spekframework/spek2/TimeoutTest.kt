@@ -4,8 +4,7 @@ import org.spekframework.spek2.style.specification.describe
 
 object TimeoutTest: AbstractSpekTest({ helper ->
     describe("test timeouts") {
-        // FIXME: provide a way to disable timeouts.
-        it("should timeout using default settings", timeout = 60000L) {
+        it("should timeout using default settings", timeout = 0) {
             val recorder = helper.executeTest(testData.timeoutTest.DefaultTimeoutTest)
 
             helper.assertExecutionEquals(
@@ -49,8 +48,8 @@ object TimeoutTest: AbstractSpekTest({ helper ->
     }
 
     describe("global timeouts") {
-        it("should use specified global timeout", timeout = 120000) {
-            System.setProperty("SPEK_TIMEOUT", 20000L.toString())
+        it("should use specified global timeout", timeout = 0) {
+            System.setProperty("SPEK_TIMEOUT", 15000L.toString())
             val recorder = helper.executeTest(testData.timeoutTest.GlobalTimeoutTest)
 
             helper.assertExecutionEquals(

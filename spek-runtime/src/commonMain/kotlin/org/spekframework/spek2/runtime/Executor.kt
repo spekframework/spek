@@ -74,12 +74,21 @@ class Executor {
                                 scope.execute()
                             }
 
-                            val exception = withTimeout(scope.timeout) {
+                            val exception = if (scope.timeout == 0L) {
                                 try {
                                     job.await()
                                     null
                                 } catch (e: Throwable) {
                                     e
+                                }
+                            } else {
+                                withTimeout(scope.timeout) {
+                                    try {
+                                        job.await()
+                                        null
+                                    } catch (e: Throwable) {
+                                        e
+                                    }
                                 }
                             }
 
