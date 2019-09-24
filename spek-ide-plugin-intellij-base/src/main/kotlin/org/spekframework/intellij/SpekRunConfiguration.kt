@@ -4,6 +4,7 @@ import com.intellij.execution.CommonProgramRunConfigurationParameters
 import com.intellij.execution.configurations.LocatableConfiguration
 import com.intellij.openapi.module.Module
 import org.spekframework.intellij.support.SpekCommonProgramRunConfigurationParameters
+import org.spekframework.intellij.support.SpekCommonProgramRunConfigurationParameters.GeneratedNameHint
 import org.spekframework.spek2.runtime.scope.isRoot
 
 interface SpekRunConfiguration<T: SpekCommonProgramRunConfigurationParameters>: LocatableConfiguration, CommonProgramRunConfigurationParameters {
@@ -42,14 +43,37 @@ interface SpekRunConfiguration<T: SpekCommonProgramRunConfigurationParameters>: 
         val path = data.path
         val parent = path.parent
 
-        val prefix = data.producerType?.let {
-            "($it)"
-        } ?: ""
+        val nameHint = data.generatedNameHint
+        if (nameHint == null) {
+            return if (path.isRoot) {
+                "Speks in <default package>"
+            } else {
+                "Spek(s): ${path.toString()}"
+            }.trim()
+        }
 
-        return if (path.isRoot) {
-            "$prefix Speks in <default package>"
-        } else {
-            "Spek(s): ${path.toString()}"
-        }.trim()
+        return when (nameHint) {
+            GeneratedNameHint.PACKAGE -> {
+                val pkg = if (path.isRoot) {
+                    "<default package>"
+                } else {
+                    path.toString().replace("/", ".")
+                }
+                "Speks in $pkg"
+            }
+            GeneratedNameHint.CLASS -> {
+                val clz = path.name
+                val pkg = path.parent?.let {
+                    it.toString().replace("/", ".")
+                }
+
+                if (pkg != null) {
+                    "Spek: $pkg.$clz"
+                } else {
+                    "Spek: $clz"
+                }
+            }
+            else -> "Scope: ${path.name}"
+        }
     }
 }

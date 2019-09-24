@@ -6,13 +6,11 @@ import com.intellij.openapi.module.Module
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ModuleRootManager
 import com.intellij.openapi.util.Ref
-import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiPackage
 import org.jetbrains.kotlin.config.KotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
-import org.jetbrains.kotlin.config.TestSourceKotlinRootType
 import org.jetbrains.kotlin.idea.caches.project.implementingModules
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.util.module
@@ -21,6 +19,7 @@ import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
 import org.spekframework.intellij.domain.ScopeDescriptorCache
+import org.spekframework.intellij.support.SpekCommonProgramRunConfigurationParameters.GeneratedNameHint
 import org.spekframework.intellij.util.maybeGetContext
 import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
@@ -34,15 +33,24 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
         )
 
         return context.psiLocation?.let {
+            var nameHint: GeneratedNameHint? = null
             val path = if (it is PsiDirectory) {
                 getPathFromDir(context, it)
+                nameHint = GeneratedNameHint.PACKAGE
             } else if (it is PsiPackage) {
                 getPathFromPackage(it)
+                nameHint = GeneratedNameHint.PACKAGE
             } else {
                 val elementContext = maybeGetContext(it)
                 val descriptor = when (elementContext) {
-                    is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
-                    is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
+                    is KtClassOrObject -> {
+                        nameHint = GeneratedNameHint.CLASS
+                        descriptorCache.fromClassOrObject(elementContext)
+                    }
+                    is KtCallExpression -> {
+                        nameHint = GeneratedNameHint.SCOPE
+                        descriptorCache.fromCallExpression(elementContext)
+                    }
                     else -> null
                 }
 
@@ -52,8 +60,7 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
                     null
                 }
             }
-
-            configuration.data.path == path
+            configuration.data.path == path && configuration.data.generatedNameHint == nameHint
         } ?: false
     }
 
@@ -65,15 +72,24 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
         )
 
         return sourceElement.get().let {
+            var nameHint: GeneratedNameHint? = null
             val path = if (it is PsiDirectory) {
+                nameHint = GeneratedNameHint.PACKAGE
                 getPathFromDir(context, it)
             } else if (it is PsiPackage) {
+                nameHint = GeneratedNameHint.PACKAGE
                 getPathFromPackage(it)
             } else {
                 val elementContext = maybeGetContext(it)
                 val descriptor = when (elementContext) {
-                    is KtClassOrObject -> descriptorCache.fromClassOrObject(elementContext)
-                    is KtCallExpression -> descriptorCache.fromCallExpression(elementContext)
+                    is KtClassOrObject -> {
+                        nameHint = GeneratedNameHint.CLASS
+                        descriptorCache.fromClassOrObject(elementContext)
+                    }
+                    is KtCallExpression -> {
+                        nameHint = GeneratedNameHint.SCOPE
+                        descriptorCache.fromCallExpression(elementContext)
+                    }
                     else -> null
                 }
 
@@ -86,6 +102,7 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
 
             if (path != null) {
                 configuration.data.path = path
+                configuration.data.generatedNameHint = nameHint
                 val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
                         .getInitializedSettings(context.module)
 
