@@ -10,8 +10,15 @@ import org.spekframework.spek2.runtime.scope.Path
 import org.spekframework.spek2.runtime.scope.PathBuilder
 
 abstract class SpekCommonProgramRunConfigurationParameters(private val _project: Project): CommonProgramRunConfigurationParameters {
+    enum class GeneratedNameHint {
+        PACKAGE,
+        CLASS,
+        SCOPE
+    }
+
     var path: Path = PathBuilder.ROOT
     var producerType: ProducerType? = null
+    var generatedNameHint: GeneratedNameHint? = null
     private var workingDirectory: String? = null
     private var envs = mutableMapOf<String, String>()
     private var passParentEnvs: Boolean = true
@@ -59,6 +66,10 @@ abstract class SpekCommonProgramRunConfigurationParameters(private val _project:
         JDOMExternalizerUtil.writeField(element, PROGRAM_PARAMETERS, programParameters)
         JDOMExternalizerUtil.writeField(element, PATH, path.serialize())
         EnvironmentVariablesComponent.writeExternal(element, envs)
+
+        if (generatedNameHint != null) {
+            JDOMExternalizerUtil.writeField(element, GENERATED_NAME_HINT, generatedNameHint!!.name)
+        }
     }
 
     open fun readExternal(element: Element) {
@@ -68,12 +79,14 @@ abstract class SpekCommonProgramRunConfigurationParameters(private val _project:
         path = PathBuilder.parse(JDOMExternalizerUtil.readField(element, PATH, ""))
             .build()
         EnvironmentVariablesComponent.readExternal(element, envs)
+        generatedNameHint = JDOMExternalizerUtil.readField(element, GENERATED_NAME_HINT)?.let(GeneratedNameHint::valueOf)
     }
 
     companion object {
         private const val PASS_PARENT_ENVS = "passParentEnvs"
         private const val WORKING_DIRECTORY = "workingDirectory"
         private const val PROGRAM_PARAMETERS = "programParameters"
+        private const val GENERATED_NAME_HINT = "generatedNameHint"
         private const val PATH= "path"
     }
 }
