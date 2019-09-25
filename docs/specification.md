@@ -73,7 +73,7 @@ result of the action.
 
 ```kotlin
 describe("adding 1 + 2") {
-    lateinit var result: Int
+    var result: Int = 0
     beforeEachTest {
         result = 1 + 2
     }
