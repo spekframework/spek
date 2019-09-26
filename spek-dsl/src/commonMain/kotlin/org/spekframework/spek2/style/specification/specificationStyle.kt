@@ -50,18 +50,22 @@ class Suite(val delegate: GroupBody) : LifecycleAware by delegate {
         delegate.createTest(description, Skip.Yes(reason), timeout, body)
     }
 
+    @Deprecated("Use beforeGroup instead", replaceWith = ReplaceWith("beforeGroup"))
     fun before(cb: () -> Unit) {
         beforeGroup(cb)
     }
 
+    @Deprecated("Use afterGroup instead", replaceWith = ReplaceWith("afterGroup"))
     fun after(cb: () -> Unit) {
         afterGroup(cb)
     }
 
+    @Deprecated("Use beforeEachTest instead", replaceWith = ReplaceWith("beforeEachTest"))
     fun beforeEach(cb: () -> Unit) {
         beforeEachTest(cb)
     }
 
+    @Deprecated("Use afterEachTest instead", replaceWith = ReplaceWith("afterEachTest"))
     fun afterEach(cb: () -> Unit) {
         afterEachTest(cb)
     }
