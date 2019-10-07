@@ -1,8 +1,7 @@
 package org.spekframework.spek2.runtime
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
@@ -68,7 +67,7 @@ class Executor {
                             // this needs to be here, in K/N the event loop
                             // is started during a runBlocking call. Calling
                             // any builders outside that will throw an exception.
-                            val job = GlobalScope.async {
+                            val job = launch {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()
                                 scope.execute()
@@ -76,7 +75,7 @@ class Executor {
 
                             val exception = if (scope.timeout == 0L) {
                                 try {
-                                    job.await()
+                                    job.join()
                                     null
                                 } catch (e: Throwable) {
                                     e
@@ -84,7 +83,7 @@ class Executor {
                             } else {
                                 withTimeout(scope.timeout) {
                                     try {
-                                        job.await()
+                                        job.join()
                                         null
                                     } catch (e: Throwable) {
                                         e

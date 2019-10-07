@@ -1,13 +1,13 @@
 package testData.timeoutTest
 
-fun getTimeMillis(): Long = System.currentTimeMillis()
+import java.util.concurrent.CountDownLatch
 
 fun sleep(time: Long) {
-    val start = getTimeMillis()
-
-    while (true) {
-        if (getTimeMillis() - start >= time) {
-            break
-        }
+    val latch = CountDownLatch(1)
+    val thread = Thread {
+        Thread.sleep(time)
+        latch.countDown()
     }
+    thread.start()
+    latch.await()
 }
