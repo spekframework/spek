@@ -49,10 +49,8 @@ class Executor {
                 when (scope) {
                     is GroupScopeImpl -> {
                         withContext(Dispatchers.Default) {
-                            coroutineScope {
-                                scope.before()
-                                scope.invokeBeforeGroupFixtures(false)
-                            }
+                            scope.before()
+                            scope.invokeBeforeGroupFixtures(false)
                             var failed = false
                             for (it in scope.getChildren()) {
 
@@ -69,14 +67,14 @@ class Executor {
                         }
                     }
                     is TestScopeImpl -> {
-                        coroutineScope {
+                        val exception = withContext(Dispatchers.Default) {
                             val job = launch {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()
                                 scope.execute()
                             }
 
-                            val exception = if (scope.timeout == 0L) {
+                            if (scope.timeout == 0L) {
                                 try {
                                     job.join()
                                     null
@@ -93,10 +91,10 @@ class Executor {
                                     }
                                 }
                             }
+                        }
 
-                            if (exception != null) {
-                                throw exception
-                            }
+                        if (exception != null) {
+                            throw exception
                         }
                     }
                 }
