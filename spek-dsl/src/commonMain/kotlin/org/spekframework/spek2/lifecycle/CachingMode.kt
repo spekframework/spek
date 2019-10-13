@@ -10,7 +10,8 @@ enum class CachingMode {
      */
     @Deprecated(
         "Use CachingMode.EACH_GROUP instead.",
-        replaceWith = ReplaceWith("org.spekframework.spek2.lifecycle.CachingMode.EACH_GROUP")
+        replaceWith = ReplaceWith("org.spekframework.spek2.lifecycle.CachingMode.EACH_GROUP"),
+        level = DeprecationLevel.ERROR
     )
     GROUP,
     /**
