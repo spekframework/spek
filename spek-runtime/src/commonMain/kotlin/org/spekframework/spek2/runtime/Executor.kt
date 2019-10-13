@@ -1,8 +1,6 @@
 package org.spekframework.spek2.runtime
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -13,12 +11,16 @@ import org.spekframework.spek2.runtime.scope.TestScopeImpl
 
 class Executor {
     fun execute(request: ExecutionRequest) {
-        request.executionListener.executionStart()
-        request.roots.forEach { execute(it, request.executionListener) }
-        request.executionListener.executionFinish()
+        doRunBlocking {
+            withContext(Dispatchers.Default) {
+                request.executionListener.executionStart()
+                request.roots.forEach { execute(it, request.executionListener) }
+                request.executionListener.executionFinish()
+            }
+        }
     }
 
-    private fun execute(scope: ScopeImpl, listener: ExecutionListener): ExecutionResult? {
+    private suspend fun execute(scope: ScopeImpl, listener: ExecutionListener): ExecutionResult? {
         if (scope.skip is Skip.Yes) {
             scopeIgnored(scope, scope.skip.reason, listener)
             return null
@@ -43,37 +45,36 @@ class Executor {
                 }
             }
 
-            val result = executeSafely(::finalize) {
+            val result = executeSafely({ finalize(it) }) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        scope.before()
-                        scope.invokeBeforeGroupFixtures(false)
-                        var failed = false
-                        for (it in scope.getChildren()) {
+                        withContext(Dispatchers.Default) {
+                            scope.before()
+                            scope.invokeBeforeGroupFixtures(false)
+                            var failed = false
+                            for (it in scope.getChildren()) {
 
-                            if (failed) {
-                                scopeIgnored(it, "Previous failure detected, skipping.", listener)
-                                continue
-                            }
+                                if (failed) {
+                                    scopeIgnored(it, "Previous failure detected, skipping.", listener)
+                                    continue
+                                }
 
-                            val result = execute(it, listener)
-                            if (scope.failFast && it is TestScopeImpl && result is ExecutionResult.Failure) {
-                                failed = true
+                                val result = execute(it, listener)
+                                if (scope.failFast && it is TestScopeImpl && result is ExecutionResult.Failure) {
+                                    failed = true
+                                }
                             }
                         }
                     }
                     is TestScopeImpl -> {
-                        doRunBlocking {
-                            // this needs to be here, in K/N the event loop
-                            // is started during a runBlocking call. Calling
-                            // any builders outside that will throw an exception.
+                        val exception = withContext(Dispatchers.Default) {
                             val job = launch {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()
                                 scope.execute()
                             }
 
-                            val exception = if (scope.timeout == 0L) {
+                            if (scope.timeout == 0L) {
                                 try {
                                     job.join()
                                     null
@@ -90,10 +91,10 @@ class Executor {
                                     }
                                 }
                             }
+                        }
 
-                            if (exception != null) {
-                                throw exception
-                            }
+                        if (exception != null) {
+                            throw exception
                         }
                     }
                 }
@@ -105,7 +106,7 @@ class Executor {
         }
     }
 
-    private fun executeSafely(finalize: (ExecutionResult) -> Unit, block: () -> Unit): ExecutionResult {
+    private suspend fun executeSafely(finalize: suspend (ExecutionResult) -> Unit, block: suspend () -> Unit): ExecutionResult {
         val result = try {
             block()
             ExecutionResult.Success
