@@ -5,9 +5,9 @@ import org.junit.platform.engine.TestSource
 import org.junit.platform.engine.TestTag
 import org.junit.platform.engine.UniqueId
 import org.junit.platform.engine.support.descriptor.ClassSource
+import org.spekframework.spek2.lifecycle.ScopeType
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
-import org.spekframework.spek2.runtime.scope.ScopeType
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import java.util.*
 

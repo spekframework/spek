@@ -13,6 +13,13 @@ object FailureTest: AbstractSpekTest({ helper ->
                         test("4 == 2 + 2")
                         test("false == true", false)
                     }
+                    group("empty description") {
+                        test("", false)
+                        test("", false)
+                    }
+                    group("") {
+                        test("4 == 2 + 2", false)
+                    }
                 }
             }
         }
