@@ -6,17 +6,17 @@ import com.nhaarman.mockitokotlin2.mock
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.spekframework.spek2.dsl.Skip
-import org.spekframework.spek2.lifecycle.ScopeId
-import org.spekframework.spek2.lifecycle.ScopeType
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.PathBuilder
+import org.spekframework.spek2.runtime.scope.ScopeId
+import org.spekframework.spek2.runtime.scope.ScopeType
 import kotlin.properties.Delegates
 
 class SpekTestDescriptorFactoryTest {
 
-    var factory: SpekTestDescriptorFactory by Delegates.notNull()
-    var lifecycleManager: LifecycleManager by Delegates.notNull()
+    private var factory: SpekTestDescriptorFactory by Delegates.notNull()
+    private var lifecycleManager: LifecycleManager by Delegates.notNull()
 
     @BeforeEach
     fun setup() {

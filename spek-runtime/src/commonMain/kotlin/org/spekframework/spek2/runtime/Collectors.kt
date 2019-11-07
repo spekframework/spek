@@ -87,6 +87,7 @@ class Collector(
         }
         val collector = Collector(group, lifecycleManager, cachingMode, defaultTimeout)
         try {
+            require(description.isNotEmpty()) { "Empty description for group." }
             body.invoke(collector)
             collector.finalize()
         } catch (e: Throwable) {
@@ -106,6 +107,7 @@ class Collector(
     }
 
     override fun test(description: String, skip: Skip, timeout: Long, body: TestBody.() -> Unit) {
+        require(description.isNotEmpty()) { "Empty description for test." }
         val test = TestScopeImpl(
             idFor(description),
             root.path.resolve(description),

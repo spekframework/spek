@@ -1,4 +1,4 @@
-package org.spekframework.spek2.lifecycle
+package org.spekframework.spek2.runtime.scope
 
 enum class ScopeType {
     Class,

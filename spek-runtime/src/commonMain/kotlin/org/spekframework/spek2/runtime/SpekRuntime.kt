@@ -3,8 +3,6 @@ package org.spekframework.spek2.runtime
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.lifecycle.CachingMode
-import org.spekframework.spek2.lifecycle.ScopeId
-import org.spekframework.spek2.lifecycle.ScopeType
 import org.spekframework.spek2.runtime.execution.DiscoveryRequest
 import org.spekframework.spek2.runtime.execution.DiscoveryResult
 import org.spekframework.spek2.runtime.execution.ExecutionRequest

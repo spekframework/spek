@@ -6,11 +6,10 @@ import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.*
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
-import org.spekframework.spek2.runtime.util.isValid
 import kotlin.properties.ReadOnlyProperty
 
 sealed class ScopeImpl(
-    override val id: ScopeId,
+    val id: ScopeId,
     val path: Path,
     val skip: Skip,
     val lifecycleManager: LifecycleManager
@@ -122,7 +121,7 @@ class GroupScopeImpl(
 }
 
 class TestScopeImpl(
-    override val id: ScopeId,
+    id: ScopeId,
     path: Path,
     override val parent: GroupScope,
     val timeout: Long,
@@ -134,7 +133,6 @@ class TestScopeImpl(
     override fun before() = lifecycleManager.beforeExecuteTest(this)
 
     fun execute() {
-        require(validDescriptions()) { "Scope description is empty." }
         body.invoke(object : TestBody {
             override fun <T> memoized(): MemoizedValue<T> {
                 return MemoizedValueReader(this@TestScopeImpl)
@@ -150,14 +148,5 @@ class TestScopeImpl(
 
     fun invokeAfterTestFixtures() {
         (parent as? GroupScopeImpl)?.invokeAfterTestFixtures()
-    }
-
-    private fun validDescriptions(): Boolean{
-        var next: Scope? = this
-        while (next != null) {
-            if (!next.id.isValid()) return false
-            next = next.parent
-        }
-        return true
     }
 }
