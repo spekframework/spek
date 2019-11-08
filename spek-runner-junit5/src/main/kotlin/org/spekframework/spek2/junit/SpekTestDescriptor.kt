@@ -12,8 +12,8 @@ import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import java.util.*
 
 class SpekTestDescriptor internal constructor(
-    val scope: ScopeImpl,
-    private val factory: SpekTestDescriptorFactory
+        val scope: ScopeImpl,
+        private val factory: SpekTestDescriptorFactory
 ) : TestDescriptor {
 
     companion object {

@@ -15,8 +15,8 @@ import kotlin.properties.Delegates
 
 class SpekTestDescriptorFactoryTest {
 
-    var factory: SpekTestDescriptorFactory by Delegates.notNull()
-    var lifecycleManager: LifecycleManager by Delegates.notNull()
+    private var factory: SpekTestDescriptorFactory by Delegates.notNull()
+    private var lifecycleManager: LifecycleManager by Delegates.notNull()
 
     @BeforeEach
     fun setup() {

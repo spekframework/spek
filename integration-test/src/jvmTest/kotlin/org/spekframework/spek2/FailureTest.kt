@@ -13,6 +13,12 @@ object FailureTest: AbstractSpekTest({ helper ->
                         test("4 == 2 + 2")
                         test("false == true", false)
                     }
+                    group("empty description") {
+                        //won't be executed as error is thrown, thus empty
+                    }
+                    group("") {
+                        //won't be executed as error is thrown, thus empty
+                    }
                 }
             }
         }
