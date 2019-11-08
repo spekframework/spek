@@ -1,12 +1,12 @@
 object Dependencies {
     val hamkrest = "com.natpryce:hamkrest:1.1.0.0"
 
-    val junitPlatformEngine = "org.junit.platform:junit-platform-engine:1.1.1"
-    val junitPlatformRunner = "org.junit.platform:junit-platform-runner:1.1.1"
-    val junitPlatformLauncher = "org.junit.platform:junit-platform-launcher:1.1.1"
+    val junitPlatformEngine = "org.junit.platform:junit-platform-engine:1.5.2"
+    val junitPlatformRunner = "org.junit.platform:junit-platform-runner:1.5.2"
+    val junitPlatformLauncher = "org.junit.platform:junit-platform-launcher:1.5.2"
 
-    val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:5.1.1"
-    val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:5.1.1"
+    val junitJupiterApi = "org.junit.jupiter:junit-jupiter-api:5.5.2"
+    val junitJupiterEngine = "org.junit.jupiter:junit-jupiter-engine:5.5.2"
 
     val classgraph = "io.github.classgraph:classgraph:4.8.37"
 
