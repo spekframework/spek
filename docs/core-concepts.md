@@ -60,7 +60,7 @@ another test
 ```
 The lines highlighted are printed during the discovery phase, while the rest in the execution phase. It is not recommended
 to directly initialize test value(s) or do any setup in this scope as it only executed once during the discovery phase. Fret not,
-Spek provides utilities to help you to those things properly.
+Spek provides utilities to help you do those things properly.
 
 ### Execution
 In this phase the tests are executed. Spek traverses the test tree starting from the root and for each scope it will execute
