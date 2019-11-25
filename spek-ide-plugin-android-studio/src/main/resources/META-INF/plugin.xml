@@ -16,6 +16,18 @@
         <runConfigurationProducer implementation="org.spekframework.intellij.SpekAndroidRunConfigurationProducer"/>
         <implicitUsageProvider implementation="org.spekframework.intellij.SpekImplicitUsageProvider"/>
         <runLineMarkerContributor language="kotlin" implementationClass="org.spekframework.intellij.SpekRunLineMarkerContributor"/>
+        <localInspection
+                language="kotlin"
+                displayName="Spek class needs no-arg constructor"
+                groupPath="Kotlin"
+                groupName="Spek"
+                groupKey="group.names.probable.bugs"
+                enabledByDefault="true"
+                level="WARNING"
+
+                implementationClass="org.spekframework.intellij.inspections.NoArgConstructorInspection"
+        />
+
     </extensions>
 
     <extensionPoints>
