@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.3.31'
-    ext.spek_version = '2.1.0-alpha.0.10+cc4a596'
+    ext.spek_version = '2.1.0-alpha.0.9+a2ab044'
 
     repositories {
         jcenter()
