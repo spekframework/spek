@@ -16,7 +16,7 @@ stages:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
             inputs:
-              tasks: 'spek-runner-junit5:check integration-test:check'
+              tasks: 'spek-runner-junit5:check integration-test:allSpekTests'
               options: '--stacktrace -PexcludeIdePlugins'
       - job: macos
         pool:
@@ -25,7 +25,7 @@ stages:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2
             inputs:
-              tasks: 'integration-test:check'
+              tasks: 'integration-test:allSpekTests'
               options: '--stacktrace -PexcludeIdePlugins'
       - job: windows
         pool:
@@ -36,7 +36,7 @@ stages:
               filePath: '.\ci\install-jdk10.ps1'
           - task: Gradle@2
             inputs:
-              tasks: 'integration-test:check'
+              tasks: 'integration-test:allSpekTests'
               options: '--stacktrace -PexcludeIdePlugins'
 
   - stage: test_ide_plugins
