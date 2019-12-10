@@ -11,8 +11,8 @@ class MemoizedValueCreator<out T>(
     val scope: ScopeImpl,
     private val mode: CachingMode,
     private val lifecycleAware: LifecycleAware,
-    val factory: () -> T,
-    private val destructor: (T) -> Unit
+    val factory: suspend () -> T,
+    private val destructor: suspend (T) -> Unit
 ) : MemoizedValue<T> {
 
     override operator fun provideDelegate(

@@ -7,8 +7,8 @@ import kotlin.reflect.KProperty
 
 sealed class MemoizedValueAdapter<T>(
     val name: String,
-    val factory: () -> T,
-    val destructor: (T) -> Unit
+    val factory: suspend () -> T,
+    val destructor: suspend (T) -> Unit
 ) : ReadOnlyProperty<Any?, T> {
 
     protected sealed class Cached<out T> {
@@ -19,9 +19,15 @@ sealed class MemoizedValueAdapter<T>(
 
     protected var cached: Cached<T> = Cached.Invalid
 
-    override fun getValue(thisRef: Any?, property: KProperty<*>) = get()
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        val cached = this.cached
+        return when (cached) {
+            is Cached.Value<T> -> cached.value
+            else -> throw AssertionError("'$name' can not be accessed in this context.")
+        }
+    }
 
-    fun get(): T {
+    suspend fun get(): T {
         val cached = this.cached
         return when (cached) {
             Cached.Empty -> {
@@ -38,8 +44,8 @@ sealed class MemoizedValueAdapter<T>(
 
     class GroupCachingModeAdapter<T>(
         name: String,
-        factory: () -> T,
-        destructor: (T) -> Unit
+        factory: suspend () -> T,
+        destructor: suspend (T) -> Unit
     ) : MemoizedValueAdapter<T>(name, factory, destructor) {
 
         private val stack = mutableListOf<Cached<T>>()
@@ -49,6 +55,7 @@ sealed class MemoizedValueAdapter<T>(
                 beforeEachGroup {
                     stack.add(0, cached)
                     cached = Cached.Empty
+                    get()
                 }
 
                 afterEachGroup {
@@ -69,14 +76,15 @@ sealed class MemoizedValueAdapter<T>(
     class ScopeCachingModeAdapter<T>(
         val scope: ScopeImpl,
         name: String,
-        factory: () -> T,
-        destructor: (T) -> Unit
+        factory: suspend () -> T,
+        destructor: suspend (T) -> Unit
     ) : MemoizedValueAdapter<T>(name, factory, destructor) {
 
         override fun setup(lifecycleAware: LifecycleAware) {
             with(lifecycleAware) {
                 beforeGroup {
                     cached = Cached.Empty
+                    get()
                 }
 
                 afterGroup {
@@ -92,14 +100,15 @@ sealed class MemoizedValueAdapter<T>(
 
     class TestCachingModeAdapter<T>(
         name: String,
-        factory: () -> T,
-        destructor: (T) -> Unit
+        factory: suspend () -> T,
+        destructor: suspend (T) -> Unit
     ) : MemoizedValueAdapter<T>(name, factory, destructor) {
 
         override fun setup(lifecycleAware: LifecycleAware) {
             with(lifecycleAware) {
                 beforeEachTest {
                     cached = Cached.Empty
+                    get()
                 }
 
                 afterEachTest {

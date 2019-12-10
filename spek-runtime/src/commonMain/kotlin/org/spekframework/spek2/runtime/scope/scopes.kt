@@ -97,23 +97,23 @@ class GroupScopeImpl(
         fixtures.afterGroup(fixture)
     }
 
-    fun invokeBeforeTestFixtures() {
+    suspend fun invokeBeforeTestFixtures() {
         (parent as? GroupScopeImpl)?.invokeBeforeTestFixtures()
         fixtures.invokeBeforeTestFixtures()
     }
 
-    fun invokeAfterTestFixtures() {
+    suspend fun invokeAfterTestFixtures() {
         fixtures.invokeAfterTestFixtures()
         (parent as? GroupScopeImpl)?.invokeAfterTestFixtures()
     }
 
-    fun invokeBeforeGroupFixtures(inheritableOnly: Boolean) {
+    suspend fun invokeBeforeGroupFixtures(inheritableOnly: Boolean) {
         // we only want to execute fixtures that we inherit aka beforeEachGroup
         (parent as? GroupScopeImpl)?.invokeBeforeGroupFixtures(true)
         fixtures.invokeBeforeGroupFixtures(inheritableOnly)
     }
 
-    fun invokeAfterGroupFixtures(inheritableOnly: Boolean) {
+    suspend fun invokeAfterGroupFixtures(inheritableOnly: Boolean) {
         // we only want to execute fixtures that we inherit aka afterEachGroup
         fixtures.invokeAfterGroupFixtures(inheritableOnly)
         (parent as? GroupScopeImpl)?.invokeAfterGroupFixtures(true)
@@ -125,14 +125,14 @@ class TestScopeImpl(
     path: Path,
     override val parent: GroupScope,
     val timeout: Long,
-    private val body: TestBody.() -> Unit,
+    private val body: suspend TestBody.() -> Unit,
     skip: Skip,
     lifecycleManager: LifecycleManager
 ) : ScopeImpl(id, path, skip, lifecycleManager), TestScope {
 
     override fun before() = lifecycleManager.beforeExecuteTest(this)
 
-    fun execute() {
+    suspend fun execute() {
         body.invoke(object : TestBody {
             override fun <T> memoized(): MemoizedValue<T> {
                 return MemoizedValueReader(this@TestScopeImpl)
@@ -142,11 +142,11 @@ class TestScopeImpl(
 
     override fun after(result: ExecutionResult) = lifecycleManager.afterExecuteTest(this, result)
 
-    fun invokeBeforeTestFixtures() {
+    suspend fun invokeBeforeTestFixtures() {
         (parent as? GroupScopeImpl)?.invokeBeforeTestFixtures()
     }
 
-    fun invokeAfterTestFixtures() {
+    suspend fun invokeAfterTestFixtures() {
         (parent as? GroupScopeImpl)?.invokeAfterTestFixtures()
     }
 }

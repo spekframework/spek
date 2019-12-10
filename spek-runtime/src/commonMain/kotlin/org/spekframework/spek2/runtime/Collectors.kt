@@ -22,9 +22,9 @@ class Collector(
         finalizers.clear()
     }
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> = memoized(mode, factory) { }
+    override fun <T> memoized(mode: CachingMode, factory: suspend () -> T): MemoizedValue<T> = memoized(mode, factory) { }
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> {
+    override fun <T> memoized(mode: CachingMode, factory: suspend () -> T, destructor: suspend (T) -> Unit): MemoizedValue<T> {
         // scope values automatically register an afterXXX fixture
         // when de-initializing - this means that any afterXXX fixture
         // declared after the memoized can't access it.
@@ -106,7 +106,7 @@ class Collector(
         }
     }
 
-    override fun test(description: String, skip: Skip, timeout: Long, body: TestBody.() -> Unit) {
+    override fun test(description: String, skip: Skip, timeout: Long, body: suspend TestBody.() -> Unit) {
         require(description.isNotEmpty()) { "Empty description for test." }
         val test = TestScopeImpl(
             idFor(description),
