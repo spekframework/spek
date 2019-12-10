@@ -1,5 +1,8 @@
 package org.spekframework.spek2
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import org.spekframework.spek2.dsl.Root
 import org.spekframework.spek2.runtime.SpekRuntime
 import org.spekframework.spek2.runtime.discovery.DiscoveryContext
@@ -114,17 +117,17 @@ class SpekTestHelper {
         return builder.build()
     }
 
-    fun executeTests(context: DiscoveryContext, vararg paths: Path): ExecutionRecorder {
+    suspend fun executeTests(context: DiscoveryContext, vararg paths: Path): ExecutionRecorder {
         val runtime = SpekRuntime()
         val recorder = ExecutionRecorder()
 
         val discoveryResult = runtime.discover(DiscoveryRequest(context, listOf(*paths)))
-        runtime.execute(ExecutionRequest(discoveryResult.roots, recorder))
+        runtime.executeAsync(ExecutionRequest(discoveryResult.roots, recorder))
 
         return recorder
     }
 
-    fun<T: Spek> executeTest(test: T): ExecutionRecorder {
+    suspend fun <T: Spek> executeTest(test: T): ExecutionRecorder {
         val path = PathBuilder.from(test::class)
             .build()
 

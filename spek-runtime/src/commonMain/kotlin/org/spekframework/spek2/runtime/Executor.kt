@@ -10,16 +10,13 @@ import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
+import kotlin.coroutines.coroutineContext
 
 class Executor {
-    fun execute(request: ExecutionRequest) {
-        doRunBlocking {
-            withContext(Dispatchers.Default) {
-                request.executionListener.executionStart()
-                request.roots.forEach { execute(it, request.executionListener) }
-                request.executionListener.executionFinish()
-            }
-        }
+    suspend fun execute(request: ExecutionRequest) {
+        request.executionListener.executionStart()
+        request.roots.forEach { execute(it, request.executionListener) }
+        request.executionListener.executionFinish()
     }
 
     private suspend fun execute(scope: ScopeImpl, listener: ExecutionListener): ExecutionResult? {
@@ -47,11 +44,11 @@ class Executor {
                 }
             }
 
-            val coroutineScope: CoroutineContext = EmptyCoroutineContext
-            val result = executeSafely(coroutineScope, { finalize(it) }) {
+            val coroutineContext: CoroutineContext = coroutineContext + EmptyCoroutineContext
+            val result = executeSafely(coroutineContext, { finalize(it) }) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        withContext(Dispatchers.Default) {
+                        withContext(coroutineContext) {
                             scope.before()
                             scope.invokeBeforeGroupFixtures(false)
                             var failed = false
@@ -70,7 +67,7 @@ class Executor {
                         }
                     }
                     is TestScopeImpl -> {
-                        val exception = withContext(Dispatchers.Default) {
+                        val exception = withContext(coroutineContext) {
                             val job = launch {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()

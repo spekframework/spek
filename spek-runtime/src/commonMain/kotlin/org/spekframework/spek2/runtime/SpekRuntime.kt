@@ -30,7 +30,14 @@ class SpekRuntime {
         return DiscoveryResult(scopes)
     }
 
-    fun execute(request: ExecutionRequest) = Executor().execute(request)
+
+    suspend fun executeAsync(request: ExecutionRequest) {
+        Executor().execute(request)
+    }
+
+    fun execute(request: ExecutionRequest) {
+        doRunBlocking { executeAsync(request) }
+    }
 
     private fun resolveSpec(instance: Spek, path: Path): GroupScopeImpl {
         val lifecycleManager = LifecycleManager()

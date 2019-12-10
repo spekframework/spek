@@ -1,24 +1,39 @@
 package testData.timeoutTest
 
+import kotlinx.coroutines.channels.ReceiveChannel
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 import org.spekframework.spek2.style.specification.describe
 
-object DefaultTimeoutTest: Spek({
+class DefaultTimeoutTest(latch: ReceiveChannel<Int>): Spek({
     test("should timeout") {
-        sleep(13000)
+        latch.receive()
+    }
+
+    test("should not timeout") {
+        println(latch.receive())
     }
 
     describe("timeout specification style") {
         it("should timeout") {
-            sleep(13000)
+            latch.receive()
+        }
+
+        it("should not timeout") {
+            println(latch.receive())
         }
     }
 
     Feature("timeout gherkin style") {
-        Scenario("some scenario") {
+        Scenario("timeout scenario") {
             Then("should timeout") {
-                sleep(13000)
+                latch.receive()
+            }
+        }
+
+        Scenario("not timeout scenario") {
+            Then("should not timeout") {
+                latch.receive()
             }
         }
     }
