@@ -7,93 +7,94 @@ import org.spekframework.spek2.style.specification.describe
 
 object TimeoutTest: AbstractSpekTest({ helper ->
     describe("test timeouts") {
-        it("should timeout using default settings", timeout = 0) {
+        it("specification style timeouts") {
             runBlockingTest {
                 val latch = Channel<Int>()
                 val recorder = async {
-                    helper.executeTest(testData.timeoutTest.DefaultTimeoutTest(latch))
+                    helper.executeTest(testData.timeoutTest.SpecificationStyleTimeoutTests(latch))
                 }
-                // should timeout
-                advanceTimeBy(10000)
-                // should *not* timeout
-                advanceTimeBy(9000)
+
+                advanceTimeBy(10_000)
+                advanceTimeBy(300)
+                advanceTimeBy(9_000)
                 latch.send(0)
-
-                // timeout specification style
-                // should timeout
-                advanceTimeBy(10000)
-                // should *not* timeout
-                advanceTimeBy(9000)
+                advanceTimeBy(400)
                 latch.send(0)
-
-
-                // timeout gherkin style
-                // should timeout
-                advanceTimeBy(10000)
-                // should *not* timeout
-                advanceTimeBy(9000)
-                latch.send(0)
-
 
                 helper.assertExecutionEquals(
                     recorder.await().events()
                 ) {
-                    group("DefaultTimeoutTest") {
-                        test("should timeout", false)
-                        test("should not timeout", true)
-                        group("timeout specification style") {
-                            test("should timeout", false)
-                            test("should not timeout", true)
+                    group("SpecificationStyleTimeoutTests") {
+                        group("timeouts") {
+                            test("tests running pass the default timeout should fail", false)
+                            test("tests running pass 300ms should fail", false)
+                            test("tests running less than default timeout should succeed")
+                            test("tests running less than 500ms should succeed")
                         }
-                        group("Feature: timeout gherkin style") {
-                            group("Scenario: timeout scenario") {
-                                test("Then: should timeout", false)
+                    }
+                }
+            }
+        }
+
+        it("gherkin style timeouts") {
+            runBlockingTest {
+                val latch = Channel<Int>()
+                val recorder = async {
+                    helper.executeTest(testData.timeoutTest.GherkinStyleTimeoutTests(latch))
+                }
+
+                advanceTimeBy(10_000)
+                advanceTimeBy(600)
+                advanceTimeBy(9_000)
+                latch.send(0)
+                advanceTimeBy(1150)
+                latch.send(0)
+
+                helper.assertExecutionEquals(
+                    recorder.await().events()
+                ) {
+                    group("GherkinStyleTimeoutTests") {
+                        group("Feature: Timeouts") {
+                            group("Scenario: Running more than default") {
+                                test("Then: It should fail", false)
                             }
-                            group("Scenario: not timeout scenario") {
-                                test("Then: should not timeout", true)
+                            group("Scenario: Running more than 600ms") {
+                                test("Then: It should fail", false)
+                            }
+                            group("Scenario: Running less than default") {
+                                test("Then: It should succeed")
+                            }
+                            group("Scenario: Running less than 1200ms") {
+                                test("Then: It should succeed")
                             }
                         }
                     }
                 }
             }
         }
-    }
 
-    describe("custom timeouts") {
-        it("should timeout using specified settings") {
-            val recorder = helper.executeTest(testData.timeoutTest.CustomTimeoutTest)
-
-            helper.assertExecutionEquals(
-                recorder.events()
-            ) {
-                group("CustomTimeoutTest") {
-                    test("should timeout", false)
-                    group("timeout specification style") {
-                        test("should timeout", false)
+        describe("global timeouts") {
+            it("should use specified global timeout") {
+                runBlockingTest {
+                    System.setProperty("SPEK_TIMEOUT", 15000L.toString())
+                    val latch = Channel<Int>()
+                    val recorder = async {
+                        helper.executeTest(testData.timeoutTest.GlobalTimeoutTest(latch))
                     }
-                    group("Feature: timeout gherkin style") {
-                        group("Scenario: some scenario") {
-                            test("Then: should timeout", false)
+
+                    advanceTimeBy(14_500)
+                    latch.send(0)
+
+                    helper.assertExecutionEquals(
+                        recorder.await().events()
+                    ) {
+                        group("GlobalTimeoutTest") {
+                            test("this should run for 10s and pass since global timeout is 15s")
                         }
                     }
+                    System.clearProperty("SPEK_TIMEOUT")
                 }
             }
-        }
-    }
-
-    describe("global timeouts") {
-        it("should use specified global timeout", timeout = 0) {
-            System.setProperty("SPEK_TIMEOUT", 15000L.toString())
-            val recorder = helper.executeTest(testData.timeoutTest.GlobalTimeoutTest)
-
-            helper.assertExecutionEquals(
-                recorder.events()
-            ) {
-                group("GlobalTimeoutTest") {
-                    test("this should run for 10 seconds and pass since global timeout is 20")
-                }
-            }
-            System.clearProperty("SPEK_TIMEOUT")
         }
     }
 })
