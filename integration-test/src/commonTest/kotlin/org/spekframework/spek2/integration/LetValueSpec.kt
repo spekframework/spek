@@ -37,6 +37,18 @@ object LetValueSpec : Spek({
             expect(listOf("1 base")) { anotherList() }
         }
 
+        describe("evaluation of values") {
+            var string = ""
+            val valueWithString by value { "with $string" }
+
+            beforeEachTest { string = "initial value" }
+
+            it("should be lazy") {
+                string = "modified value"
+                expect("with modified value") { valueWithString() }
+            }
+        }
+
         context("in another context") {
             beforeEachTest { anotherList().add("2A ${str()}") }
 
