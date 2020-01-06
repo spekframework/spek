@@ -2,9 +2,7 @@ package org.spekframework.spek2.runtime
 
 import org.spekframework.spek2.dsl.*
 import org.spekframework.spek2.lifecycle.*
-import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
-import org.spekframework.spek2.runtime.lifecycle.MemoizedValueCreator
-import org.spekframework.spek2.runtime.lifecycle.MemoizedValueReader
+import org.spekframework.spek2.runtime.lifecycle.*
 import org.spekframework.spek2.runtime.scope.*
 
 class Collector(
@@ -63,6 +61,14 @@ class Collector(
 
     override fun <T> memoized(): MemoizedValue<T> {
         return MemoizedValueReader(root)
+    }
+
+    override fun <T> value(factory: () -> T): LetValue.PropertyCreator<T> {
+        return LetValueCreator(factory, this, { finalizers.add(it) })
+    }
+
+    override fun <T> value(letValue: LetValue<T>, factory: () -> T) {
+        (letValue as LetValueHolder).override(root.path, factory)
     }
 
     override fun registerListener(listener: LifecycleListener) {

@@ -6,6 +6,7 @@ import org.spekframework.spek2.dsl.GroupBody
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.dsl.TestBody
 import org.spekframework.spek2.lifecycle.CachingMode
+import org.spekframework.spek2.lifecycle.LetValue
 import org.spekframework.spek2.lifecycle.MemoizedValue
 
 class FakeGroupBody : GroupBody {
@@ -26,6 +27,12 @@ class FakeGroupBody : GroupBody {
             throw UnsupportedOperationException()
 
     override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> =
+            throw UnsupportedOperationException()
+
+    override fun <T> value(factory: () -> T): LetValue.PropertyCreator<T> =
+            throw UnsupportedOperationException()
+
+    override fun <T> value(letValue: LetValue<T>, factory: () -> T) =
             throw UnsupportedOperationException()
 
     override fun beforeEachTest(fixture: Fixture) {

@@ -5,6 +5,7 @@ import org.spekframework.spek2.lifecycle.LifecycleListener
 import org.spekframework.spek2.lifecycle.MemoizedValue
 import org.spekframework.spek2.meta.*
 import org.spekframework.spek2.Spek
+import org.spekframework.spek2.lifecycle.LetValue
 
 sealed class Skip {
     class Yes(val reason: String? = null) : Skip()
@@ -32,6 +33,9 @@ interface LifecycleAware : ScopeBody {
 
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T): MemoizedValue<T>
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
+
+    fun <T> value(factory: () -> T): LetValue.PropertyCreator<T>
+    fun <T> value(letValue: LetValue<T>, factory: () -> T)
 
     fun beforeEachTest(fixture: Fixture)
     fun afterEachTest(fixture: Fixture)
