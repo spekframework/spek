@@ -139,6 +139,8 @@ stages:
               ij_sdk: IJ192
             ij193:
               ij_sdk: IJ193
+            ij201:
+              ij_sdk: IJ201
         steps:
           - script: './ci/install-jdk10.sh'
           - task: Gradle@2

@@ -1,7 +1,3 @@
-/**
- *@author Nikolaus Knop
- */
-
 package org.spekframework.intellij.inspections
 
 import com.intellij.codeInspection.*
