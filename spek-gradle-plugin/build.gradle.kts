@@ -1,7 +1,13 @@
 plugins {
     id("org.ajoberstar.reckon") version "0.8.0"
     `kotlin-dsl`
-    kotlin("kapt") version embeddedKotlinVersion
+    kotlin("kapt") version "1.3.61"
+}
+
+buildscript {
+    dependencies {
+        classpath(kotlin("gradle-plugin", version = "1.3.61"))
+    }
 }
 
 repositories {
