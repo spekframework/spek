@@ -6,10 +6,10 @@ import com.intellij.psi.PsiElementVisitor
 import org.jetbrains.kotlin.idea.inspections.AbstractKotlinInspection
 import org.jetbrains.kotlin.idea.refactoring.pullUp.makeAbstract
 import org.jetbrains.kotlin.idea.util.addAnnotation
-import org.jetbrains.kotlin.lexer.KtModifierKeywordToken
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.psi.psiUtil.getSuperNames
+import org.jetbrains.kotlin.psi.psiUtil.isAbstract
 
 class NoArgConstructorInspection : AbstractKotlinInspection() {
 
@@ -20,11 +20,10 @@ class NoArgConstructorInspection : AbstractKotlinInspection() {
                 if (!isSpek) return
                 val ignored = klass.annotationEntries.any { it.shortName?.toString() == "Ignore" }
                 if (ignored) return
-                val modifiers = klass.modifierList
-                val isAbstract = modifiers != null && modifiers.hasModifier(ABSTRACT)
-                if (isAbstract) return
+                if (klass.isAbstract()) return
                 val hasCreateWith = klass.annotationEntries.any { it.shortName?.toString() == "CreateWith" }
                 if (hasCreateWith) return
+                if (klass.hasPrimaryConstructor() && klass.primaryConstructorParameters.isEmpty()) return
                 val hasNoArgConstructor = klass.allConstructors.any { constr ->
                     constr.getValueParameters().all { param -> param.hasDefaultValue() }
                 }
@@ -54,6 +53,5 @@ class NoArgConstructorInspection : AbstractKotlinInspection() {
 
     companion object {
         private const val IGNORE = "org.spekframework.spek2.meta.Ignore"
-        private val ABSTRACT = KtModifierKeywordToken.softKeywordModifier("abstract")
     }
 }
