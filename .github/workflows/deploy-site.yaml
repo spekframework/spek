@@ -1,0 +1,13 @@
+name: Deploy Site
+on:
+  push:
+    tags:
+      - '*'
+jobs:
+  deploy_site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: curl -X POST -d {} $NETLIFY_DEPLOY_URL
+        env:
+          NETLIFY_DEPLOY_URL: ${{ secrets.NETLIFY_DEPLOY_URL }}
