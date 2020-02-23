@@ -16,9 +16,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            arguments: spek-runner-junit5:check integration-test:check -PexcludeIdePlugins
+          - os: macos-latest
+            arguments: integration-test:check -PexcludeIdePlugins
+          - os: windows-latest
+              arguments: integration-test:check -PexcludeIdePlugins
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 1000
+      - run: git fetch --depth=1000 origin +refs/tags/*:refs/tags/*
       - name: Checkout submodules
         uses: snickerbockers/submodules-init@v4
       - name: Set up JDK 11
