@@ -23,6 +23,9 @@ class Spek2ConsoleLauncher {
         val discoveryResult = runtime.discover(discoveryRequest)
         val executionRequest = ExecutionRequest(discoveryResult.roots, ServiceMessageAdapter())
         runtime.execute(executionRequest)
+        // forces the jvm to shutdown even if there are non-daemon threads running.
+        // Ideally libraries should not leave non-daemon threads running after exit, unfortunately,
+        // this is quite common even with newer libraries.
         exitProcess(0)
     }
 }
