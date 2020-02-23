@@ -111,7 +111,11 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
     archiveClassifier.value("javadoc")
 }
 
-project.extra["artifacts"] = arrayOf("metadata", "jvm")
+project.extra["artifacts"] = when (currentOS) {
+    OS.LINUX -> arrayOf("metadata", "jvm", "js", "linux")
+    OS.WINDOWS -> arrayOf("windows")
+    OS.MACOS -> arrayOf("macos")
+}
 
 apply {
     plugin("publish")

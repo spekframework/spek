@@ -166,12 +166,12 @@ The created objects can then be referenced by name.
 // Put the common logic here
 fun Root.setup() {
     val obj by memoized(
-        factory = { createObj() }
+        factory = { createObj() },
         destructor = { it.dispose() }
     )
 }
 
-objects Test: Spek({
+object Test: Spek({
    setup()
    
    // Fetches the object keyed by name 'obj'

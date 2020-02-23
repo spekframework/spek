@@ -67,7 +67,7 @@ dependencies {
     testImplementation 'org.spekframework.spek2:spek-dsl-jvm:$spek_version'
     testImplementation 'org.spekframework.spek2:spek-runner-junit5:$spek_version'
     // spek requires kotlin-reflect, can be omitted if already in the classpath
-    testRuntimeOnly "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 
 // setup the test task

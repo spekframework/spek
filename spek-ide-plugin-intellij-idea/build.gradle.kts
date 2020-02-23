@@ -35,11 +35,18 @@ val buildMatrix = mapOf(
         arrayOf("java", "org.jetbrains.kotlin:1.3.40-release-IJ2019.2-1")
     ),
     "IJ193" to ij.BuildConfig(
-        "193-EAP-SNAPSHOT",
+        "193.6015.39",
         "IJ2019.3",
         "IJ183",
         ij.VersionRange("193.1", "193.*"),
         arrayOf("java", "org.jetbrains.kotlin:1.3.50-release-IJ2019.2-1")
+    ),
+    "IJ201" to ij.BuildConfig(
+      "201-EAP-SNAPSHOT",
+      "IJ2020.1",
+      "IJ183",
+      ij.VersionRange("201.1", "201.*"),
+      arrayOf("java", "org.jetbrains.kotlin:1.3.61-release-IJ2019.3-1")
     )
 )
 
