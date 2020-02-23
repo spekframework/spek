@@ -22,7 +22,7 @@ jobs:
           - os: macos-latest
             arguments: integration-test:check -PexcludeIdePlugins
           - os: windows-latest
-              arguments: integration-test:check -PexcludeIdePlugins
+            arguments: integration-test:check -PexcludeIdePlugins
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
