@@ -35,7 +35,7 @@ interface LifecycleAware : ScopeBody {
     fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
 
     fun <T> value(factory: () -> T): LetValue.PropertyCreator<T>
-    fun <T> value(letValue: LetValue<T>, factory: () -> T)
+    fun <T> value(letValue: T, factory: () -> T)
 
     fun beforeEachTest(fixture: Fixture)
     fun afterEachTest(fixture: Fixture)

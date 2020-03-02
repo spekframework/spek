@@ -34,7 +34,7 @@ object LetValueMetaSpec : AbstractSpekTest({ helper ->
 
             val (_, result) = results.afterExecuteGroupResults.single()
             result as ExecutionResult.Failure
-            expect("letValue() can't be used from beforeEachGroup or afterEachGroup") { result.cause.message }
+            expect("letValue can't be used from beforeEachGroup or afterEachGroup") { result.cause.message }
         }
 
         it("should fail silently when invoked in afterEachGroup, cuz spek") {
@@ -45,7 +45,7 @@ object LetValueMetaSpec : AbstractSpekTest({ helper ->
             result as ExecutionResult.Success
             expect(listOf(
                     "afterEachGroup called",
-                    "letValue() failed: letValue() can't be used from beforeEachGroup or afterEachGroup"
+                    "letValue() failed: letValue can't be used from beforeEachGroup or afterEachGroup"
             )) { events }
         }
     }
@@ -54,7 +54,7 @@ object LetValueMetaSpec : AbstractSpekTest({ helper ->
 class LetValueInvokedFromBeforeEachGroupExample(private val listener: LifecycleListener) : Spek({
     registerListener(listener)
     val letValue by value { "anything" }
-    beforeEachGroup { letValue() }
+    beforeEachGroup { letValue.capitalize() }
     test("empty test") {}
 })
 
@@ -66,7 +66,8 @@ class LetValueInvokedFromAfterEachGroupExample(
     afterEachGroup {
         events.add("afterEachGroup called")
         try {
-            letValue()
+            // captitalize() so static analysis won't try to make this go away:
+            letValue.capitalize()
             events.add("letValue() called")
         } catch (e: Exception) {
             events.add("letValue() failed: ${e.message}")
@@ -79,7 +80,7 @@ class LetValueInvokedFromBeforeEachTestExample(private val listener: LifecycleLi
     registerListener(listener)
     val letValue by value { "anything" }
     beforeEachTest {
-        expect("anything") { letValue() }
+        expect("anything") { letValue }
     }
     test("empty test") {}
 })
@@ -88,7 +89,7 @@ class LetValueInvokedFromAfterEachTestExample(private val listener: LifecycleLis
     registerListener(listener)
     val letValue by value { "anything" }
     afterEachTest {
-        expect("anything") { letValue() }
+        expect("anything") { letValue }
     }
     test("empty test") {}
 })

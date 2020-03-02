@@ -32,7 +32,7 @@ class FakeGroupBody : GroupBody {
     override fun <T> value(factory: () -> T): LetValue.PropertyCreator<T> =
             throw UnsupportedOperationException()
 
-    override fun <T> value(letValue: LetValue<T>, factory: () -> T) =
+    override fun <T> value(letValue: T, factory: () -> T) =
             throw UnsupportedOperationException()
 
     override fun beforeEachTest(fixture: Fixture) {

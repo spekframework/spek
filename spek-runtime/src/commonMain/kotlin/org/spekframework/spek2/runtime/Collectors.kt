@@ -67,8 +67,8 @@ class Collector(
         return LetValueCreator(factory, this, { finalizers.add(it) })
     }
 
-    override fun <T> value(letValue: LetValue<T>, factory: () -> T) {
-        (letValue as LetValueHolder).override(root.path, factory)
+    override fun <T> value(letValue: T, factory: () -> T) {
+        LetValueGetter.override(root.path, factory)
     }
 
     override fun registerListener(listener: LifecycleListener) {
