@@ -2,22 +2,34 @@ package org.spekframework.spek2.launcher
 
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.runtime.discovery.DiscoveryContext
+import kotlin.native.concurrent.ThreadLocal
 import kotlin.reflect.KClass
 import kotlin.system.exitProcess
 
-private data class TestInfo(val cls: KClass<out Spek>, val factory: () -> Spek)
-private val speks = mutableListOf<TestInfo>()
-
-fun registerSpek(cls: KClass<out Spek>, factory: () -> Spek) {
-    speks.add(TestInfo(cls, factory))
+class TestInfo(val cls: KClass<out Spek>, val factory: () -> Spek) {
+  init {
+    RegisteredSpeks.add(this)
+  }
 }
 
-fun spekMain(args: Array<String>) {
-    val discoveryContextBuilder = DiscoveryContext.builder()
+@ThreadLocal
+private object RegisteredSpeks {
+  val speks = mutableListOf<TestInfo>()
 
-    speks.forEach { discoveryContextBuilder.addTest(it.cls, it.factory) }
+  fun add(spek: TestInfo) {
+    speks.add(spek)
+  }
+}
 
-    val launcher = ConsoleLauncher()
-    val exitCode = launcher.launch(discoveryContextBuilder.build(), args.toList())
-    exitProcess(exitCode)
+fun spekMain(args: Array<String>): Int {
+  val discoveryContextBuilder = DiscoveryContext.builder()
+
+   RegisteredSpeks.speks.forEach { discoveryContextBuilder.addTest(it.cls, it.factory) }
+
+  val launcher = ConsoleLauncher()
+  return launcher.launch(discoveryContextBuilder.build(), args.toList())
+}
+
+fun main(args: Array<String>) {
+  exitProcess(spekMain(args))
 }
