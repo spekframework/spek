@@ -5,9 +5,10 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.dsl.KotlinNativeBinaryContainer
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithTests
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 import org.spekframework.spek2.gradle.domain.SpekTest
@@ -30,7 +31,7 @@ class MultiplatformPlugin : Plugin<Project> {
                 group = SPEK_GROUP
                 description = "Run Spek tests for ${spekTest.name}"
                 target.set(spekTest.target)
-                compilation.set(spekTest.compilation)
+                compilation.set(spekTest.target.map { it.compilations.getByName("test") })
                 project.afterEvaluate {
                     val target = spekTest.target.get()
                     project.tasks.named("${target.name}SpekTests").configure {
@@ -53,9 +54,9 @@ class MultiplatformPlugin : Plugin<Project> {
 
     private fun configureNativeTest(project: Project, compilation: KotlinNativeCompilation, spekTask: ExecSpekTests, testName: String) {
         compilation.target.binaries {
-            executable("spek", listOf(DEBUG)) {
+            executable("spek${testName.capitalize()}", listOf(DEBUG)) {
                 this.compilation = compilation
-                entryPoint = "org.spekframework.spek2.launcher.spekMain"
+                entryPoint = "org.spekframework.spek2.launcher.main"
                 runTask?.let { runTask ->
                     spekTask.dependsOn(runTask)
                 }
@@ -90,7 +91,7 @@ class MultiplatformPlugin : Plugin<Project> {
 
         kotlinMppExtension.targets.all {
             when (this) {
-                is KotlinNativeTarget, is KotlinJvmTarget -> {
+                is KotlinNativeTargetWithTests, is KotlinJvmTarget -> {
                     project.tasks.create("${this.name}SpekTests") {
                         group = VERIFICATION_GROUP
                         description = "Run Spek tests for target ${this@all.name}."

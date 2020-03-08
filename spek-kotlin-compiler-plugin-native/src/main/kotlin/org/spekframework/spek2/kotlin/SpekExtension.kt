@@ -2,30 +2,22 @@ package org.spekframework.spek2.kotlin
 
 import org.jetbrains.kotlin.backend.common.BackendContext
 import org.jetbrains.kotlin.backend.common.CommonBackendContext
-import org.jetbrains.kotlin.backend.common.descriptors.WrappedFieldDescriptor
 import org.jetbrains.kotlin.backend.common.descriptors.WrappedSimpleFunctionDescriptor
+import org.jetbrains.kotlin.backend.common.descriptors.synthesizedName
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
-import org.jetbrains.kotlin.backend.common.ir.addChild
 import org.jetbrains.kotlin.backend.common.lower.createIrBuilder
 import org.jetbrains.kotlin.backend.common.reportWarning
-import org.jetbrains.kotlin.descriptors.ClassKind
-import org.jetbrains.kotlin.descriptors.Modality
-import org.jetbrains.kotlin.descriptors.SourceElement
-import org.jetbrains.kotlin.descriptors.Visibilities
-import org.jetbrains.kotlin.descriptors.annotations.AnnotationDescriptorImpl
-import org.jetbrains.kotlin.descriptors.annotations.Annotations
-import org.jetbrains.kotlin.descriptors.findClassAcrossModuleDependencies
+import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.ir.IrElement
-import org.jetbrains.kotlin.ir.builders.irBlockBody
-import org.jetbrains.kotlin.ir.builders.irCall
-import org.jetbrains.kotlin.ir.builders.irGetObject
-import org.jetbrains.kotlin.ir.builders.irReturn
+import org.jetbrains.kotlin.ir.builders.*
+import org.jetbrains.kotlin.ir.builders.declarations.addField
+import org.jetbrains.kotlin.ir.builders.declarations.addProperty
+import org.jetbrains.kotlin.ir.builders.declarations.buildFun
 import org.jetbrains.kotlin.ir.declarations.IrClass
 import org.jetbrains.kotlin.ir.declarations.IrDeclarationOrigin
 import org.jetbrains.kotlin.ir.declarations.IrFile
 import org.jetbrains.kotlin.ir.declarations.IrFunction
-import org.jetbrains.kotlin.ir.declarations.impl.IrFieldImpl
 import org.jetbrains.kotlin.ir.declarations.impl.IrFunctionImpl
 import org.jetbrains.kotlin.ir.expressions.IrBlock
 import org.jetbrains.kotlin.ir.expressions.IrExpression
@@ -34,10 +26,10 @@ import org.jetbrains.kotlin.ir.expressions.impl.IrBlockImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrExpressionBodyImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrFunctionReferenceImpl
-import org.jetbrains.kotlin.ir.symbols.impl.IrFieldSymbolImpl
 import org.jetbrains.kotlin.ir.symbols.impl.IrSimpleFunctionSymbolImpl
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.classifierOrFail
+import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.defaultType
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
@@ -92,29 +84,22 @@ private class SpekCollector(
     // All of this is trying to create a call that looks like this:
     // registerSpek(SpecObject::class, { SpecObject })
     private fun generateRegistration(declaration: IrClass) {
-        // TODO: is this the correct way to find the package? This works, but it feels wrong.
-        val launcherPackage = backendContext.builtIns.builtInsModule.getPackage(FqName.fromSegments(listOf("org", "spekframework", "spek2", "launcher")))
-        val registrationFunction = launcherPackage.memberScope.getContributedFunctions(Name.identifier("registerSpek"), NoLookupLocation.FROM_BACKEND)
-                .single()
-
-        val registrationFunctionSymbol = backendContext.ir.symbols
-                .externalSymbolTable.referenceSimpleFunction(registrationFunction)
-
-        val classSymbol = declaration.symbol
+        val testInfoClassDescriptor = backendContext.builtIns.builtInsModule.resolveClassByFqName(FqName.fromSegments(listOf("org", "spekframework", "spek2", "launcher", "TestInfo")), NoLookupLocation.FROM_BACKEND)!!
+        val testInfoClass = backendContext.ir.symbols.externalSymbolTable.referenceClass(testInfoClassDescriptor)
 
         commonContext.createIrBuilder(file.symbol, file.startOffset, file.endOffset).run {
-            val call = irCall(registrationFunctionSymbol).apply {
+            val primaryConstructor = testInfoClass.constructors.first()
+            val call = irCall(primaryConstructor).apply {
                 // TODO: should both of the IrType parameters below be declaration.defaultType?
                 // Should one be the equivalent of KClass<Spek> or KClass<DerivedSpek>?
-                val classReference = IrClassReferenceImpl(startOffset, endOffset, declaration.defaultType, classSymbol, declaration.defaultType)
+                val classReference = IrClassReferenceImpl(startOffset, endOffset, declaration.defaultType, declaration.symbol, declaration.defaultType)
                 putValueArgument(0, classReference)
 
-                val factoryType = registrationFunctionSymbol.owner.valueParameters[1].type
+                val factoryType = primaryConstructor.owner.valueParameters[1].type
                 val factoryBlock = createFactoryLambdaBlock(declaration, factoryType)
 
                 putValueArgument(1, factoryBlock)
             }
-
             file.addTopLevelInitializer(call, backendContext)
         }
     }
@@ -160,7 +145,7 @@ private class SpekCollector(
                 isSuspend = false
         ).apply {
             descriptor.bind(this)
-            parent = file
+            parent = this@SpekCollector.file
 
             body = backendContext.createIrBuilder(symbol, symbol.owner.startOffset, symbol.owner.endOffset).irBlockBody {
                 +irReturn(irGetObject(declaration.symbol))
@@ -177,35 +162,46 @@ private class SpekCollector(
 
 private var topLevelInitializersCounter = 0
 
-// Taken from org.jetbrains.kotlin.ir.util/IrUtils2.kt
+// originally taken from org.jetbrains.kotlin.ir.util/IrUtils2.kt but reworked
+// 1. creates a top level field
+// 2. creates a property using the previously declared field as its backing field
+// Previously a top level field would cause the object to created but now it requires a property
 private fun IrFile.addTopLevelInitializer(expression: IrExpression, context: BackendContext) {
     val threadLocalAnnotation = context.builtIns.builtInsModule.findClassAcrossModuleDependencies(
             ClassId.topLevel(FqName("kotlin.native.concurrent.ThreadLocal")))!!
+    val t = context.ir.symbols.externalSymbolTable.referenceClass(threadLocalAnnotation)
+    val fieldName = "topLevelInitializer${topLevelInitializersCounter++}".synthesizedName
 
-    val annotations = Annotations.create(listOf(
-            AnnotationDescriptorImpl(threadLocalAnnotation.defaultType, emptyMap(), SourceElement.NO_SOURCE)
-    ))
-
-    // This was a WrappedFieldDescriptor in the original version, but this isn't accessible to us.
-    // Using a WrappedPropertyDescriptor doesn't seem to have any impact on anything.
-    val descriptor = WrappedFieldDescriptor(annotations)
-
-    val irField = IrFieldImpl(
-            expression.startOffset, expression.endOffset,
-            IrDeclarationOrigin.DEFINED,
-            IrFieldSymbolImpl(descriptor),
-            Name.identifier("\$spekTopLevelInitializer${topLevelInitializersCounter++}"),
-            expression.type,
-            Visibilities.PRIVATE,
-            isFinal = true,
-            isExternal = false,
-            isStatic = true
-    ).apply {
-        descriptor.bind(this)
-
-        initializer = IrExpressionBodyImpl(expression.startOffset, expression.endOffset, expression)
+    val field = addField {
+        name = fieldName
+        isFinal = true
+        isStatic = true
+        visibility = Visibilities.PRIVATE
+        type = expression.type
+        origin = IrDeclarationOrigin.PROPERTY_BACKING_FIELD
+    }.also { field ->
+        field.parent = this@addTopLevelInitializer
+        field.initializer = IrExpressionBodyImpl(startOffset, endOffset, expression)
+        field.annotations += context.createIrBuilder(field.symbol, startOffset, endOffset).irCallConstructor(t.constructors.first(), emptyList())
     }
 
-    addChild(irField)
+    addProperty {
+        name = fieldName
+        visibility = Visibilities.PRIVATE
+        origin = IrDeclarationOrigin.DEFINED
+    }.also { property ->
+        property.backingField = field
+        property.getter = buildFun {
+            origin = IrDeclarationOrigin.DEFAULT_PROPERTY_ACCESSOR
+            name = "get-${fieldName.identifier}".synthesizedName
+            returnType = field.type
+            visibility = Visibilities.PRIVATE
+        }.also { func ->
+            func.parent = this@addTopLevelInitializer
+            func.body = context.createIrBuilder(func.symbol, func.startOffset, func.endOffset).irBlockBody {
+                +irReturn(irGetField(null, field))
+            }
+        }
+    }
 }
 
