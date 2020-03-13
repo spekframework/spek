@@ -28,9 +28,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - run: cd integration-test
       - uses: eskatos/gradle-command-action@v1
         with:
+          build-root-directory: integration-test
+          wrapper-directory: integration-test
           arguments: check -PexcludeIdePlugins
   runner_junit5:
     runs-on: ubuntu-latest
