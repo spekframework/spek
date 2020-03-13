@@ -24,14 +24,14 @@ interface GroupBody : LifecycleAware, TestContainer {
     fun group(description: String, skip: Skip = Skip.No, defaultCachingMode: CachingMode = CachingMode.INHERIT, preserveExecutionOrder: Boolean = false, failFast: Boolean = false, body: GroupBody.() -> Unit)
 }
 
-typealias Fixture = () -> Unit
+typealias Fixture = suspend () -> Unit
 
 @SpekDsl
 interface LifecycleAware : ScopeBody {
     val defaultCachingMode: CachingMode
 
-    fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T): MemoizedValue<T>
-    fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T>
+    fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: suspend () -> T): MemoizedValue<T>
+    fun <T> memoized(mode: CachingMode = defaultCachingMode, factory: suspend () -> T, destructor: suspend (T) -> Unit): MemoizedValue<T>
 
     fun beforeEachTest(fixture: Fixture)
     fun afterEachTest(fixture: Fixture)
@@ -53,7 +53,7 @@ interface TestContainer {
 
     @Synonym(type = SynonymType.TEST)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun test(description: String, skip: Skip = Skip.No, timeout: Long = defaultTimeout, body: TestBody.() -> Unit)
+    fun test(description: String, skip: Skip = Skip.No, timeout: Long = defaultTimeout, body: suspend TestBody.() -> Unit)
 }
 
 @SpekDsl

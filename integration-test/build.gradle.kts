@@ -22,6 +22,8 @@ kotlin {
                 implementation(project(":spek-dsl"))
                 implementation(project(":spek-runtime"))
                 implementation(kotlin("test"))
+                implementation(Dependencies.kotlinCoroutinesCoreCommon)
+                implementation(Dependencies.kotlinCoroutinesTest)
             }
         }
 
@@ -36,6 +38,7 @@ kotlin {
                 dependencies {
                     implementation(Dependencies.mockitoKotlin)
                     implementation(Dependencies.mockitoCore)
+                    implementation(Dependencies.kotlinCoroutinesCore)
                     runtimeOnly(kotlin("reflect"))
                     runtimeOnly(project(":spek-runner-junit5"))
                 }
@@ -48,6 +51,9 @@ kotlin {
 
         val nativeTest by creating {
             dependsOn(commonTest)
+            dependencies {
+                implementation(Dependencies.kotlinCoroutinesNative)
+            }
         }
 
         linuxX64("linux") {

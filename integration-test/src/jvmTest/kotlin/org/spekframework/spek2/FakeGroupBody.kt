@@ -22,10 +22,10 @@ class FakeGroupBody : GroupBody {
     override val defaultCachingMode: CachingMode
         get() = throw UnsupportedOperationException()
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T): MemoizedValue<T> =
+    override fun <T> memoized(mode: CachingMode, factory: suspend () -> T): MemoizedValue<T> =
             throw UnsupportedOperationException()
 
-    override fun <T> memoized(mode: CachingMode, factory: () -> T, destructor: (T) -> Unit): MemoizedValue<T> =
+    override fun <T> memoized(mode: CachingMode, factory: suspend () -> T, destructor: suspend (T) -> Unit): MemoizedValue<T> =
             throw UnsupportedOperationException()
 
     override fun beforeEachTest(fixture: Fixture) {
@@ -56,5 +56,5 @@ class FakeGroupBody : GroupBody {
 
     override var defaultTimeout: Long = 0L
 
-    override fun test(description: String, skip: Skip, timeout: Long, body: TestBody.() -> Unit) = throw UnsupportedOperationException()
+    override fun test(description: String, skip: Skip, timeout: Long, body: suspend TestBody.() -> Unit) = throw UnsupportedOperationException()
 }

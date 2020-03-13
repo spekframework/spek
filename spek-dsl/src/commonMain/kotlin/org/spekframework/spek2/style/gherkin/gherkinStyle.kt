@@ -60,25 +60,25 @@ class ScenarioBody(val delegate: GroupBody): LifecycleAware by delegate {
 
     @Synonym(SynonymType.TEST, prefix = "Given: ", runnable = false)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun Given(description: String, timeout: Long = defaultTimeout, body: TestBody.() -> Unit) {
+    fun Given(description: String, timeout: Long = defaultTimeout, body: suspend TestBody.() -> Unit) {
         delegate.test("Given: $description", timeout = timeout, body = body)
     }
 
     @Synonym(SynonymType.TEST, prefix = "When: ", runnable = false)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun When(description: String, timeout: Long = defaultTimeout, body: TestBody.() -> Unit) {
+    fun When(description: String, timeout: Long = defaultTimeout, body: suspend TestBody.() -> Unit) {
         delegate.test("When: $description", timeout = timeout, body = body)
     }
 
     @Synonym(SynonymType.TEST, prefix = "Then: ", runnable = false)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun Then(description: String, timeout: Long = defaultTimeout, body: TestBody.() -> Unit) {
+    fun Then(description: String, timeout: Long = defaultTimeout, body: suspend TestBody.() -> Unit) {
         delegate.test("Then: $description", timeout = timeout, body = body)
     }
 
     @Synonym(SynonymType.TEST, prefix = "And: ", runnable = false)
     @Descriptions(Description(DescriptionLocation.VALUE_PARAMETER, 0))
-    fun And(description: String, timeout: Long = defaultTimeout, body: TestBody.() -> Unit) {
+    fun And(description: String, timeout: Long = defaultTimeout, body: suspend TestBody.() -> Unit) {
         delegate.test("And: $description", timeout = timeout, body = body)
     }
 

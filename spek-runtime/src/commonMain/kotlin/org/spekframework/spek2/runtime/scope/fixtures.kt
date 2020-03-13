@@ -4,7 +4,7 @@ import org.spekframework.spek2.dsl.Fixture
 
 class Fixtures {
     private class GroupFixture(val inheritable: Boolean, val fixture: Fixture) {
-        operator fun invoke() {
+        suspend operator fun invoke() {
             fixture()
         }
     }
@@ -39,21 +39,29 @@ class Fixtures {
     }
 
 
-    fun invokeBeforeTestFixtures() {
-        beforeTestFixtures.forEach(Fixture::invoke)
+    suspend fun invokeBeforeTestFixtures() {
+        beforeTestFixtures.forEach { fixture ->
+            fixture()
+        }
     }
 
-    fun invokeAfterTestFixtures() {
-        afterTestFixtures.forEach(Fixture::invoke)
+    suspend fun invokeAfterTestFixtures() {
+        afterTestFixtures.forEach { fixture ->
+            fixture()
+        }
     }
 
-    fun invokeBeforeGroupFixtures(inheritableOnly: Boolean) {
+    suspend fun invokeBeforeGroupFixtures(inheritableOnly: Boolean) {
         beforeGroupFixtures.filter { !inheritableOnly || it.inheritable }
-            .forEach(GroupFixture::invoke)
+            .forEach { fixture ->
+                fixture()
+            }
     }
 
-    fun invokeAfterGroupFixtures(inheritableOnly: Boolean) {
+    suspend fun invokeAfterGroupFixtures(inheritableOnly: Boolean) {
         afterGroupFixtures.filter { !inheritableOnly || it.inheritable }
-            .forEach(GroupFixture::invoke)
+            .forEach { fixture ->
+                fixture()
+            }
     }
 }

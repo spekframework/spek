@@ -8,16 +8,14 @@ import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.EmptyCoroutineContext
 
 class Executor {
-    fun execute(request: ExecutionRequest) {
-        doRunBlocking {
-            withContext(Dispatchers.Default) {
-                request.executionListener.executionStart()
-                request.roots.forEach { execute(it, request.executionListener) }
-                request.executionListener.executionFinish()
-            }
-        }
+    suspend fun execute(request: ExecutionRequest) {
+        request.executionListener.executionStart()
+        request.roots.forEach { execute(it, request.executionListener) }
+        request.executionListener.executionFinish()
     }
 
     private suspend fun execute(scope: ScopeImpl, listener: ExecutionListener): ExecutionResult? {
@@ -27,7 +25,7 @@ class Executor {
         } else {
             scopeExecutionStarted(scope, listener)
 
-            fun finalize(result: ExecutionResult) {
+            suspend fun finalize(result: ExecutionResult) {
                 val actualResult = try {
                     when (scope) {
                         is GroupScopeImpl -> scope.invokeAfterGroupFixtures(false)
@@ -45,10 +43,11 @@ class Executor {
                 }
             }
 
-            val result = executeSafely({ finalize(it) }) {
+            val scopeCoroutineContext: CoroutineContext = EmptyCoroutineContext
+            val result = executeSafely(scopeCoroutineContext, { finalize(it) }) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        withContext(Dispatchers.Default) {
+                        withContext(scopeCoroutineContext) {
                             scope.before()
                             scope.invokeBeforeGroupFixtures(false)
                             var failed = false
@@ -67,7 +66,7 @@ class Executor {
                         }
                     }
                     is TestScopeImpl -> {
-                        val exception = withContext(Dispatchers.Default) {
+                        val exception = withContext(scopeCoroutineContext) {
                             val job = launch {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()
@@ -106,7 +105,7 @@ class Executor {
         }
     }
 
-    private suspend fun executeSafely(finalize: suspend (ExecutionResult) -> Unit, block: suspend () -> Unit): ExecutionResult {
+    private suspend fun executeSafely(coroutineContext: CoroutineContext, finalize: suspend (ExecutionResult) -> Unit, block: suspend () -> Unit): ExecutionResult {
         val result = try {
             block()
             ExecutionResult.Success
@@ -116,7 +115,9 @@ class Executor {
 
         // failures here will replace execution result
         return try {
-            finalize(result)
+            withContext(coroutineContext) {
+                finalize(result)
+            }
             result
         } catch (e: Throwable) {
             ExecutionResult.Failure(e)

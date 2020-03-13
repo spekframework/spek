@@ -1,5 +1,9 @@
 package org.spekframework.spek2.runtime
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.selects.select
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.lifecycle.CachingMode
@@ -30,7 +34,22 @@ class SpekRuntime {
         return DiscoveryResult(scopes)
     }
 
-    fun execute(request: ExecutionRequest) = Executor().execute(request)
+
+    suspend fun executeAsync(request: ExecutionRequest) {
+        Executor().execute(request)
+    }
+
+    fun execute(request: ExecutionRequest) {
+        doRunBlocking {
+            val job = coroutineScope {
+                launch(Dispatchers.Default) {
+                    executeAsync(request)
+                }
+            }
+
+            job.join()
+        }
+    }
 
     private fun resolveSpec(instance: Spek, path: Path): GroupScopeImpl {
         val lifecycleManager = LifecycleManager()
