@@ -1,6 +1,10 @@
 plugins {
-    kotlin("multiplatform")
+    kotlin("multiplatform") version "1.3.61"
     id("org.spekframework.spek2.multiplatform")
+}
+
+repositories {
+    jcenter()
 }
 
 kotlin {
@@ -19,11 +23,9 @@ kotlin {
 
         val commonTest by getting {
             dependencies {
-                implementation(project(":spek-dsl"))
-                implementation(project(":spek-runtime"))
+                implementation("org.spekframework.spek2:spek-dsl-metadata")
+                implementation("org.spekframework.spek2:spek-runtime-metadata")
                 implementation(kotlin("test"))
-                implementation(Dependencies.kotlinCoroutinesCoreCommon)
-                implementation(Dependencies.kotlinCoroutinesTest)
             }
         }
 
@@ -36,11 +38,11 @@ kotlin {
 
             compilations["test"].defaultSourceSet {
                 dependencies {
-                    implementation(Dependencies.mockitoKotlin)
-                    implementation(Dependencies.mockitoCore)
-                    implementation(Dependencies.kotlinCoroutinesCore)
                     runtimeOnly(kotlin("reflect"))
-                    runtimeOnly(project(":spek-runner-junit5"))
+                    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.3")
+                    implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
+                    implementation("org.mockito:mockito-core:2.23.4")
+                    runtimeOnly("org.spekframework.spek2:spek-runner-junit5")
                 }
             }
         }
@@ -51,9 +53,6 @@ kotlin {
 
         val nativeTest by creating {
             dependsOn(commonTest)
-            dependencies {
-                implementation(Dependencies.kotlinCoroutinesNative)
-            }
         }
 
         linuxX64("linux") {
@@ -66,20 +65,8 @@ kotlin {
             compilations["test"].defaultSourceSet {
                 dependencies {
                     dependsOn(nativeTest)
-                }
-            }
-        }
-
-        linuxX64("linux") {
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeMain)
-                }
-            }
-
-            compilations["test"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeTest)
+                    implementation("org.spekframework.spek2:spek-dsl-linux")
+                    implementation("org.spekframework.spek2:spek-runtime-linux")
                 }
             }
         }
@@ -94,6 +81,8 @@ kotlin {
             compilations["test"].defaultSourceSet {
                 dependencies {
                     dependsOn(nativeTest)
+                    implementation("org.spekframework.spek2:spek-dsl-macos")
+                    implementation("org.spekframework.spek2:spek-runtime-macos")
                 }
             }
         }
@@ -108,6 +97,8 @@ kotlin {
             compilations["test"].defaultSourceSet {
                 dependencies {
                     dependsOn(nativeTest)
+                    implementation("org.spekframework.spek2:spek-dsl-windows")
+                    implementation("org.spekframework.spek2:spek-runtime-windows")
                 }
             }
         }
@@ -135,15 +126,5 @@ tasks {
         val check by getting {
             dependsOn(allSpekTests)
         }
-    }
-}
-
-// This is required to substitute the versions of spek-runtime and the compiler plugins applied automatically by spek-gradle-plugin with the version provided by
-// the spek-runtime and compiler plugin projects, rather than trying to download the not-yet-published version from a Maven repository.
-configurations.forEach {
-    it.resolutionStrategy.dependencySubstitution {
-        substitute(module("org.spekframework.spek2:spek-runtime")).with(project(":spek-runtime"))
-        substitute(module("org.spekframework.spek2:spek-kotlin-compiler-plugin-jvm")).with(project(":spek-kotlin-compiler-plugin-jvm"))
-        substitute(module("org.spekframework.spek2:spek-kotlin-compiler-plugin-native")).with(project(":spek-kotlin-compiler-plugin-native"))
     }
 }
