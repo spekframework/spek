@@ -31,7 +31,7 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           build-root-directory: integration-test
-          arguments: integration-test:check -PexcludeIdePlugins
+          arguments: check -PexcludeIdePlugins
   runner_junit5:
     runs-on: ubuntu-latest
     steps:
