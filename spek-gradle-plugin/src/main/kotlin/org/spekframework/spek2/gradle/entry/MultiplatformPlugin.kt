@@ -5,7 +5,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinNativeBinaryContainer
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithTests
@@ -91,7 +90,7 @@ class MultiplatformPlugin : Plugin<Project> {
 
         kotlinMppExtension.targets.all {
             when (this) {
-                is KotlinNativeTargetWithTests, is KotlinJvmTarget -> {
+                is KotlinNativeTargetWithTests<*>, is KotlinJvmTarget -> {
                     project.tasks.create("${this.name}SpekTests") {
                         group = VERIFICATION_GROUP
                         description = "Run Spek tests for target ${this@all.name}."

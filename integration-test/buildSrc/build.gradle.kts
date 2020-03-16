@@ -3,5 +3,5 @@ repositories {
 }
 
 dependencies {
-  api(kotlin("gradle-plugin", version = "1.3.61"))
+  api(kotlin("gradle-plugin", version = "1.3.70"))
 }
