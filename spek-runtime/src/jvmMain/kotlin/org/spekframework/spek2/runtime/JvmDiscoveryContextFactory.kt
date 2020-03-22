@@ -46,7 +46,7 @@ object JvmDiscoveryContextFactory {
             .enableClassInfo()
 
         if (testDirs.isNotEmpty()) {
-            cg.overrideClasspath(System.getProperty("java.class.path"), testDirs)
+            cg.overrideClasspath(System.getProperty("java.class.path"), *testDirs.toTypedArray())
         }
 
         return cg.scan().use {
