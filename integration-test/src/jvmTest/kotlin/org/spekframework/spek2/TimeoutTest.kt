@@ -26,7 +26,6 @@ object TimeoutTest: AbstractSpekTest({ helper ->
                 ) {
                     group("SpecificationStyleTimeoutTests") {
                         group("timeouts") {
-                            test("tests running pass the default timeout should fail", false)
                             test("tests running pass 300ms should fail", false)
                             test("tests running less than default timeout should succeed")
                             test("tests running less than 500ms should succeed")
@@ -55,9 +54,6 @@ object TimeoutTest: AbstractSpekTest({ helper ->
                 ) {
                     group("GherkinStyleTimeoutTests") {
                         group("Feature: Timeouts") {
-                            group("Scenario: Running more than default") {
-                                test("Then: It should fail", false)
-                            }
                             group("Scenario: Running more than 600ms") {
                                 test("Then: It should fail", false)
                             }

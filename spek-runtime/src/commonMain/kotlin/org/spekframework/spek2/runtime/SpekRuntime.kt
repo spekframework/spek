@@ -84,7 +84,7 @@ class SpekRuntime {
     }
 
     companion object {
-        private const val DEFAULT_TIMEOUT = 10000L
+        private const val DEFAULT_TIMEOUT = 0L
     }
 }
 
