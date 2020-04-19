@@ -7,12 +7,6 @@ import org.spekframework.spek2.style.specification.describe
 
 class GherkinStyleTimeoutTests(latch: ReceiveChannel<Int>): Spek({
     Feature("Timeouts") {
-        Scenario("Running more than default") {
-            Then("It should fail") {
-                latch.receive()
-            }
-        }
-
         Scenario("Running more than 600ms") {
             defaultTimeout = 600
             Then("It should fail") {
