@@ -4,20 +4,20 @@ import org.spekframework.spek2.style.specification.describe
 
 object TimeoutTest: AbstractSpekTest({ helper ->
     describe("test timeouts") {
-        it("should timeout using default settings", timeout = 0) {
+        it("should not timeout using default settings", timeout = 0) {
             val recorder = helper.executeTest(testData.timeoutTest.DefaultTimeoutTest)
 
             helper.assertExecutionEquals(
                 recorder.events()
             ) {
                 group("DefaultTimeoutTest") {
-                    test("should timeout", false)
+                    test("should not timeout")
                     group("timeout specification style") {
-                        test("should timeout", false)
+                        test("should not timeout")
                     }
                     group("Feature: timeout gherkin style") {
                         group("Scenario: some scenario") {
-                            test("Then: should timeout", false)
+                            test("Then: should not timeout")
                         }
                     }
                 }
@@ -49,14 +49,14 @@ object TimeoutTest: AbstractSpekTest({ helper ->
 
     describe("global timeouts") {
         it("should use specified global timeout", timeout = 0) {
-            System.setProperty("SPEK_TIMEOUT", 15000L.toString())
+            System.setProperty("SPEK_TIMEOUT", 8000L.toString())
             val recorder = helper.executeTest(testData.timeoutTest.GlobalTimeoutTest)
 
             helper.assertExecutionEquals(
                 recorder.events()
             ) {
                 group("GlobalTimeoutTest") {
-                    test("this should run for 10 seconds and pass since global timeout is 20")
+                    test("this should run for 10 seconds and but fail since global timeout is 8 seconds", false)
                 }
             }
             System.clearProperty("SPEK_TIMEOUT")
