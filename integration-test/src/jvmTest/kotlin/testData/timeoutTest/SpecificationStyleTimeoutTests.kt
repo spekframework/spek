@@ -6,10 +6,6 @@ import org.spekframework.spek2.style.specification.describe
 
 class SpecificationStyleTimeoutTests(latch: ReceiveChannel<Int>): Spek({
     describe("timeouts") {
-        it("tests running pass the default timeout should fail") {
-            latch.receive()
-        }
-
         it("tests running pass 300ms should fail", timeout = 300) {
             latch.receive()
         }
