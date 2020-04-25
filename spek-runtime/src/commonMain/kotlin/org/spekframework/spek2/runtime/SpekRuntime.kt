@@ -42,7 +42,8 @@ class SpekRuntime {
     fun execute(request: ExecutionRequest) {
         doRunBlocking {
             val job = coroutineScope {
-                launch(Dispatchers.Default) {
+                // inherit the dispatcher from doRunBlocking (which is an event loop backed by the main thread)
+                launch {
                     executeAsync(request)
                 }
             }
