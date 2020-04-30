@@ -5,6 +5,8 @@ import org.jetbrains.kotlin.backend.common.descriptors.synthesizedName
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
 import org.jetbrains.kotlin.backend.common.lower.DeclarationIrBuilder
+import org.jetbrains.kotlin.backend.common.phaser.defaultDumper
+import org.jetbrains.kotlin.backend.common.phaser.dumpToStdout
 import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.builders.*
@@ -27,6 +29,7 @@ import org.jetbrains.kotlin.ir.types.classifierOrFail
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.dump
 import org.jetbrains.kotlin.ir.util.isLocal
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
@@ -78,8 +81,6 @@ private class SpekCollector(
         collectedSpeks.forEach { generateRegistration(it) }
     }
 
-    // All of this is trying to create a call that looks like this:
-    // registerSpek(SpecObject::class, { SpecObject })
     private fun generateRegistration(declaration: IrClass) {
         val testInfoClassDescriptor = pluginContext.moduleDescriptor.findClassAcrossModuleDependencies(ClassId.topLevel(FqName("org.spekframework.spek2.launcher.TestInfo")))!!
         val testInfoClass = pluginContext.symbolTable.referenceClass(testInfoClassDescriptor)
