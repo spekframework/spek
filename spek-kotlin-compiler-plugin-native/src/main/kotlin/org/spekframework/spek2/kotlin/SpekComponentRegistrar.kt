@@ -5,7 +5,6 @@ import com.intellij.mock.MockProject
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.compiler.plugin.ComponentRegistrar
 import org.jetbrains.kotlin.config.CompilerConfiguration
-import org.jetbrains.kotlin.extensions.CollectAdditionalSourcesExtension
 
 @AutoService(ComponentRegistrar::class)
 class SpekComponentRegistrar : ComponentRegistrar {
@@ -14,7 +13,6 @@ class SpekComponentRegistrar : ComponentRegistrar {
             return
         }
 
-        //IrGenerationExtension.registerExtension(project, SpekExtension())
-        CollectAdditionalSourcesExtension.registerExtension(project, SpekExtension2())
+        IrGenerationExtension.registerExtension(project, SpekExtension())
     }
 }

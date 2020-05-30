@@ -87,21 +87,24 @@ kotlin {
             }
         }
 
-        linuxX64("linux") {
-            compilations["main"].defaultSourceSet {
-                dependsOn(nativeMain)
+        val linuxMain by getting {
+            dependsOn(nativeMain)
+            dependencies {
+                implementation(Dependencies.kotlinCoroutinesNative)
             }
         }
 
-        macosX64("macos") {
-            compilations["main"].defaultSourceSet {
-                dependsOn(nativeMain)
+        val macosMain by getting {
+            dependsOn(nativeMain)
+            dependencies {
+                implementation(Dependencies.kotlinCoroutinesNative)
             }
         }
 
-        mingwX64("windows") {
-            compilations["main"].defaultSourceSet {
-                dependsOn(nativeMain)
+        val windowsMain by getting {
+            dependsOn(nativeMain)
+            dependencies {
+                implementation(Dependencies.kotlinCoroutinesNative)
             }
         }
     }

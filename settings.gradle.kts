@@ -1,5 +1,3 @@
-enableFeaturePreview("GRADLE_METADATA")
-
 rootProject.name = "spek"
 
 include("spek-dsl")
