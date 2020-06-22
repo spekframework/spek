@@ -1,7 +1,9 @@
 # Setting up for JVM
 
 ## Gradle
-Gradle `4.7` is recommended as it added a built-in support for JUnit Platform.
+Gradle `4.7` or higher is recommended as it added a built-in support for JUnit Platform.
+
+Groovy config:
 
 ```groovy
 // setup dependencies
@@ -20,6 +22,29 @@ dependencies {
 test {
     useJUnitPlatform {
         includeEngines 'spek2'
+    }
+}
+```
+
+Kotlin Config:
+
+```kt
+// setup dependencies
+dependencies {
+    // some version of Kotlin
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
+
+    testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spek_version")
+    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spek_version")
+
+    // spek requires kotlin-reflect, can be omitted if already in the classpath
+    testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
+}
+
+// setup the test task
+tasks.test {
+    useJUnitPlatform {
+        includeEngines("spek2")
     }
 }
 ```
