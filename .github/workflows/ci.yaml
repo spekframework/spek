@@ -60,7 +60,7 @@ jobs:
   deploy_as_plugin:
     strategy:
       matrix:
-        as_sdk: [AS33, AS34, AS35, AS36]
+        as_sdk: [AS33, AS34, AS35, AS36, AS40]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
