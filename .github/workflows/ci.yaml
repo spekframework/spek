@@ -41,7 +41,7 @@ jobs:
   deploy_ij_plugin:
     strategy:
       matrix:
-        ij_sdk: [IJ182, IJ183, IJ191, IJ192, IJ193, IJ201, IJ202]
+        ij_sdk: [IJ193, IJ201, IJ202]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -61,7 +61,7 @@ jobs:
   deploy_as_plugin:
     strategy:
       matrix:
-        as_sdk: [AS33, AS34, AS35, AS36, AS40]
+        as_sdk: [AS35, AS36, AS40]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
