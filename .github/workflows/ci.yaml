@@ -40,7 +40,7 @@ jobs:
   deploy_ij_plugin:
     strategy:
       matrix:
-        ij_sdk: [IJ182, IJ183, IJ191, IJ192, IJ193, IJ201]
+        ij_sdk: [IJ182, IJ183, IJ191, IJ192, IJ193, IJ201, IJ202]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
