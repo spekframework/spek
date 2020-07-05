@@ -29,7 +29,7 @@ val buildMatrix = mapOf(
     )
 )
 
-val sdkVersion = project.properties["ij.version"] ?: "IJ192"
+val sdkVersion = project.properties["ij.version"] ?: "IJ202"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {

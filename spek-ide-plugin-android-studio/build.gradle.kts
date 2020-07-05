@@ -29,7 +29,7 @@ val buildMatrix = mapOf(
     )
 )
 
-val sdkVersion = project.properties["as.version"] ?: "AS36"
+val sdkVersion = project.properties["as.version"] ?: "AS40"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {
