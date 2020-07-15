@@ -6,20 +6,6 @@ plugins {
 }
 
 val buildMatrix = mapOf(
-    "AS33" to ij.BuildConfig(
-        "182.5107.16",
-        "Studio3.3",
-        "AS33",
-        ij.VersionRange("182.5107", "182.5107.*"),
-        arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.3-1")
-    ),
-    "AS34" to ij.BuildConfig(
-        "183.6156.11",
-        "Studio3.4",
-        "AS34",
-        ij.VersionRange("183.6156", "183.6156.*"),
-        arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.4-1")
-    ),
     "AS35" to ij.BuildConfig(
         "191.8026.42",
         "Studio3.5",
@@ -33,10 +19,17 @@ val buildMatrix = mapOf(
         "AS34",
         ij.VersionRange("192.7142.36", "192.7142.36.*"),
         arrayOf("android", "java", "org.jetbrains.kotlin:1.3.61-release-Studio3.6-1")
+    ),
+    "AS40" to ij.BuildConfig(
+        "193.6911.18",
+        "Studio4.0",
+        "AS34",
+        ij.VersionRange("193.6911.18", "193.6911.18.*"),
+        arrayOf("android", "java", "org.jetbrains.kotlin:1.3.70-release-Studio4.0-1")
     )
 )
 
-val sdkVersion = project.properties["as.version"] ?: "AS36"
+val sdkVersion = project.properties["as.version"] ?: "AS40"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {
