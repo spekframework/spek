@@ -84,6 +84,6 @@ class ConsoleExecutionListener : ExecutionListener {
     private val Path.depth: Int
         get() = when {
             parent == null || parent == PathBuilder.ROOT -> 0
-            else -> 1 + parent.depth
+            else -> 1 + parent!!.depth
         }
 }

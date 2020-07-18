@@ -14,6 +14,8 @@ reckon {
 allprojects {
     repositories {
         jcenter()
+        maven ("https://dl.bintray.com/kotlin/kotlin-eap")
+        maven ("https://kotlin.bintray.com/kotlinx")
     }
 
     if (Files.exists(Paths.get("$rootDir/local.properties"))) {

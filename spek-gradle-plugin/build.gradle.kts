@@ -1,22 +1,10 @@
 plugins {
-    id("org.ajoberstar.reckon") version "0.8.0"
     `kotlin-dsl`
-    kotlin("kapt") version "1.3.61"
-}
-
-buildscript {
-    dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.61"))
-    }
+//    kotlin("kapt")
 }
 
 repositories {
     jcenter()
-}
-
-reckon {
-    scopeFromProp()
-    stageFromProp("alpha", "rc", "final")
 }
 
 gradlePlugin {
@@ -36,13 +24,13 @@ dependencies {
     implementation(kotlin("gradle-plugin-api"))
 
     implementation(autoService)
-    kapt(autoService)
+//    kapt(autoService)
 }
 
 tasks {
-    kapt {
-        includeCompileClasspath = false
-    }
+//    kapt {
+//        includeCompileClasspath = false
+//    }
 
     jar {
         manifest {

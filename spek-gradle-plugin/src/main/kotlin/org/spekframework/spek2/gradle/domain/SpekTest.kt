@@ -5,7 +5,7 @@ import org.gradle.api.tasks.testing.junitplatform.JUnitPlatformOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 
-class SpekTest(val name: String, objects: ObjectFactory) {
+open class SpekTest(val name: String, objects: ObjectFactory) {
     val target = objects.property(KotlinTarget::class.java)
     val compilation = objects.property(KotlinCompilation::class.java)
 

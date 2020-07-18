@@ -65,7 +65,7 @@ kotlin {
             dependencies {
                 api(project(":spek-dsl"))
                 implementation(kotlin("stdlib-common"))
-                implementation(Dependencies.kotlinCoroutinesCoreCommon)
+                implementation(Dependencies.kotlinCoroutinesCore)
             }
         }
         
@@ -75,34 +75,24 @@ kotlin {
                     implementation(kotlin("stdlib-jdk8"))
                     implementation(kotlin("reflect"))
                     implementation(Dependencies.classgraph)
-                    implementation(Dependencies.kotlinCoroutinesCore)
                 }
             }
         }
 
         val nativeMain by creating {
             dependsOn(commonMain)
-            dependencies {
-                implementation(Dependencies.kotlinCoroutinesNative)
-            }
         }
 
-        linuxX64("linux") {
-            compilations["main"].defaultSourceSet {
-                dependsOn(nativeMain)
-            }
+        val linuxMain by getting {
+            dependsOn(nativeMain)
         }
 
-        macosX64("macos") {
-            compilations["main"].defaultSourceSet {
-                dependsOn(nativeMain)
-            }
+        val macosMain by getting {
+            dependsOn(nativeMain)
         }
 
-        mingwX64("windows") {
-            compilations["main"].defaultSourceSet {
-                dependsOn(nativeMain)
-            }
+        val windowsMain by getting {
+            dependsOn(nativeMain)
         }
     }
 }

@@ -5,13 +5,13 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.dsl.KotlinNativeBinaryContainer
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJvmCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCompilation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithTests
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 import org.spekframework.spek2.gradle.domain.SpekTest
+import org.spekframework.spek2.gradle.kotlin.CompilerPlugin
 import org.spekframework.spek2.gradle.task.ExecSpekTests
 
 class MultiplatformPlugin : Plugin<Project> {
@@ -22,6 +22,7 @@ class MultiplatformPlugin : Plugin<Project> {
             configureTestsContainer(project, mppExtension)
             configureDefaults(project, mppExtension, kotlinMppExtension)
         }
+        project.pluginManager.apply(CompilerPlugin::class.java)
     }
 
     private fun configureTestsContainer(project: Project, mppExtension: MultiplatformExtension) {
@@ -91,7 +92,7 @@ class MultiplatformPlugin : Plugin<Project> {
 
         kotlinMppExtension.targets.all {
             when (this) {
-                is KotlinNativeTargetWithTests, is KotlinJvmTarget -> {
+                is KotlinNativeTargetWithTests<*>, is KotlinJvmTarget -> {
                     project.tasks.create("${this.name}SpekTests") {
                         group = VERIFICATION_GROUP
                         description = "Run Spek tests for target ${this@all.name}."

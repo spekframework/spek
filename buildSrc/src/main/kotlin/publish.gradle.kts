@@ -38,31 +38,29 @@ bintray {
 
 publishing {
     publications {
-        all {
-            if (this is MavenPublication) {
-                pom {
+        withType<MavenPublication> {
+            pom {
+                url.set("https://github.com/spekframework/spek")
+                licenses {
+                    license {
+                        name.set("Modified BSD")
+                        url.set("https://github.com/spekframework/spek/blob/2.x/LICENSE.TXT")
+                        distribution.set("repo")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/spekframework/spek")
+                    developerConnection.set("scm:git:github.com:spekframework/spek.git")
+                    tag.set("2.x")
                     url.set("https://github.com/spekframework/spek")
-                    licenses {
-                        license {
-                            name.set("Modified BSD")
-                            url.set("https://github.com/spekframework/spek/blob/2.x/LICENSE.TXT")
-                            distribution.set("repo")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:https://github.com/spekframework/spek")
-                        developerConnection.set("scm:git:github.com:spekframework/spek.git")
-                        tag.set("2.x")
-                        url.set("https://github.com/spekframework/spek")
-                    }
+                }
 
-                    developers {
-                        developer {
-                            id.set("spek")
-                            name.set("Spek Team")
-                            url.set("https://spekframework.org")
-                            email.set("team@spekframwork.org")
-                        }
+                developers {
+                    developer {
+                        id.set("spek")
+                        name.set("Spek Team")
+                        url.set("https://spekframework.org")
+                        email.set("team@spekframwork.org")
                     }
                 }
             }
