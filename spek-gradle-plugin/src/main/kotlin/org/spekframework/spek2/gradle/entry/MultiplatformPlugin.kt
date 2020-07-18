@@ -11,6 +11,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTargetWithTests
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 import org.spekframework.spek2.gradle.domain.SpekTest
+import org.spekframework.spek2.gradle.kotlin.CompilerPlugin
 import org.spekframework.spek2.gradle.task.ExecSpekTests
 
 class MultiplatformPlugin : Plugin<Project> {
@@ -21,6 +22,7 @@ class MultiplatformPlugin : Plugin<Project> {
             configureTestsContainer(project, mppExtension)
             configureDefaults(project, mppExtension, kotlinMppExtension)
         }
+        project.pluginManager.apply(CompilerPlugin::class.java)
     }
 
     private fun configureTestsContainer(project: Project, mppExtension: MultiplatformExtension) {

@@ -1,6 +1,6 @@
 plugins {
     `kotlin-dsl`
-    kotlin("kapt")
+//    kotlin("kapt")
 }
 
 repositories {
@@ -24,13 +24,13 @@ dependencies {
     implementation(kotlin("gradle-plugin-api"))
 
     implementation(autoService)
-    kapt(autoService)
+//    kapt(autoService)
 }
 
 tasks {
-    kapt {
-        includeCompileClasspath = false
-    }
+//    kapt {
+//        includeCompileClasspath = false
+//    }
 
     jar {
         manifest {

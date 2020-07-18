@@ -29,6 +29,7 @@ import org.jetbrains.kotlin.ir.types.classifierOrFail
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.constructors
 import org.jetbrains.kotlin.ir.util.defaultType
+import org.jetbrains.kotlin.ir.util.dump
 import org.jetbrains.kotlin.ir.visitors.IrElementVisitorVoid
 import org.jetbrains.kotlin.ir.visitors.acceptChildrenVoid
 import org.jetbrains.kotlin.name.ClassId
@@ -81,8 +82,10 @@ private class SpekCollector(
     }
 
     private fun generateRegistration(declaration: IrClass) {
-        val testInfoClassDescriptor = pluginContext.moduleDescriptor.findClassAcrossModuleDependencies(ClassId.topLevel(FqName("org.spekframework.spek2.launcher.TestInfo")))!!
-        val testInfoClass = pluginContext.symbolTable.referenceClass(testInfoClassDescriptor)
+        val testInfoClass = pluginContext.referenceClass(FqName("org.spekframework.spek2.launcher.TestInfo"))
+        requireNotNull(testInfoClass) { "Unable to find org.spekframework.spek2.launcher.TestInfo" }
+        //val testInfoClassDescriptor = pluginContext.moduleDescriptor.findClassAcrossModuleDependencies(ClassId.topLevel(FqName("org.spekframework.spek2.launcher.TestInfo")))!!
+        //val testInfoClass = pluginContext.symbolTable.referenceClass(testInfoClassDescriptor)
 
         DeclarationIrBuilder(pluginContext, file.symbol, file.startOffset, file.endOffset).run {
             val primaryConstructor = testInfoClass.constructors.first()
@@ -111,15 +114,15 @@ private class SpekCollector(
         ).apply {
             val factory = createFactoryLambda(declaration)
             val factoryReference = IrFunctionReferenceImpl(
-                    factory.startOffset,
-                    factory.endOffset,
-                    factoryType,
-                    factory.symbol,
-                    0,
-                    0,
-                    IrStatementOrigin.LAMBDA
+                factory.startOffset,
+                factory.endOffset,
+                factoryType,
+                factory.symbol,
+                0,
+                0,
+                null,
+                IrStatementOrigin.LAMBDA
             )
-
             statements.add(factory)
             statements.add(factoryReference)
         }
@@ -171,7 +174,7 @@ private fun IrFile.addTopLevelInitializer(expression: IrExpression, pluginContex
     val t = pluginContext.symbols.externalSymbolTable.referenceClass(threadLocalAnnotation)
     val fieldName = "topLevelInitializer${topLevelInitializersCounter++}".synthesizedName
 
-    val field = addField {
+    addField {
         name = fieldName
         isFinal = true
         isStatic = true
@@ -184,23 +187,24 @@ private fun IrFile.addTopLevelInitializer(expression: IrExpression, pluginContex
         field.annotations += DeclarationIrBuilder(pluginContext, field.symbol, startOffset, endOffset).irCallConstructor(t.constructors.first(), emptyList())
     }
 
-    addProperty {
-        name = fieldName
-        visibility = Visibilities.PRIVATE
-        origin = IrDeclarationOrigin.DEFINED
-    }.also { property ->
-        property.backingField = field
-        property.getter = buildFun {
-            origin = IrDeclarationOrigin.DEFAULT_PROPERTY_ACCESSOR
-            name = "get-${fieldName.identifier}".synthesizedName
-            returnType = field.type
-            visibility = Visibilities.PRIVATE
-        }.also { func ->
-            func.parent = this@addTopLevelInitializer
-            func.body = DeclarationIrBuilder(pluginContext, func.symbol, func.startOffset, func.endOffset).irBlockBody {
-                +irReturn(irGetField(null, field))
-            }
-        }
-    }
+// Don't need a property anymore for a field to be initialized (in 1.4), previously this was needed.
+//    addProperty {
+//        name = fieldName
+//        visibility = Visibilities.PRIVATE
+//        origin = IrDeclarationOrigin.DEFINED
+//    }.also { property ->
+//        property.backingField = field
+//        property.getter = buildFun {
+//            origin = IrDeclarationOrigin.DEFAULT_PROPERTY_ACCESSOR
+//            name = "get-${fieldName.identifier}".synthesizedName
+//            returnType = field.type
+//            visibility = Visibilities.PRIVATE
+//        }.also { func ->
+//            func.parent = this@addTopLevelInitializer
+//            func.body = DeclarationIrBuilder(pluginContext, func.symbol, func.startOffset, func.endOffset).irBlockBody {
+//                +irReturn(irGetField(null, field))
+//            }
+//        }
+//    }
 }
 

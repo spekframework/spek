@@ -74,38 +74,19 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(kotlin("stdlib-common"))
-        api(Dependencies.kotlinCoroutinesCoreCommon)
+        api(Dependencies.kotlinCoroutinesCore)
       }
     }
 
     val jvmMain by getting {
       dependencies {
         implementation(kotlin("stdlib-jdk8"))
-        api(Dependencies.kotlinCoroutinesCore)
       }
     }
 
     val jsMain by getting {
       dependencies {
         implementation(kotlin("stdlib-js"))
-      }
-    }
-
-    val linuxMain by getting {
-      dependencies {
-        api(Dependencies.kotlinCoroutinesNative)
-      }
-    }
-
-    val macosMain by getting {
-      dependencies {
-        api(Dependencies.kotlinCoroutinesNative)
-      }
-    }
-
-    val windowsMain by getting {
-      dependencies {
-        api(Dependencies.kotlinCoroutinesNative)
       }
     }
   }
