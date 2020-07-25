@@ -1,9 +1,7 @@
 package org.spekframework.spek2.runtime
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
+import kotlinx.coroutines.withTimeoutOrNull
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -70,7 +68,7 @@ class Executor {
                     }
                     is TestScopeImpl -> {
                         val exception = withContext(scopeCoroutineContext) {
-                            val job = launch {
+                            val job = async {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()
                                 scope.execute()
@@ -78,18 +76,30 @@ class Executor {
 
                             if (scope.timeout == 0L) {
                                 try {
-                                    job.join()
+                                    job.await()
                                     null
                                 } catch (e: Throwable) {
                                     e
                                 }
                             } else {
-                                withTimeout(scope.timeout) {
+                                val timedExecutionResult = withTimeoutOrNull(scope.timeout) {
                                     try {
-                                        job.join()
-                                        null
+                                        job.await()
+                                        TimedExecutionResult.Success
                                     } catch (e: Throwable) {
-                                        e
+                                        TimedExecutionResult.Failed(e)
+                                    }
+                                }
+
+                                if (timedExecutionResult == null) {
+                                    // test may still be running, cancel it!
+                                    job.cancel()
+                                    TestScopeTimeoutException(scope)
+                                } else {
+                                    when (timedExecutionResult) {
+                                        is TimedExecutionResult.Failed -> timedExecutionResult.exception
+                                        is TimedExecutionResult.Success -> null
+                                        else -> throw AssertionError("Unsupported TimedExecutionResult: $timedExecutionResult")
                                     }
                                 }
                             }
@@ -107,6 +117,15 @@ class Executor {
             return result
         }
     }
+
+    private sealed class TimedExecutionResult {
+        object Success : TimedExecutionResult()
+        class Failed(val exception: Throwable) : TimedExecutionResult()
+    }
+
+    private class TestScopeTimeoutException(scopeImpl: TestScopeImpl) : Throwable(
+        "Execution of test ${scopeImpl.path.name} has timed out!"
+    )
 
     private suspend fun executeSafely(coroutineContext: CoroutineContext, finalize: suspend (ExecutionResult) -> Unit, block: suspend () -> Unit): ExecutionResult {
         val result = try {

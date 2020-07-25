@@ -41,7 +41,7 @@ kotlin {
       compilations["test"].defaultSourceSet {
         dependencies {
           runtimeOnly(kotlin("reflect"))
-          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4")
+          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7-1.4-M3")
           implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
           implementation("org.mockito:mockito-core:2.23.4")
           runtimeOnly("org.spekframework.spek2:spek-runner-junit5")
