@@ -25,8 +25,8 @@ kotlin {
 
     val commonTest by getting {
       dependencies {
-        implementation("org.spekframework.spek2:spek-dsl-metadata")
-        implementation("org.spekframework.spek2:spek-runtime-metadata")
+        implementation("org.spekframework.spek2:spek-dsl")
+        implementation("org.spekframework.spek2:spek-runtime")
         implementation(kotlin("test"))
       }
     }
@@ -67,8 +67,6 @@ kotlin {
       compilations["test"].defaultSourceSet {
         dependencies {
           dependsOn(nativeTest)
-          implementation("org.spekframework.spek2:spek-dsl-linux")
-          implementation("org.spekframework.spek2:spek-runtime-linux")
         }
       }
     }
@@ -83,8 +81,6 @@ kotlin {
       compilations["test"].defaultSourceSet {
         dependencies {
           dependsOn(nativeTest)
-          implementation("org.spekframework.spek2:spek-dsl-macos")
-          implementation("org.spekframework.spek2:spek-runtime-macos")
         }
       }
     }
@@ -99,8 +95,6 @@ kotlin {
       compilations["test"].defaultSourceSet {
         dependencies {
           dependsOn(nativeTest)
-          implementation("org.spekframework.spek2:spek-dsl-windows")
-          implementation("org.spekframework.spek2:spek-runtime-windows")
         }
       }
     }

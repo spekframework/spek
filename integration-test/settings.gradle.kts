@@ -1,11 +1,13 @@
 includeBuild("../") {
   dependencySubstitution {
     substitute(module("org.spekframework.spek2:spek-gradle-plugin:0.1.0")).with(project(":spek-gradle-plugin"))
+    substitute(module("org.spekframework.spek2:spek-dsl")).with(project(":spek-dsl"))
     substitute(module("org.spekframework.spek2:spek-dsl-metadata")).with(project(":spek-dsl"))
     substitute(module("org.spekframework.spek2:spek-dsl-jvm")).with(project(":spek-dsl"))
     substitute(module("org.spekframework.spek2:spek-dsl-linux")).with(project(":spek-dsl"))
     substitute(module("org.spekframework.spek2:spek-dsl-windows")).with(project(":spek-dsl"))
     substitute(module("org.spekframework.spek2:spek-dsl-macos")).with(project(":spek-dsl"))
+    substitute(module("org.spekframework.spek2:spek-runtime")).with(project(":spek-runtime"))
     substitute(module("org.spekframework.spek2:spek-runtime-metadata")).with(project(":spek-runtime"))
     substitute(module("org.spekframework.spek2:spek-runtime-jvm")).with(project(":spek-runtime"))
     substitute(module("org.spekframework.spek2:spek-runtime-linux")).with(project(":spek-runtime"))
