@@ -12,6 +12,10 @@ import kotlin.reflect.full.primaryConstructor
 import kotlin.streams.toList
 
 object JvmDiscoveryContextFactory {
+    private val scanParallelism by lazy {
+        Runtime.getRuntime().availableProcessors()
+    }
+
     private val defaultInstanceFactory = object : InstanceFactory {
         override fun <T : Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.constructors.first { it.parameters.isEmpty() }
@@ -44,13 +48,15 @@ object JvmDiscoveryContextFactory {
     private fun scanClasses(testDirs: List<String>): List<KClass<out Spek>> {
         val cg = ClassGraph()
             .enableClassInfo()
+            // any jar on the classpath won't be scanned
+            .disableJarScanning()
 
         if (testDirs.isNotEmpty()) {
             cg.overrideClasspath(System.getProperty("java.class.path"), *testDirs.toTypedArray())
         }
 
-        return cg.scan().use {
-            it.getSubclasses(Spek::class.qualifiedName!!).stream()
+        return cg.scan(scanParallelism).use { scanResult ->
+            scanResult.getSubclasses(Spek::class.qualifiedName!!).stream()
                 .map { it.loadClass() as Class<out Spek> }
                 .filter { !it.isAnonymousClass }
                 .map { it.kotlin }
