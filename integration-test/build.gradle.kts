@@ -119,6 +119,8 @@ spek2 {
 tasks {
     afterEvaluate {
         val runSpekJvmTest by getting(Test::class) {
+            // enable concurrent discovery
+            systemProperty("spek2.discovery.concurrent", "")
             filter {
                 includeTestsMatching("org.spekframework.spek2.*")
             }
