@@ -14,7 +14,6 @@ import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.*
 import org.spekframework.spek2.runtime.util.ClassUtil
 import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 class SpekRuntime {
     private suspend fun CoroutineScope.filterScopes(discoveryRequest: DiscoveryRequest): Flow<GroupScopeImpl> = flow {
@@ -60,7 +59,7 @@ class SpekRuntime {
             }
         }
 
-        println("Spek discovery completed in ${time.inMilliseconds} ms")
+        println("Spek discovery completed in $time ms")
         return DiscoveryResult(scopes)
     }
 
@@ -105,3 +104,5 @@ class SpekRuntime {
 
 expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long
+
+expect fun measureTime(block: () -> Unit): Long
