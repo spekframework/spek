@@ -8,6 +8,6 @@ actual fun getGlobalTimeoutSetting(default: Long): Long {
     return override ?: default
 }
 
-actual fun isEnableConcurrentDiscovery(default: Boolean): Boolean {
+actual fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean {
     return System.getProperty("spek2.discovery.concurrent") != null || default
 }

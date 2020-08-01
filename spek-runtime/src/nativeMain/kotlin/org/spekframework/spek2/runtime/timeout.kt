@@ -4,6 +4,6 @@ actual fun getGlobalTimeoutSetting(default: Long): Long {
     return default
 }
 
-actual fun isEnableConcurrentDiscovery(default: Boolean): Boolean {
+actual fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean {
     return default
 }

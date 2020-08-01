@@ -46,7 +46,7 @@ class SpekRuntime {
         val scopes = mutableListOf<GroupScopeImpl>()
         val time = measureTime {
             doRunBlocking {
-                if (isEnableConcurrentDiscovery(false)) {
+                if (isConcurrentDiscoveryEnabled(false)) {
                     withContext(Dispatchers.Default) {
                         filterScopes(discoveryRequest).collect { scope ->
                             scopes.add(scope)
@@ -103,5 +103,5 @@ class SpekRuntime {
     }
 }
 
-expect fun isEnableConcurrentDiscovery(default: Boolean): Boolean
+expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long
