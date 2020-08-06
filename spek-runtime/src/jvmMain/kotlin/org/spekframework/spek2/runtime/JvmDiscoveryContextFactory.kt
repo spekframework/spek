@@ -10,7 +10,6 @@ import org.spekframework.spek2.runtime.discovery.DiscoveryContext
 import kotlin.reflect.KClass
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.primaryConstructor
-import kotlin.streams.toList
 
 object JvmDiscoveryContextFactory {
     // classgraph scan is already done in parallel, this property allows it to be overriden
@@ -65,7 +64,7 @@ object JvmDiscoveryContextFactory {
     }
 
     private fun filterScanResult(scanResult: ScanResult) : List<KClass<out Spek>> {
-        return scanResult.getSubclasses(Spek::class.qualifiedName!!).stream()
+        return scanResult.getSubclasses(Spek::class.qualifiedName!!)
             .map { it.loadClass() as Class<out Spek> }
             .filter { !it.isAnonymousClass }
             .map { it.kotlin }

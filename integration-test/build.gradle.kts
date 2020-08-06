@@ -103,10 +103,8 @@ spek2 {
 tasks {
   afterEvaluate {
     val runSpekJvmTest by getting(Test::class) {
-      if (!project.hasProperty("ci")) {
-        systemProperty("spek2.discovery.parallel.enabled", "")
-        systemProperty("spek2.execution.parallel.enabled", "")
-      }
+      systemProperty("spek2.discovery.parallel.enabled", "")
+      systemProperty("spek2.execution.parallel.enabled", "")
       filter {
         includeTestsMatching("org.spekframework.spek2.*")
       }
