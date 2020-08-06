@@ -10,34 +10,25 @@ repositories {
 }
 
 kotlin {
-  metadata {}
   jvm {}
+  js {}
   linuxX64("linux") {}
   macosX64("macos") {}
   mingwX64("windows") {}
 
   sourceSets {
-    val commonMain by getting {
-      dependencies {
-        implementation(kotlin("stdlib"))
-      }
-    }
+    val commonMain by getting
 
     val commonTest by getting {
       dependencies {
         implementation("org.spekframework.spek2:spek-dsl")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc")
         implementation("org.spekframework.spek2:spek-runtime")
         implementation(kotlin("test"))
       }
     }
 
     jvm {
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-jdk8"))
-        }
-      }
-
       compilations["test"].defaultSourceSet {
         dependencies {
           runtimeOnly(kotlin("reflect"))

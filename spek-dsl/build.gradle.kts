@@ -69,27 +69,6 @@ kotlin {
       }
     }
   }
-
-  sourceSets {
-    val commonMain by getting {
-      dependencies {
-        implementation(kotlin("stdlib-common"))
-        api(Dependencies.kotlinCoroutinesCore)
-      }
-    }
-
-    val jvmMain by getting {
-      dependencies {
-        implementation(kotlin("stdlib-jdk8"))
-      }
-    }
-
-    val jsMain by getting {
-      dependencies {
-        implementation(kotlin("stdlib-js"))
-      }
-    }
-  }
 }
 
 val stubJavaDocJar by tasks.registering(Jar::class) {
