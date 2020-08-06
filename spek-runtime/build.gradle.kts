@@ -27,6 +27,17 @@ kotlin {
 
     }
 
+    js {
+        mavenPublication {
+            groupId = "org.spekframework.spek2"
+            artifactId = "spek-runtime-js"
+            pom {
+                name.set("Spek Runtime JS")
+                description.set("Kotlin JS module for spek-runtime")
+            }
+        }
+    }
+
     linuxX64("linux") {
         mavenPublication {
             groupId = "org.spekframework.spek2"
@@ -64,7 +75,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":spek-dsl"))
-                implementation(kotlin("stdlib-common"))
                 implementation(Dependencies.kotlinCoroutinesCore)
             }
         }
@@ -72,7 +82,6 @@ kotlin {
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
-                    implementation(kotlin("stdlib-jdk8"))
                     implementation(kotlin("reflect"))
                     implementation(Dependencies.classgraph)
                 }

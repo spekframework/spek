@@ -121,7 +121,7 @@ class SpekTestHelper {
         val runtime = SpekRuntime()
         val recorder = ExecutionRecorder()
 
-        val discoveryResult = runtime.discover(DiscoveryRequest(context, listOf(*paths)))
+        val discoveryResult = runtime.discoverAsync(DiscoveryRequest(context, listOf(*paths)))
         runtime.executeAsync(ExecutionRequest(discoveryResult.roots, recorder))
 
         return recorder

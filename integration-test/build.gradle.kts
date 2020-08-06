@@ -10,38 +10,29 @@ repositories {
 }
 
 kotlin {
-  metadata {}
   jvm {}
+  js {}
   linuxX64("linux") {}
   macosX64("macos") {}
   mingwX64("windows") {}
 
   sourceSets {
-    val commonMain by getting {
-      dependencies {
-        implementation(kotlin("stdlib"))
-      }
-    }
+    val commonMain by getting
 
     val commonTest by getting {
       dependencies {
         implementation("org.spekframework.spek2:spek-dsl")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc")
         implementation("org.spekframework.spek2:spek-runtime")
         implementation(kotlin("test"))
       }
     }
 
     jvm {
-      compilations["main"].defaultSourceSet {
-        dependencies {
-          implementation(kotlin("stdlib-jdk8"))
-        }
-      }
-
       compilations["test"].defaultSourceSet {
         dependencies {
           runtimeOnly(kotlin("reflect"))
-          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7-1.4-M3")
+          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.8-1.4.0-rc")
           implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
           implementation("org.mockito:mockito-core:2.23.4")
           runtimeOnly("org.spekframework.spek2:spek-runner-junit5")
@@ -112,7 +103,8 @@ spek2 {
 tasks {
   afterEvaluate {
     val runSpekJvmTest by getting(Test::class) {
-      systemProperty("spek2.discovery.concurrent", "")
+      systemProperty("spek2.discovery.parallel.enabled", "")
+      systemProperty("spek2.execution.parallel.enabled", "")
       filter {
         includeTestsMatching("org.spekframework.spek2.*")
       }

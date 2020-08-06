@@ -16,6 +16,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            task: spekLinuxTest spekJvmTest
+          - os: macos-latest
+            task: spekMacosTest spekJvmTest
+          - os: windows-latest
+            task: spekWindowsTest spekJvmTest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +38,7 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           build-root-directory: integration-test
-          arguments: check -PexcludeIdePlugins
+          arguments: ${{ matrix.task }} -PexcludeIdePlugins -i
   runner_junit5:
     runs-on: ubuntu-latest
     steps:

@@ -16,7 +16,7 @@ object Dependencies {
     val mockitoCore = "org.mockito:mockito-core:2.23.4"
     val mockitoInline = "org.mockito:mockito-inline:2.23.4"
 
-    val kotlinCoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7-1.4-M3"
+    val kotlinCoroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc"
 
     val autoService = "com.google.auto.service:auto-service:1.0-rc4"
 }
