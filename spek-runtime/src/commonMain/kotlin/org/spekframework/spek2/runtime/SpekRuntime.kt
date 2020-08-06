@@ -47,7 +47,7 @@ class SpekRuntime {
         println("Spek discovery started.")
         val time = measureTime {
             doRunBlocking {
-                if (isConcurrentDiscoveryEnabled(false)) {
+                if (isParallelDiscoveryEnabled(false)) {
                     withContext(Dispatchers.Default) {
                         filterScopes(discoveryRequest).collect { scope ->
                             scopes.add(scope)
@@ -65,7 +65,7 @@ class SpekRuntime {
         return DiscoveryResult(scopes)
     }
 
-
+    // For internal use only!
     suspend fun executeAsync(request: ExecutionRequest) {
         Executor().execute(request)
     }
@@ -74,9 +74,15 @@ class SpekRuntime {
     fun execute(request: ExecutionRequest) {
         doRunBlocking {
             val job = coroutineScope {
-                // inherit the dispatcher from doRunBlocking (which is an event loop backed by the main thread)
-                launch {
-                    executeAsync(request)
+                if (isParallelExecutionEnabled(false)) {
+                    launch(Dispatchers.Default) {
+                        executeAsync(request)
+                    }
+                } else {
+                    // inherit the dispatcher from doRunBlocking (which is an event loop backed by the main thread)
+                    launch {
+                        executeAsync(request)
+                    }
                 }
             }
 
@@ -121,5 +127,6 @@ class SpekRuntime {
     }
 }
 
-expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
+expect fun isParallelDiscoveryEnabled(default: Boolean): Boolean
+expect fun isParallelExecutionEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long
