@@ -5,13 +5,19 @@ import kotlin.system.measureTimeMillis
 actual fun getGlobalTimeoutSetting(default: Long): Long {
     var override = System.getProperty("SPEK_TIMEOUT")?.toLong()
     if (override == null) {
-        override = System.getProperty("spek2.timeout")?.toLong()
+        override = System.getProperty("spek2.execution.test.timeout")?.toLong()
+    } else {
+        println("SPEK2_TIMEOUT is deprecated please use spek2.execution.test.timeout instead.")
     }
     return override ?: default
 }
 
 actual fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean {
-    return System.getProperty("spek2.discovery.concurrent") != null || default
+    return System.getProperty("spek2.discovery.parallel.enabled") != null || default
+}
+
+actual fun isConcurrentExecutionEnabled(default: Boolean): Boolean {
+    return System.getProperty("spek2.execution.parallel.enabled") != null || default
 }
 
 actual fun measureTime(block: () -> Unit): Long {

@@ -8,16 +8,13 @@ import org.spekframework.spek2.runtime.execution.ExecutionResult
 import org.spekframework.spek2.runtime.scope.GroupScopeImpl
 import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
+import kotlin.coroutines.EmptyCoroutineContext
 
 class Executor {
-    fun execute(request: ExecutionRequest) {
-        doRunBlocking {
-            withContext(Dispatchers.Default) {
-                request.executionListener.executionStart()
-                request.roots.forEach { execute(it, request.executionListener) }
-                request.executionListener.executionFinish()
-            }
-        }
+    suspend fun execute(request: ExecutionRequest) {
+        request.executionListener.executionStart()
+        request.roots.forEach { execute(it, request.executionListener) }
+        request.executionListener.executionFinish()
     }
 
     private suspend fun execute(scope: ScopeImpl, listener: ExecutionListener): ExecutionResult? {
@@ -45,10 +42,11 @@ class Executor {
                 }
             }
 
+            val contextOverride = EmptyCoroutineContext
             val result = executeSafely({ finalize(it) }) {
                 when (scope) {
                     is GroupScopeImpl -> {
-                        withContext(Dispatchers.Default) {
+                        withContext(contextOverride) {
                             scope.before()
                             scope.invokeBeforeGroupFixtures(false)
                             var failed = false
@@ -67,7 +65,7 @@ class Executor {
                         }
                     }
                     is TestScopeImpl -> {
-                        val exception = withContext(Dispatchers.Default) {
+                        val exception = withContext(contextOverride) {
                             val job = launch {
                                 scope.before()
                                 scope.invokeBeforeTestFixtures()
