@@ -41,7 +41,7 @@ kotlin {
       compilations["test"].defaultSourceSet {
         dependencies {
           runtimeOnly(kotlin("reflect"))
-          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.7-1.4-M3")
+          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.8-1.4.0-rc")
           implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
           implementation("org.mockito:mockito-core:2.23.4")
           runtimeOnly("org.spekframework.spek2:spek-runner-junit5")
@@ -112,7 +112,7 @@ spek2 {
 tasks {
   afterEvaluate {
     val runSpekJvmTest by getting(Test::class) {
-      if (!hasProperty("ci")) {
+      if (!project.hasProperty("ci")) {
         systemProperty("spek2.discovery.parallel.enabled", "")
         systemProperty("spek2.execution.parallel.enabled", "")
       }
