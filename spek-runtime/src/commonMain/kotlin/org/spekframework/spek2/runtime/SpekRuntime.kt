@@ -89,7 +89,6 @@ class SpekRuntime {
             }
 
             job.join()
-            println("spek2: execution done")
         }
     }
 
