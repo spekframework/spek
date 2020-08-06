@@ -63,7 +63,17 @@ class SpekRuntime {
         return DiscoveryResult(scopes)
     }
 
-    fun execute(request: ExecutionRequest) = Executor().execute(request)
+    fun execute(request: ExecutionRequest) {
+        doRunBlocking {
+            if (isConcurrentExecutionEnabled(false)) {
+                withContext(Dispatchers.Default) {
+                    Executor().execute(request)
+                }
+            } else {
+                Executor().execute(request)
+            }
+        }
+    }
 
     private fun resolveSpec(instance: Spek, path: Path): GroupScopeImpl {
         val lifecycleManager = LifecycleManager()
@@ -103,6 +113,7 @@ class SpekRuntime {
 }
 
 expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
+expect fun isConcurrentExecutionEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long
 
 expect fun measureTime(block: () -> Unit): Long

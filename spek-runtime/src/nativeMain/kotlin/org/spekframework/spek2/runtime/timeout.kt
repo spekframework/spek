@@ -12,6 +12,10 @@ actual fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean {
     return default
 }
 
+actual fun isConcurrentExecutionEnabled(default: Boolean): Boolean {
+    return default
+}
+
 @UseExperimental(ExperimentalTime::class)
 actual fun measureTime(block: () -> Unit): Long {
     return MonoClock.measureTime(block).inMilliseconds.toLong()
