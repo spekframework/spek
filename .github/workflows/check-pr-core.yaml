@@ -38,7 +38,7 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           build-root-directory: integration-test
-          arguments: ${{ matrix.task }} -PexcludeIdePlugins
+          arguments: ${{ matrix.task }} -PexcludeIdePlugins -Pci
   runner_junit5:
     runs-on: ubuntu-latest
     steps:
