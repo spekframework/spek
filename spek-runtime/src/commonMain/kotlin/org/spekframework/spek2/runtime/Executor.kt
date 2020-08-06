@@ -15,10 +15,16 @@ class Executor {
     suspend fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
         // note that this call will be run in parallel depending on the CoroutineDispatcher used
-        val jobs = supervisorScope {
-            request.roots.map { launch { execute(it, request.executionListener) } }
+        supervisorScope {
+            request.roots.map { async { execute(it, request.executionListener) } }
+                .forEach { job ->
+                    try {
+                        job.await()
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                    }
+                }
         }
-        jobs.joinAll()
         request.executionListener.executionFinish()
     }
 
