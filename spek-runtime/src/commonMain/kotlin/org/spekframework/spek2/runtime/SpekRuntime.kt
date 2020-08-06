@@ -44,10 +44,11 @@ class SpekRuntime {
     @OptIn(ExperimentalTime::class)
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = mutableListOf<GroupScopeImpl>()
-        println("Spek discovery started.")
+        println("spek2: Discovery started.")
         val time = measureTime {
             doRunBlocking {
                 if (isParallelDiscoveryEnabled(false)) {
+                    println("spek2: Running discovery phase in parallel.")
                     withContext(Dispatchers.Default) {
                         filterScopes(discoveryRequest).collect { scope ->
                             scopes.add(scope)
@@ -61,7 +62,7 @@ class SpekRuntime {
             }
         }
 
-        println("Spek discovery completed in ${time.inMilliseconds} ms")
+        println("spek2: Discovery completed in ${time.inMilliseconds} ms")
         return DiscoveryResult(scopes)
     }
 
@@ -75,6 +76,7 @@ class SpekRuntime {
         doRunBlocking {
             val job = coroutineScope {
                 if (isParallelExecutionEnabled(false)) {
+                    println("spek2: Running execution phase in parallel.")
                     launch(Dispatchers.Default) {
                         executeAsync(request)
                     }

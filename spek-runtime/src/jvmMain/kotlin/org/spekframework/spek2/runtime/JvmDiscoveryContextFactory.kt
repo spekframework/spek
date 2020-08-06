@@ -50,7 +50,6 @@ object JvmDiscoveryContextFactory {
             .enableClassInfo()
             // any jar on the classpath won't be scanned
             .disableJarScanning()
-            .verbose()
 
         if (testDirs.isNotEmpty()) {
             cg.overrideClasspath(System.getProperty("java.class.path"), *testDirs.toTypedArray())

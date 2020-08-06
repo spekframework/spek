@@ -6,9 +6,9 @@ actual fun getGlobalTimeoutSetting(default: Long): Long {
 }
 
 actual fun isParallelDiscoveryEnabled(default: Boolean): Boolean {
-    return System.getProperty("spek2.discovery.parallel.enabled]") != null || default
+    return System.getProperty("spek2.discovery.parallel.enabled") != null || default
 }
 
 actual fun isParallelExecutionEnabled(default: Boolean): Boolean {
-    return System.getProperty("spek2.execution.parallel.enabled]") != null || default
+    return System.getProperty("spek2.execution.parallel.enabled") != null || default
 }
