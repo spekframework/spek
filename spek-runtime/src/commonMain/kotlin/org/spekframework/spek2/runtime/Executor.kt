@@ -15,10 +15,10 @@ class Executor {
     suspend fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
         // note that this call will be run in parallel depending on the CoroutineDispatcher used
-        coroutineScope {
+        val jobs = supervisorScope {
             request.roots.map { launch { execute(it, request.executionListener) } }
-                .joinAll()
         }
+        jobs.joinAll()
         request.executionListener.executionFinish()
     }
 
