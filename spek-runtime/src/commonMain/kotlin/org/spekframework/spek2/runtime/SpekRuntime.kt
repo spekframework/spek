@@ -1,9 +1,9 @@
 package org.spekframework.spek2.runtime
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.selects.select
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.lifecycle.CachingMode
@@ -13,24 +13,55 @@ import org.spekframework.spek2.runtime.execution.ExecutionRequest
 import org.spekframework.spek2.runtime.lifecycle.LifecycleManager
 import org.spekframework.spek2.runtime.scope.*
 import org.spekframework.spek2.runtime.util.ClassUtil
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 class SpekRuntime {
+    private suspend fun CoroutineScope.filterScopes(discoveryRequest: DiscoveryRequest): Flow<GroupScopeImpl> = flow {
+        val tasks = mutableListOf<Deferred<GroupScopeImpl?>>()
+        discoveryRequest.context.getTests().forEach { testInfo ->
+            val matchingPath = discoveryRequest.paths.firstOrNull { it.intersects(testInfo.path) }
+            if (matchingPath != null) {
+                val task = async {
+                    val spec = resolveSpec(testInfo.createInstance(), testInfo.path)
+                    spec.filterBy(matchingPath)
+                    if (!spec.isEmpty()) {
+                        spec
+                    } else {
+                        null
+                    }
+
+                }
+                tasks.add(task)
+            }
+        }
+
+        tasks.forEach { task ->
+            task.await()?.let { emit(it) }
+        }
+    }
+
+    @OptIn(ExperimentalTime::class)
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
-        val scopes = discoveryRequest.context.getTests()
-            .map { testInfo ->
-                val matchingPath = discoveryRequest.paths.firstOrNull { it.intersects(testInfo.path) }
-                testInfo to matchingPath
+        val scopes = mutableListOf<GroupScopeImpl>()
+        println("Spek discovery started.")
+        val time = measureTime {
+            doRunBlocking {
+                if (isConcurrentDiscoveryEnabled(false)) {
+                    withContext(Dispatchers.Default) {
+                        filterScopes(discoveryRequest).collect { scope ->
+                            scopes.add(scope)
+                        }
+                    }
+                } else {
+                    filterScopes(discoveryRequest).collect { scope ->
+                        scopes.add(scope)
+                    }
+                }
             }
-            .filter { (_, matchingPath) -> matchingPath != null }
-            .map { (testInfo, matchingPath) ->
-                checkNotNull(matchingPath)
-                val spec = resolveSpec(testInfo.createInstance(), testInfo.path)
-                spec.filterBy(matchingPath)
-                spec
-            }
-            .filter { spec -> !spec.isEmpty() }
+        }
 
-
+        println("Spek discovery completed in ${time.inMilliseconds} ms")
         return DiscoveryResult(scopes)
     }
 
@@ -39,6 +70,7 @@ class SpekRuntime {
         Executor().execute(request)
     }
 
+    // TODO: allow making the test run in parallel.
     fun execute(request: ExecutionRequest) {
         doRunBlocking {
             val job = coroutineScope {
@@ -89,4 +121,5 @@ class SpekRuntime {
     }
 }
 
+expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long

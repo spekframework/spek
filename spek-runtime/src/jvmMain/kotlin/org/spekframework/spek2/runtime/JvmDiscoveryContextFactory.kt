@@ -1,6 +1,7 @@
 package org.spekframework.spek2.runtime
 
 import io.github.classgraph.ClassGraph
+import io.github.classgraph.ScanResult
 import org.spekframework.spek2.CreateWith
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.lifecycle.InstanceFactory
@@ -12,6 +13,9 @@ import kotlin.reflect.full.primaryConstructor
 import kotlin.streams.toList
 
 object JvmDiscoveryContextFactory {
+    // classgraph scan is already done in parallel, this property allows it to be overriden
+    private val classpathScanConcurrency = System.getProperty("spek2.jvm.cg.scan.concurrency")?.toInt()
+
     private val defaultInstanceFactory = object : InstanceFactory {
         override fun <T : Spek> create(spek: KClass<T>): T {
             return spek.objectInstance ?: spek.constructors.first { it.parameters.isEmpty() }
@@ -44,17 +48,28 @@ object JvmDiscoveryContextFactory {
     private fun scanClasses(testDirs: List<String>): List<KClass<out Spek>> {
         val cg = ClassGraph()
             .enableClassInfo()
+            // any jar on the classpath won't be scanned
+            .disableJarScanning()
+            .verbose()
 
         if (testDirs.isNotEmpty()) {
             cg.overrideClasspath(System.getProperty("java.class.path"), *testDirs.toTypedArray())
         }
 
-        return cg.scan().use {
-            it.getSubclasses(Spek::class.qualifiedName!!).stream()
-                .map { it.loadClass() as Class<out Spek> }
-                .filter { !it.isAnonymousClass }
-                .map { it.kotlin }
-                .toList()
+        val scanResult = if (classpathScanConcurrency != null) {
+            cg.scan(classpathScanConcurrency)
+        } else {
+            cg.scan()
         }
+
+        return filterScanResult(scanResult)
+    }
+
+    private fun filterScanResult(scanResult: ScanResult) : List<KClass<out Spek>> {
+        return scanResult.getSubclasses(Spek::class.qualifiedName!!).stream()
+            .map { it.loadClass() as Class<out Spek> }
+            .filter { !it.isAnonymousClass }
+            .map { it.kotlin }
+            .toList()
     }
 }
