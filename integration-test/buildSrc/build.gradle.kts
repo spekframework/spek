@@ -6,4 +6,5 @@ repositories {
 
 dependencies {
   implementation(kotlin("gradle-plugin", version = "1.4.0-rc"))
+  implementation(kotlin("reflect", version = "1.4.0-rc"))
 }
