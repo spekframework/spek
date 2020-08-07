@@ -27,16 +27,16 @@ kotlin {
 
     }
 
-    js {
-        mavenPublication {
-            groupId = "org.spekframework.spek2"
-            artifactId = "spek-runtime-js"
-            pom {
-                name.set("Spek Runtime JS")
-                description.set("Kotlin JS module for spek-runtime")
-            }
-        }
-    }
+//    js {
+//        mavenPublication {
+//            groupId = "org.spekframework.spek2"
+//            artifactId = "spek-runtime-js"
+//            pom {
+//                name.set("Spek Runtime JS")
+//                description.set("Kotlin JS module for spek-runtime")
+//            }
+//        }
+//    }
 
     linuxX64("linux") {
         mavenPublication {
@@ -111,7 +111,7 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
 }
 
 project.extra["artifacts"] = when (currentOS) {
-    OS.LINUX -> arrayOf("kotlinMultiplatform", "metadata", "jvm", "js", "linux")
+    OS.LINUX -> arrayOf("kotlinMultiplatform", "metadata", "jvm" ,/* "js",*/ "linux")
     OS.WINDOWS -> arrayOf("windows")
     OS.MACOS -> arrayOf("macos")
 }
