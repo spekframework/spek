@@ -37,7 +37,7 @@ class GroupScopeImpl(
     override val parent: GroupScope?,
     skip: Skip,
     lifecycleManager: LifecycleManager,
-    preserveExecutionOrder: Boolean,
+    val preserveExecutionOrder: Boolean,
     val failFast: Boolean = false
 ) : ScopeImpl(id, path, skip, lifecycleManager), GroupScope {
     private val fixtures = Fixtures()
