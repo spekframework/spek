@@ -70,6 +70,12 @@ class Collector(
     }
 
     override fun group(description: String, skip: Skip, defaultCachingMode: CachingMode, preserveExecutionOrder: Boolean, failFast: Boolean, body: GroupBody.() -> Unit) {
+        // TODO: combine failFast and preserveExecutionOrder into a single parameter.
+        require(failFast == preserveExecutionOrder) { "failFast and preserveExecutionOrder must have the same value!" }
+        if (root.failFast) {
+            throw AssertionError("Fail fast groups can only contain test scopes!")
+        }
+
         val group = GroupScopeImpl(
             idFor(description),
             root.path.resolve(description),
