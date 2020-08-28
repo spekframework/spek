@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompile
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -29,6 +31,22 @@ allprojects {
         releaseMode = true
     }
     project.extra["releaseMode"] = releaseMode
+
+    afterEvaluate {
+        tasks.withType<KotlinCompile<*>> {
+            if (this is KotlinJvmCompile) {
+                kotlinOptions {
+                    apiVersion = "1.3"
+                    jvmTarget = "1.8"
+                }
+            } else {
+                kotlinOptions {
+                    // KN requires 1.4
+                    apiVersion = "1.4"
+                }
+            }
+        }
+    }
 }
 
 listOf("check", "build", "clean").forEach { taskName ->

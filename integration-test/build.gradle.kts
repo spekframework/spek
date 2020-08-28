@@ -22,7 +22,7 @@ kotlin {
     val commonTest by getting {
       dependencies {
         implementation("org.spekframework.spek2:spek-dsl")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9")
         implementation("org.spekframework.spek2:spek-runtime")
         implementation(kotlin("test"))
       }
@@ -32,7 +32,7 @@ kotlin {
       compilations["test"].defaultSourceSet {
         dependencies {
           runtimeOnly(kotlin("reflect"))
-          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.8-1.4.0-rc")
+          implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.9")
           implementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
           implementation("org.mockito:mockito-core:2.23.4")
           runtimeOnly("org.spekframework.spek2:spek-runner-junit5")
