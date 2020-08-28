@@ -13,16 +13,16 @@ import kotlin.coroutines.EmptyCoroutineContext
 class Executor {
     suspend fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
+        // note that this call will be run in parallel depending on the CoroutineDispatcher used
         supervisorScope {
-            val jobs = mutableListOf<Job>()
-            request.roots.forEach {
-                val job = launch {
-                    execute(it, request.executionListener)
+            request.roots.map { async { execute(it, request.executionListener) } }
+                .forEach { job ->
+                    try {
+                        job.await()
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                    }
                 }
-                jobs.add(job)
-            }
-
-            jobs.joinAll()
         }
         request.executionListener.executionFinish()
     }
