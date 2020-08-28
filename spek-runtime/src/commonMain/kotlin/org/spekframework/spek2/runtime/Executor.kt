@@ -13,7 +13,17 @@ import kotlin.coroutines.EmptyCoroutineContext
 class Executor {
     suspend fun execute(request: ExecutionRequest) {
         request.executionListener.executionStart()
-        request.roots.forEach { execute(it, request.executionListener) }
+        supervisorScope {
+            val jobs = mutableListOf<Job>()
+            request.roots.forEach {
+                val job = launch {
+                    execute(it, request.executionListener)
+                }
+                jobs.add(job)
+            }
+
+            jobs.joinAll()
+        }
         request.executionListener.executionFinish()
     }
 
