@@ -9,3 +9,10 @@ data class BuildConfig(
     val version: VersionRange,
     val deps: Array<String> = emptyArray()
 )
+
+data class PluginDescriptor(
+    val identifier: String,
+    val sdk: String,
+    val version: VersionRange,
+    val deps: Array<String> = emptyArray()
+)

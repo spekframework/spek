@@ -15,4 +15,5 @@ if (excludeIdePlugins == null) {
     include("spek-ide-plugin-intellij-base-jvm")
     include("spek-ide-plugin-intellij-idea")
     include("spek-ide-plugin-android-studio")
+    include("spek-intellij-plugin")
 }

@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>org.spekframework.spek2</id>
+    <name>Spek Framework</name>
+    <vendor email="team@spekframework.org" url="http://spekframework.org">Spek Team</vendor>
+    <description>
+        Adds support for managing and running Spek 2 tests within IntelliJ IDEA.
+    </description>
+
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <configurationType implementation="org.spekframework.spek2.intellij.execution.SpekConfigurationType" />
+    </extensions>
+
+    <extensionPoints>
+        <extensionPoint name="configurationFactory" interface="org.spekframework.spek2.intellij.execution.SpekConfigurationFactory" />
+        <extensionPoint name="jvm.parameterPatcher" interface="org.spekframework.spek2.intellij.execution.jvm.SpekJvmParameterPatcher" />
+    </extensionPoints>
+
+    <extensions defaultExtensionNs="org.spekframework.spek2">
+        <configurationFactory implementation="org.spekframework.spek2.intellij.execution.jvm.SpekJvmConfigurationFactory" />
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+
+</idea-plugin>
