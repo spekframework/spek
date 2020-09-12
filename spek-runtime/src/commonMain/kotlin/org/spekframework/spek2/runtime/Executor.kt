@@ -20,7 +20,7 @@ class Executor {
                     try {
                         job.await()
                     } catch (e: Throwable) {
-                        e.printStackTrace()
+                        println("An error has occurred: ${e.message}")
                     }
                 }
         }
