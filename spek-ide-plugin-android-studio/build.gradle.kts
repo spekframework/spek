@@ -6,13 +6,6 @@ plugins {
 }
 
 val buildMatrix = mapOf(
-    "AS35" to ij.BuildConfig(
-        "191.8026.42",
-        "Studio3.5",
-        "AS34",
-        ij.VersionRange("191.8026", "191.8026.*"),
-        arrayOf("org.jetbrains.kotlin:1.3.30-release-Studio3.5-1")
-    ),
     "AS36" to ij.BuildConfig(
         "192.7142.36",
         "Studio3.6",
