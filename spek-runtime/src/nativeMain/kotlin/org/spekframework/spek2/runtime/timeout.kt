@@ -20,3 +20,7 @@ actual fun isConcurrentExecutionEnabled(default: Boolean): Boolean {
 actual fun measureTime(block: () -> Unit): Long {
     return MonoClock.measureTime(block).inMilliseconds.toLong()
 }
+
+actual fun isDebuggingEnabled(default: Boolean): Boolean {
+    return default
+}
