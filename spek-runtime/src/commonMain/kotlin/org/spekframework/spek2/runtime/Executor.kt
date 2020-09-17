@@ -10,20 +10,29 @@ import org.spekframework.spek2.runtime.scope.ScopeImpl
 import org.spekframework.spek2.runtime.scope.TestScopeImpl
 import kotlin.coroutines.EmptyCoroutineContext
 
+interface TestHandle {
+    fun await()
+}
+
+expect class TestRunner(concurrency: Int) {
+    fun runTest(test: suspend () -> Unit): TestHandle
+}
+
 class Executor {
-    suspend fun execute(request: ExecutionRequest) {
+    fun execute(request: ExecutionRequest, concurrency: Int) {
+        val runner = TestRunner(concurrency)
         request.executionListener.executionStart()
-        // note that this call will be run in parallel depending on the CoroutineDispatcher used
-        supervisorScope {
-            request.roots.map { async { execute(it, request.executionListener) } }
-                .forEach { job ->
-                    try {
-                        job.await()
-                    } catch (e: Throwable) {
-                        println("An error has occurred: ${e.message}")
-                    }
+        request.roots
+            .map {
+                runner.runTest { execute(it, request.executionListener) }
+            }
+            .forEach { handle ->
+                try {
+                    handle.await()
+                } catch (e: Throwable) {
+                    println("An error has occurred: ${e.message}")
                 }
-        }
+            }
         request.executionListener.executionFinish()
     }
 
