@@ -23,3 +23,7 @@ actual fun isConcurrentExecutionEnabled(default: Boolean): Boolean {
 actual fun measureTime(block: () -> Unit): Long {
     return measureTimeMillis(block)
 }
+
+actual fun getExecutionParallelism(): Int {
+    return Runtime.getRuntime().availableProcessors()
+}
