@@ -12,14 +12,14 @@ actual fun doRunBlocking(block: suspend CoroutineScope.() -> Unit) {
     }
 }
 
-actual class TestRunner actual constructor(concurrency: Int) {
+actual class TaskRunner actual constructor(concurrency: Int) {
     private val executor = Executors.newFixedThreadPool(concurrency) { r ->
         Thread(r).also {
             it.isDaemon = true
         }
     }
 
-    actual fun runTest(test: suspend () -> Unit): TestHandle {
+    actual fun runTask(test: suspend () -> Unit): TaskHandle {
         val handle = CompletableFuture<Unit>()
 
         executor.submit {
@@ -29,7 +29,7 @@ actual class TestRunner actual constructor(concurrency: Int) {
             }
         }
 
-        return object : TestHandle {
+        return object : TaskHandle {
             override fun await() {
                 try {
                 handle.get()

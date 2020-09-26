@@ -16,47 +16,46 @@ import org.spekframework.spek2.runtime.util.ClassUtil
 import kotlin.time.ExperimentalTime
 
 class SpekRuntime {
-    private suspend fun CoroutineScope.filterScopes(discoveryRequest: DiscoveryRequest): Flow<GroupScopeImpl> = flow {
-        val tasks = mutableListOf<Deferred<GroupScopeImpl?>>()
+    private fun filterScopes(discoveryRequest: DiscoveryRequest, concurrency: Int): List<GroupScopeImpl> {
+        val results = mutableListOf<GroupScopeImpl>()
+        val handles = mutableListOf<TaskHandle>()
+        val runner = TaskRunner(concurrency)
         discoveryRequest.context.getTests().forEach { testInfo ->
             val matchingPath = discoveryRequest.paths.firstOrNull { it.intersects(testInfo.path) }
             if (matchingPath != null) {
-                val task = async {
+                val task = runner.runTask {
                     val spec = resolveSpec(testInfo.createInstance(), testInfo.path)
                     spec.filterBy(matchingPath)
                     if (!spec.isEmpty()) {
-                        spec
-                    } else {
-                        null
+                        results.add(spec)
                     }
-
                 }
-                tasks.add(task)
+                handles.add(task)
             }
         }
 
-        tasks.forEach { task ->
-            task.await()?.let { emit(it) }
+        // wait
+        handles.forEach { handle ->
+            try {
+                handle.await()
+            } catch (e: Throwable) {
+                println("An error has occurred in discovery: ${e.message}")
+            }
         }
+
+        return results
     }
 
     @UseExperimental(ExperimentalTime::class)
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = mutableListOf<GroupScopeImpl>()
         val time = measureTime {
-            doRunBlocking {
-                if (isConcurrentDiscoveryEnabled(false)) {
-                    withContext(Dispatchers.Default) {
-                        filterScopes(discoveryRequest).collect { scope ->
-                            scopes.add(scope)
-                        }
-                    }
-                } else {
-                    filterScopes(discoveryRequest).collect { scope ->
-                        scopes.add(scope)
-                    }
-                }
+            val concurrency = if (isConcurrentExecutionEnabled(false)) {
+                getExecutionParallelism()
+            } else {
+                1
             }
+            scopes.addAll(filterScopes(discoveryRequest, concurrency))
         }
 
         if (isDebuggingEnabled()) {
@@ -66,14 +65,12 @@ class SpekRuntime {
     }
 
     fun execute(request: ExecutionRequest) {
-        doRunBlocking {
-            val concurrency = if (isConcurrentExecutionEnabled(false)) {
-                getExecutionParallelism()
-            } else {
-                1
-            }
-            Executor().execute(request, concurrency)
+        val concurrency = if (isConcurrentExecutionEnabled(false)) {
+            getExecutionParallelism()
+        } else {
+            1
         }
+        Executor().execute(request, concurrency)
     }
 
     private fun resolveSpec(instance: Spek, path: Path): GroupScopeImpl {

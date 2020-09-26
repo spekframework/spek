@@ -9,13 +9,13 @@ actual fun doRunBlocking(block: suspend CoroutineScope.() -> Unit) {
     }
 }
 
-actual class TestRunner actual constructor(concurrency: Int) {
-    actual fun runTest(test: suspend () -> Unit): TestHandle {
+actual class TaskRunner actual constructor(concurrency: Int) {
+    actual fun runTask(test: suspend () -> Unit): TaskHandle {
         doRunBlocking {
             test()
         }
 
-        return object : TestHandle {
+        return object : TaskHandle {
             override fun await() {
                 // do nothing
             }
