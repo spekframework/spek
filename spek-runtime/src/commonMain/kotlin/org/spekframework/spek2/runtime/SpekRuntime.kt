@@ -59,7 +59,9 @@ class SpekRuntime {
             }
         }
 
-        println("Spek discovery completed in $time ms")
+        if (isDebuggingEnabled()) {
+            println("Spek discovery completed in $time ms")
+        }
         return DiscoveryResult(scopes)
     }
 
@@ -106,6 +108,10 @@ class SpekRuntime {
         return classScope
     }
 
+    fun isDebuggingEnabled(): Boolean {
+        return isDebuggingEnabled(false)
+    }
+
     companion object {
         private const val DEFAULT_TIMEOUT = 0L
     }
@@ -115,5 +121,6 @@ expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
 expect fun getExecutionParallelism(): Int
 expect fun isConcurrentExecutionEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long
+expect fun isDebuggingEnabled(default: Boolean): Boolean
 
 expect fun measureTime(block: () -> Unit): Long

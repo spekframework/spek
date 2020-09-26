@@ -24,6 +24,10 @@ actual fun measureTime(block: () -> Unit): Long {
     return measureTimeMillis(block)
 }
 
+actual fun isDebuggingEnabled(default: Boolean): Boolean {
+    return System.getProperty("spek2.debug.enabled") != null || default
+}
+
 actual fun getExecutionParallelism(): Int {
     return Runtime.getRuntime().availableProcessors()
 }
