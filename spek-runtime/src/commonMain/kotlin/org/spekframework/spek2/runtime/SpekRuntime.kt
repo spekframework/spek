@@ -67,13 +67,12 @@ class SpekRuntime {
 
     fun execute(request: ExecutionRequest) {
         doRunBlocking {
-            if (isConcurrentExecutionEnabled(false)) {
-                withContext(Dispatchers.Default) {
-                    Executor().execute(request)
-                }
+            val concurrency = if (isConcurrentExecutionEnabled(false)) {
+                getExecutionParallelism()
             } else {
-                Executor().execute(request)
+                1
             }
+            Executor().execute(request, concurrency)
         }
     }
 
@@ -119,6 +118,7 @@ class SpekRuntime {
 }
 
 expect fun isConcurrentDiscoveryEnabled(default: Boolean): Boolean
+expect fun getExecutionParallelism(): Int
 expect fun isConcurrentExecutionEnabled(default: Boolean): Boolean
 expect fun getGlobalTimeoutSetting(default: Long): Long
 expect fun isDebuggingEnabled(default: Boolean): Boolean

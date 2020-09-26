@@ -24,3 +24,7 @@ actual fun measureTime(block: () -> Unit): Long {
 actual fun isDebuggingEnabled(default: Boolean): Boolean {
     return default
 }
+
+actual fun getExecutionParallelism(): Int {
+    return 1
+}

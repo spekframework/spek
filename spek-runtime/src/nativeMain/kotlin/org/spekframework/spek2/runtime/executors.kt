@@ -8,3 +8,17 @@ actual fun doRunBlocking(block: suspend CoroutineScope.() -> Unit) {
         block()
     }
 }
+
+actual class TestRunner actual constructor(concurrency: Int) {
+    actual fun runTest(test: suspend () -> Unit): TestHandle {
+        doRunBlocking {
+            test()
+        }
+
+        return object : TestHandle {
+            override fun await() {
+                // do nothing
+            }
+        }
+    }
+}
