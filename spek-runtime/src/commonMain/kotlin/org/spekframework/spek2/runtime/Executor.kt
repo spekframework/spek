@@ -1,6 +1,9 @@
 package org.spekframework.spek2.runtime
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import org.spekframework.spek2.dsl.Skip
 import org.spekframework.spek2.runtime.execution.ExecutionListener
 import org.spekframework.spek2.runtime.execution.ExecutionRequest
@@ -12,18 +15,20 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
 class Executor {
-    suspend fun execute(request: ExecutionRequest) {
+    fun execute(request: ExecutionRequest, concurrency: Int) {
+        val runner = TaskRunner(concurrency)
         request.executionListener.executionStart()
-        // note that this call will be run in parallel depending on the CoroutineDispatcher used
-        supervisorScope {
-            request.roots.map { async { execute(it, request.executionListener) } }
-                .forEach { job ->
-                    try {
-                        job.await()
-                    } catch (e: Throwable) {
-                        e.printStackTrace()
-                    }
-                }
+        val handles = request.roots.map {
+            runner.runTask { execute(it, request.executionListener) }
+        }
+
+        // wait for tasks
+        handles.forEach { handle ->
+            try {
+                handle.await()
+            } catch (e: Throwable) {
+                println("An error has occurred: ${e.message}")
+            }
         }
         request.executionListener.executionFinish()
     }
