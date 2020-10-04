@@ -1,10 +1,10 @@
 package testData.timeoutTest
 
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.delay
 import org.spekframework.spek2.Spek
 
-class GlobalTimeoutTest(latch: ReceiveChannel<Int>): Spek({
-    test("this should run for 10s and pass since global timeout is 15s") {
-        latch.receive()
+object GlobalTimeoutTest: Spek({
+    test("this should run for 300ms and fail since global timeout is 100ms") {
+        delay(300)
     }
 })

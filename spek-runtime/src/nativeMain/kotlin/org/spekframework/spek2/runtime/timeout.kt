@@ -11,3 +11,11 @@ actual fun isParallelDiscoveryEnabled(default: Boolean): Boolean {
 actual fun isParallelExecutionEnabled(default: Boolean): Boolean {
     return default
 }
+
+actual fun getExecutionParallelism(): Int {
+    return 1
+}
+
+actual fun isDebuggingEnabled(default: Boolean): Boolean {
+    return default
+}
