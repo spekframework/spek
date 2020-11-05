@@ -15,7 +15,7 @@ jobs:
   build:
     strategy:
       matrix:
-        as_sdk: [AS35, AS36, AS40]
+        as_sdk: [AS36, AS40, AS41]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
