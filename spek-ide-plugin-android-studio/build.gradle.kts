@@ -22,7 +22,7 @@ val buildMatrix = mapOf(
     ),
     "AS41" to ij.BuildConfig(
         "201.7223.91",
-        "Studio4.0",
+        "Studio4.1",
         "AS34",
         ij.VersionRange("201.8743.12", "201.8743.12.*"),
         arrayOf("android", "java", "org.jetbrains.kotlin:1.3.72-release-Studio4.1-5")
