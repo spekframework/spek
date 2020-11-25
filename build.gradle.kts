@@ -36,7 +36,7 @@ allprojects {
         tasks.withType<KotlinCompile<*>> {
             if (this is KotlinJvmCompile) {
                 kotlinOptions {
-                    apiVersion = "1.3"
+                    apiVersion = "1.4"
                     jvmTarget = "1.8"
                 }
             } else {
