@@ -3,16 +3,16 @@ package org.spekframework.spek2.kotlin
 import org.jetbrains.kotlin.backend.common.descriptors.synthesizedName
 import org.jetbrains.kotlin.backend.common.extensions.IrGenerationExtension
 import org.jetbrains.kotlin.backend.common.extensions.IrPluginContext
+import org.jetbrains.kotlin.backend.common.ir.addChild
 import org.jetbrains.kotlin.backend.common.lower.DeclarationIrBuilder
-import org.jetbrains.kotlin.descriptors.ClassKind
-import org.jetbrains.kotlin.descriptors.Modality
-import org.jetbrains.kotlin.descriptors.Visibilities
-import org.jetbrains.kotlin.descriptors.findClassAcrossModuleDependencies
+import org.jetbrains.kotlin.backend.common.serialization.knownBuiltins
+import org.jetbrains.kotlin.descriptors.*
 import org.jetbrains.kotlin.ir.IrElement
 import org.jetbrains.kotlin.ir.builders.*
 import org.jetbrains.kotlin.ir.builders.declarations.addField
 import org.jetbrains.kotlin.ir.declarations.*
 import org.jetbrains.kotlin.ir.declarations.impl.IrFunctionImpl
+import org.jetbrains.kotlin.ir.descriptors.WrappedFieldDescriptor
 import org.jetbrains.kotlin.ir.descriptors.WrappedSimpleFunctionDescriptor
 import org.jetbrains.kotlin.ir.expressions.IrBlock
 import org.jetbrains.kotlin.ir.expressions.IrExpression
@@ -21,6 +21,8 @@ import org.jetbrains.kotlin.ir.expressions.impl.IrBlockImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrClassReferenceImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrExpressionBodyImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrFunctionReferenceImpl
+import org.jetbrains.kotlin.ir.symbols.IrFieldSymbol
+import org.jetbrains.kotlin.ir.symbols.impl.IrFieldSymbolImpl
 import org.jetbrains.kotlin.ir.symbols.impl.IrSimpleFunctionSymbolImpl
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.types.getClass
@@ -132,7 +134,7 @@ private class SpekCollector(
                 IrDeclarationOrigin.LOCAL_FUNCTION_FOR_LAMBDA,
                 IrSimpleFunctionSymbolImpl(descriptor),
                 Name.special("<anonymous>"),
-                Visibilities.LOCAL,
+                DescriptorVisibilities.LOCAL,
                 Modality.FINAL,
                 declaration.defaultType,
                 isInline = false,
@@ -141,7 +143,8 @@ private class SpekCollector(
                 isSuspend = false,
                 isExpect = false,
                 isOperator = false,
-                isFakeOverride = false
+                isFakeOverride = false,
+                isInfix = false,
         ).apply {
             descriptor.bind(this)
             parent = this@SpekCollector.file
@@ -168,22 +171,29 @@ private var topLevelInitializersCounter = 0
 // 2. creates a property using the previously declared field as its backing field
 // Previously a top level field would cause the object to created but now it requires a property
 private fun IrFile.addTopLevelInitializer(expression: IrExpression, pluginContext: IrPluginContext) {
-    val threadLocalAnnotation = pluginContext.builtIns.builtInsModule.findClassAcrossModuleDependencies(
+    val threadLocalAnnotation = pluginContext.irBuiltIns.builtIns.builtInsModule.findClassAcrossModuleDependencies(
             ClassId.topLevel(FqName("kotlin.native.concurrent.ThreadLocal")))!!
     val t = pluginContext.symbols.externalSymbolTable.referenceClass(threadLocalAnnotation)
     val fieldName = "topLevelInitializer${topLevelInitializersCounter++}".synthesizedName
 
-    addField {
-        name = fieldName
-        isFinal = true
-        isStatic = true
-        visibility = Visibilities.PRIVATE
-        type = expression.type
-        origin = IrDeclarationOrigin.PROPERTY_BACKING_FIELD
-    }.also { field ->
-        field.parent = this@addTopLevelInitializer
-        field.initializer = IrExpressionBodyImpl(startOffset, endOffset, expression)
-        field.annotations += DeclarationIrBuilder(pluginContext, field.symbol, startOffset, endOffset).irCallConstructor(t.constructors.first(), emptyList())
+    val descriptor = WrappedFieldDescriptor()
+    pluginContext.irFactory.createField(
+        startOffset,
+        endOffset,
+        IrDeclarationOrigin.PROPERTY_BACKING_FIELD,
+        IrFieldSymbolImpl(descriptor),
+        fieldName,
+        expression.type,
+        DescriptorVisibilities.PRIVATE,
+        true,
+        false,
+        true
+    ).apply {
+        addChild(this)
+        descriptor.bind(this)
+        parent = this@addTopLevelInitializer
+        initializer = IrExpressionBodyImpl(startOffset, endOffset, expression)
+        annotations += DeclarationIrBuilder(pluginContext, this.symbol, startOffset, endOffset).irCallConstructor(t.constructors.first(), emptyList())
     }
 
 // Don't need a property anymore for a field to be initialized (in 1.4), previously this was needed.
