@@ -19,7 +19,6 @@ gradlePlugin {
 val autoService = "com.google.auto.service:auto-service:1.0-rc4"
 
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation(kotlin("gradle-plugin"))
     implementation(kotlin("gradle-plugin-api"))
 
