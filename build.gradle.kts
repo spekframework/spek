@@ -9,7 +9,7 @@ plugins {
 
 reckon {
     scopeFromProp()
-    stageFromProp("snapshot", "final")
+    stageFromProp("alpha", "rc", "final")
 }
 
 
