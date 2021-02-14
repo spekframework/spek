@@ -1,6 +1,0 @@
-apply plugin: "org.ajoberstar.reckon"
-
-reckon {
-    scopeFromProp()
-    stageFromProp('alpha', 'rc', 'final')
-}
