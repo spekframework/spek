@@ -14,11 +14,11 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
         include:
           - os: ubuntu-latest
-            arguments: spek-dsl:bintrayUpload spek-runtime:bintrayUpload spek-runner-junit5:bintrayUpload --stacktrace -PexcludeIdePlugins
+            arguments: spek-dsl:publish spek-runtime:publish spek-runner-junit5:publish --stacktrace -PexcludeIdePlugins
           - os: windows-latest
-            arguments: spek-dsl:bintrayUpload spek-runtime:bintrayUpload --stacktrace -PexcludeIdePlugins
+            arguments: spek-dsl:publish spek-runtime:publish --stacktrace -PexcludeIdePlugins
           - os: macos-latest
-            arguments: spek-dsl:bintrayUpload spek-runtime:bintrayUpload --stacktrace -PexcludeIdePlugins
+            arguments: spek-dsl:publish spek-runtime:publish --stacktrace -PexcludeIdePlugins
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -35,8 +35,10 @@ jobs:
         with:
           arguments: ${{ matrix.arguments }}
         env:
-          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
-          BINTRAY_API_KEY: ${{ secrets.BINTRAY_API_KEY }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          OSSRH_SIGNING_KEY: ${{ secrets.OSSRH_SIGNING_KEY }}
+          OSSRH_SIGNING_PASSWORD: ${{ secrets.OSSRH_SIGNING_PASSWORD }}
 
   deploy_ij_plugin:
     strategy:

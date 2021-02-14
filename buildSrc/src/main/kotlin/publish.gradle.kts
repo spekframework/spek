@@ -1,42 +1,55 @@
 plugins {
-    id("com.jfrog.bintray")
-    `maven-publish` apply false
+    `maven-publish`
+    signing
 }
-
-val bintrayUser = propOrEnv("BINTRAY_USER")
-val bintrayApiKey = propOrEnv("BINTRAY_API_KEY")
 
 var bintrayRepo = "spek-dev"
 var doPublish = true
+
+var releaseMode = project.extra["releaseMode"] == true
 
 if (project.extra["releaseMode"] == true) {
     bintrayRepo = "spek"
     doPublish = false
 }
 
-val artifacts = project.extra["artifacts"] as Array<String>
-bintray {
-    user = bintrayUser
-    key = bintrayApiKey
-    publish = doPublish
-    with(pkg) {
-        repo = bintrayRepo
-        desc = "Test framework for Kotlin"
-        name = "spek2"
-        userOrg = "spekframework"
-        setLicenses("BSD New")
-        setLabels("kotlin", "testing")
-        vcsUrl = "https://github.com/spekframework/spek.git"
-        githubRepo = "spekframework/spek"
-        with(version) {
-            name = rootProject.version.toString()
+val artifacts = (project.extra["artifacts"] as Array<String>).toHashSet()
+
+tasks.withType<AbstractPublishToMaven>()
+    .configureEach {
+        onlyIf {
+            artifacts.contains(publication.name)
         }
     }
 
-    setPublications(*artifacts)
+signing {
+    val signingKey = propOrEnv("OSSRH_SIGNING_KEY")
+    val signingPassword = propOrEnv("OSSRH_SIGNING_PASSWORD")
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    publishing.publications.all {
+        if (artifacts.contains(name)) {
+            sign(this)
+        }
+    }
 }
 
 publishing {
+    repositories {
+        maven {
+            val targetRepo = if (releaseMode) {
+                "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            } else {
+                "https://oss.sonatype.org/content/repositories/snapshots/"
+            }
+            setUrl(targetRepo)
+
+            credentials {
+                username = propOrEnv("OSSRH_USERNAME")
+                password = propOrEnv("OSSRH_PASSWORD")
+            }
+        }
+    }
+
     publications {
         withType<MavenPublication> {
             pom {
