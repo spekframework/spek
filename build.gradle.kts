@@ -9,7 +9,7 @@ plugins {
 
 reckon {
     scopeFromProp()
-    stageFromProp("alpha", "rc", "final")
+    stageFromProp("snapshot", "final")
 }
 
 
@@ -27,6 +27,8 @@ allprojects {
     var releaseMode = false
     if ("$version".matches(Regex("^\\d+\\.\\d+\\.\\d+(-rc\\.\\d+)?"))) {
         releaseMode = true
+    } else {
+        version = "$version-SNAPSHOT"
     }
     project.extra["releaseMode"] = releaseMode
 
