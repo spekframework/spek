@@ -1,6 +1,6 @@
-[ ![CI](https://travis-ci.com/spekframework/spek.svg?branch=2.x) ](https://travis-ci.com/spekframework/spek)
-[ ![Download](https://img.shields.io/badge/dynamic/json.svg?label=stable&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fspekframework%2Fspek%2Fspek2%2Fversions%2F_latest&query=name&colorB=blue) ](https://bintray.com/spekframework/spek/spek2/_latestVersion)
-[ ![Download](https://img.shields.io/badge/dynamic/json.svg?label=dev&url=https%3A%2F%2Fapi.bintray.com%2Fpackages%2Fspekframework%2Fspek-dev%2Fspek2%2Fversions%2F_latest&query=name&colorB=blue) ](https://bintray.com/spekframework/spek-dev/spek2/_latestVersion)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/spekframework/spek/CI?style=flat-square)](https://github.com/spekframework/spek/actions?query=workflow%3ACI)
+![Maven Central](https://img.shields.io/maven-central/v/org.spekframework.spek2/spek-dsl-jvm?style=flat-square)
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/org.spekframework.spek2/spek-dsl-jvm?server=https%3A%2F%2Foss.sonatype.org&style=flat-square)
 
 Spek `2.x` is a complete rewrite of Spek with Kotlin multiplatform support in mind. The DSL is also reworked into
 two distinct styles: [specification](specification.md) and [gherkin](gherkin.md).
