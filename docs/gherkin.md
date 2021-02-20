@@ -63,7 +63,7 @@ Describes a business rule, it consists of a list of steps.
 - `And`: Can be used as an alternative to additional `Given`, `When`, or `Then` steps.
 
 ## Scope values
-The default caching mode for `memoized` is `CachingMode.GROUP`, which means that every scenario will have a unique instance.
+The default caching mode for `memoized` is `CachingMode.EACH_GROUP`, which means that every scenario will have a unique instance.
 
 ## Best practices
 ### Validating a side-effect

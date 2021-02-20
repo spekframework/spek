@@ -148,11 +148,11 @@ beforeEachTest {
 You can pass in an optional parameter to `memoized` which controls how the values are cached.
 
 - `CachingMode.TEST`: each test scope will receive a unique instance, this is the default.
-- `CachingMode.GROUP`: each group scope will receive a unique instance.
+- `CachingMode.EACH_GROUP`: each group scope will receive a unique instance.
 - `CachingMode.SCOPE`: effectively a singleton.
 - `CachingMode.INHERIT`: internal use only.
 
-If you are using the [gherkin](gherkin.md) style note that the default caching mode is `CachingMode.GROUP`.
+If you are using the [gherkin](gherkin.md) style note that the default caching mode is `CachingMode.EACH_GROUP`.
 
 ### Share common logic between tests
 Often there is some code, which needs to be called repeatedly before and after tests.
