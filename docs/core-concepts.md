@@ -138,7 +138,7 @@ val added by memoized { list.add(item) }
 // GOOD
 val item by memoized { 1 }
 
-lateinit var added: Boolean
+var added = false
 beforeEachTest {
     added = list.add(item)
 }
