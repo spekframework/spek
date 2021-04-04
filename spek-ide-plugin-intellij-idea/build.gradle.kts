@@ -33,10 +33,17 @@ val buildMatrix = mapOf(
         "IJ183",
         ij.VersionRange("203.1", "203.*"),
         arrayOf("java", "org.jetbrains.kotlin:1.4.0-release-IJ2020.2-1")
+    ),
+    "IJ211" to ij.BuildConfig(
+        "211-EAP-SNAPSHOT",
+        "IJ2021.1",
+        "IJ183",
+        ij.VersionRange("211.1", "211.*"),
+        arrayOf("java", "org.jetbrains.kotlin:211-1.4.21-release-IJ6556.4")
     )
 )
 
-val sdkVersion = project.properties["ij.version"] ?: "IJ203"
+val sdkVersion = project.properties["ij.version"] ?: "IJ211"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {
