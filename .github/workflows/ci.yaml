@@ -45,7 +45,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ij_sdk: [IJ193, IJ201, IJ202, IJ203]
+        ij_sdk: [IJ193, IJ201, IJ202, IJ203, IJ211]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
