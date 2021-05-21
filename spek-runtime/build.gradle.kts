@@ -112,7 +112,7 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
 }
 
 project.extra["artifacts"] = when (currentOS) {
-    OS.LINUX -> arrayOf("metadata", "jvm", "js", "linux")
+    OS.LINUX -> arrayOf("kotlinMultiplatform", "jvm", "js", "linux")
     OS.WINDOWS -> arrayOf("windows")
     OS.MACOS -> arrayOf("macos")
 }
@@ -126,6 +126,17 @@ publishing {
         val targetPublication: Publication? = publications.findByName(target.name)
         if (targetPublication is MavenPublication) {
             targetPublication.artifact(stubJavaDocJar.get())
+        }
+    }
+
+    publications.findByName("kotlinMultiplatform")?.apply {
+        if (this is MavenPublication) {
+            groupId = "org.spekframework.spek2"
+            artifactId = "spek-runtime"
+            pom {
+                name.set("Spek Runtime")
+                description.set("Kotlin metadata module for spek-runtime")
+            }
         }
     }
 }
