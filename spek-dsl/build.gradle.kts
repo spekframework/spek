@@ -97,6 +97,10 @@ publishing {
     getByName("kotlinMultiplatform", MavenPublication::class) {
       groupId = "org.spekframework.spek2"
       artifactId = "spek-dsl"
+      pom {
+        name.set("Spek DSL")
+        description.set("Kotlin metadata module for spek-dsl")
+      }
     }
   }
 }
