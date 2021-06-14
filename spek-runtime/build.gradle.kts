@@ -78,7 +78,7 @@ kotlin {
                 implementation(Dependencies.kotlinCoroutinesCore)
             }
         }
-        
+
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
@@ -132,6 +132,10 @@ publishing {
         getByName("kotlinMultiplatform", MavenPublication::class) {
             groupId = "org.spekframework.spek2"
             artifactId = "spek-runtime"
+            pom {
+                name.set("Spek Runtime")
+                description.set("Kotlin metadata module for spek-runtime")
+            }
         }
     }
 }
