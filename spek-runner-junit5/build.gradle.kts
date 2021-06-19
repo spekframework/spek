@@ -31,6 +31,14 @@ tasks {
     }
 }
 
+configurations["apiElements"].attributes {
+    attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 8)
+}
+
+configurations["runtimeElements"].attributes {
+    attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 8)
+}
+
 val sourceJar by tasks.registering(Jar::class) {
     archiveBaseName.value(archive)
     archiveClassifier.value("sources")
