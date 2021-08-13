@@ -91,7 +91,7 @@ class MultiplatformPlugin : Plugin<Project> {
 
         kotlinMppExtension.targets.all {
             when (this) {
-                is KotlinNativeTargetWithTests, is KotlinJvmTarget -> {
+                is KotlinNativeTargetWithTests<*>, is KotlinJvmTarget -> {
                     project.tasks.create("${this.name}SpekTests") {
                         group = VERIFICATION_GROUP
                         description = "Run Spek tests for target ${this@all.name}."

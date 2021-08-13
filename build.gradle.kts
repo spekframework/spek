@@ -15,6 +15,7 @@ reckon {
 
 allprojects {
     repositories {
+        mavenCentral()
         jcenter()
     }
 

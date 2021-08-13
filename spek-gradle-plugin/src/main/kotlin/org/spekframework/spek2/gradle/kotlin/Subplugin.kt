@@ -13,7 +13,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 import org.spekframework.spek2.gradle.entry.MultiplatformPlugin
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
 
-@AutoService(KotlinGradleSubplugin::class)
 class Subplugin : KotlinGradleSubplugin<AbstractCompile> {
     override fun apply(project: Project, kotlinCompile: AbstractCompile, javaCompile: AbstractCompile?, variantData: Any?, androidProjectHandler: Any?, kotlinCompilation: KotlinCompilation<KotlinCommonOptions>?): List<SubpluginOption> {
         val extension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))

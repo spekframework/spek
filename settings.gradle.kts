@@ -19,8 +19,8 @@ pluginManagement {
 include("spek-dsl")
 include("spek-runtime")
 include("spek-runner-junit5")
-include("spek-kotlin-compiler-plugin-jvm")
-include("spek-kotlin-compiler-plugin-native")
+//include("spek-kotlin-compiler-plugin-jvm")
+//include("spek-kotlin-compiler-plugin-native")
 include("integration-test")
 
 val excludeIdePlugins: String? by settings

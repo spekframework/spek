@@ -139,7 +139,5 @@ tasks {
 configurations.forEach {
     it.resolutionStrategy.dependencySubstitution {
         substitute(module("org.spekframework.spek2:spek-runtime")).with(project(":spek-runtime"))
-        substitute(module("org.spekframework.spek2:spek-kotlin-compiler-plugin-jvm")).with(project(":spek-kotlin-compiler-plugin-jvm"))
-        substitute(module("org.spekframework.spek2:spek-kotlin-compiler-plugin-native")).with(project(":spek-kotlin-compiler-plugin-native"))
     }
 }
