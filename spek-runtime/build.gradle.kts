@@ -65,7 +65,7 @@ kotlin {
             dependencies {
                 api(project(":spek-dsl"))
                 implementation(kotlin("stdlib-common"))
-                implementation(Dependencies.kotlinCoroutinesCoreCommon)
+                implementation(Dependencies.kotlinCoroutinesCore)
             }
         }
         
