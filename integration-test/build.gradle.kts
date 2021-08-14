@@ -3,12 +3,16 @@ plugins {
     id("org.spekframework.spek2.multiplatform")
 }
 
+repositories {
+    mavenCentral()
+}
+
 kotlin {
     metadata {}
     jvm {}
-    linuxX64("linux") {}
-    macosX64("macos") {}
-    mingwX64("windows") {}
+//    linuxX64("linux") {}
+//    macosX64("macos") {}
+//    mingwX64("windows") {}
 
     sourceSets {
         val commonMain by getting {
@@ -42,69 +46,69 @@ kotlin {
             }
         }
 
-        val nativeMain by creating {
-            dependsOn(commonMain)
-        }
-
-        val nativeTest by creating {
-            dependsOn(commonTest)
-        }
-
-        linuxX64("linux") {
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeMain)
-                }
-            }
-
-            compilations["test"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeTest)
-                }
-            }
-        }
-
-        linuxX64("linux") {
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeMain)
-                }
-            }
-
-            compilations["test"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeTest)
-                }
-            }
-        }
-
-        macosX64("macos") {
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeMain)
-                }
-            }
-
-            compilations["test"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeTest)
-                }
-            }
-        }
-
-        mingwX64("windows") {
-            compilations["main"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeMain)
-                }
-            }
-
-            compilations["test"].defaultSourceSet {
-                dependencies {
-                    dependsOn(nativeTest)
-                }
-            }
-        }
+//        val nativeMain by creating {
+//            dependsOn(commonMain)
+//        }
+//
+//        val nativeTest by creating {
+//            dependsOn(commonTest)
+//        }
+//
+//        linuxX64("linux") {
+//            compilations["main"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeMain)
+//                }
+//            }
+//
+//            compilations["test"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeTest)
+//                }
+//            }
+//        }
+//
+//        linuxX64("linux") {
+//            compilations["main"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeMain)
+//                }
+//            }
+//
+//            compilations["test"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeTest)
+//                }
+//            }
+//        }
+//
+//        macosX64("macos") {
+//            compilations["main"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeMain)
+//                }
+//            }
+//
+//            compilations["test"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeTest)
+//                }
+//            }
+//        }
+//
+//        mingwX64("windows") {
+//            compilations["main"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeMain)
+//                }
+//            }
+//
+//            compilations["test"].defaultSourceSet {
+//                dependencies {
+//                    dependsOn(nativeTest)
+//                }
+//            }
+//        }
     }
 }
 
