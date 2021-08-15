@@ -82,9 +82,6 @@ kotlin {
 
         val nativeMain by creating {
             dependsOn(commonMain)
-            dependencies {
-                implementation(Dependencies.kotlinCoroutinesNative)
-            }
         }
 
         linuxX64("linux") {

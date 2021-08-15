@@ -44,7 +44,7 @@ allprojects {
                 kotlinOptions {
                     // note: change this to 1.4 when upgrading to Kotlin 1.4
                     // KN can only be built using the current kotlin version.
-                    apiVersion = "1.3"
+                    apiVersion = "1.4"
                 }
             }
         }
