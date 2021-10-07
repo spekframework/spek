@@ -6,6 +6,10 @@ Gradle `4.7` or higher is recommended as it added a built-in support for JUnit P
 Groovy config:
 
 ```groovy
+
+def kotlin_version = '1.4.20'
+def spek_version = '2.0.17'
+
 // setup dependencies
 dependencies {
     // some version of Kotlin
