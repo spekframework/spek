@@ -49,11 +49,11 @@ val buildMatrix = mapOf(
         arrayOf("java", "org.jetbrains.kotlin:211-1.4.21-release-IJ6693.43")
     ),
     "IJ213" to ij.BuildConfig(
-        "213.5744.223",
+        "213.6461.79",
         "IJ2021.3",
         "IJ183",
         ij.VersionRange("213.1", "213.*"),
-        arrayOf("java", "org.jetbrains.kotlin:211-1.4.32-release-IJ6693.72")
+        arrayOf("java", "org.jetbrains.kotlin:213-1.6.10-release-944-IJ6461.79")
     )
 )
 
