@@ -12,8 +12,6 @@ includeBuild("../") {
 pluginManagement {
   repositories {
     jcenter()
-    maven ("https://dl.bintray.com/kotlin/kotlin-eap")
-    maven ("https://kotlin.bintray.com/kotlinx")
   }
   resolutionStrategy.eachPlugin {
     if (requested.id.id == "org.spekframework.spek2.multiplatform") {
