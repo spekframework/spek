@@ -3,7 +3,7 @@ buildscript {
     ext.spek_version = '2.1.0-alpha.0.14+a763c30'
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -15,7 +15,7 @@ apply plugin: 'kotlin'
 
 repositories {
     mavenLocal()
-    jcenter()
+    mavenCentral()
     // uncomment to use development build
      maven { url "https://dl.bintray.com/spekframework/spek-dev" }
 }
