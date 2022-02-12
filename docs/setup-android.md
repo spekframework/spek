@@ -56,7 +56,7 @@ The setup assumes you are using Gradle `4.7` or above as it has a built-in suppo
 
 ```groovy
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 // setup dependencies

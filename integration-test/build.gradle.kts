@@ -4,9 +4,9 @@ plugins {
 }
 
 repositories {
-  jcenter()
-  maven ("https://dl.bintray.com/kotlin/kotlin-eap")
-  maven ("https://kotlin.bintray.com/kotlinx")
+  mavenCentral()
+  maven ("https://www.jetbrains.com/intellij-repository/releases")  
+  maven ("https://www.jetbrains.com/intellij-repository/snapshots")
 }
 
 kotlin {

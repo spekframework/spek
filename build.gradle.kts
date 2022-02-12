@@ -15,9 +15,9 @@ reckon {
 
 allprojects {
     repositories {
-        jcenter()
-        maven ("https://dl.bintray.com/kotlin/kotlin-eap")
-        maven ("https://kotlin.bintray.com/kotlinx")
+        mavenCentral()
+        maven ("https://www.jetbrains.com/intellij-repository/releases")
+        maven ("https://www.jetbrains.com/intellij-repository/snapshots")
     }
 
     if (Files.exists(Paths.get("$rootDir/local.properties"))) {
@@ -39,7 +39,7 @@ allprojects {
             if (this is KotlinJvmCompile) {
                 kotlinOptions {
                     apiVersion = "1.4"
-                    jvmTarget = "1.8"
+                    jvmTarget = "11"
                 }
             } else {
                 kotlinOptions {
