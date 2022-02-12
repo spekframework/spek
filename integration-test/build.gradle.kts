@@ -5,7 +5,8 @@ plugins {
 
 repositories {
   mavenCentral()
-  maven ("https://www.jetbrains.com/intellij-repository/releases")
+  maven ("https://www.jetbrains.com/intellij-repository/releases")  
+  maven ("https://www.jetbrains.com/intellij-repository/snapshots")
 }
 
 kotlin {
