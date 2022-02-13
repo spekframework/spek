@@ -1,3 +1,5 @@
+import org.jetbrains.intellij.tasks.PublishPluginTask
+
 val channel = if (project.extra["releaseMode"] == true) {
     "default"
 } else {
@@ -6,7 +8,9 @@ val channel = if (project.extra["releaseMode"] == true) {
 
 val publishToken = propOrEnv("HUB_API_TOKEN")
 
-//publishPlugin {
-//    token = publishToken
-//    channels = [channel]
-//}
+tasks {
+    withType(PublishPluginTask::class) {
+        token.set(publishToken)
+        channels.set(listOf(channel))
+    }
+}
