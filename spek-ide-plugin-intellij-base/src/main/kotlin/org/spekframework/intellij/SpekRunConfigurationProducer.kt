@@ -15,6 +15,7 @@ import org.jetbrains.kotlin.idea.caches.project.implementingModules
 import org.jetbrains.kotlin.idea.core.getPackage
 import org.jetbrains.kotlin.idea.util.module
 import org.jetbrains.kotlin.platform.IdePlatformKind
+import org.jetbrains.kotlin.platform.idePlatformKind
 import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
 import org.jetbrains.kotlin.psi.KtCallExpression
 import org.jetbrains.kotlin.psi.KtClassOrObject
@@ -103,22 +104,22 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
             if (path != null) {
                 configuration.data.path = path
                 configuration.data.generatedNameHint = nameHint
-                val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)
+                val kotlinFacetSettings = KotlinFacetSettingsProvider.getInstance(context.project)!!
                         .getInitializedSettings(context.module)
 
 
                 var canRun = false
-                if (isPlatformSupported(kotlinFacetSettings.platform!!.kind)) {
+                if (isPlatformSupported(kotlinFacetSettings.targetPlatform!!.idePlatformKind)) {
                     configuration.configureForModule(context.module)
                     configuration.data.producerType = producerType
                     canRun = true
                     configuration.data.producerType = producerType
-                } else if (kotlinFacetSettings.platform!!.kind == CommonIdePlatformKind) {
+                } else if (kotlinFacetSettings.targetPlatform!!.idePlatformKind == CommonIdePlatformKind) {
                     val result = findSupportedModule(context.project, context.module)
                     if (result != null) {
                         val (module, moduleKotlinFacetSettings) = result
                         configuration.configureForModule(module)
-                        configuration.data.producerType = moduleKotlinFacetSettings.platform!!.kind.toProducerType()
+                        configuration.data.producerType = moduleKotlinFacetSettings.targetPlatform!!.idePlatformKind.toProducerType()
                         canRun = true
                     }
                 }
@@ -153,11 +154,11 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
     }
 
     private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, KotlinFacetSettings>? {
-        val kotlinFacetSettingsProvider = KotlinFacetSettingsProvider.getInstance(project)
+        val kotlinFacetSettingsProvider = KotlinFacetSettingsProvider.getInstance(project)!!
         return commonModule.implementingModules
             .map { it to kotlinFacetSettingsProvider.getInitializedSettings(it) }
             .firstOrNull {
-                isPlatformSupported(it.second.platform!!.kind)
+                isPlatformSupported(it.second.targetPlatform!!.idePlatformKind)
             }
     }
 

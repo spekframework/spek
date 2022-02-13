@@ -11,28 +11,28 @@ val buildMatrix = mapOf(
         "Studio3.6",
         "AS34",
         ij.VersionRange("192.7142.36", "192.7142.36.*"),
-        arrayOf("android", "java", "org.jetbrains.kotlin:1.3.61-release-Studio3.6-1")
+        listOf("android", "java", "org.jetbrains.kotlin:1.3.61-release-Studio3.6-1")
     ),
     "AS40" to ij.BuildConfig(
         "193.6911.18",
         "Studio4.0",
         "AS34",
         ij.VersionRange("193.6911.18", "193.6911.18.*"),
-        arrayOf("android", "java", "org.jetbrains.kotlin:1.3.70-release-Studio4.0-1")
+        listOf("android", "java", "org.jetbrains.kotlin:1.3.70-release-Studio4.0-1")
     ),
     "AS41" to ij.BuildConfig(
         "201.7223.91",
         "Studio4.1",
         "AS34",
         ij.VersionRange("201.8743.12", "201.8743.12.*"),
-        arrayOf("android", "java", "org.jetbrains.kotlin:1.3.72-release-Studio4.1-5")
+        listOf("android", "java", "org.jetbrains.kotlin:1.3.72-release-Studio4.1-5")
     ),
     "AS42" to ij.BuildConfig(
         "202.7660.26",
         "Studio4.2",
         "AS34",
         ij.VersionRange("202.7660.26", "202.7660.26.*"),
-        arrayOf("android", "java", "org.jetbrains.kotlin:1.4.10-release-Studio4.2-1")
+        listOf("android", "java", "org.jetbrains.kotlin:1.4.10-release-Studio4.2-1")
     )
 )
 
@@ -40,10 +40,9 @@ val sdkVersion = project.properties["as.version"] ?: "AS42"
 val settings = checkNotNull(buildMatrix[sdkVersion])
 
 intellij {
-    pluginName = "Spek Framework"
-    val plugins = arrayOf("gradle", "android") + settings.deps
-    setPlugins(*plugins)
-    version = settings.sdk
+    pluginName.set("Spek Framework")
+    plugins.set(listOf("gradle", "android") + settings.deps)
+    version.set(settings.sdk)
 }
 
 sourceSets {
@@ -73,8 +72,12 @@ tasks {
 
     patchPluginXml {
         setVersion("${project.version}-${settings.prefix}")
-        setSinceBuild(settings.version.since)
-        setUntilBuild(settings.version.until)
+        sinceBuild.set(settings.version.since)
+        untilBuild.set(settings.version.until)
+    }
+
+    buildSearchableOptions {
+        enabled = false
     }
 }
 

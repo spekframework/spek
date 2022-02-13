@@ -7,5 +7,5 @@ data class BuildConfig(
     val prefix: String,
     val extraSource: String,
     val version: VersionRange,
-    val deps: Array<String> = emptyArray()
+    val deps: List<String> = emptyList()
 )

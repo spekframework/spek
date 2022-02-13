@@ -1,12 +1,13 @@
 plugins {
-    id("org.ajoberstar.reckon") version "0.8.0"
     `kotlin-dsl`
-    kotlin("kapt") version "1.3.61"
+    kotlin("kapt") version "1.5.31"
+    id("org.ajoberstar.reckon") version "0.8.0"
+
 }
 
 buildscript {
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.61"))
+        classpath(kotlin("gradle-plugin", version = "1.5.31"))
     }
 }
 
