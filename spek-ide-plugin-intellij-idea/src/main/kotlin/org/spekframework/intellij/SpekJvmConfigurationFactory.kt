@@ -9,4 +9,9 @@ import com.intellij.openapi.project.Project
 class SpekJvmConfigurationFactory(type: ConfigurationType): ConfigurationFactory(type) {
     override fun createTemplateConfiguration(project: Project): RunConfiguration =
         SpekJvmRunConfiguration("Un-named", JavaRunConfigurationModule(project, true), this)
+
+    override fun getId(): String {
+        // name is not localized
+        return name
+    }
 }

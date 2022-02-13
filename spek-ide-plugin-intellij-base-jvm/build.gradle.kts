@@ -4,9 +4,9 @@ plugins {
 }
 
 intellij {
-    pluginName = "spek-base-jvm"
-    setPlugins("org.jetbrains.kotlin:1.3.30-release-IJ2018.1-1")
-    version = "2018.1"
+    pluginName.set("spek-base-jvm")
+    plugins.set(listOf("org.jetbrains.kotlin:1.3.61-release-IJ2018.3-1"))
+    version.set("2018.3")
 }
 
 dependencies {
