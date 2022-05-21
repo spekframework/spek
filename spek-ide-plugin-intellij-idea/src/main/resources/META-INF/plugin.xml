@@ -9,6 +9,8 @@
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.modules.java</depends>
 
+    <incompatible-with>com.intellij.modules.androidstudio</incompatible-with>
+
     <extensions defaultExtensionNs="com.intellij">
         <configurationType implementation="org.spekframework.intellij.SpekJvmConfigurationType"/>
         <runConfigurationProducer implementation="org.spekframework.intellij.SpekJvmRunConfigurationProducer"/>
