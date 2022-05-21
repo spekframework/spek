@@ -47,7 +47,7 @@ val buildMatrix = mapOf(
         "213.6461.79",
         "IJ2021.3",
         "IJ183",
-        ij.VersionRange("213.1", "213.*"),
+        ij.VersionRange("213.1", "223.*"),
         listOf("java", "org.jetbrains.kotlin:213-1.6.10-release-944-IJ6461.79")
     )
 )
@@ -59,6 +59,8 @@ intellij {
     pluginName.set("Spek Framework")
     plugins.set(settings.deps)
     version.set(settings.sdk)
+    updateSinceUntilBuild.set(true)
+    sameSinceUntilBuild.set(false)
 }
 
 sourceSets {
