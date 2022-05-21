@@ -109,7 +109,7 @@ val stubJavaDocJar by tasks.registering(Jar::class) {
 }
 
 project.extra["artifacts"] = when (currentOS) {
-    OS.LINUX -> arrayOf("kotlinMultiplatform", "jvm", "js", "linux")
+    OS.LINUX -> arrayOf("kotlinMultiplatform", "jvm", "js", "linux", "metadata")
     OS.WINDOWS -> arrayOf("windows")
     OS.MACOS -> arrayOf("macos")
 }
