@@ -1,6 +1,6 @@
 package ij
 
-data class VersionRange(val since: String, val until: String)
+data class VersionRange(val since: String, val until: String?)
 
 data class BuildConfig(
     val sdk: String,

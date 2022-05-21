@@ -47,7 +47,7 @@ val buildMatrix = mapOf(
         "213.6461.79",
         "IJ2021.3",
         "IJ183",
-        ij.VersionRange("213.1", "213.*"),
+        ij.VersionRange("213.1", null),
         listOf("java", "org.jetbrains.kotlin:213-1.6.10-release-944-IJ6461.79")
     )
 )
