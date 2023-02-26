@@ -1,8 +1,8 @@
-Spek provides two built-in testing styles, but before proceeding to that - it is important to have a good
+Spek provides two built-in testing styles, but before proceeding to that — it is important to have a good
 grasp on some core concepts.
 
 ## Structure
-Tests are written using nested lambdas, each scope (level) can either be a `group` or a `test`.
+Tests are written using nested lambdas. Each scope (level) can either be a `group` or a `test`.
 
 ```kotlin
 object MyTest: Spek({
@@ -22,7 +22,7 @@ object MyTest: Spek({
 
 Understanding the difference between each scope is crucial in writing correct tests.
 
-- **Test** scope is where you place your assertions/checks (in JUnit dialect - this is your test method).
+- **Test** scope is where you place your assertions/checks (in JUnit dialect — this is your test method).
 - **Group** scope is used to organize your tests. It can contain test scopes and other group scopes as well.
   A very important thing to note is that group scopes will be **eagerly** executed during the *discovery phase*.
   (more about this on the next section).
@@ -111,7 +111,7 @@ after root
 ```
 
 ## Scope values
-As a best practice you typically want test values to be unique for each test this can be done by using a `lateinit` variable
+As a best practice, you typically want test values to be unique for each test; this can be done by using a `lateinit` variable
 and assigning it within a `beforeEachTest`.
 
 ```kotlin
@@ -128,7 +128,7 @@ To make it more concise, Spek provides `memoized` to do the same thing:
 val calculator by memoized { Calculator() }
 ```
 
-`memoized` should not be used to hold the result of an action, use a fixture instead.
+`memoized` should not be used to hold the result of an action; use a fixture instead.
 
 ```kotlin
 // BAD
@@ -147,15 +147,15 @@ beforeEachTest {
 ### Caching modes
 You can pass in an optional parameter to `memoized` which controls how the values are cached.
 
-- `CachingMode.TEST`: each test scope will receive a unique instance, this is the default.
+- `CachingMode.TEST`: each test scope will receive a unique instance; this is the default.
 - `CachingMode.EACH_GROUP`: each group scope will receive a unique instance.
 - `CachingMode.SCOPE`: effectively a singleton.
 - `CachingMode.INHERIT`: internal use only.
 
-If you are using the [gherkin](gherkin.md) style note that the default caching mode is `CachingMode.EACH_GROUP`.
+If you are using the [gherkin style](gherkin.md), note that the default caching mode is `CachingMode.EACH_GROUP`.
 
 ### Share common logic between tests
-Often there is some code, which needs to be called repeatedly before and after tests.
+Often there is some code which needs to be called repeatedly before and after tests.
 To have code not duplicated through the code base, Spek allows sharing common logic through the use of Kotlin's extension functions. 
 Shared setup code can be implemented by declaring an extension function on the `Root` interface.
 This function is accessible in every test class or object, which derives from `Spek`.
