@@ -2,7 +2,7 @@
 ![Maven Central](https://img.shields.io/maven-central/v/org.spekframework.spek2/spek-dsl-jvm?style=flat-square)
 ![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/org.spekframework.spek2/spek-dsl-jvm?server=https%3A%2F%2Foss.sonatype.org&style=flat-square)
 
-![Spek Logo](spek-logo.png)
+![Spek Logo](spek-logo-bw.svg)
 
 ## A Test Framework for Kotlin
 
