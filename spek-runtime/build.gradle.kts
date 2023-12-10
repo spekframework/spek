@@ -64,15 +64,15 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 api(project(":spek-dsl"))
-                implementation(kotlin("stdlib-common"))
+//                implementation(kotlin("stdlib-common"))
                 implementation(Dependencies.kotlinCoroutinesCore)
             }
         }
-        
+
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
-                    implementation(kotlin("stdlib-jdk8"))
+//                    implementation(kotlin("stdlib-jdk8"))
                     implementation(kotlin("reflect"))
                     implementation(Dependencies.classgraph)
                     implementation(Dependencies.kotlinCoroutinesCore)

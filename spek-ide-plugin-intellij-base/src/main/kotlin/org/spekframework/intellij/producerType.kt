@@ -13,7 +13,7 @@ enum class ProducerType {
     JS
 }
 
-fun IdePlatformKind<*>.toProducerType(): ProducerType {
+fun IdePlatformKind.toProducerType(): ProducerType {
     return when (this) {
         CommonIdePlatformKind -> ProducerType.COMMON
         JvmIdePlatformKind -> ProducerType.JVM

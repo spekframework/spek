@@ -1,10 +1,8 @@
-enableFeaturePreview("GRADLE_METADATA")
-
 rootProject.name = "spek"
 
 includeBuild("./spek-gradle-plugin") {
     dependencySubstitution {
-        substitute(module("org.spekframework.spek2:spek-gradle-plugin:0.1.0")).with(project(":"))
+        substitute(module("org.spekframework.spek2:spek-gradle-plugin:0.1.0")).using(project(":"))
     }
 }
 
@@ -30,5 +28,7 @@ if (excludeIdePlugins == null) {
     include("spek-ide-plugin-intellij-base")
     include("spek-ide-plugin-intellij-base-jvm")
     include("spek-ide-plugin-intellij-idea")
-    include("spek-ide-plugin-android-studio")
+//    include("spek-ide-plugin-android-studio")
 }
+
+

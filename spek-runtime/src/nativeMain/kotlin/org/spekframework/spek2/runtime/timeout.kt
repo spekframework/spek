@@ -16,7 +16,7 @@ actual fun isConcurrentExecutionEnabled(default: Boolean): Boolean {
     return default
 }
 
-@UseExperimental(ExperimentalTime::class)
+@OptIn(ExperimentalTime::class)
 actual fun measureTime(block: () -> Unit): Long {
     return TimeSource.Monotonic.measureTime(block).inMilliseconds.toLong()
 }

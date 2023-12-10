@@ -100,7 +100,6 @@ class SynonymContext(val synonym: PsiSynonym, val descriptions: PsiDescriptions)
                         else -> throw UnsupportedFeatureException("Value argument description should be a string.")
                     }
                 }
-                else -> throw IllegalArgumentException("Invalid location: ${it.location}")
             }
         }.fold(synonym.prefix) { prev, current ->
             if (prev.isNotEmpty()) {

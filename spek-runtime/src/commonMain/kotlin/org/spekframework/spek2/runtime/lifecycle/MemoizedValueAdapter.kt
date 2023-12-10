@@ -83,6 +83,9 @@ sealed class MemoizedValueAdapter<T>(
                     val cached = this@ScopeCachingModeAdapter.cached
                     when (cached) {
                         is Cached.Value<T> -> destructor(cached.value)
+                        else -> {
+                            // do nothing
+                        }
                     }
                     this@ScopeCachingModeAdapter.cached = Cached.Invalid
                 }
@@ -105,6 +108,9 @@ sealed class MemoizedValueAdapter<T>(
                 afterEachTest {
                     when (val cached = this@TestCachingModeAdapter.cached) {
                         is Cached.Value<T> -> destructor(cached.value)
+                        else -> {
+                            // do nothing
+                        }
                     }
                     this@TestCachingModeAdapter.cached = Cached.Invalid
                 }

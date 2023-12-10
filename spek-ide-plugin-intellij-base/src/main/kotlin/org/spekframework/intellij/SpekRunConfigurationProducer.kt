@@ -9,11 +9,11 @@ import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiPackage
-import org.jetbrains.kotlin.config.KotlinFacetSettings
+import org.jetbrains.kotlin.config.IKotlinFacetSettings
 import org.jetbrains.kotlin.config.KotlinFacetSettingsProvider
-import org.jetbrains.kotlin.idea.caches.project.implementingModules
+import org.jetbrains.kotlin.idea.base.facet.implementingModules
+import org.jetbrains.kotlin.idea.base.util.module
 import org.jetbrains.kotlin.idea.core.getPackage
-import org.jetbrains.kotlin.idea.util.module
 import org.jetbrains.kotlin.platform.IdePlatformKind
 import org.jetbrains.kotlin.platform.idePlatformKind
 import org.jetbrains.kotlin.platform.impl.CommonIdePlatformKind
@@ -133,7 +133,8 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
     private fun getPathFromDir(context: ConfigurationContext, dir: PsiDirectory): Path? {
         if (context.module != null) {
             val moduleRootManager = ModuleRootManager.getInstance(context.module)
-            if (context.module == dir.module || moduleRootManager.isDependsOn(dir.module)) {
+            var dirModule = dir.module
+            if (context.module == dirModule || (dirModule != null && moduleRootManager.isDependsOn(dirModule))) {
                 val psiPackage = dir.getPackage()
 
                 if (psiPackage != null) {
@@ -153,7 +154,7 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
             .build()
     }
 
-    private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, KotlinFacetSettings>? {
+    private fun findSupportedModule(project: Project, commonModule: Module): Pair<Module, IKotlinFacetSettings>? {
         val kotlinFacetSettingsProvider = KotlinFacetSettingsProvider.getInstance(project)!!
         return commonModule.implementingModules
             .map { it to kotlinFacetSettingsProvider.getInitializedSettings(it) }
@@ -162,5 +163,5 @@ abstract class SpekRunConfigurationProducer(val producerType: ProducerType, type
             }
     }
 
-    private fun isPlatformSupported(kind: IdePlatformKind<*>) = kind.toProducerType() == producerType
+    private fun isPlatformSupported(kind: IdePlatformKind) = kind.toProducerType() == producerType
 }

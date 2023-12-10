@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+//    implementation(kotlin("stdlib-jdk8"))
     compileOnly(kotlin("compiler"))
 
     implementation(Dependencies.autoService)
@@ -18,7 +18,7 @@ tasks {
 
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = JavaVersion.VERSION_17.toString()
         }
     }
 }

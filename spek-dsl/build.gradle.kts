@@ -73,14 +73,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib-common"))
+//                implementation(kotlin("stdlib-common"))
             }
         }
-        
+
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
-                    implementation(kotlin("stdlib-jdk8"))
+//                    implementation(kotlin("stdlib-jdk8"))
                 }
             }
         }
@@ -88,7 +88,7 @@ kotlin {
         js {
             compilations["main"].defaultSourceSet {
                 dependencies {
-                    implementation(kotlin("stdlib-js"))
+//                    implementation(kotlin("stdlib-js"))
                 }
             }
         }
