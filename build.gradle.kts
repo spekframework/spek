@@ -16,7 +16,6 @@ reckon {
 allprojects {
     repositories {
         mavenCentral()
-        jcenter()
     }
 
     if (Files.exists(Paths.get("$rootDir/local.properties"))) {
@@ -37,8 +36,8 @@ allprojects {
         tasks.withType<KotlinCompile<*>> {
             if (this is KotlinJvmCompile) {
                 kotlinOptions {
-                    apiVersion = "1.3"
-                    jvmTarget = "1.8"
+                    apiVersion = "1.4"
+                    jvmTarget = JavaVersion.VERSION_17.toString()
                 }
             } else {
                 kotlinOptions {

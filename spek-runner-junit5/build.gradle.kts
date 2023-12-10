@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
+//    implementation(kotlin("stdlib-jdk8"))
     implementation(project(":spek-runtime"))
     implementation(Dependencies.junitPlatformEngine)
 
@@ -18,6 +18,11 @@ dependencies {
 }
 
 val archive = "spek-runner-junit5"
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 tasks {
     test {

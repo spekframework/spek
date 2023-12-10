@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
 plugins {
     kotlin("jvm")
     id("org.jetbrains.intellij")
@@ -47,21 +45,23 @@ intellij {
 
 sourceSets {
     main {
-        withConvention(KotlinSourceSet::class) {
-            kotlin.srcDirs("src/${settings.extraSource}/kotlin")
+        sourceSets {
+            kotlin {
+                srcDir("src/${settings.extraSource}/kotlin")
+            }
         }
     }
 }
 
 dependencies {
-    compile(project(":spek-ide-plugin-intellij-base-jvm"))
-    compileOnly(kotlin("stdlib"))
+    api(project(":spek-ide-plugin-intellij-base-jvm"))
+//    compileOnly(kotlin("stdlib"))
 }
 
 tasks {
     compileKotlin {
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = JavaVersion.VERSION_17.toString()
         }
     }
 

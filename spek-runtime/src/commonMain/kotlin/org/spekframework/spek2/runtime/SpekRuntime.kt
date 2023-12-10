@@ -46,7 +46,6 @@ class SpekRuntime {
         return results
     }
 
-    @UseExperimental(ExperimentalTime::class)
     fun discover(discoveryRequest: DiscoveryRequest): DiscoveryResult {
         val scopes = mutableListOf<GroupScopeImpl>()
         val time = measureTime {

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
 plugins {
     kotlin("jvm")
     id("org.jetbrains.intellij")
@@ -49,11 +47,24 @@ val buildMatrix = mapOf(
         "IJ183",
         ij.VersionRange("213.1", "223.*"),
         listOf("java", "org.jetbrains.kotlin:213-1.6.10-release-944-IJ6461.79")
+    ),
+    "IJ233" to ij.BuildConfig(
+        "233.11799.241",
+        "IJ2023.3",
+        "IJ183",
+        ij.VersionRange("233.1", "233.*"),
+        listOf("java", "org.jetbrains.kotlin"), // :231-1.7.10-release-334-IJ8228
+        JavaVersion.VERSION_17
     )
 )
 
-val sdkVersion = project.properties["ij.version"] ?: "IJ213"
+val sdkVersion = project.properties["ij.version"] ?: "IJ233"
 val settings = checkNotNull(buildMatrix[sdkVersion])
+
+java {
+    sourceCompatibility = settings.javaVersion
+    targetCompatibility = settings.javaVersion
+}
 
 intellij {
     pluginName.set("Spek Framework")
@@ -65,21 +76,21 @@ intellij {
 
 sourceSets {
     main {
-        withConvention(KotlinSourceSet::class) {
-            kotlin.srcDirs("src/${settings.extraSource}/kotlin")
+        kotlin {
+            srcDirs("src/${settings.extraSource}/kotlin")
         }
     }
 }
 
 dependencies {
-    compile(project(":spek-ide-plugin-intellij-base-jvm"))
-    compileOnly(kotlin("stdlib"))
+    api(project(":spek-ide-plugin-intellij-base-jvm"))
 }
 
 tasks {
     compileKotlin {
+//        version = settings.kotlinVersion
         kotlinOptions {
-            jvmTarget = "1.8"
+            jvmTarget = settings.javaVersion.toString()
         }
     }
 

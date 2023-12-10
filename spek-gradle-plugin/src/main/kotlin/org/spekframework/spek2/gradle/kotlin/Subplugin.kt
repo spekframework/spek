@@ -1,23 +1,20 @@
 package org.spekframework.spek2.gradle.kotlin
 
-import com.google.auto.service.AutoService
-import org.gradle.api.Project
-import org.gradle.api.tasks.compile.AbstractCompile
-import org.jetbrains.kotlin.gradle.dsl.KotlinCommonOptions
+import org.gradle.api.provider.Provider
 import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
-import org.jetbrains.kotlin.gradle.plugin.KotlinGradleSubplugin
+import org.jetbrains.kotlin.gradle.plugin.KotlinCompilerPluginSupportPlugin
 import org.jetbrains.kotlin.gradle.plugin.SubpluginArtifact
 import org.jetbrains.kotlin.gradle.plugin.SubpluginOption
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
-import org.spekframework.spek2.gradle.entry.MultiplatformPlugin
 import org.spekframework.spek2.gradle.domain.MultiplatformExtension
+import org.spekframework.spek2.gradle.entry.MultiplatformPlugin
 
-class Subplugin : KotlinGradleSubplugin<AbstractCompile> {
-    override fun apply(project: Project, kotlinCompile: AbstractCompile, javaCompile: AbstractCompile?, variantData: Any?, androidProjectHandler: Any?, kotlinCompilation: KotlinCompilation<KotlinCommonOptions>?): List<SubpluginOption> {
-        val extension = checkNotNull(project.extensions.findByType(MultiplatformExtension::class.java))
+class Subplugin : KotlinCompilerPluginSupportPlugin {
+    override fun applyToCompilation(kotlinCompilation: KotlinCompilation<*>): Provider<List<SubpluginOption>> {
+        val extension = checkNotNull(kotlinCompilation.target.project.extensions.findByType(MultiplatformExtension::class.java))
 
-        return listOf(SubpluginOption("enabled", extension.enabled.toString()))
+        return kotlinCompilation.target.project.provider {
+            listOf(SubpluginOption("enabled", extension.enabled.toString()))
+        }
     }
 
     override fun getCompilerPluginId(): String {
@@ -35,14 +32,8 @@ class Subplugin : KotlinGradleSubplugin<AbstractCompile> {
         )
     }
 
-    override fun getNativeCompilerPluginArtifact(): SubpluginArtifact? {
-        return SubpluginArtifact(
-            MultiplatformPlugin.spekMavenGroup,
-            "spek-kotlin-compiler-plugin-native",
-            MultiplatformPlugin.spekVersion
-        )
+    override fun isApplicable(kotlinCompilation: KotlinCompilation<*>): Boolean {
+        return kotlinCompilation.target.project.plugins.hasPlugin(MultiplatformPlugin::class.java)
+//                && (task is KotlinNativeCompile || task is KotlinNativeLink)
     }
-
-    override fun isApplicable(project: Project, task: AbstractCompile): Boolean
-            = project.plugins.hasPlugin(MultiplatformPlugin::class.java) && (task is KotlinNativeCompile || task is KotlinNativeLink)
 }

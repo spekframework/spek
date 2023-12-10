@@ -17,7 +17,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(kotlin("stdlib"))
+//                implementation(kotlin("stdlib"))
             }
         }
 
@@ -32,7 +32,7 @@ kotlin {
         jvm {
             compilations["main"].defaultSourceSet {
                 dependencies {
-                    implementation(kotlin("stdlib-jdk8"))
+//                    implementation(kotlin("stdlib-jdk8"))
                 }
             }
 
@@ -142,6 +142,6 @@ tasks {
 // the spek-runtime and compiler plugin projects, rather than trying to download the not-yet-published version from a Maven repository.
 configurations.forEach {
     it.resolutionStrategy.dependencySubstitution {
-        substitute(module("org.spekframework.spek2:spek-runtime")).with(project(":spek-runtime"))
+        substitute(module("org.spekframework.spek2:spek-runtime")).using(project(":spek-runtime"))
     }
 }
